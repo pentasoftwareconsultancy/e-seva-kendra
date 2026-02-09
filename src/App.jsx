@@ -1,15 +1,15 @@
+import Header from "./components/common/Header";
+import Footer from "./components/common/Footer";
+import AppRoutes from "./routes/AppRoutes";
 
-import './App.css'
-import React from 'react'
-import Home from './pages/home.jsx'
 function App() {
-  
-
   return (
     <>
-     <Home />
+      <Header />
+      <AppRoutes />
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
