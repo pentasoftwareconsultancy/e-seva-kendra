@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import AboutusPage from "../pages/AboutusPage";
+import ContactPage from "../pages/ContactPage"; 
 import React from "react";
 import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
@@ -18,6 +20,9 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/about" element={<AboutusPage />} />
+      <Route path="/contact" element={<ContactPage />} />
+      <Route path="/services" element={<ServicesPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/services/pan" element={<PANCardServices />} />
@@ -51,9 +56,9 @@ const AppRoutes = () => {
         <ProtectedRoute>
           <AdminSettings />
         </ProtectedRoute>
-      } />
+      } />  
     </Routes>
   );
 };
 
-export default AppRoutes;
+export default AppRoutes; 
