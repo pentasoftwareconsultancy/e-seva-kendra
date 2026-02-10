@@ -73,7 +73,7 @@ export default function Home() {
                                 desc: "New PAN application, corrections & reprint services",
                                 img: panImg,
                                 btnColor: "bg-slate-700 hover:bg-green-800",
-                                link: "/services/pan-card"
+                                link: "/services/pan"
                             },
                             {
                                 title: "Aadhaar Card",
