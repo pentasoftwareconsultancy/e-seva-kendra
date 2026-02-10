@@ -104,7 +104,7 @@ const AdminDashboard = () => {
           </div>
 
           {/* Earnings Card */}
-          <div className="bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg shadow p-6 mb-6 relative overflow-hidden">
+          <div className="bg-gradient-to-r from-green-50 to-green-100 rounded-lg shadow p-6 mb-6 relative overflow-hidden">
             <div className="absolute right-0 bottom-0 opacity-20">
               <svg width="200" height="100" viewBox="0 0 200 100">
                 <rect x="10" y="60" width="15" height="30" fill="#fb923c" opacity="0.5"/>
@@ -120,7 +120,7 @@ const AdminDashboard = () => {
             </div>
             <h3 className="text-lg font-semibold text-gray-800 mb-2">Earnings Today</h3>
             <p className="text-3xl font-bold text-gray-800">₹ 12,450</p>
-            <p className="text-sm text-gray-600">+20% Yesterday</p>
+          
           </div>
 
           {/* Tabs */}

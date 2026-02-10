@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AdminLayout from '../../components/common/AdminLayout';
 const users = [
   {
@@ -36,6 +36,19 @@ const statusStyles = {
 };
 
 const AdminUsers = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [roleFilter, setRoleFilter] = useState('All Roles');
+  const [statusFilter, setStatusFilter] = useState('All Status');
+
+  const filteredUsers = users
+    .filter(user => 
+      searchQuery === '' ? true : 
+      user.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      user.email.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .filter(user => roleFilter === 'All Roles' ? true : user.role === roleFilter)
+    .filter(user => statusFilter === 'All Status' ? true : user.status === statusFilter);
+
   return (
     <AdminLayout>
       {/* Page Title */}
@@ -48,12 +61,18 @@ const AdminUsers = () => {
           <input
             type="text"
             placeholder="Search by name or email..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="flex-1 min-w-[200px] px-3 md:px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
           />
 
-  
+          
 
-          <select className="px-3 md:px-4 py-2 border rounded-lg text-sm">
+          <select 
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="px-3 md:px-4 py-2 border rounded-lg text-sm"
+          >
             <option>All Status</option>
             <option>Active</option>
             <option>Blocked</option>
@@ -74,7 +93,7 @@ const AdminUsers = () => {
             </thead>
 
             <tbody>
-              {users.map((user) => (
+              {filteredUsers.map((user) => (
                 <tr
                   key={user.id}
                   className="border-b hover:bg-gray-50 transition"

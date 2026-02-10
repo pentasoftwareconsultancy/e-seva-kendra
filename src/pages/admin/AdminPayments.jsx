@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AdminLayout from '../../components/common/AdminLayout';
 const payments = [
   {
@@ -36,11 +36,30 @@ const statusStyle = {
 };
 
 const AdminPayments = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredPayments = payments.filter(pay => 
+    searchQuery === '' ? true : 
+    pay.id.toString().includes(searchQuery) || 
+    pay.user.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <AdminLayout>
       <h1 className="text-xl md:text-2xl font-bold text-[#1f2a44] mb-4 md:mb-6">Payments</h1>
 
       <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6">
+        {/* Search Bar */}
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Search by payment ID or user name..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full px-3 md:px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
+          />
+        </div>
+
         <div className="overflow-x-auto">
         <table className="w-full text-xs md:text-sm">
           <thead>
@@ -56,7 +75,7 @@ const AdminPayments = () => {
           </thead>
 
           <tbody className="divide-y">
-            {payments.map((pay) => (
+            {filteredPayments.map((pay) => (
               <tr key={pay.id} className="text-gray-700">
                 <td className="py-4 font-medium">{pay.id}</td>
                 <td className="py-4 font-semibold">{pay.user}</td>
