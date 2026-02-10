@@ -1,6 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import React from "react";
 import HomePage from "../pages/HomePage";
+import RegisterPage from "../pages/RegisterPage";
+import LoginPage from "../pages/LoginPage";
+import PANCardServices from "../components/Services/Pan";
 import AdminLogin from "../pages/admin/AdminLogin";
 import ProtectedRoute from "../components/common/ProtectedRoute";
 import AdminDashboard from "../pages/admin/AdminDashboard";
@@ -15,8 +18,9 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-     <Route path="/services" element={<ServicesPage />} />
-
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/services/pan" element={<PANCardServices />} />
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={
         <ProtectedRoute>

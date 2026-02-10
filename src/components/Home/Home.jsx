@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import heroImg from "../../assets/Home/hero.png";
 import panImg from "../../assets/services/pan-img.jpg";
 import aadhaarImg from "../../assets/services/adhar_img.jpg";
@@ -38,9 +39,9 @@ export default function Home() {
                         </p>
 
                         <div className="mt-6 flex gap-4">
-                            <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium">
+                            <Link to="/services" className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium">
                                 Get Started
-                            </button>
+                            </Link>
                             <a
                                 href="https://wa.me/919876543310"
                                 className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium"
@@ -71,49 +72,57 @@ export default function Home() {
                                 title: "PAN Card",
                                 desc: "New PAN application, corrections & reprint services",
                                 img: panImg,
-                                btnColor: "bg-slate-700 hover:bg-slate-800"
+                                btnColor: "bg-slate-700 hover:bg-green-800",
+                                link: "/services/pan"
                             },
                             {
                                 title: "Aadhaar Card",
                                 desc: "Aadhaar enrollment, updates & mobile linking",
                                 img: aadhaarImg,
-                                btnColor: "bg-yellow-600 hover:bg-yellow-700"
+                                btnColor: "bg-yellow-600 hover:bg-green-700",
+                                link: "/services/aadhaar"
                             },
                             {
                                 title: "Voter ID",
                                 desc: "New voter registration & correction services",
                                 img: panImg,
-                                btnColor: "bg-green-700 hover:bg-green-800"
+                                btnColor: "bg-green-700 hover:bg-green-800",
+                                link: "/services/voter-id"
                             },
                             {
                                 title: "Driving License",
                                 desc: "DL application, renewal & address change",
                                 img: aadhaarImg,
-                                btnColor: "bg-slate-700 hover:bg-slate-800"
+                                btnColor: "bg-slate-700 hover:bg-green-800",
+                                link: "/services/driving-license"
                             },
                             {
                                 title: "Passport",
                                 desc: "New passport & renewal assistance",
                                 img: panImg,
-                                btnColor: "bg-yellow-600 hover:bg-yellow-700"
+                                btnColor: "bg-yellow-600 hover:bg-green-700",
+                                link: "/services/passport"
                             },
                             {
                                 title: "Ration Card",
                                 desc: "Apply for new ration card & modifications",
                                 img: aadhaarImg,
-                                btnColor: "bg-green-700 hover:bg-green-800"
+                                btnColor: "bg-green-700 hover:bg-green-800",
+                                link: "/services/ration-card"
                             },
                             {
                                 title: "Income Certificate",
                                 desc: "Get income certificate for various purposes",
                                 img: panImg,
-                                btnColor: "bg-slate-700 hover:bg-slate-800"
+                                btnColor: "bg-slate-700 hover:bg-slate-800",
+                                link: "/services/income-certificate"
                             },
                             {
                                 title: "Birth Certificate",
                                 desc: "Birth certificate registration & corrections",
                                 img: aadhaarImg,
-                                btnColor: "bg-yellow-600 hover:bg-yellow-700"
+                                btnColor: "bg-yellow-600 hover:bg-yellow-700",
+                                link: "/services/birth-certificate"
                             },
                         ].map((service) => (
                             <div
@@ -142,9 +151,9 @@ export default function Home() {
                                     </p>
 
                                     {/* APPLY NOW BUTTON */}
-                                    <button className={`w-full ${service.btnColor} text-white text-sm font-semibold py-2.5 rounded-lg transition-all`}>
+                                    <Link to={service.link} className={`w-full ${service.btnColor} text-white text-sm font-semibold py-2.5 rounded-lg transition-all block text-center`}>
                                         Apply Now →
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         ))}
