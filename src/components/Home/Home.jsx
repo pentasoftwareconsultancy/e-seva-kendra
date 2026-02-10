@@ -10,41 +10,41 @@ export default function Home() {
     return (
         <>
             {/* ================= HERO SECTION ================= */}
-            <section className="relative h-[520px] overflow-hidden">
+            <section className="relative h-[400px] sm:h-[480px] md:h-[520px] overflow-hidden">
 
                 {/* LEFT BLUE GRADIENT BACKGROUND */}
                 <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d] via-[#143f8f] to-[#1e56c4]" />
 
                 {/* RIGHT IMAGE */}
-                <div className="absolute right-0 top-0 h-full w-[65%]">
+                <div className="absolute right-0 top-0 h-full w-full md:w-[65%]">
                     <img
                         src={heroImg}
                         alt="Professional consultation"
-                        className="h-full w-full object-cover rounded-l-3xl"
+                        className="h-full w-full object-cover md:rounded-l-3xl"
                     />
                     {/* IMAGE BLEND OVERLAY */}
                     <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#143f8f]/90" />
                 </div>
 
                 {/* HERO CONTENT */}
-                <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center px-6">
+                <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center px-4 sm:px-6">
                     <div className="max-w-xl text-white">
-                        <h1 className="text-4xl font-bold leading-tight">
-                            Fast & Trusted Document <br /> & Legal Services in Pune
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
+                            Fast & Trusted Document <br className="hidden sm:block" /> & Legal Services in Pune
                         </h1>
 
-                        <p className="mt-4 text-blue-100">
+                        <p className="mt-3 md:mt-4 text-sm sm:text-base text-blue-100">
                             Quick, reliable and affordable assistance for PAN Card, Aadhaar,
                             Voter ID, Driving License & all document services.
                         </p>
 
-                        <div className="mt-6 flex gap-4">
-                            <Link to="/services" className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium">
+                        <div className="mt-4 md:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
+                            <Link to="/services" className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium text-center">
                                 Get Started
                             </Link>
                             <a
                                 href="https://wa.me/919876543310"
-                                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium"
+                                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium text-center"
                             >
                                 WhatsApp Now
                             </a>
@@ -299,18 +299,25 @@ export default function Home() {
                     {/* CTA Section */}
                     <div className="text-center mt-16">
                         <p className="text-slate-600 mb-6 text-lg">Ready to get started with your documentation?</p>
-                        <button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-10 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
+                        <Link to="/services" className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-10 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
                             Start Your Application →
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </section>
 
             {/* ================= CONTACT ================= */}
-            <section className="relative py-20 bg-gradient-to-b from-slate-50 to-white">
-                <div className="max-w-7xl mx-auto px-6">
+            <section className="relative py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 overflow-hidden">
+                {/* Decorative Background Elements */}
+                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full blur-3xl opacity-30"></div>
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full blur-3xl opacity-30"></div>
+                
+                <div className="max-w-7xl mx-auto px-6 relative z-10">
                     {/* Title */}
                     <div className="text-center mb-12">
+                        <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-4">
+                            Get In Touch
+                        </span>
                         <h2 className="text-4xl font-bold text-slate-900 mb-3">
                             Contact Us
                         </h2>
@@ -322,9 +329,9 @@ export default function Home() {
                     {/* Cards */}
                     <div className="grid md:grid-cols-2 gap-8">
                         {/* LEFT CARD */}
-                        <div className="relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all p-8 border border-slate-100">
+                        <div className="relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all p-8 border border-slate-200">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-green-600 to-green-700 text-white flex items-center justify-center font-bold shadow-md">
+                                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-green-500 to-green-600 text-white flex items-center justify-center font-bold shadow-lg">
                                     ES
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-900">
@@ -349,8 +356,8 @@ export default function Home() {
                                 </div>
 
                                 <div className="flex items-center gap-3">
-                                    <i className="fa-solid fa-envelope text-blue-900 text-lg"></i>
-                                    <a href="mailto:esuvidha@gmail.com" className="text-slate-700 hover:text-blue-600 transition">
+                                    <i className="fa-solid fa-envelope text-blue-600 text-lg"></i>
+                                    <a href="mailto:esuvidha@gmail.com" className="text-slate-600 hover:text-blue-600 transition">
                                         esuvidha@gmail.com
                                     </a>
                                 </div>
@@ -358,7 +365,7 @@ export default function Home() {
 
                             <a
                                 href="https://wa.me/919876543310"
-                                className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition-all shadow-md"
+                                className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 rounded-xl transition-all shadow-lg"
                             >
                                 <i className="fa-brands fa-whatsapp text-xl"></i>
                                 WhatsApp Chat
@@ -366,9 +373,9 @@ export default function Home() {
                         </div>
 
                         {/* RIGHT CARD */}
-                        <div className="relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all p-8 border border-slate-100">
+                        <div className="relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all p-8 border border-slate-200">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-blue-900 to-blue-700 text-white flex items-center justify-center shadow-md">
+                                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center shadow-lg">
                                     <i className="fa-solid fa-building text-lg"></i>
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-900">
@@ -393,8 +400,8 @@ export default function Home() {
                                 </div>
 
                                 <div className="flex items-center gap-3">
-                                    <i className="fa-solid fa-clock text-blue-900 text-lg"></i>
-                                    <p className="text-slate-700 font-medium">
+                                    <i className="fa-solid fa-clock text-blue-600 text-lg"></i>
+                                    <p className="text-slate-600 font-medium">
                                         Mon - Sat: 9:00 AM - 7:00 PM
                                     </p>
                                 </div>
@@ -409,7 +416,7 @@ export default function Home() {
                                     Call Now
                                 </a>
 
-                                <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-slate-700 hover:bg-slate-800 text-white font-semibold transition shadow-md">
+                                <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-900 to-blue-900 hover:from-blue-600 hover:to-blue-700 text-white font-semibold transition shadow-lg">
                                     Contact Us
                                     <i className="fa-solid fa-arrow-right"></i>
                                 </button>
