@@ -1,15 +1,12 @@
 import React from 'react'
 import Pan from '../components/Services/Pan'
 
-function Servicespage() {
+function ServicesPage() {
   return (
     <div>
-      
-     <Pan/>
-
-
+      <Pan />
     </div>
   )
 }
 
-export default Servicespage;
+export default ServicesPage;
