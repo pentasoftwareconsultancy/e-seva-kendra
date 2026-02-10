@@ -9,11 +9,14 @@ import AdminUsers from "../pages/admin/AdminUsers";
 import AdminPayments from "../pages/admin/AdminPayments";
 import AdminReports from "../pages/admin/AdminReports";
 import AdminSettings from "../pages/admin/AdminSettings";
+import ServicesPage from "../pages/ServicesPage";
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+     <Route path="/services" element={<ServicesPage />} />
+
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={
         <ProtectedRoute>
