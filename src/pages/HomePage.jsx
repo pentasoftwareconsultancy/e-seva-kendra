@@ -1,14 +1,13 @@
 import React from 'react'
-import Hero from '../components/Hero.jsx'
+import Home from '../components/Home/Home'
 
 
-const home = () => {
+const HomePage = () => {
   return (
     <div>
-      <h1 className='text-3xl font-bold text-center text-blue-600'>Welcome to the Home</h1>
-    <Hero />
+    <Home/>
     </div>
   )
 }
 
-export default home;
+export default HomePage;
