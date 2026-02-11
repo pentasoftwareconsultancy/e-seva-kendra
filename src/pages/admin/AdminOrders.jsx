@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const AdminOrders = () => {
   const [activeTab, setActiveTab] = useState('All Orders');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedOrder, setSelectedOrder] = useState(null);
   
   const orders = [
     { id: 2375, name: 'Rajesh Kumar', service: 'PAN Card', status: 'Pending', date: 'Mar 28, 2024' },
@@ -64,48 +65,82 @@ const AdminOrders = () => {
           </div>
 
           {/* Order Table */}
-          <div className="bg-white rounded-lg shadow overflow-hidden">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b">
-                  <tr>
-                    <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order ID</th>
-                    <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer Name</th>
-                    <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase hidden sm:table-cell">Service Type</th>
-                    <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                    <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase hidden md:table-cell">Date</th>
-                    <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                <thead>
+                  <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Order ID</th>
+                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Customer Name</th>
+                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Service Type</th>
+                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden md:table-cell">Date</th>
+                    <th className="px-4 md:px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {filteredOrders.map((order) => (
-                    <tr key={order.id} className="hover:bg-gray-50">
-                      <td className="px-3 md:px-6 py-4 text-sm font-medium text-gray-900">{order.id}</td>
-                      <td className="px-3 md:px-6 py-4 text-sm text-gray-900">{order.name}</td>
-                      <td className="px-3 md:px-6 py-4 text-sm text-gray-900 hidden sm:table-cell">{order.service}</td>
-                      <td className="px-3 md:px-6 py-4">
-                        <span className={`px-2 md:px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
+                <tbody className="divide-y divide-gray-100">
+                  {filteredOrders.map((order, index) => (
+                    <tr key={order.id} className="hover:bg-blue-50/50 transition-colors duration-150">
+                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600">#{order.id}</td>
+                      <td className="px-4 md:px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold text-xs">
+                            {order.name.charAt(0)}
+                          </div>
+                          <span className="text-sm font-medium text-gray-900">{order.name}</span>
+                        </div>
+                      </td>
+                      <td className="px-4 md:px-6 py-4 text-sm text-gray-600 hidden sm:table-cell">{order.service}</td>
+                      <td className="px-4 md:px-6 py-4">
+                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(order.status)}`}>
                           {order.status}
                         </span>
                       </td>
-                      <td className="px-3 md:px-6 py-4 text-sm text-gray-500 hidden md:table-cell">{order.date}</td>
-                      <td className="px-3 md:px-6 py-4">
-                        <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">View</button>
+                      <td className="px-4 md:px-6 py-4 text-sm text-gray-500 hidden md:table-cell">{order.date}</td>
+                      <td className="px-4 md:px-6 py-4 text-center">
+                        <button 
+                          onClick={() => setSelectedOrder(order)}
+                          className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
+                        >
+                          View
+                        </button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <div className="px-3 md:px-6 py-4 border-t flex flex-col sm:flex-row items-center justify-between gap-3">
-              <p className="text-sm text-gray-500">Showing 1 to 7 of 152 entries</p>
+            <div className="px-4 md:px-6 py-4 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <p className="text-sm text-gray-600 font-medium">Showing 1 to 7 of 152 entries</p>
               <div className="flex gap-2">
-                <button className="px-3 py-1 border rounded">1</button>
-                <button className="px-3 py-1 border rounded bg-blue-600 text-white">2</button>
-                <button className="px-3 py-1 border rounded">→</button>
+                <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">1</button>
+                <button className="px-4 py-2 border border-blue-600 rounded-lg bg-blue-600 text-white text-sm font-medium shadow-sm">2</button>
+                <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">→</button>
               </div>
             </div>
           </div>
+
+          {/* Order Details Modal */}
+          {selectedOrder && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setSelectedOrder(null)}>
+              <div className="bg-white rounded-lg p-6 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
+                <h3 className="text-xl font-bold mb-4">Order Details</h3>
+                <div className="space-y-3">
+                  <p><span className="font-semibold">Order ID:</span> {selectedOrder.id}</p>
+                  <p><span className="font-semibold">Customer:</span> {selectedOrder.name}</p>
+                  <p><span className="font-semibold">Service:</span> {selectedOrder.service}</p>
+                  <p><span className="font-semibold">Status:</span> <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(selectedOrder.status)}`}>{selectedOrder.status}</span></p>
+                  <p><span className="font-semibold">Date:</span> {selectedOrder.date}</p>
+                </div>
+                <button 
+                  onClick={() => setSelectedOrder(null)}
+                  className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
     </AdminLayout>
   );
 };

@@ -19,6 +19,7 @@ const menuItems = [
   { icon: Users, label: "Users", path: "/admin/users" },
   { icon: CreditCard, label: "Payments", path: "/admin/payments" },
   { icon: BarChart2, label: "Reports", path: "/admin/reports" },
+  {icon: Briefcase, label: "Messages", path: "/admin/messages" },
   { icon: Settings, label: "Settings", path: "/admin/settings" },
 ];
 

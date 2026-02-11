@@ -80,61 +80,63 @@ const AdminUsers = () => {
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="text-left text-gray-500 border-b text-xs">
-                <th className="py-3">User</th>
-                <th className="hidden sm:table-cell">Email</th>
-                <th className="hidden md:table-cell">Role</th>
-                <th>Status</th>
-                <th className="hidden lg:table-cell">Joined</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {filteredUsers.map((user) => (
-                <tr
-                  key={user.id}
-                  className="border-b hover:bg-gray-50 transition"
-                >
-                  <td className="py-4 flex items-center gap-2 md:gap-3">
-                    <img
-                      src={user.avatar}
-                      alt={user.name}
-                      className="w-8 h-8 md:w-9 md:h-9 rounded-full"
-                    />
-                    <span className="font-medium text-gray-800 text-sm">
-                      {user.name}
-                    </span>
-                  </td>
-
-                  <td className="text-gray-600 text-sm hidden sm:table-cell">{user.email}</td>
-                  <td className="text-gray-700 text-sm hidden md:table-cell">{user.role}</td>
-
-                  <td>
-                    <span
-                      className={`px-2 md:px-3 py-1 rounded-full text-xs font-semibold ${statusStyles[user.status]}`}
-                    >
-                      {user.status}
-                    </span>
-                  </td>
-
-                  <td className="text-gray-600 text-sm hidden lg:table-cell">{user.date}</td>
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 text-left text-xs">
+                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider">User</th>
+                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Email</th>
+                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider hidden md:table-cell">Role</th>
+                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider hidden lg:table-cell">Joined</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
 
-        {/* Footer */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mt-4 md:mt-6 text-xs md:text-sm text-gray-500 gap-3">
-          <span>Showing 1 to 3 of 3 users</span>
+              <tbody className="divide-y divide-gray-100">
+                {filteredUsers.map((user) => (
+                  <tr
+                    key={user.id}
+                    className="hover:bg-blue-50/50 transition-colors duration-150"
+                  >
+                    <td className="px-4 md:px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold text-xs">
+                          {user.name.charAt(0)}
+                        </div>
+                        <span className="font-medium text-gray-900 text-sm">
+                          {user.name}
+                        </span>
+                      </div>
+                    </td>
 
-          <div className="flex items-center gap-2">
-            <button className="px-3 py-1 border rounded-md">1</button>
-            <button className="px-3 py-1 border rounded-md">2</button>
-            <button className="px-3 py-1 border rounded-md">→</button>
+                    <td className="px-4 md:px-6 py-4 text-gray-600 text-sm hidden sm:table-cell">{user.email}</td>
+                    <td className="px-4 md:px-6 py-4 text-gray-700 text-sm hidden md:table-cell">{user.role}</td>
+
+                    <td className="px-4 md:px-6 py-4">
+                      <span
+                        className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${statusStyles[user.status]}`}
+                      >
+                        {user.status}
+                      </span>
+                    </td>
+
+                    <td className="px-4 md:px-6 py-4 text-gray-500 text-sm hidden lg:table-cell">{user.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Footer */}
+          <div className="px-4 md:px-6 py-4 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs md:text-sm">
+            <span className="text-gray-600 font-medium">Showing 1 to 3 of 3 users</span>
+
+            <div className="flex items-center gap-2">
+              <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">1</button>
+              <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">2</button>
+              <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">→</button>
+            </div>
           </div>
         </div>
       </div>

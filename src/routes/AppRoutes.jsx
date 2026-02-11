@@ -14,6 +14,7 @@ import AdminUsers from "../pages/admin/AdminUsers";
 import AdminPayments from "../pages/admin/AdminPayments";
 import AdminReports from "../pages/admin/AdminReports";
 import AdminSettings from "../pages/admin/AdminSettings";
+import AdminMessages from "../pages/admin/AdminMessages";
 import ServicesPage from "../pages/ServicesPage";
 
 const AppRoutes = () => {
@@ -50,6 +51,11 @@ const AppRoutes = () => {
        <Route path="/admin/reports" element={
         <ProtectedRoute>
           <AdminReports />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/messages" element={
+        <ProtectedRoute>
+          <AdminMessages />
         </ProtectedRoute>
       } />
        <Route path="/admin/settings" element={

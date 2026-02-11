@@ -60,40 +60,49 @@ const AdminPayments = () => {
           />
         </div>
 
-        <div className="overflow-x-auto">
-        <table className="w-full text-xs md:text-sm">
-          <thead>
-            <tr className="text-left text-gray-500 border-b">
-              <th className="pb-3">Payment ID</th>
-              <th className="pb-3">User</th>
-              <th className="pb-3 hidden sm:table-cell">Service</th>
-              <th className="pb-3">Amount</th>
-              <th className="pb-3 hidden md:table-cell">Method</th>
-              <th className="pb-3 hidden lg:table-cell">Date</th>
-              <th className="pb-3">Status</th>
-            </tr>
-          </thead>
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs md:text-sm">
+              <thead>
+                <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 text-left">
+                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs">Payment ID</th>
+                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs">User</th>
+                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs hidden sm:table-cell">Service</th>
+                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs">Amount</th>
+                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs hidden md:table-cell">Method</th>
+                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs hidden lg:table-cell">Date</th>
+                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs">Status</th>
+                </tr>
+              </thead>
 
-          <tbody className="divide-y">
-            {filteredPayments.map((pay) => (
-              <tr key={pay.id} className="text-gray-700">
-                <td className="py-4 font-medium">{pay.id}</td>
-                <td className="py-4 font-semibold">{pay.user}</td>
-                <td className="py-4 hidden sm:table-cell">{pay.service}</td>
-                <td className="py-4 font-semibold">{pay.amount}</td>
-                <td className="py-4 hidden md:table-cell">{pay.method}</td>
-                <td className="py-4 hidden lg:table-cell">{pay.date}</td>
-                <td className="py-4">
-                  <span
-                    className={`px-2 md:px-3 py-1 rounded-full text-xs font-semibold ${statusStyle[pay.status]}`}
-                  >
-                    {pay.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+              <tbody className="divide-y divide-gray-100">
+                {filteredPayments.map((pay) => (
+                  <tr key={pay.id} className="hover:bg-blue-50/50 transition-colors duration-150">
+                    <td className="px-4 md:px-6 py-4 font-semibold text-blue-600">#{pay.id}</td>
+                    <td className="px-4 md:px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold text-xs">
+                          {pay.user.charAt(0)}
+                        </div>
+                        <span className="font-medium text-gray-900">{pay.user}</span>
+                      </div>
+                    </td>
+                    <td className="px-4 md:px-6 py-4 text-gray-600 hidden sm:table-cell">{pay.service}</td>
+                    <td className="px-4 md:px-6 py-4 font-semibold text-gray-900">{pay.amount}</td>
+                    <td className="px-4 md:px-6 py-4 text-gray-600 hidden md:table-cell">{pay.method}</td>
+                    <td className="px-4 md:px-6 py-4 text-gray-500 hidden lg:table-cell">{pay.date}</td>
+                    <td className="px-4 md:px-6 py-4">
+                      <span
+                        className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${statusStyle[pay.status]}`}
+                      >
+                        {pay.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </AdminLayout>
