@@ -72,14 +72,14 @@ export default function Home() {
                                 title: "PAN Card",
                                 desc: "New PAN application, corrections & reprint services",
                                 img: panImg,
-                                btnColor: "bg-slate-700 hover:bg-green-800",
+                                btnColor: "bg-green-700 hover:bg-green-800",
                                 link: "/services/pan"
                             },
                             {
                                 title: "Aadhaar Card",
                                 desc: "Aadhaar enrollment, updates & mobile linking",
                                 img: aadhaarImg,
-                                btnColor: "bg-yellow-600 hover:bg-green-700",
+                                btnColor: "bg-green-700 hover:bg-green-800",
                                 link: "/services/aadhaar"
                             },
                             {
@@ -93,14 +93,14 @@ export default function Home() {
                                 title: "Driving License",
                                 desc: "DL application, renewal & address change",
                                 img: aadhaarImg,
-                                btnColor: "bg-slate-700 hover:bg-green-800",
+                                btnColor: "bg-green-700 hover:bg-green-800",
                                 link: "/services/driving-license"
                             },
                             {
                                 title: "Passport",
                                 desc: "New passport & renewal assistance",
                                 img: panImg,
-                                btnColor: "bg-yellow-600 hover:bg-green-700",
+                                btnColor: "bg-green-700 hover:bg-green-800",
                                 link: "/services/passport"
                             },
                             {
@@ -114,14 +114,14 @@ export default function Home() {
                                 title: "Income Certificate",
                                 desc: "Get income certificate for various purposes",
                                 img: panImg,
-                                btnColor: "bg-slate-700 hover:bg-slate-800",
+                                btnColor: "bg-green-700 hover:bg-green-800",
                                 link: "/services/income-certificate"
                             },
                             {
                                 title: "Birth Certificate",
                                 desc: "Birth certificate registration & corrections",
                                 img: aadhaarImg,
-                                btnColor: "bg-yellow-600 hover:bg-yellow-700",
+                                btnColor: "bg-green-700 hover:bg-green-800",
                                 link: "/services/birth-certificate"
                             },
                         ].map((service) => (
