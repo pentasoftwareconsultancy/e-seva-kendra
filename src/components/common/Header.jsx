@@ -24,13 +24,13 @@ export default function Header() {
 
             <div className="h-5 w-px bg-slate-300" />
 
-            <Link to="/contact" className="px-4 hover:text-blue-600">
+            <Link to="/about" className="px-4 hover:text-blue-600">
                About Us
             </Link>
 
             <div className="h-5 w-px bg-slate-300" />
 
-            <Link to="/about" className="px-4 hover:text-blue-600">
+            <Link to="/contact" className="px-4 hover:text-blue-600">
              Contact Us
             </Link>
           </nav>
