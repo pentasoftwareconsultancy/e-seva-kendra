@@ -1,122 +1,81 @@
-import React from 'react';
-// Correct relative imports based on your folder structure
-import Panhero from '../../assets/Panimg/Panhero.png';
-import Pan1 from '../../assets/Panimg/pan1.png';
-import Pan2 from '../../assets/Panimg/pan2.png';
-import Pan3 from '../../assets/Panimg/pan3.png';
+import React from "react";
 
-const PANCardServices = () => {
+// PAN Images
+import Panhero from "../../assets/Panimg/Panhero.png";
+import Pan1 from "../../assets/Panimg/pan1.png";
+import Pan2 from "../../assets/Panimg/pan2.png";
+import Pan3 from "../../assets/Panimg/pan3.png";
+
+/* =====================================
+   PAN SERVICE FUNCTION (YOUR FULL UI)
+===================================== */
+function PANCardServices() {
   return (
     <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
-      
+
       {/* Hero Section */}
-<section className="relative w-full h-[550px] flex items-center">
-  
-  {/* Background Image */}
-  <div className="absolute inset-0">
-    <img
-      src={Panhero}
-      alt="PAN Hero"
-      className="w-full h-full object-cover"
-    />
-  </div>
-
-  {/* Dark Overlay (optional but recommended for text visibility) */}
-  <div className="absolute inset-0 bg-black/40"></div>
-
-  {/* Content */}
-  <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-    <div className="w-full md:w-1/2 space-y-6 text-white">
-      
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
-        PAN Card Services
-      </h1>
-
-      <p className="text-lg md:text-xl text-gray-200 leading-relaxed">
-        We provide fast and reliable assistance for PAN card application and updates.
-        Get your PAN card in a hassle-free manner.
-      </p>
-
-      <div className="flex flex-wrap items-center gap-6 pt-4">
-        <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all active:scale-95">
-          Apply Now
-        </button>
-
-        <div className="flex items-center gap-2">
-          <div className="flex text-yellow-400 text-xl font-bold">★★★★★</div>
-          <span className="text-sm text-gray-200 font-semibold">
-            (450+ Reviews)
-          </span>
+      <section className="relative w-full h-[550px] flex items-center">
+        <div className="absolute inset-0">
+          <img src={Panhero} alt="PAN Hero" className="w-full h-full object-cover" />
         </div>
-      </div>
 
-    </div>
-  </div>
-</section>
+        <div className="absolute inset-0 bg-black/40"></div>
 
-{/* Steps Section */}
-<section className="bg-[#f8faff] py-20 px-4 md:px-8">
-  <div className="text-center mb-12">
-    <h2 className="text-3xl md:text-4xl font-bold text-[#0f172a] mb-3">
-      Steps to Apply for PAN Card
-    </h2>
-    <p className="text-gray-500 text-lg">
-      Follow these simple steps to get your PAN card easily and quickly.
-    </p>
-  </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+          <div className="w-full md:w-1/2 space-y-6 text-white">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
+              PAN Card Services
+            </h1>
 
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-    
-    {/* Step 1 */}
-    <div className="bg-white rounded-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.04)] overflow-hidden flex flex-col items-start transition-transform hover:scale-[1.02]">
-      <div className="w-full h-52 bg-[#f1f5f9] flex items-center justify-center">
-        <img src={Pan1} alt="Fill Application" className="w-full h-full object-cover" />
-      </div>
-      <div className="p-8 pt-6 flex flex-col flex-grow">
-        <h3 className="font-bold text-xl text-[#0f172a] mb-3">1. Fill the Application Form</h3>
-        <p className="text-gray-500 leading-relaxed mb-6 flex-grow">
-          Use the form below to provide the necessary details for your PAN card application.
-        </p>
-        <button className="text-[#1e40af] font-bold flex items-center gap-2 hover:gap-3 transition-all">
-          Learn More <span className="text-lg">›</span>
-        </button>
-      </div>
-    </div>
+            <p className="text-lg md:text-xl text-gray-200 leading-relaxed">
+              We provide fast and reliable assistance for PAN card application and updates.
+              Get your PAN card in a hassle-free manner.
+            </p>
 
-    {/* Step 2 */}
-    <div className="bg-white rounded-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.04)] overflow-hidden flex flex-col items-start transition-transform hover:scale-[1.02]">
-      <div className="w-full h-52 bg-[#f1f5f9] flex items-center justify-center">
-        <img src={Pan2} alt="Submit Documents" className="w-full h-full object-cover" />
-      </div>
-      <div className="p-8 pt-6 flex flex-col flex-grow">
-        <h3 className="font-bold text-xl text-[#0f172a] mb-3">2. Submit Your Documents</h3>
-        <p className="text-gray-500 leading-relaxed mb-6 flex-grow">
-          Upload scanned documents for identity and address proof.
-        </p>
-        <button className="text-[#1e40af] font-bold flex items-center gap-2 hover:gap-3 transition-all">
-          Learn More <span className="text-lg">›</span>
-        </button>
-      </div>
-    </div>
+            <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
+              Apply Now
+            </button>
+          </div>
+        </div>
+      </section>
 
-    {/* Step 3 */}
-    <div className="bg-white rounded-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.04)] overflow-hidden flex flex-col items-start transition-transform hover:scale-[1.02]">
-      <div className="w-full h-52 bg-[#f1f5f9] flex items-center justify-center">
-        <img src={Pan3} alt="Receive Card" className="w-full h-full object-cover" />
-      </div>
-      <div className="p-8 pt-6 flex flex-col flex-grow">
-        <h3 className="font-bold text-xl text-[#0f172a] mb-3">3. Receive Your PAN Card</h3>
-        <p className="text-gray-500 leading-relaxed mb-6 flex-grow">
-          Get your PAN card delivered to your doorstep once processed.
-        </p>
-        <button className="text-[#1e40af] font-bold flex items-center gap-2 hover:gap-3 transition-all">
-          Learn More <span className="text-lg">›</span>
-        </button>
-      </div>
-    </div>
+      {/* Steps Section */}
+      <section className="bg-[#f8faff] py-20 px-4 md:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#0f172a] mb-3">
+            Steps to Apply for PAN Card
+          </h2>
+        </div>
 
-  </div>
-</section>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+
+          <div className="bg-white rounded-[32px] shadow overflow-hidden">
+            <img src={Pan1} alt="" className="w-full h-52 object-cover" />
+            <div className="p-6">
+              <h3 className="font-bold text-xl mb-2">1. Fill Application</h3>
+              <p className="text-gray-500">Provide required details.</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-[32px] shadow overflow-hidden">
+            <img src={Pan2} alt="" className="w-full h-52 object-cover" />
+            <div className="p-6">
+              <h3 className="font-bold text-xl mb-2">2. Submit Documents</h3>
+              <p className="text-gray-500">Upload identity proof.</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-[32px] shadow overflow-hidden">
+            <img src={Pan3} alt="" className="w-full h-52 object-cover" />
+            <div className="p-6">
+              <h3 className="font-bold text-xl mb-2">3. Receive Card</h3>
+              <p className="text-gray-500">Delivered to your address.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
 
     {/* Form Section */}
 <section className="py-5 px-4 md:px-8 bg-[#f8faff]">

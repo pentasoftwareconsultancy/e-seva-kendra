@@ -18,19 +18,19 @@ export default function Header() {
 
           {/* NAV WITH DIVIDERS */}
           <nav className="hidden md:flex items-center text-sm font-medium text-slate-700 ml-auto mr-8">
-            <Link to="/services" className="px-4 hover:text-blue-600">
+            <Link to="/service" className="px-4 hover:text-blue-600">
               Services
             </Link>
 
             <div className="h-5 w-px bg-slate-300" />
 
-            <Link to="/contact" className="px-4 hover:text-blue-600">
+            <Link to="/about" className="px-4 hover:text-blue-600">
                About Us
             </Link>
 
             <div className="h-5 w-px bg-slate-300" />
 
-            <Link to="/about" className="px-4 hover:text-blue-600">
+            <Link to="/contact" className="px-4 hover:text-blue-600">
              Contact Us
             </Link>
           </nav>
@@ -60,9 +60,12 @@ export default function Header() {
             </div>
 
             {/* CTA */}
-            <button className="px-5 py-2 rounded-lg bg-yellow-500 text-white text-sm font-medium hover:bg-yellow-600">
+            <Link to="/login" className="px-5 py-2 rounded-lg border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-50">
+              Login
+            </Link>
+            <Link to="/services" className="px-5 py-2 rounded-lg bg-yellow-500 text-white text-sm font-medium hover:bg-yellow-600">
               Get Started
-            </button>
+            </Link>
           </div>
 
         </div>

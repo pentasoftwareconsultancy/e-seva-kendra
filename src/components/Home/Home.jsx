@@ -1,6 +1,14 @@
+import { Link } from "react-router-dom";
 import heroImg from "../../assets/Home/hero.png";
+
 import panImg from "../../assets/services/pan-img.jpg";
 import aadhaarImg from "../../assets/services/adhar_img.jpg";
+import voterImg from "../../assets/services/voter-id.png";
+import drivingImg from "../../assets/services/driving-li.png";
+import passImg from "../../assets/services/pass.png";
+import rationImg from "../../assets/services/ration.png";
+import incomeImg from "../../assets/services/income.webp";
+import birthImg from "../../assets/services/birth-cer.png";
 import serviceImg from "../../assets/Home/service.png";
 import uploadImg from "../../assets/Home/upload.png";
 import deliveryImg from "../../assets/Home/delivery.png";
@@ -38,9 +46,9 @@ export default function Home() {
                         </p>
 
                         <div className="mt-6 flex gap-4">
-                            <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium">
+                            <Link to="/services" className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium">
                                 Get Started
-                            </button>
+                            </Link>
                             <a
                                 href="https://wa.me/919876543310"
                                 className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium"
@@ -69,52 +77,52 @@ export default function Home() {
                         {[
                             {
                                 title: "PAN Card",
-                                desc: "New PAN application, corrections & reprint services",
+                                desc: "Apply, update, or reprint your PAN card easily.",
                                 img: panImg,
-                                btnColor: "bg-slate-700 hover:bg-slate-800"
-                            },
-                            {
+                                slug: "pan",
+                              },
+                              {
                                 title: "Aadhaar Card",
-                                desc: "Aadhaar enrollment, updates & mobile linking",
+                                desc: "New enrollment, updates, and mobile linking.",
                                 img: aadhaarImg,
-                                btnColor: "bg-yellow-600 hover:bg-yellow-700"
-                            },
-                            {
+                                slug: "aadhaar",
+                              },
+                              {
                                 title: "Voter ID",
-                                desc: "New voter registration & correction services",
-                                img: panImg,
-                                btnColor: "bg-green-700 hover:bg-green-800"
-                            },
-                            {
+                                desc: "Register or correct voter details.",
+                                img: voterImg,
+                                slug: "voter",
+                              },
+                              {
                                 title: "Driving License",
-                                desc: "DL application, renewal & address change",
-                                img: aadhaarImg,
-                                btnColor: "bg-slate-700 hover:bg-slate-800"
-                            },
-                            {
+                                desc: "Apply or renew your driving license.",
+                                img: drivingImg,
+                                slug: "driving-license",
+                              },
+                              {
                                 title: "Passport",
-                                desc: "New passport & renewal assistance",
-                                img: panImg,
-                                btnColor: "bg-yellow-600 hover:bg-yellow-700"
-                            },
-                            {
+                                desc: "Apply or renew your passport.",
+                                img: passImg,
+                                slug: "passport",
+                              },
+                              {
                                 title: "Ration Card",
-                                desc: "Apply for new ration card & modifications",
-                                img: aadhaarImg,
-                                btnColor: "bg-green-700 hover:bg-green-800"
-                            },
-                            {
+                                desc: "Apply or update your ration card details.",
+                                img: rationImg,
+                                slug: "ration-card",
+                              },
+                              {
                                 title: "Income Certificate",
-                                desc: "Get income certificate for various purposes",
-                                img: panImg,
-                                btnColor: "bg-slate-700 hover:bg-slate-800"
-                            },
-                            {
+                                desc: "Get income certificate for official purposes.",
+                                img: incomeImg,
+                                slug: "income-certificate",
+                              },
+                              {
                                 title: "Birth Certificate",
-                                desc: "Birth certificate registration & corrections",
-                                img: aadhaarImg,
-                                btnColor: "bg-yellow-600 hover:bg-yellow-700"
-                            },
+                                desc: "Register or correct birth certificate details.",
+                                img: birthImg,
+                                slug: "birth-certificate",
+                              },
                         ].map((service) => (
                             <div
                                 key={service.title}
@@ -142,9 +150,9 @@ export default function Home() {
                                     </p>
 
                                     {/* APPLY NOW BUTTON */}
-                                    <button className={`w-full ${service.btnColor} text-white text-sm font-semibold py-2.5 rounded-lg transition-all`}>
+                                    <Link to={service.link} className={`w-full ${service.btnColor} text-white text-sm font-semibold py-2.5 rounded-lg transition-all block text-center`}>
                                         Apply Now →
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         ))}
@@ -153,7 +161,7 @@ export default function Home() {
                     {/* VIEW ALL SERVICES BUTTON */}
                     <div className="text-center">
                         <a
-                            href="/services"
+                            href="/service"
                             className="inline-flex items-center gap-2 bg-blue-900 hover:bg-slate-800 text-white font-semibold px-8 py-3.5 rounded-lg shadow-lg hover:shadow-xl transition-all"
                         >
                             <span>View All Services</span>

@@ -1,5 +1,5 @@
 import React from 'react'
-import Pan from '../components/Services/Pan'
+import Pan from '../components/services/Pan'
 
 function ServicesPage() {
   return (
