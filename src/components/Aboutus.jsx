@@ -6,7 +6,7 @@ import img4 from "../assets/About/about-img4.png";
 import top from "../assets/About/top-img.png";
 
 
-export default function AboutusPage() {
+export default function Aboutus() {
   return (
     <div>
 
