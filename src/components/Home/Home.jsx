@@ -7,7 +7,7 @@ import voterImg from "../../assets/services/voter-id.png";
 import drivingImg from "../../assets/services/driving-li.png";
 import passImg from "../../assets/services/pass.png";
 import rationImg from "../../assets/services/ration.png";
-import incomeImg from "../../assets/services/income.webp";
+import incomeImg from "../../assets/services/income.png";
 import birthImg from "../../assets/services/birth-cer.png";
 import serviceImg from "../../assets/Home/service.png";
 import uploadImg from "../../assets/Home/upload.png";
@@ -16,49 +16,53 @@ import deliveryImg from "../../assets/Home/delivery.png";
 export default function Home() {
     return (
         <>
-            {/* ================= HERO SECTION ================= */}
-            <section className="relative h-[520px] overflow-hidden">
+           {/* ================= HERO SECTION ================= */}
+<section className="relative h-[400px] sm:h-[480px] md:h-[520px] overflow-hidden">
 
-                {/* LEFT BLUE GRADIENT BACKGROUND */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d] via-[#143f8f] to-[#1e56c4]" />
+  {/* FULL WIDTH IMAGE */}
+  <div className="absolute inset-0">
+    <img
+      src={heroImg}
+      alt="Professional consultation"
+      className="h-full w-full object-cover object-[center_45%]"
+    />
+  </div>
 
-                {/* RIGHT IMAGE */}
-                <div className="absolute right-0 top-0 h-full w-[65%]">
-                    <img
-                        src={heroImg}
-                        alt="Professional consultation"
-                        className="h-full w-full object-cover rounded-l-3xl"
-                    />
-                    {/* IMAGE BLEND OVERLAY */}
-                    <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#143f8f]/90" />
-                </div>
+  {/* LEFT GRADIENT OVERLAY (smooth blend) */}
+  <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/80 to-transparent" />
 
-                {/* HERO CONTENT */}
-                <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center px-6">
-                    <div className="max-w-xl text-white">
-                        <h1 className="text-4xl font-bold leading-tight">
-                            Fast & Trusted Document <br /> & Legal Services in Pune
-                        </h1>
+  {/* HERO CONTENT */}
+  <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center px-4 sm:px-6">
+    <div className="max-w-xl text-white">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
+        Fast & Trusted Document <br className="hidden sm:block" />
+        & Legal Services in Pune
+      </h1>
 
-                        <p className="mt-4 text-blue-100">
-                            Quick, reliable and affordable assistance for PAN Card, Aadhaar,
-                            Voter ID, Driving License & all document services.
-                        </p>
+      <p className="mt-3 md:mt-4 text-sm sm:text-base text-blue-100">
+        Quick, reliable and affordable assistance for PAN Card, Aadhaar,
+        Voter ID, Driving License & all document services.
+      </p>
 
-                        <div className="mt-6 flex gap-4">
-                            <Link to="/services" className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium">
-                                Get Started
-                            </Link>
-                            <a
-                                href="https://wa.me/919876543310"
-                                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium"
-                            >
-                                WhatsApp Now
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
+      <div className="mt-4 md:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <Link
+          to="/Register"
+          className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium text-center"
+        >
+          Get Started
+        </Link>
+
+        <a
+          href="https://wa.me/919876543310"
+          className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium text-center"
+        >
+          WhatsApp Now
+        </a>
+      </div>
+    </div>
+  </div>
+
+</section>
 
             {/* ================= OUR SERVICES ================= */}
             <section className="bg-gradient-to-b from-slate-50 to-white py-20">
@@ -73,56 +77,65 @@ export default function Home() {
                     </div>
 
                     {/* SERVICES GRID - 2 ROWS OF 4 */}
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                         {[
                             {
                                 title: "PAN Card",
                                 desc: "Apply, update, or reprint your PAN card easily.",
                                 img: panImg,
-                                slug: "pan",
-                              },
-                              {
+                                btnColor: "bg-blue-900 hover:bg-blue-700",
+                                slug: "pan"
+
+                            },
+                            {
                                 title: "Aadhaar Card",
                                 desc: "New enrollment, updates, and mobile linking.",
                                 img: aadhaarImg,
-                                slug: "aadhaar",
-                              },
-                              {
+                                btnColor: "bg-blue-900 hover:bg-blue-700",
+                                slug: "aadhaar"
+                            },
+                            {
                                 title: "Voter ID",
-                                desc: "Register or correct voter details.",
+                                desc: "Register or correct voter details quickly and easily.",
                                 img: voterImg,
-                                slug: "voter",
-                              },
-                              {
+                                btnColor: "bg-blue-900 hover:bg-blue-700",
+                                slug: "voter"
+                            },
+                            {
                                 title: "Driving License",
-                                desc: "Apply or renew your driving license.",
+                                desc: "DL application, renewal & address change",
                                 img: drivingImg,
+                                btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "driving-license",
-                              },
-                              {
+                            },
+                            {
                                 title: "Passport",
-                                desc: "Apply or renew your passport.",
+                                desc: "New passport & renewal assistance",
                                 img: passImg,
-                                slug: "passport",
-                              },
-                              {
+                                btnColor: "bg-blue-900 hover:bg-blue-700",
+                                slug: "passport"
+                            },
+                            {
                                 title: "Ration Card",
                                 desc: "Apply or update your ration card details.",
                                 img: rationImg,
+                                btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "ration-card",
-                              },
-                              {
+                            },
+                            {
                                 title: "Income Certificate",
-                                desc: "Get income certificate for official purposes.",
+                                desc: "Get income certificate for various purposes",
                                 img: incomeImg,
+                                btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "income-certificate",
-                              },
-                              {
+                            },
+                            {
                                 title: "Birth Certificate",
-                                desc: "Register or correct birth certificate details.",
+                                desc: "Birth certificate registration & corrections",
                                 img: birthImg,
+                                btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "birth-certificate",
-                              },
+                            },
                         ].map((service) => (
                             <div
                                 key={service.title}
@@ -150,7 +163,7 @@ export default function Home() {
                                     </p>
 
                                     {/* APPLY NOW BUTTON */}
-                                    <Link to={service.link} className={`w-full ${service.btnColor} text-white text-sm font-semibold py-2.5 rounded-lg transition-all block text-center`}>
+                                    <Link to={`/apply/${service.slug}`} className={`w-full ${service.btnColor} text-white text-sm font-semibold py-2.5 rounded-lg transition-all block text-center`}>
                                         Apply Now →
                                     </Link>
                                 </div>
@@ -159,7 +172,7 @@ export default function Home() {
                     </div>
 
                     {/* VIEW ALL SERVICES BUTTON */}
-                    <div className="text-center">
+                    <div className="text-center mt-8">
                         <a
                             href="/service"
                             className="inline-flex items-center gap-2 bg-blue-900 hover:bg-slate-800 text-white font-semibold px-8 py-3.5 rounded-lg shadow-lg hover:shadow-xl transition-all"
@@ -175,41 +188,41 @@ export default function Home() {
 
 
             {/* ================= HOW IT WORKS ================= */}
-            <section className="relative py-24 bg-gradient-to-br from-blue-50 via-white to-slate-50 overflow-hidden">
+            <section className="relative  pt-0.1 pb-10 bg-gradient-to-br from-blue-50 via-white to-slate-50 overflow-hidden">
                 {/* Decorative Background Elements */}
                 <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-20"></div>
                 <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-100 rounded-full blur-3xl opacity-20"></div>
                 
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                     {/* Section Heading */}
-                    <div className="text-center mb-16">
-                        <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-4">
+                    <div className="text-center mb-12">
+                        <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-3">
                             Simple Process
                         </span>
-                        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
                             How It Works
                         </h2>
-                        <p className="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
-                            Get your documents processed in just three simple steps. Our streamlined process ensures quick, secure, and hassle-free service delivery for all your documentation needs.
+                        <p className="text-base text-slate-600 max-w-2xl mx-auto">
+                            Get your documents processed in just three simple steps. Our streamlined process ensures quick, secure, and hassle-free service delivery.
                         </p>
                     </div>
 
                     {/* Steps with Connecting Lines */}
                     <div className="relative">
                         {/* Connecting Line (hidden on mobile) */}
-                        <div className="hidden md:block absolute top-32 left-0 right-0 h-1 bg-gradient-to-r from-blue-200 via-green-200 to-yellow-200" style={{width: '85%', margin: '0 auto'}}></div>
+                        <div className="hidden md:block absolute top-28 left-0 right-0 h-1 bg-gradient-to-r from-blue-200 via-green-200 to-yellow-200" style={{width: '85%', margin: '0 auto'}}></div>
                         
-                        <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+                        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
                             {/* Step 1 */}
                             <div className="relative group">
-                                <div className="bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-blue-200">
+                                <div className="bg-white rounded-3xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-blue-200">
                                     {/* Step Number Badge */}
                                     <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg z-10">
                                         1
                                     </div>
                                     
                                     {/* Image Container */}
-                                    <div className="h-48 flex items-center justify-center mb-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6">
+                                    <div className="h-40 flex items-center justify-center mb-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-4">
                                         <img
                                             src={serviceImg}
                                             alt="Choose Service"
@@ -218,14 +231,14 @@ export default function Home() {
                                     </div>
                                     
                                     <div className="text-center">
-                                        <span className="inline-block text-xs font-bold text-blue-600 tracking-wider mb-3">
+                                        <span className="inline-block text-xs font-bold text-blue-600 tracking-wider mb-2">
                                             STEP 01
                                         </span>
-                                        <h3 className="text-xl font-bold text-slate-900 mb-4">
+                                        <h3 className="text-lg font-bold text-slate-900 mb-3">
                                             Choose Your Service
                                         </h3>
-                                        <p className="text-slate-600 leading-relaxed">
-                                            Browse through our comprehensive list of services including PAN Card, Aadhaar, Voter ID, Driving License, Passport, and more. Select the service that matches your requirement and proceed to the next step.
+                                        <p className="text-sm text-slate-600 leading-relaxed">
+                                            Browse through our comprehensive list of services including PAN Card, Aadhaar, Voter ID, Driving License, Passport, and more and proceed to the next step.
                                         </p>
                                     </div>
                                 </div>
@@ -233,14 +246,14 @@ export default function Home() {
 
                             {/* Step 2 */}
                             <div className="relative group">
-                                <div className="bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-green-200">
+                                <div className="bg-white rounded-3xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-green-200">
                                     {/* Step Number Badge */}
                                     <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg z-10">
                                         2
                                     </div>
                                     
                                     {/* Image Container */}
-                                    <div className="h-48 flex items-center justify-center mb-6 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6">
+                                    <div className="h-40 flex items-center justify-center mb-4 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-4">
                                         <img
                                             src={uploadImg}
                                             alt="Upload Documents"
@@ -249,13 +262,13 @@ export default function Home() {
                                     </div>
                                     
                                     <div className="text-center">
-                                        <span className="inline-block text-xs font-bold text-green-600 tracking-wider mb-3">
+                                        <span className="inline-block text-xs font-bold text-green-600 tracking-wider mb-2">
                                             STEP 02
                                         </span>
-                                        <h3 className="text-xl font-bold text-slate-900 mb-4">
+                                        <h3 className="text-lg font-bold text-slate-900 mb-3">
                                             Upload Documents
                                         </h3>
-                                        <p className="text-slate-600 leading-relaxed">
+                                        <p className="text-sm text-slate-600 leading-relaxed">
                                             Securely upload all required documents through our encrypted platform. Our expert team will carefully verify each document for accuracy and completeness before processing your application.
                                         </p>
                                     </div>
@@ -264,14 +277,14 @@ export default function Home() {
 
                             {/* Step 3 */}
                             <div className="relative group">
-                                <div className="bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-yellow-200">
+                                <div className="bg-white rounded-3xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-yellow-200">
                                     {/* Step Number Badge */}
                                     <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-yellow-600 to-yellow-700 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg z-10">
                                         3
                                     </div>
                                     
                                     {/* Image Container */}
-                                    <div className="h-48 flex items-center justify-center mb-6 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl p-6">
+                                    <div className="h-40 flex items-center justify-center mb-4 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl p-4">
                                         <img
                                             src={deliveryImg}
                                             alt="Get Updates"
@@ -280,13 +293,13 @@ export default function Home() {
                                     </div>
                                     
                                     <div className="text-center">
-                                        <span className="inline-block text-xs font-bold text-yellow-600 tracking-wider mb-3">
+                                        <span className="inline-block text-xs font-bold text-yellow-600 tracking-wider mb-2">
                                             STEP 03
                                         </span>
-                                        <h3 className="text-xl font-bold text-slate-900 mb-4">
+                                        <h3 className="text-lg font-bold text-slate-900 mb-3">
                                             Get Update & Delivery
                                         </h3>
-                                        <p className="text-slate-600 leading-relaxed">
+                                        <p className="text-sm text-slate-600 leading-relaxed">
                                             Track your application status in real-time through our portal. Receive instant notifications at every stage. Once processed, get your documents delivered safely to your doorstep or download them digitally.
                                         </p>
                                     </div>
@@ -296,20 +309,27 @@ export default function Home() {
                     </div>
 
                     {/* CTA Section */}
-                    <div className="text-center mt-16">
-                        <p className="text-slate-600 mb-6 text-lg">Ready to get started with your documentation?</p>
-                        <button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-10 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
+                    <div className="text-center mt-10">
+                        <p className="text-slate-600 mb-4 text-base">Ready to get started with your documentation?</p>
+                        <Link to="/service" className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
                             Start Your Application →
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </section>
 
             {/* ================= CONTACT ================= */}
-            <section className="relative py-20 bg-gradient-to-b from-slate-50 to-white">
-                <div className="max-w-7xl mx-auto px-6">
+            <section className="relative py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 overflow-hidden">
+                {/* Decorative Background Elements */}
+                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full blur-3xl opacity-30"></div>
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full blur-3xl opacity-30"></div>
+                
+                <div className="max-w-7xl mx-auto px-6 relative z-10">
                     {/* Title */}
                     <div className="text-center mb-12">
+                        <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-4">
+                            Get In Touch
+                        </span>
                         <h2 className="text-4xl font-bold text-slate-900 mb-3">
                             Contact Us
                         </h2>
@@ -321,9 +341,9 @@ export default function Home() {
                     {/* Cards */}
                     <div className="grid md:grid-cols-2 gap-8">
                         {/* LEFT CARD */}
-                        <div className="relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all p-8 border border-slate-100">
+                        <div className="relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all p-8 border border-slate-200">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-green-600 to-green-700 text-white flex items-center justify-center font-bold shadow-md">
+                                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-green-500 to-green-600 text-white flex items-center justify-center font-bold shadow-lg">
                                     ES
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-900">
@@ -348,8 +368,8 @@ export default function Home() {
                                 </div>
 
                                 <div className="flex items-center gap-3">
-                                    <i className="fa-solid fa-envelope text-blue-900 text-lg"></i>
-                                    <a href="mailto:esuvidha@gmail.com" className="text-slate-700 hover:text-blue-600 transition">
+                                    <i className="fa-solid fa-envelope text-blue-600 text-lg"></i>
+                                    <a href="mailto:esuvidha@gmail.com" className="text-slate-600 hover:text-blue-600 transition">
                                         esuvidha@gmail.com
                                     </a>
                                 </div>
@@ -357,7 +377,7 @@ export default function Home() {
 
                             <a
                                 href="https://wa.me/919876543310"
-                                className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition-all shadow-md"
+                                className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 rounded-xl transition-all shadow-lg"
                             >
                                 <i className="fa-brands fa-whatsapp text-xl"></i>
                                 WhatsApp Chat
@@ -365,9 +385,9 @@ export default function Home() {
                         </div>
 
                         {/* RIGHT CARD */}
-                        <div className="relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all p-8 border border-slate-100">
+                        <div className="relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all p-8 border border-slate-200">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-blue-900 to-blue-700 text-white flex items-center justify-center shadow-md">
+                                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center shadow-lg">
                                     <i className="fa-solid fa-building text-lg"></i>
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-900">
@@ -392,8 +412,8 @@ export default function Home() {
                                 </div>
 
                                 <div className="flex items-center gap-3">
-                                    <i className="fa-solid fa-clock text-blue-900 text-lg"></i>
-                                    <p className="text-slate-700 font-medium">
+                                    <i className="fa-solid fa-clock text-blue-600 text-lg"></i>
+                                    <p className="text-slate-600 font-medium">
                                         Mon - Sat: 9:00 AM - 7:00 PM
                                     </p>
                                 </div>
@@ -408,7 +428,7 @@ export default function Home() {
                                     Call Now
                                 </a>
 
-                                <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-slate-700 hover:bg-slate-800 text-white font-semibold transition shadow-md">
+                                <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-900 to-blue-900 hover:from-blue-600 hover:to-blue-700 text-white font-semibold transition shadow-lg">
                                     Contact Us
                                     <i className="fa-solid fa-arrow-right"></i>
                                 </button>
