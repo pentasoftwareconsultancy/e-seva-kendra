@@ -1,29 +1,41 @@
 import React from "react";
+import img1 from "../assets/About/about-img1.png";
+import img2 from "../assets/About/about-img2.png";
+import img3 from "../assets/About/about-img3.png";
+import img4 from "../assets/About/about-img4.png";
+import top from "../assets/About/top-img.png";
+
 
 export default function AboutusPage() {
   return (
     <div>
 
-      {/* HERO SECTION */}
-      <div
-        className="relative w-full min-h-[420px] md:min-h-[520px] lg:min-h-[500px] bg-cover bg-center text-white flex items-center px-6 md:px-12"
-        style={{
-          backgroundImage: "url('/aboutpage_img/top-img.jpeg')",
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 to-transparent"></div>
+   {/* HERO SECTION */}
+<div
+  className="relative w-full min-h-[420px] md:min-h-[520px] lg:min-h-[500px] bg-cover bg-center text-white flex items-center"
+  style={{
+    backgroundImage: `url(${top})`,
+  }}
+>
+  <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 to-transparent"></div>
 
-        <div className="relative max-w-7xl">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            About Us
-          </h1>
+  <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+    <div className="w-full md:w-1/2 space-y-6 text-white">
+      
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+        About Us
+      </h1>
 
-          <p className="text-lg md:text-xl max-w-xl">
-            Your Trusted Partner for Government &
-            <br /> Legal Services
-          </p>
-        </div>
-      </div>
+      <p className="text-lg md:text-xl">
+        Your Trusted Partner for Government & Legal Services.At E-Suvidha, we are committed to providing fast, reliable, and hassle-free digital services to our customers.
+      </p>
+
+    </div>
+  </div>
+</div>
+
+
+
 
       {/* ABOUT SECTION */}
       <div className="bg-gray-100">
@@ -41,7 +53,7 @@ export default function AboutusPage() {
           </div>
 
           <img
-            src="/aboutpage_img/about-img1.png"
+            src={img1}
             alt="office"
             className="w-full max-w-md mx-auto rounded-xl shadow-md"
           />
@@ -55,10 +67,10 @@ export default function AboutusPage() {
         </h2>
 
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-8 px-6">
-          <FeatureCard title="Trusted Service" desc="Reliable & Secure Solutions" img="/aboutpage_img/about-img2.png" />
-          <FeatureCard title="Fast Processing" desc="Quick & Hassle-Free Procedures" img="/aboutpage_img/about-img1.png" />
-          <FeatureCard title="Affordable Charges" desc="Transparent & Reasonable Fees" img="/aboutpage_img/about-img3.png" />
-          <FeatureCard title="WhatsApp Support" desc="Easy Communication & Quick Response" img="/aboutpage_img/about-img4.png" />
+          <FeatureCard title="Trusted Service" desc="Reliable & Secure Solutions" img={img2} />
+          <FeatureCard title="Fast Processing" desc="Quick & Hassle-Free Procedures" img={img1} />
+          <FeatureCard title="Affordable Charges" desc="Transparent & Reasonable Fees" img={img3} />
+          <FeatureCard title="WhatsApp Support" desc="Easy Communication & Quick Response" img={img4} />
         </div>
       </div>
 
@@ -81,25 +93,6 @@ export default function AboutusPage() {
           <button className="bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800">
             Submit
           </button>
-        </div>
-
-        <div className="mt-6 text-gray-600 space-y-3 text-lg">
-
-          <div className="flex items-center gap-3">
-            <img src="https://raw.githubusercontent.com/tailwindlabs/heroicons/master/optimized/24/outline/phone.svg" className="w-6 h-6" />
-            <span>+91 9084 156368</span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <img src="https://raw.githubusercontent.com/tailwindlabs/heroicons/master/optimized/24/outline/envelope.svg" className="w-6 h-6" />
-            <span>contact@esuvidha.com</span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <img src="https://raw.githubusercontent.com/tailwindlabs/heroicons/master/optimized/24/outline/globe-alt.svg" className="w-6 h-6" />
-            <span>www.esuvidha.com</span>
-          </div>
-
         </div>
       </div>
 
