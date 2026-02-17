@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
-import PANCardServices from "../components/Services/Pan";
-import AadhaarForm from "../components/Services/AadhaarForm";
-import VoterForm from "../components/Services/VoterForm";
+import PANCardServices from "../components/services/Pan";
+import AadhaarForm from "../components/services/AadhaarForm";
+import VoterForm from "../components/services/VoterForm";
 
 function Dynamic_form() {
   const { serviceName } = useParams();
