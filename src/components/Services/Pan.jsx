@@ -25,12 +25,8 @@ function PANCardServices() {
 
 {/* Left Side Blue Gradient Overlay */}
 <div className="absolute inset-0">
-  <div className="h-full w-full md:w-1/2 bg-gradient-to-r from-blue-950/90 via-blue-900/70 to-transparent"></div>
-</div>
-
-
-
-
+  <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/80 to-transparent"></div>
+  </div>
 
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">

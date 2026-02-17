@@ -17,7 +17,9 @@ export default function Aboutus() {
     backgroundImage: `url(${top})`,
   }}
 >
-  <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 to-transparent"></div>
+  <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/80 to-transparent"></div>
+
+  
 
   <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
     <div className="w-full md:w-1/2 space-y-6 text-white">

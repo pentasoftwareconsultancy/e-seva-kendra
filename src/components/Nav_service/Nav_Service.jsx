@@ -129,6 +129,7 @@ return (
         alt="Our Services"
         className="w-full h-full object-cover"
       />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/80 to-transparent"></div>  
 <div className="absolute inset-0 flex items-center">
   <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
     
