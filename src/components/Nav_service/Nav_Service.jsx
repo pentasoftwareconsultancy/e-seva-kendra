@@ -129,18 +129,25 @@ return (
         alt="Our Services"
         className="w-full h-full object-cover"
       />
+<div className="absolute inset-0 flex items-center">
+  <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+    
+    <div className="w-full md:w-1/2 space-y-6 text-white">
+      
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+        Our Services
+      </h1>
 
-      <div className="absolute inset-0 flex items-center">
-        <div className="text-white max-w-xl px-6 md:px-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Our Services
-          </h1>
-          <p className="text-lg md:text-xl max-w-xl">
-            Fast, Reliable & Affordable Document Solutions for All Your
-            Government and Legal Needs
-          </p>
-        </div>
-      </div>
+      <p className="text-lg md:text-xl">
+        Fast, Reliable & Affordable Document Solutions for All Your
+        Government and Legal Needs
+      </p>
+
+    </div>
+
+  </div>
+</div>
+
     </div>
 
     {/* SERVICES GRID */}
