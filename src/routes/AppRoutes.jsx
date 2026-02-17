@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import AboutusPage from "../pages/AboutusPage";
-import ContactPage from "../pages/ContactPage"; 
+import Aboutpage from "../pages/Aboutpage";
+import Contactpage from "../pages/Contactpage"; 
 import React from "react";
 import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
@@ -27,8 +27,8 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/about" element={<AboutusPage />} />
-      <Route path="/contact" element={<ContactPage />} />
+      <Route path="/about" element={<Aboutpage />} />
+      <Route path="/contact" element={<Contactpage />} />
       <Route path="/service" element={<Service_navpage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
