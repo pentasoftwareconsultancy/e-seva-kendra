@@ -5,7 +5,6 @@ import React from "react";
 import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
-import PANCardServices from "../components/Services/Pan";
 import AdminLogin from "../pages/admin/AdminLogin";
 import ProtectedRoute from "../components/common/ProtectedRoute";
 import AdminDashboard from "../pages/admin/AdminDashboard";
@@ -14,7 +13,8 @@ import AdminUsers from "../pages/admin/AdminUsers";
 import AdminPayments from "../pages/admin/AdminPayments";
 import AdminReports from "../pages/admin/AdminReports";
 import AdminSettings from "../pages/admin/AdminSettings";
-import ServicesPage from "../pages/ServicesPage";
+import Service_navpage from "../pages/ServicePage_nav";
+import Dynamic_form from "../pages/dynamic_form";
 
 const AppRoutes = () => {
   return (
@@ -22,11 +22,11 @@ const AppRoutes = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/about" element={<AboutusPage />} />
       <Route path="/contact" element={<ContactPage />} />
-      <Route path="/services" element={<ServicesPage />} />
+      <Route path="/service" element={<Service_navpage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/services/pan" element={<PANCardServices />} />
-      <Route path="/admin" element={<AdminLogin />} />
+      <Route path="/apply/:serviceName" element={<Dynamic_form />} />    
+        <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={
         <ProtectedRoute>
           <AdminDashboard />

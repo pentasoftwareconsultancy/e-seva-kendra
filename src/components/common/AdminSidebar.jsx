@@ -22,7 +22,7 @@ const menuItems = [
   { icon: Settings, label: "Settings", path: "/admin/settings" },
 ];
 
-const AdminSidebar = ({ isOpen, setIsOpen }) => {
+const AdminSidebar = ({ isOpen, setIsOpen, isDark }) => {
   const location = useLocation();
 
   return (
@@ -37,7 +37,7 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-40 w-64  min-h-screen bg-gradient-to-b from-[#2D3A5F] to-[#223054] text-white flex flex-col transition-transform duration-300 overflow-y-auto ${
+        className={`fixed lg:static inset-y-0 left-0 z-40 w-64  min-h-screen ${isDark ? 'bg-gradient-to-b from-gray-800 to-gray-900' : 'bg-gradient-to-b from-[#2D3A5F] to-[#223054]'} text-white flex flex-col transition-transform duration-300 overflow-y-auto ${
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
@@ -51,7 +51,7 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
         </div>
         <button
           onClick={() => setIsOpen(false)}
-          className="lg:hidden p-1 ml-2  bg-gray-500 hover:gray-red-600 rounded">
+          className="lg:hidden p-1 ml-2 bg-red-500 hover:bg-red-600 rounded">
           <X size={20} />
         </button>
       </div>
@@ -83,7 +83,13 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
 
       {/* Logout */}
       <div className="px-4 py-4">
-        <button className="w-full flex items-center justify-center space-x-2 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition text-sm">
+        <button 
+          onClick={() => {
+            localStorage.removeItem('adminAuth');
+            window.location.href = '/admin';
+          }}
+          className="w-full flex items-center justify-center space-x-2 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition text-sm"
+        >
           <LogOut size={18} />
           <span className="font-semibold">Logout</span>
         </button>

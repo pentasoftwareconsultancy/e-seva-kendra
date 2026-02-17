@@ -18,7 +18,7 @@ export default function Header() {
 
           {/* NAV WITH DIVIDERS */}
           <nav className="hidden md:flex items-center text-sm font-medium text-slate-700 ml-auto mr-8">
-            <Link to="/services" className="px-4 hover:text-blue-600">
+            <Link to="/service" className="px-4 hover:text-blue-600">
               Services
             </Link>
 
