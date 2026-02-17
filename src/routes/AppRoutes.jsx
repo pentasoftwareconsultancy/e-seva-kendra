@@ -14,7 +14,7 @@ import AdminPayments from "../pages/admin/AdminPayments";
 import AdminReports from "../pages/admin/AdminReports";
 import AdminSettings from "../pages/admin/AdminSettings";
 import Service_navpage from "../pages/ServicePage_nav";
-import Dynamic_form from "../pages/dynamic_form";
+import Dynamic_form from "../pages/Dynamic_form";
 import AdminMessages from "../pages/admin/AdminMessages";
 
 const AppRoutes = () => {

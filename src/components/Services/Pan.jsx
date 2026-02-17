@@ -16,21 +16,35 @@ function PANCardServices() {
       {/* Hero Section */}
       <section className="relative w-full h-[550px] flex items-center">
         <div className="absolute inset-0">
-          <img src={Panhero} alt="PAN Hero" className="w-full h-full object-cover" />
-        </div>
+  <img 
+    src={Panhero} 
+    alt="PAN Hero" 
+    className="w-full h-full object-cover object-[20%_center]"
+  />
+</div>
 
-        <div className="absolute inset-0 bg-black/40"></div>
+{/* Left Side Blue Gradient Overlay */}
+<div className="absolute inset-0">
+  <div className="h-full w-full md:w-1/2 bg-gradient-to-r from-blue-950/90 via-blue-900/70 to-transparent"></div>
+</div>
+
+
+
+
+
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
           <div className="w-full md:w-1/2 space-y-6 text-white">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
               PAN Card Services
             </h1>
 
             <p className="text-lg md:text-xl text-gray-200 leading-relaxed">
-              We provide fast and reliable assistance for PAN card application and updates.
-              Get your PAN card in a hassle-free manner.
+              We provide fast and reliable assistance for PAN card <br/>
+              application and updates<br/>
+             
             </p>
+            <h6> Get your PAN card in a hassle-free manner.</h6>
 
             <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
               Apply Now
@@ -45,35 +59,59 @@ function PANCardServices() {
           <h2 className="text-3xl md:text-4xl font-bold text-[#0f172a] mb-3">
             Steps to Apply for PAN Card
           </h2>
+           <h6  className="text-lg md:text-xl text-gray-500 leading-relaxed">Follow these simple steps to get your PAN card easily and quickly.</h6>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
 
-          <div className="bg-white rounded-[32px] shadow overflow-hidden">
-            <img src={Pan1} alt="" className="w-full h-52 object-cover" />
-            <div className="p-6">
-              <h3 className="font-bold text-xl mb-2">1. Fill Application</h3>
-              <p className="text-gray-500">Provide required details.</p>
-            </div>
-          </div>
+  {/* Card 1 */}
+  <div className="bg-white rounded-[32px] shadow overflow-hidden">
+    <div className="w-full h-44 flex items-center justify-center bg-gray-50">
+      <img 
+        src={Pan1} 
+        alt="" 
+        className="max-h-full max-w-full object-contain"
+      />
+    </div>
+    <div className="p-4">
+      <h3 className="font-bold text-xl mb-1">1. Fill Application</h3>
+      <p className="text-gray-500">Provide required details.</p>
+    </div>
+  </div>
 
-          <div className="bg-white rounded-[32px] shadow overflow-hidden">
-            <img src={Pan2} alt="" className="w-full h-52 object-cover" />
-            <div className="p-6">
-              <h3 className="font-bold text-xl mb-2">2. Submit Documents</h3>
-              <p className="text-gray-500">Upload identity proof.</p>
-            </div>
-          </div>
+  {/* Card 2 */}
+  <div className="bg-white rounded-[32px] shadow overflow-hidden">
+    <div className="w-full h-44 flex items-center justify-center bg-gray-50">
+      <img 
+        src={Pan2} 
+        alt="" 
+        className="max-h-full max-w-full object-contain"
+      />
+    </div>
+    <div className="p-4">
+      <h3 className="font-bold text-xl mb-1">2. Submit Documents</h3>
+      <p className="text-gray-500">Upload identity proof.</p>
+    </div>
+  </div>
 
-          <div className="bg-white rounded-[32px] shadow overflow-hidden">
-            <img src={Pan3} alt="" className="w-full h-52 object-cover" />
-            <div className="p-6">
-              <h3 className="font-bold text-xl mb-2">3. Receive Card</h3>
-              <p className="text-gray-500">Delivered to your address.</p>
-            </div>
-          </div>
+  {/* Card 3 */}
+  <div className="bg-white rounded-[32px] shadow overflow-hidden">
+    <div className="w-full h-44 flex items-center justify-center bg-gray-50">
+      <img 
+        src={Pan3} 
+        alt="" 
+        className="max-h-full max-w-full object-contain"
+      />
+    </div>
+    <div className="p-4">
+      <h3 className="font-bold text-xl mb-1">3. Receive Card</h3>
+      <p className="text-gray-500">Delivered to your address.</p>
+    </div>
+  </div>
 
-        </div>
+</div>
+
+
       </section>
 
 
@@ -92,7 +130,10 @@ function PANCardServices() {
         Update/Correction PAN Card
       </button>
     </div>
-
+     
+       <p className="text-sm text-gray-600 mb-10">
+      Fill the full form below to provide  your neccessary details for your PAN card application.
+    </p>
     <form className="space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
         
@@ -102,7 +143,7 @@ function PANCardServices() {
             <label className="block text-lg font-bold text-[#0f172a] mb-2">
               Full Name <span className="text-yellow-500 text-sm">★★★★★</span>
             </label>
-            <p className="text-xs text-gray-400 mb-3 italic">Use the form below to provide the necessary details for your PAN card application.</p>
+            .
             <div className="relative">
               <input 
                 type="text" 
