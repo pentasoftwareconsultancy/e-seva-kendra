@@ -7,7 +7,7 @@ import voterImg from "../../assets/services/voter-id.png";
 import drivingImg from "../../assets/services/driving-li.png";
 import passImg from "../../assets/services/pass.png";
 import rationImg from "../../assets/services/ration.png";
-import incomeImg from "../../assets/services/income.webp";
+import incomeImg from "../../assets/services/income.png";
 import birthImg from "../../assets/services/birth-cer.png";
 import serviceImg from "../../assets/Home/service.png";
 import uploadImg from "../../assets/Home/upload.png";
@@ -46,7 +46,7 @@ export default function Home() {
 
       <div className="mt-4 md:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
         <Link
-          to="/services"
+          to="/Register"
           className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium text-center"
         >
           Get Started
@@ -84,56 +84,57 @@ export default function Home() {
                                 desc: "Apply, update, or reprint your PAN card easily.",
                                 img: panImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
-                                link: "/services/pan"
+                                slug: "pan"
+
                             },
                             {
                                 title: "Aadhaar Card",
                                 desc: "New enrollment, updates, and mobile linking.",
                                 img: aadhaarImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
-                                link: "/services/aadhaar"
+                                slug: "aadhaar"
                             },
                             {
                                 title: "Voter ID",
                                 desc: "Register or correct voter details quickly and easily.",
                                 img: voterImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
-                                link: "/services/voter-id"
+                                slug: "voter"
                             },
                             {
                                 title: "Driving License",
                                 desc: "DL application, renewal & address change",
                                 img: drivingImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
-                                link: "/services/driving-license"
+                                slug: "driving-license",
                             },
                             {
                                 title: "Passport",
                                 desc: "New passport & renewal assistance",
                                 img: passImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
-                                link: "/services/passport"
+                                slug: "passport"
                             },
                             {
                                 title: "Ration Card",
                                 desc: "Apply or update your ration card details.",
                                 img: rationImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
-                                link: "/services/ration-card"
+                                slug: "ration-card",
                             },
                             {
                                 title: "Income Certificate",
                                 desc: "Get income certificate for various purposes",
                                 img: incomeImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
-                                link: "/services/income-certificate"
+                                slug: "income-certificate",
                             },
                             {
                                 title: "Birth Certificate",
                                 desc: "Birth certificate registration & corrections",
                                 img: birthImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
-                                link: "/services/birth-certificate"
+                                slug: "birth-certificate",
                             },
                         ].map((service) => (
                             <div
@@ -162,7 +163,7 @@ export default function Home() {
                                     </p>
 
                                     {/* APPLY NOW BUTTON */}
-                                    <Link to={service.link} className={`w-full ${service.btnColor} text-white text-sm font-semibold py-2.5 rounded-lg transition-all block text-center`}>
+                                    <Link to={`/apply/${service.slug}`} className={`w-full ${service.btnColor} text-white text-sm font-semibold py-2.5 rounded-lg transition-all block text-center`}>
                                         Apply Now →
                                     </Link>
                                 </div>
@@ -310,7 +311,7 @@ export default function Home() {
                     {/* CTA Section */}
                     <div className="text-center mt-10">
                         <p className="text-slate-600 mb-4 text-base">Ready to get started with your documentation?</p>
-                        <Link to="/services" className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
+                        <Link to="/service" className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
                             Start Your Application →
                         </Link>
                     </div>

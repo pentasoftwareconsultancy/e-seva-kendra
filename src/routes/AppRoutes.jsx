@@ -5,6 +5,12 @@ import React from "react";
 import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
+
+import Pan from "../components/services/Pan";
+import Aadhar from "../components/services/AadhaarForm";
+import Voterid from "../components/services/VoterForm";
+
+
 import AdminLogin from "../pages/admin/AdminLogin";
 import ProtectedRoute from "../components/common/ProtectedRoute";
 import AdminDashboard from "../pages/admin/AdminDashboard";
@@ -16,6 +22,7 @@ import AdminSettings from "../pages/admin/AdminSettings";
 import Service_navpage from "../pages/ServicePage_nav";
 import Dynamic_form from "../pages/Dynamic_form";
 
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -25,7 +32,10 @@ const AppRoutes = () => {
       <Route path="/service" element={<Service_navpage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/apply/:serviceName" element={<Dynamic_form />} />    
+      <Route path="/apply/:serviceName" element={<Dynamic_form />} />  
+
+      
+
         <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={
         <ProtectedRoute>

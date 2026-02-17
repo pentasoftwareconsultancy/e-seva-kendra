@@ -7,7 +7,7 @@ import voterImg from "../../assets/services/voter-id.png";
 import drivingImg from "../../assets/services/driving-li.png";
 import passImg from "../../assets/services/pass.png";
 import rationImg from "../../assets/services/ration.png";
-import incomeImg from "../../assets/services/income.webp";
+import incomeImg from "../../assets/services/income.png";
 import birthImg from "../../assets/services/birth-cer.png"; 
 import cowinImg from "../../assets/services/cowin.png";
 import shopImg from "../../assets/services/shop.png";
