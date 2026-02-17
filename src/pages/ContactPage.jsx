@@ -1,4 +1,7 @@
 import React from "react";
+import top from "../assets/Contact/top-img.png";
+import bg from "../assets/Contact/body-bg.avif";
+
 
 export default function ContactPage() {
 
@@ -6,33 +9,38 @@ export default function ContactPage() {
 <div
   className="min-h-screen bg-no-repeat bg-center bg-cover"
   style={{
-    backgroundImage: "url('/contact_img/body-bg.avif')",
+    backgroundImage: `url(${bg})`,
   }}
 >
 
-            {/* HERO SECTION */}
-            <div
-                className="w-full px-6 py-16 md:px-16 bg-no-repeat bg-center bg-cover"
-                style={{
-                    backgroundImage: "url('/contact_img/top-img.png')",
-                }}
-            >
-                <div className="max-w-7xl mx-auto">
+          {/* HERO SECTION */}
+<div
+  className="relative w-full min-h-[420px] md:min-h-[520px] lg:min-h-[500px] bg-cover bg-center text-white flex items-center"
+  style={{
+    backgroundImage: `url(${top})`,
+  }}
+>
+  {/* Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 to-transparent"></div>
 
-                    {/* TEXT LEFT SIDE */}
-                    <div className="md:w-1/2">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
-                            Contact Us
-                        </h1>
+  <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+    <div className="w-full md:w-1/2 space-y-6">
 
-                        <p className="text-lg md:text-xl text-white">
-                            Get in touch with Today! <br />
-                            For All Your Government and Legal Needs.
-                        </p>
-                    </div>
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+        Contact Us
+      </h1>
 
-                </div>
-            </div>
+      <p className="text-lg md:text-xl">
+        Get in touch with us today! <br />
+        For all your Government and Legal Needs.
+      </p>
+
+    </div>
+  </div>
+</div>
+
+              
+         
 
             {/* MAIN SECTION */}
             <div className="max-w-7xl mx-auto px-4 md:px-6 py-10 grid grid-cols-1 lg:grid-cols-2 gap-10">
