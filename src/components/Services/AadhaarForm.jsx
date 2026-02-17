@@ -16,14 +16,9 @@ function AadhaarForm() {
           {/* Hero Section */}
           <section className="relative w-full h-[550px] flex items-center">
             <div className="absolute inset-0">
-              <img src={Aadhaarhero} alt="PAN Hero" className="w-full h-full object-cover object-[20%_center]"
-    />
+              <img src={Aadhaarhero} alt="PAN Hero" className="w-full h-full object-cover object-[20%_center]" />
     
             </div>
-    
-    
-    
-    
     
             <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
               <div className="w-full md:w-1/2 space-y-6 text-white">
@@ -38,9 +33,11 @@ function AadhaarForm() {
                 </p>
                 <h6>Get your Aadhar Updated in a hassle-free manner.</h6>
     
-                <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
-                  Apply Now
-                </button>
+                <a href="#Aadhaar-form">
+  <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
+    Apply Now
+  </button>
+</a>
               </div>
             </div>
           </section>
@@ -108,7 +105,8 @@ function AadhaarForm() {
     
     
         {/* Form Section */}
-    <section className="py-5 px-4 md:px-8 bg-[#f8faff]">
+    <section id="Aadhaar-form"
+     className="py-5 px-4 md:px-8 bg-[#f8faff]">
       <div className="max-w-6xl mx-auto bg-white rounded-[40px] shadow-[0_10px_50px_rgba(0,0,0,0.04)] p-8 md:p-12">
         
         <h2 className="text-3xl font-bold text-[#0f172a] mb-8">Aadhaar Update/Enrollment Form</h2>
