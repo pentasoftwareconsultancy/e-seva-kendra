@@ -30,11 +30,11 @@ export default function AboutusPage() {
         <div className="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl font-semibold mb-5">
-              About E-Seva
+              About E-Suvidha
             </h2>
 
             <p className="text-gray-600 leading-relaxed text-lg">
-              At E-Seva, we provide fast, reliable, affordable
+              At E-Suvidha, we provide fast, reliable, affordable
               documentation solutions for all government and
               legal needs.
             </p>
@@ -92,23 +92,21 @@ export default function AboutusPage() {
 
           <div className="flex items-center gap-3">
             <img src="https://raw.githubusercontent.com/tailwindlabs/heroicons/master/optimized/24/outline/envelope.svg" className="w-6 h-6" />
-            <span>contact@eseva.com</span>
+            <span>contact@esuvidha.com</span>
           </div>
 
           <div className="flex items-center gap-3">
             <img src="https://raw.githubusercontent.com/tailwindlabs/heroicons/master/optimized/24/outline/globe-alt.svg" className="w-6 h-6" />
-            <span>www.eseva.com</span>
+            <span>www.esuvidha.com</span>
           </div>
 
         </div>
       </div>
 
-     
     </div>
   );
 }
 
-/* FEATURE CARD */
 function FeatureCard({ img, title, desc }) {
   return (
     <div className="flex items-center gap-5 p-6 bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition">

@@ -1,5 +1,6 @@
 import AdminLayout from '../../components/common/AdminLayout';
 import React, { useState } from 'react';
+import { MessageSquare, User, Eye } from 'lucide-react';
 
 const AdminMessages = () => {
   const [selectedMessage, setSelectedMessage] = useState(null);
@@ -22,7 +23,12 @@ const AdminMessages = () => {
 
   return (
     <AdminLayout>
-      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">Contact Messages</h2>
+      <div className="flex items-center gap-2 mb-4 md:mb-6">
+        <MessageSquare className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
+        <h2 className="text-xl md:text-3xl font-bold text-gray-800">Contact 
+          <span className="text-green-600"> Messages</span>
+        </h2>
+      </div>
 
       {/* Messages Table */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
@@ -44,8 +50,8 @@ const AdminMessages = () => {
                 <tr key={msg.id} className="hover:bg-blue-50/50 transition-colors duration-150">
                   <td className="px-4 md:px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold text-xs">
-                        {msg.name.charAt(0)}
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white">
+                        <User size={16} />
                       </div>
                       <span className="text-sm font-medium text-gray-900">{msg.name}</span>
                     </div>
@@ -62,9 +68,10 @@ const AdminMessages = () => {
                   <td className="px-4 md:px-6 py-4 text-center">
                     <button 
                       onClick={() => setSelectedMessage(msg)}
-                      className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
+                      className="inline-flex items-center gap-1 px-2 py-1.5 md:px-4 md:py-2 bg-green-500 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
                     >
-                      View
+                      <Eye size={12} className="md:w-3.5 md:h-3.5" />
+                      <span className="hidden md:inline">View</span>
                     </button>
                   </td>
                 </tr>

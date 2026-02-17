@@ -10,8 +10,6 @@ export default function ContactPage() {
   }}
 >
 
-
-
             {/* HERO SECTION */}
             <div
                 className="w-full px-6 py-16 md:px-16 bg-no-repeat bg-center bg-cover"
@@ -36,9 +34,6 @@ export default function ContactPage() {
                 </div>
             </div>
 
-
-
-
             {/* MAIN SECTION */}
             <div className="max-w-7xl mx-auto px-4 md:px-6 py-10 grid grid-cols-1 lg:grid-cols-2 gap-10">
 
@@ -60,12 +55,12 @@ export default function ContactPage() {
                         />
 
                         <ContactItem
-                            text="contact@eseva.com"
+                            text="contact@esuvidha.com"
                             icon={<path d="M4 4h16v16H4zM22 6l-10 7L2 6" />}
                         />
 
                         <ContactItem
-                            text="www.eseva.com"
+                            text="www.esuvidha.com"
                             icon={<circle cx="12" cy="12" r="10" />}
                         />
 

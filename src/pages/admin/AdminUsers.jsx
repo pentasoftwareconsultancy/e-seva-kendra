@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import AdminLayout from '../../components/common/AdminLayout';
+import { Users as UsersIcon, User, Eye } from 'lucide-react';
 const users = [
   {
     id: 101,
     name: "Rajesh Kumar",
     email: "rajesh@gmail.com",
+    mobile: "+91 98765 43210",
     role: "User",
-    status: "Active",
     date: "Mar 29, 2024",
     avatar: "https://i.pravatar.cc/40?img=1",
   },
@@ -14,8 +15,8 @@ const users = [
     id: 102,
     name: "Priya Sharma",
     email: "priya@gmail.com",
+    mobile: "+91 98765 43211",
     role: "User",
-    status: "Blocked",
     date: "Mar 28, 2024",
     avatar: "https://i.pravatar.cc/40?img=2",
   },
@@ -23,8 +24,8 @@ const users = [
     id: 103,
     name: "Amit Patil",
     email: "amit@gmail.com",
+    mobile: "+91 98765 43212",
     role: "Admin",
-    status: "Active",
     date: "Mar 28, 2024",
     avatar: "https://i.pravatar.cc/40?img=3",
   },
@@ -38,7 +39,7 @@ const statusStyles = {
 const AdminUsers = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState('All Roles');
-  const [statusFilter, setStatusFilter] = useState('All Status');
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const filteredUsers = users
     .filter(user => 
@@ -46,13 +47,15 @@ const AdminUsers = () => {
       user.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
       user.email.toLowerCase().includes(searchQuery.toLowerCase())
     )
-    .filter(user => roleFilter === 'All Roles' ? true : user.role === roleFilter)
-    .filter(user => statusFilter === 'All Status' ? true : user.status === statusFilter);
+    .filter(user => roleFilter === 'All Roles' ? true : user.role === roleFilter);
 
   return (
     <AdminLayout>
       {/* Page Title */}
-      <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">Users</h1>
+      <div className="flex items-center gap-2 mb-4 md:mb-6">
+        <UsersIcon className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
+        <h1 className="text-xl md:text-2xl font-bold text-gray-800">Users</h1>
+      </div>
 
       {/* Card */}
       <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-lg p-4 md:p-6">
@@ -65,18 +68,6 @@ const AdminUsers = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="flex-1 min-w-[200px] px-3 md:px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
           />
-
-          
-
-          <select 
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 md:px-4 py-2 border rounded-lg text-sm"
-          >
-            <option>All Status</option>
-            <option>Active</option>
-            <option>Blocked</option>
-          </select>
         </div>
 
         {/* Table */}
@@ -87,9 +78,9 @@ const AdminUsers = () => {
                 <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 text-left text-xs">
                   <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider">User</th>
                   <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Email</th>
-                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider hidden md:table-cell">Role</th>
-                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider hidden md:table-cell">Mobile No</th>
                   <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider hidden lg:table-cell">Joined</th>
+                  <th className="px-4 md:px-6 py-4 text-center font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
 
@@ -101,8 +92,8 @@ const AdminUsers = () => {
                   >
                     <td className="px-4 md:px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold text-xs">
-                          {user.name.charAt(0)}
+                        <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
+                          <User size={16} />
                         </div>
                         <span className="font-medium text-gray-900 text-sm">
                           {user.name}
@@ -111,17 +102,18 @@ const AdminUsers = () => {
                     </td>
 
                     <td className="px-4 md:px-6 py-4 text-gray-600 text-sm hidden sm:table-cell">{user.email}</td>
-                    <td className="px-4 md:px-6 py-4 text-gray-700 text-sm hidden md:table-cell">{user.role}</td>
-
-                    <td className="px-4 md:px-6 py-4">
-                      <span
-                        className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${statusStyles[user.status]}`}
-                      >
-                        {user.status}
-                      </span>
-                    </td>
+                    <td className="px-4 md:px-6 py-4 text-gray-700 text-sm hidden md:table-cell">{user.mobile}</td>
 
                     <td className="px-4 md:px-6 py-4 text-gray-500 text-sm hidden lg:table-cell">{user.date}</td>
+                    <td className="px-4 md:px-6 py-4 text-center">
+                      <button 
+                        onClick={() => setSelectedUser(user)}
+                        className="inline-flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
+                      >
+                        <Eye size={15} className="md:w-3.5 md:h-3.5 cursor-pointer" />
+                        <span className="hidden md:inline cursor-pointer">View</span>
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -140,6 +132,29 @@ const AdminUsers = () => {
           </div>
         </div>
       </div>
+
+      {/* User Details Modal */}
+      {selectedUser && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setSelectedUser(null)}>
+          <div className="bg-white rounded-lg p-6 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-xl font-bold mb-4">User Details</h3>
+            <div className="space-y-3">
+              <p><span className="font-semibold">User ID:</span> {selectedUser.id}</p>
+              <p><span className="font-semibold">Name:</span> {selectedUser.name}</p>
+              <p><span className="font-semibold">Email:</span> {selectedUser.email}</p>
+              <p><span className="font-semibold">Mobile:</span> {selectedUser.mobile}</p>
+              <p><span className="font-semibold">Role:</span> {selectedUser.role}</p>
+              <p><span className="font-semibold">Joined:</span> {selectedUser.date}</p>
+            </div>
+            <button 
+              onClick={() => setSelectedUser(null)}
+              className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </AdminLayout>
   );
 };

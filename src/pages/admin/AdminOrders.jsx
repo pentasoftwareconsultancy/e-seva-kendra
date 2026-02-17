@@ -1,5 +1,6 @@
 import AdminLayout from '../../components/common/AdminLayout';
 import React, { useState } from 'react';
+import { User, Eye, ShoppingBag } from 'lucide-react';
 const AdminOrders = () => {
   const [activeTab, setActiveTab] = useState('All Orders');
   const [searchQuery, setSearchQuery] = useState('');
@@ -35,16 +36,19 @@ const AdminOrders = () => {
 
   return (
     <AdminLayout>
-      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">Orders Management</h2>
+      <div className="flex items-center gap-2 mb-4 md:mb-6">
+        <ShoppingBag className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
+        <h2 className="text-xl md:text-3xl font-bold"><span className="text-gray-800">Orders</span> <span className="text-green-600">Management</span></h2>
+      </div>
 
           {/* Tabs */}
-          <div className="flex gap-2 md:gap-4 mb-4 md:mb-6 overflow-x-auto pb-2">
+          <div className="flex gap-2 md:gap-4 mb-4 md:mb-6 overflow-x-auto pb-2 cursor-pointer">
             {['All Orders', 'Pending', 'In Progress', 'Completed', 'Cancelled'].map(tab => (
               <button 
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-3 md:px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap ${
-                  activeTab === tab ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'
+                className={`px-3 md:px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition-all duration-200 ${
+                  activeTab === tab ? 'bg-blue-600 text-white shadow-lg scale-105' : 'bg-white text-gray-700 hover:bg-gray-100 hover:scale-102'
                 }`}
               >
                 {tab}
@@ -59,9 +63,9 @@ const AdminOrders = () => {
               placeholder="Search by order ID or customer name..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue -500"
             />
-            <button className="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium">Filter</button>
+            
           </div>
 
           {/* Order Table */}
@@ -73,7 +77,7 @@ const AdminOrders = () => {
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Order ID</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Customer Name</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Service Type</th>
-                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden md:table-cell">Status</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden md:table-cell">Date</th>
                     <th className="px-4 md:px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
                   </tr>
@@ -84,14 +88,14 @@ const AdminOrders = () => {
                       <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600">#{order.id}</td>
                       <td className="px-4 md:px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold text-xs">
-                            {order.name.charAt(0)}
+                          <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
+                            <User size={16} />
                           </div>
                           <span className="text-sm font-medium text-gray-900">{order.name}</span>
                         </div>
                       </td>
                       <td className="px-4 md:px-6 py-4 text-sm text-gray-600 hidden sm:table-cell">{order.service}</td>
-                      <td className="px-4 md:px-6 py-4">
+                      <td className="px-4 md:px-6 py-4 hidden md:table-cell">
                         <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(order.status)}`}>
                           {order.status}
                         </span>
@@ -100,9 +104,10 @@ const AdminOrders = () => {
                       <td className="px-4 md:px-6 py-4 text-center">
                         <button 
                           onClick={() => setSelectedOrder(order)}
-                          className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
+                          className="inline-flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
                         >
-                          View
+                          <Eye size={15} className="md:w-3.5 md:h-3.5 cursor-pointer" />
+                          <span className="hidden md:inline cursor-pointer">View</span>
                         </button>
                       </td>
                     </tr>
