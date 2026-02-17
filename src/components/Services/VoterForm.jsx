@@ -1,8 +1,8 @@
 import React from 'react'
-import Votehero from "../../assets/Panimg/Votehero.jpeg";
-import Pan1 from "../../assets/Panimg/pan1.png";
-import Pan2 from "../../assets/Panimg/pan2.png";
-import Pan3 from "../../assets/Panimg/pan3.png";
+import Votehero from "../../assets/Servicesimg/Votehero.jpeg";
+import Pan1 from "../../assets/Servicesimg/Pan1.png";
+import Pan2 from "../../assets/Servicesimg/Pan2.png";
+import Pan3 from "../../assets/Servicesimg/Pan3.png";
 
 function VoterForm() {
   return (

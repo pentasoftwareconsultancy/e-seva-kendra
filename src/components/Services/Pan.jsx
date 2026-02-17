@@ -1,10 +1,10 @@
 import React from "react";
 
-// PAN Images
-import Panhero from "../../assets/Panimg/Panhero.png";
-import Pan1 from "../../assets/Panimg/pan1.png";
-import Pan2 from "../../assets/Panimg/pan2.png";
-import Pan3 from "../../assets/Panimg/pan3.png";
+
+import Panhero from "../../assets/Servicesimg/Panhero.png";
+import Pan1 from "../../assets/Servicesimg/Pan1.png";
+import Pan2 from "../../assets/Servicesimg/Pan2.png";
+import Pan3 from "../../assets/Servicesimg/Pan3.png";
 
 /* =====================================
    PAN SERVICE FUNCTION (YOUR FULL UI)
