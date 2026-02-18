@@ -311,7 +311,7 @@ export default function Home() {
                     {/* CTA Section */}
                     <div className="text-center mt-10">
                         <p className="text-slate-600 mb-4 text-base">Ready to get started with your documentation?</p>
-                        <Link to="/service" className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
+                        <Link to="/service" className="inline-flex items-center gap-2 bg-blue-900 hover:bg-slate-800 text-white font-semibold px-8 py-3.5 rounded-lg shadow-lg hover:shadow-xl transition-all">
                             Start Your Application →
                         </Link>
                     </div>
