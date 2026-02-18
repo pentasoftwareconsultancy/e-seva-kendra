@@ -126,7 +126,7 @@ export default function Contact() {
                             className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
                         />
 
-                        <button className="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-lg font-semibold transition">
+                        <button className="w-full bg-slate-700 hover:bg-slate-800 text-white py-2 rounded-lg">
                             Send Message
                         </button>
 

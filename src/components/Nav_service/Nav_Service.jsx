@@ -22,13 +22,13 @@ export default function Nav_Service() {
 const services = [
   {
     title: "PAN Card",
-    desc: "Apply, update, or reprint your PAN card easily.",
+    desc: "Apply, update, or reprint your card .",
     img: panImg,
     slug: "pan",
   },
   {
     title: "Aadhaar Card",
-    desc: "New enrollment, updates, and mobile linking.",
+    desc: "New enrollment, updates.",
     img: aadhaarImg,
     slug: "aadhaar",
   },
