@@ -2,11 +2,11 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
-  ShoppingCart,
+  ShoppingBag,
   Users,
   CreditCard,
   BarChart2,
-  Briefcase,
+  MessageSquare,
   Settings,
   LogOut,
   Menu,
@@ -15,10 +15,11 @@ import {
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/admin/dashboard" },
-  { icon: ShoppingCart, label: "Orders", path: "/admin/orders"},
+  { icon: ShoppingBag, label: "Orders", path: "/admin/orders"},
   { icon: Users, label: "Users", path: "/admin/users" },
   { icon: CreditCard, label: "Payments", path: "/admin/payments" },
   { icon: BarChart2, label: "Reports", path: "/admin/reports" },
+  { icon: MessageSquare, label: "Messages", path: "/admin/messages" },
   { icon: Settings, label: "Settings", path: "/admin/settings" },
 ];
 
@@ -63,15 +64,15 @@ const AdminSidebar = ({ isOpen, setIsOpen, isDark }) => {
             key={item.label}
             to={item.path}
             onClick={() => setIsOpen(false)}
-            className={`flex items-center justify-between px-4 py-2.5 rounded-xl cursor-pointer transition text-sm ${
+            className={`flex items-center justify-between px-4 py-2.5 rounded-xl cursor-pointer transition-all duration-200 text-sm lg:text-lg  ${
               location.pathname === item.path
-                ? "bg-green-500 shadow-lg"
-                : "hover:bg-white/10 text-gray-300"
+                ? "bg-green-500 shadow-lg text-white scale-105 font-bold"
+                : "hover:bg-white/10 text-gray-300 hover:scale-102"
             }`}
           >
             <div className="flex items-center space-x-3">
-              <item.icon size={18} />
-              <span className="font-medium">{item.label}</span>
+              <item.icon size={18} className={location.pathname === item.path ? "text-white" : "text-gray-300"} />
+              <span className={`font-medium ${location.pathname === item.path ? "font-bold" : ""}`}>{item.label}</span>
             </div>
 
             {item.dot && (
@@ -88,7 +89,7 @@ const AdminSidebar = ({ isOpen, setIsOpen, isDark }) => {
             localStorage.removeItem('adminAuth');
             window.location.href = '/admin';
           }}
-          className="w-full flex items-center justify-center space-x-2 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition text-sm"
+          className="w-full flex items-center justify-center space-x-2 py-2.5 rounded-xl bg-white/10 hover:bg-white/10 hover:border border-green-500  transition text-sm"
         >
           <LogOut size={18} />
           <span className="font-semibold">Logout</span>

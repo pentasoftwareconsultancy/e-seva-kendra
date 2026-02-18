@@ -1,10 +1,10 @@
 import React from "react";
 
-// PAN Images
-import Panhero from "../../assets/Panimg/Panhero.png";
-import Pan1 from "../../assets/Panimg/pan1.png";
-import Pan2 from "../../assets/Panimg/pan2.png";
-import Pan3 from "../../assets/Panimg/pan3.png";
+
+import Panhero from "../../assets/Servicesimg/Panhero.png";
+import Pan1 from "../../assets/Servicesimg/Pan1.png";
+import Pan2 from "../../assets/Servicesimg/Pan2.png";
+import Pan3 from "../../assets/Servicesimg/Pan3.png";
 
 /* =====================================
    PAN SERVICE FUNCTION (YOUR FULL UI)
@@ -42,9 +42,12 @@ function PANCardServices() {
             </p>
             <h6> Get your PAN card in a hassle-free manner.</h6>
 
-            <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
-              Apply Now
-            </button>
+           <a href="#pan-form">
+  <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
+    Apply Now
+  </button>
+</a>
+
           </div>
         </div>
       </section>
@@ -112,7 +115,8 @@ function PANCardServices() {
 
 
     {/* Form Section */}
-<section className="py-5 px-4 md:px-8 bg-[#f8faff]">
+<section  id="pan-form"
+     className="py-5 px-4 md:px-8 bg-[#f8faff] scroll-mt-24">
   <div className="max-w-6xl mx-auto bg-white rounded-[40px] shadow-[0_10px_50px_rgba(0,0,0,0.04)] p-8 md:p-12">
     
     <h2 className="text-3xl font-bold text-[#0f172a] mb-8">PAN Card Application Form</h2>

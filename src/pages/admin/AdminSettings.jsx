@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AdminLayout from "../../components/common/AdminLayout";
+import { Settings as SettingsIcon, Save } from 'lucide-react';
 const AdminSettings = () => {
   const [settings, setSettings] = useState({
     email: "admin@rautenterprises.in",
@@ -41,7 +42,12 @@ const AdminSettings = () => {
 
   return (
     <AdminLayout>
-      <h1 className="text-xl md:text-2xl font-bold text-[#1f2a44] mb-4 md:mb-6">Settings</h1>
+      <div className="flex items-center gap-2 mb-4 md:mb-6">
+        <SettingsIcon className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
+        <h1 className="text-xl md:text-3xl font-bold text-[#1f2a44]">Settings
+          <span></span>
+        </h1>
+      </div>
 
       <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 max-w-3xl">
         {/* General Settings */}
@@ -97,8 +103,9 @@ const AdminSettings = () => {
         <div className="mt-6 md:mt-8 text-center">
           <button
             onClick={handleSave}
-            className="px-5 md:px-6 py-2 bg-[#5BA45E] text-white font-semibold rounded-lg shadow hover:bg-[#4e9151] transition text-sm md:text-base"
+            className="inline-flex items-center gap-2 px-5 md:px-6 py-2 bg-[#5BA45E] text-white font-semibold rounded-lg shadow hover:bg-[#4e9151] transition text-sm md:text-base"
           >
+            <Save size={18} />
             Save Changes
           </button>
         </div>
