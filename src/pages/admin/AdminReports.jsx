@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AdminLayout from "../../components/common/AdminLayout";
+import { BarChart2 } from 'lucide-react';
 import {
   LineChart,
   Line,
@@ -81,7 +82,7 @@ const pieData = [
 const COLORS = ["#5BA45E", "#3B82F6", "#F59E0B", "#EF4444", "#8B5CF6", "#EC4899", "#10B981"];
 
 const AdminReports = () => {
-  const [filter, setFilter] = useState("week");
+  const [filter, setFilter] = useState("year");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   React.useEffect(() => {
@@ -110,7 +111,13 @@ const AdminReports = () => {
     <AdminLayout>
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 md:mb-6 gap-3">
-        <h1 className="text-xl md:text-2xl font-bold text-[#1f2a44]">Reports</h1>
+        <div className="flex items-center gap-2">
+          <BarChart2 className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
+          <h1 className="text-xl md:text-3xl font-bold text-[#1f2a44]">Reports
+        
+          </h1>
+          
+        </div>
 
         {/* Filter Buttons */}
         <div className="flex bg-white rounded-xl shadow p-1">
@@ -120,7 +127,7 @@ const AdminReports = () => {
               onClick={() => setFilter(type)}
               className={`px-3 md:px-5 py-2 text-xs md:text-sm font-semibold rounded-lg transition ${
                 filter === type
-                  ? "bg-[#5BA45E] text-white shadow"
+                  ? "bg-green-500 text-white shadow"
                   : "text-gray-600 hover:bg-gray-100"
               }`}
             >
@@ -162,9 +169,9 @@ const AdminReports = () => {
                 <Line
                   type="monotone"
                   dataKey="value"
-                  stroke="#5BA45E"
+                  stroke="#16a34a"
                   strokeWidth={3}
-                  dot={{ r: 5, fill: '#5BA45E' }}
+                  dot={{ r: 5, fill: '#16a34a' }}
                   activeDot={{ r: 7 }}
                 />
               </LineChart>
