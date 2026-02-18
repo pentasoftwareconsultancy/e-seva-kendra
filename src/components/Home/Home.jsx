@@ -16,53 +16,53 @@ import deliveryImg from "../../assets/Home/delivery.png";
 export default function Home() {
     return (
         <>
-           {/* ================= HERO SECTION ================= */}
-<section className="relative h-[400px] sm:h-[480px] md:h-[520px] overflow-hidden">
+            {/* ================= HERO SECTION ================= */}
+            <section className="relative h-[400px] sm:h-[480px] md:h-[520px] overflow-hidden">
 
-  {/* FULL WIDTH IMAGE */}
-  <div className="absolute inset-0">
-    <img
-      src={heroImg}
-      alt="Professional consultation"
-      className="h-full w-full object-cover object-[center_45%]"
-    />
-  </div>
+                {/* FULL WIDTH IMAGE */}
+                <div className="absolute inset-0">
+                    <img
+                        src={heroImg}
+                        alt="Professional consultation"
+                        className="h-full w-full object-cover object-[center_45%]"
+                    />
+                </div>
 
-  {/* LEFT GRADIENT OVERLAY (smooth blend) */}
-  <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/80 to-transparent" />
+                {/* LEFT GRADIENT OVERLAY (smooth blend) */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/80 to-transparent" />
 
-  {/* HERO CONTENT */}
-  <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center px-4 sm:px-6">
-    <div className="max-w-xl text-white">
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
-        Fast & Trusted Document <br className="hidden sm:block" />
-        & Legal Services in Pune
-      </h1>
+                {/* HERO CONTENT */}
+                <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center px-4 sm:px-6">
+                    <div className="max-w-xl text-white">
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
+                            Fast & Trusted Document <br className="hidden sm:block" />
+                            & Legal Services in Pune
+                        </h1>
 
-      <p className="mt-3 md:mt-4 text-sm sm:text-base text-blue-100">
-        Quick, reliable and affordable assistance for PAN Card, Aadhaar,
-        Voter ID, Driving License & all document services.
-      </p>
+                        <p className="mt-3 md:mt-4 text-sm sm:text-base text-blue-100">
+                            Quick, reliable and affordable assistance for PAN Card, Aadhaar,
+                            Voter ID, Driving License & all document services.
+                        </p>
 
-      <div className="mt-4 md:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
-        <Link
-          to="/Register"
-          className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium text-center"
-        >
-          Get Started
-        </Link>
+                        <div className="mt-4 md:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
+                            <Link
+                                to="/Register"
+                                className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium text-center"
+                            >
+                                Get Started
+                            </Link>
 
-        <a
-          href="https://wa.me/919876543310"
-          className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium text-center"
-        >
-          WhatsApp Now
-        </a>
-      </div>
-    </div>
-  </div>
+                            <a
+                                href="https://wa.me/919876543310"
+                                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium text-center"
+                            >
+                                WhatsApp Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-</section>
+            </section>
 
             {/* ================= OUR SERVICES ================= */}
             <section className="bg-gradient-to-b from-slate-50 to-white py-20">
@@ -110,7 +110,7 @@ export default function Home() {
                             },
                             {
                                 title: "Passport",
-                                desc: "New passport & renewal assistance",
+                                desc: "New passport & renewal assistance passport",
                                 img: passImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "passport"
@@ -192,7 +192,7 @@ export default function Home() {
                 {/* Decorative Background Elements */}
                 <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-20"></div>
                 <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-100 rounded-full blur-3xl opacity-20"></div>
-                
+
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                     {/* Section Heading */}
                     <div className="text-center mb-12">
@@ -210,8 +210,8 @@ export default function Home() {
                     {/* Steps with Connecting Lines */}
                     <div className="relative">
                         {/* Connecting Line (hidden on mobile) */}
-                        <div className="hidden md:block absolute top-28 left-0 right-0 h-1 bg-gradient-to-r from-blue-200 via-green-200 to-yellow-200" style={{width: '85%', margin: '0 auto'}}></div>
-                        
+                        <div className="hidden md:block absolute top-28 left-0 right-0 h-1 bg-gradient-to-r from-blue-200 via-green-200 to-yellow-200" style={{ width: '85%', margin: '0 auto' }}></div>
+
                         <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
                             {/* Step 1 */}
                             <div className="relative group">
@@ -220,7 +220,7 @@ export default function Home() {
                                     <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg z-10">
                                         1
                                     </div>
-                                    
+
                                     {/* Image Container */}
                                     <div className="h-40 flex items-center justify-center mb-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-4">
                                         <img
@@ -229,7 +229,7 @@ export default function Home() {
                                             className="h-full w-full object-contain drop-shadow-lg"
                                         />
                                     </div>
-                                    
+
                                     <div className="text-center">
                                         <span className="inline-block text-xs font-bold text-blue-600 tracking-wider mb-2">
                                             STEP 01
@@ -251,7 +251,7 @@ export default function Home() {
                                     <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg z-10">
                                         2
                                     </div>
-                                    
+
                                     {/* Image Container */}
                                     <div className="h-40 flex items-center justify-center mb-4 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-4">
                                         <img
@@ -260,7 +260,7 @@ export default function Home() {
                                             className="h-full w-full object-contain drop-shadow-lg"
                                         />
                                     </div>
-                                    
+
                                     <div className="text-center">
                                         <span className="inline-block text-xs font-bold text-green-600 tracking-wider mb-2">
                                             STEP 02
@@ -282,7 +282,7 @@ export default function Home() {
                                     <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-yellow-600 to-yellow-700 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg z-10">
                                         3
                                     </div>
-                                    
+
                                     {/* Image Container */}
                                     <div className="h-40 flex items-center justify-center mb-4 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl p-4">
                                         <img
@@ -291,7 +291,7 @@ export default function Home() {
                                             className="h-full w-full object-contain drop-shadow-lg"
                                         />
                                     </div>
-                                    
+
                                     <div className="text-center">
                                         <span className="inline-block text-xs font-bold text-yellow-600 tracking-wider mb-2">
                                             STEP 03
@@ -323,7 +323,7 @@ export default function Home() {
                 {/* Decorative Background Elements */}
                 <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full blur-3xl opacity-30"></div>
                 <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full blur-3xl opacity-30"></div>
-                
+
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                     {/* Title */}
                     <div className="text-center mb-12">
@@ -428,10 +428,14 @@ export default function Home() {
                                     Call Now
                                 </a>
 
-                                <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-900 to-blue-900 hover:from-blue-600 hover:to-blue-700 text-white font-semibold transition shadow-lg">
+
+                                <Link
+                                    to="/contact"
+                                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-900 to-blue-900 hover:from-blue-600 hover:to-blue-700 text-white font-semibold transition shadow-lg"
+                                >
                                     Contact Us
-                                    <i className="fa-solid fa-arrow-right"></i>
-                                </button>
+                                </Link>
+
                             </div>
                         </div>
                     </div>

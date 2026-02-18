@@ -7,37 +7,38 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
 
           {/* LOGO */}
-          <div className="flex items-center gap-3 ml-4">
+          <Link to="/" className="flex items-center gap-3 ml-4">
             <div className="h-11 w-11 rounded-full bg-gradient-to-br from-green-600 to-green-700 text-white grid place-items-center font-bold text-lg shadow-md">
               ES
             </div>
             <span className="font-bold text-xl text-slate-800">
               E-Suvidha
             </span>
-          </div>
+          </Link>
+
 
           {/* NAV WITH DIVIDERS */}
           <nav className="hidden md:flex items-center text-sm font-medium text-slate-700 ml-auto mr-8">
-            <Link to="/Home" className="px-4 hover:text-blue-600">
+            <Link to="/" className="px-4 hover:text-blue-600">
               Home
             </Link>
 
-          <div className="h-5 w-px bg-slate-300" />
+            <div className="h-5 w-px bg-slate-300" />
 
             <Link to="/service" className="px-4 hover:text-blue-600">
-               Services
+              Services
             </Link>
 
             <div className="h-5 w-px bg-slate-300" />
 
             <Link to="/about" className="px-4 hover:text-blue-600">
-               About Us
+              About Us
             </Link>
 
             <div className="h-5 w-px bg-slate-300" />
 
             <Link to="/contact" className="px-4 hover:text-blue-600">
-             Contact Us
+              Contact Us
             </Link>
           </nav>
 
