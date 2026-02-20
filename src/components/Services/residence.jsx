@@ -57,11 +57,11 @@ function residence() {
       {/* Document Requirements Section */}
       <section className="bg-white py-16 px-4 md:px-8">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white border-4 border-blue-900 rounded-3xl p-8 md:p-12 shadow-xl">
+          <div className="bg-white border-4 border-green-700 rounded-3xl p-8 md:p-12 shadow-xl">
             <h2 className="text-3xl font-bold text-green-600 text-center mb-2">
               रहिवाशी दाखल्यासाठी लागणारी कागदपत्रे
             </h2>
-            <h3 className="text-2xl font-bold text-green-600 text-center mb-8 border-b-4 border-blue-900 pb-4">
+            <h3 className="text-2xl font-bold text-green-600 text-center mb-8 border-b-4 border-green-700 pb-4">
               Documents Required for Residence Certificate
             </h3>
             
@@ -129,7 +129,8 @@ function residence() {
      className="py-5 px-4 md:px-8 bg-[#f8faff] scroll-mt-24">
   <div className="max-w-6xl mx-auto bg-white rounded-[40px] shadow-[0_10px_50px_rgba(0,0,0,0.04)] p-8 md:p-12">
     
-    <h2 className="text-3xl font-bold text-[#0f172a] mb-8">Residence Certificate Application Form</h2>
+    <h1 className="text-4xl font-bold text-[#0f172a] text-center mb-4">Apply</h1>
+    <h4 className="text-2xl font-bold text-[#0f172a] text-center mb-8">(Residence Certificate Application Form)</h4>
      
     <form className="space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">

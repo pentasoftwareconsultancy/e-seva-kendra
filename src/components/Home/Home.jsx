@@ -80,7 +80,7 @@ export default function Home() {
                     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                         {[
                             {
-                                title: "PAN Card",
+                                title: "PAN Card (पॅन कार्ड)",
                                 desc: "Apply, update, or reprint your PAN card easily.",
                                 img: panImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
@@ -154,7 +154,13 @@ export default function Home() {
                                 <div className="p-5 flex flex-col">
                                     {/* TITLE */}
                                     <h3 className="font-bold text-lg text-slate-800 mb-2">
-                                        {service.title}
+                                        {service.title === "PAN Card (पॅन कार्ड)" ? (
+                                            <>
+                                                PAN Card<br />(पॅन कार्ड)
+                                            </>
+                                        ) : (
+                                            service.title
+                                        )}
                                     </h3>
 
                                     {/* DESCRIPTION */}

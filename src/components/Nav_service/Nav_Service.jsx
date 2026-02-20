@@ -9,7 +9,7 @@ import passImg from "../../assets/services/pass.png";
 import rationImg from "../../assets/services/ration.png";
 import incomeImg from "../../assets/services/income.png";
 import birthImg from "../../assets/services/birth-cer.png"; 
-import cowinImg from "../../assets/services/cowin.png";
+import gazetteImg from "../../assets/services/gazette.png";
 import shopImg from "../../assets/services/shop.png";
 import udyamImg from "../../assets/services/udyam.png";
 import gstImg from "../../assets/services/gst.png";
@@ -21,8 +21,8 @@ export default function Nav_Service() {
   const navigate = useNavigate();
 const services = [
   {
-    title: "PAN Card",
-    desc: "Apply, update, or reprint your card .",
+    title: "PAN Card(पॅन कार्ड)",
+    desc: "Apply, update, or reprint your PAN card easily.",
     img: panImg,
     slug: "pan",
   },
@@ -46,7 +46,7 @@ const services = [
   },
   {
     title: "Passport",
-    desc: "Apply or renew your passport.",
+    desc: "Apply for a new passport, renew an existing one, or update personal details quickly.",
     img: passImg,
     slug: "passport",
   },
@@ -69,10 +69,10 @@ const services = [
     slug: "birth-certificate",
   },
   {
-    title: "Cowin Certificate",
-    desc: "Download your vaccination certificate.",
-    img: cowinImg,
-    slug: "cowin",
+    title: "Gazette Certificate",
+    desc: "Apply for Gazette publication for name change, correction record updates.",
+    img: gazetteImg,
+    slug: "gazette",
   },
   {
     title: "Shop Act",
@@ -169,7 +169,13 @@ return (
 
             <div className="p-5 flex flex-col">
               <h3 className="font-bold text-lg text-slate-800 mb-2">
-                {service.title}
+                {service.title === "PAN Card(पॅन कार्ड)" ? (
+                  <>
+                    PAN Card<br />(पॅन कार्ड)
+                  </>
+                ) : (
+                  service.title
+                )}
               </h3>
 
               <p className="text-sm text-slate-600 mb-4 flex-grow leading-relaxed">

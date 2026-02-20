@@ -54,65 +54,75 @@ function PANCardServices() {
         </div>
       </section>
 
-      {/* Steps Section */}
-      <section className="bg-[#f8faff] py-20 px-4 md:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0f172a] mb-3">
-            Steps to Apply for PAN Card
-          </h2>
-           <h6  className="text-lg md:text-xl text-gray-500 leading-relaxed">Follow these simple steps to get your PAN card easily and quickly.</h6>
+      {/* Document Requirements Section */}
+      <section className="bg-white py-16 px-4 md:px-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white border-4 border-green-700 rounded-3xl p-8 md:p-12 shadow-xl">
+            <h2 className="text-3xl font-bold text-green-600 text-center mb-2">
+              पॅनकार्डसाठी लागणारी कागदपत्रे
+            </h2>
+            <h3 className="text-2xl font-bold text-green-600 text-center mb-8 border-b-4 border-green-600 pb-4">
+              Documents Required for PAN Card
+            </h3>
+            
+            <div className="space-y-4 text-lg">
+              <div className="flex items-start gap-3">
+                <span className="text-green-600 font-bold text-xl">✱</span>
+                <div>
+                  <p className="text-gray-800 font-semibold">आधारकार्ड</p>
+                  <p className="text-gray-600 text-base">Aadhaar Card</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <span className="text-green-600 font-bold text-xl">✱</span>
+                <div>
+                  <p className="text-gray-800 font-semibold">३ पासपोर्ट साईज फोटो</p>
+                  <p className="text-gray-600 text-base">3 Passport Size Photographs</p>
+                </div>
+              </div>
+              
+              <div className="bg-pink-100 p-4 rounded-xl">
+                <h4 className="text-xl font-bold text-pink-600 mb-3">नावात बदल पनकार्डसाठी लागणारी कागदपत्रे</h4>
+                <h5 className="text-lg font-bold text-pink-600 mb-4">Documents Required for Name Change PAN Card</h5>
+                
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold text-xl">✱</span>
+                    <div>
+                      <p className="text-gray-800 font-semibold">आधारकार्ड</p>
+                      <p className="text-gray-600 text-base">Aadhaar Card</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold text-xl">✱</span>
+                    <div>
+                      <p className="text-gray-800 font-semibold">३ पासपोर्ट साईज फोटो</p>
+                      <p className="text-gray-600 text-base">3 Passport Size Photographs</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold text-xl">✱</span>
+                    <div>
+                      <p className="text-gray-800 font-semibold">लग्नपत्रिका</p>
+                      <p className="text-gray-600 text-base">Marriage Certificate</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold text-xl">✱</span>
+                    <div>
+                      <p className="text-gray-800 font-semibold">आधीच्या नावाचे जुने पॅनकार्ड</p>
+                      <p className="text-gray-600 text-base">Old PAN Card with Previous Name</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-
-  {/* Card 1 */}
-  <div className="bg-white rounded-[32px] shadow overflow-hidden">
-    <div className="w-full h-44 flex items-center justify-center bg-gray-50">
-      <img 
-        src={Pan1} 
-        alt="" 
-        className="max-h-full max-w-full object-contain"
-      />
-    </div>
-    <div className="p-4">
-      <h3 className="font-bold text-xl mb-1">1. Fill Application</h3>
-      <p className="text-gray-500">Provide required details.</p>
-    </div>
-  </div>
-
-  {/* Card 2 */}
-  <div className="bg-white rounded-[32px] shadow overflow-hidden">
-    <div className="w-full h-44 flex items-center justify-center bg-gray-50">
-      <img 
-        src={Pan2} 
-        alt="" 
-        className="max-h-full max-w-full object-contain"
-      />
-    </div>
-    <div className="p-4">
-      <h3 className="font-bold text-xl mb-1">2. Submit Documents</h3>
-      <p className="text-gray-500">Upload identity proof.</p>
-    </div>
-  </div>
-
-  {/* Card 3 */}
-  <div className="bg-white rounded-[32px] shadow overflow-hidden">
-    <div className="w-full h-44 flex items-center justify-center bg-gray-50">
-      <img 
-        src={Pan3} 
-        alt="" 
-        className="max-h-full max-w-full object-contain"
-      />
-    </div>
-    <div className="p-4">
-      <h3 className="font-bold text-xl mb-1">3. Receive Card</h3>
-      <p className="text-gray-500">Delivered to your address.</p>
-    </div>
-  </div>
-
-</div>
-
-
       </section>
 
 
