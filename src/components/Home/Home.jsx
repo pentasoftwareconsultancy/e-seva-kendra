@@ -4,7 +4,7 @@ import heroImg from "../../assets/Home/hero.png";
 import panImg from "../../assets/services/pan-img.jpg";
 import aadhaarImg from "../../assets/services/adhar_img.jpg";
 import voterImg from "../../assets/services/voter-id.png";
-import drivingImg from "../../assets/services/driving-li.png";
+import residence from "../../assets/services/rahivashi.jpg";
 import passImg from "../../assets/services/pass.png";
 import rationImg from "../../assets/services/ration.png";
 import incomeImg from "../../assets/services/income.png";
@@ -102,11 +102,11 @@ export default function Home() {
                                 slug: "voter"
                             },
                             {
-                                title: "Driving License",
-                                desc: "DL application, renewal & address change",
-                                img: drivingImg,
-                                btnColor: "bg-blue-900 hover:bg-blue-700",
-                                slug: "driving-license",
+                                   title: "Residence Certificate (रहिवासी दाखला)",
+                                   desc: "Apply for a domicile/residence certificate ",
+                                   img: residence,
+                                   btnColor: "bg-blue-900 hover:bg-blue-700",
+                                   slug: "residence"
                             },
                             {
                                 title: "Passport",

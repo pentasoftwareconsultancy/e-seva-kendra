@@ -4,7 +4,7 @@ import panImg from "../../assets/services/pan-img.jpg";
 import aadhaarImg from "../../assets/services/adhar_img.jpg";
 import bannerImg from "../../assets/services/services-banner.png";
 import voterImg from "../../assets/services/voter-id.png";
-import drivingImg from "../../assets/services/driving-li.png";
+import Rahivashi from "../../assets/services/rahivashi.jpg";
 import passImg from "../../assets/services/pass.png";
 import rationImg from "../../assets/services/ration.png";
 import incomeImg from "../../assets/services/income.png";
@@ -39,10 +39,10 @@ const services = [
     slug: "voter",
   },
   {
-    title: "Driving License",
-    desc: "Apply or renew your driving license.",
-    img: drivingImg,
-    slug: "driving-license",
+    title: "Residence Certificate (रहिवासी दाखला)",
+    desc: "Apply for a domicile/residence certificate ",
+    img: Rahivashi,
+    slug: "residence",
   },
   {
     title: "Passport",
