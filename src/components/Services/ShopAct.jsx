@@ -9,16 +9,14 @@ import Pan3 from "../../assets/Servicesimg/Pan3.png";
 /* =====================================
    PAN SERVICE FUNCTION (YOUR FULL UI)
 ===================================== */
-function residence() {
+function ShopAct() {
   const [activeTab, setActiveTab] = useState('new');
   
   const [files, setFiles] = useState({
-    rationCard: null,
-    lightBill: null,
-    consentLetter: null,
-    idProof: null,
-    photo: null,
-    schoolCert: null,
+    aadhaar: null,
+    photos: null,
+    marriageCert: null,
+    oldPan: null,
   });
 
   const handleFileChange = (e, field) => {
@@ -54,17 +52,17 @@ function residence() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
           <div className="w-full md:w-1/2 space-y-6 text-white">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Residence Certificate Services
+              Shop Act License Services
             </h1>
 
             <p className="text-lg md:text-xl text-gray-200 leading-relaxed">
-              We provide fast and reliable assistance for Residence Certificate <br/>
-              application and updates<br/>
+              We provide fast and reliable assistance for Shop Act License <br/>
+              application and registration<br/>
              
             </p>
-            <h6> Get your Residence Certificate in a hassle-free manner.</h6>
+            <h6> Get your Shop Act License in a hassle-free manner.</h6>
 
-           <a href="#pan-form">
+           <a href="#shopact-form">
   <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
     Apply Now
   </button>
@@ -79,43 +77,50 @@ function residence() {
         <div className="max-w-4xl mx-auto">
           <div className="bg-white border-4 border-green-700 rounded-3xl p-8 md:p-12 shadow-xl">
             <h2 className="text-3xl font-bold text-green-600 text-center mb-2">
-              रहिवाशी दाखल्यासाठी लागणारी कागदपत्रे
+              दुकान नोंदणी लायसन्स काढण्यासाठी लागणारी कागदपत्रे
             </h2>
-            <h3 className="text-2xl font-bold text-green-600 text-center mb-8 border-b-4 border-green-700 pb-4">
-              Documents Required for Residence Certificate
+            <h3 className="text-2xl font-bold text-green-600 text-center mb-8 border-b-4 border-green-600 pb-4">
+              Documents Required for Shop Act License
             </h3>
             
             <div className="space-y-4 text-lg">
               <div className="flex items-start gap-3">
                 <span className="text-green-600 font-bold text-xl">✱</span>
                 <div>
-                  <p className="text-gray-800 font-semibold">रेशनकार्ड</p>
-                  <p className="text-gray-600 text-base">Ration Card</p>
+                  <p className="text-gray-800 font-semibold">पॅनकार्ड</p>
+                  <p className="text-gray-600 text-base">PAN Card</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3">
                 <span className="text-green-600 font-bold text-xl">✱</span>
                 <div>
-                  <p className="text-gray-800 font-semibold">१५ वर्षापूर्वीचे १ लाईट बिल व चालू वर्षाचे १ लाईट बिल</p>
-                  <p className="text-gray-600 text-base">1 Light Bill older than 15 years and 1 Recent Light Bill</p>
+                  <p className="text-gray-800 font-semibold">आधारकार्ड</p>
+                  <p className="text-gray-600 text-base">Aadhaar Card</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3">
                 <span className="text-green-600 font-bold text-xl">✱</span>
                 <div>
-                  <p className="text-gray-800 font-semibold">स्वतःचे लाईटबील नसल्यास घरमालकाचे लाईटबील व समंतीपत्र</p>
-                  <p className="text-gray-600 text-base">If Light Bill not in your name: Owner's Light Bill and Consent Letter</p>
+                  <p className="text-gray-800 font-semibold">बँक पासबुक</p>
+                  <p className="text-gray-600 text-base">Bank Passbook</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3">
                 <span className="text-green-600 font-bold text-xl">✱</span>
                 <div>
-                  <p className="text-gray-800 font-semibold">आधारकार्ड / पॅनकार्ड / मतदान कार्ड</p>
-                  <p className="text-gray-600 text-base">Aadhaar Card / PAN Card / Voter ID</p>
-                  <p className="text-gray-600 text-sm">(आपको १ कागदपत्रे, वडील व अर्जदार) - (Any 1 document of Parents and Applicant)</p>
+                  <p className="text-gray-800 font-semibold">ई-मेल आय.डी. / मोबाईल नंबर</p>
+                  <p className="text-gray-600 text-base">Email ID / Mobile Number</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <span className="text-green-600 font-bold text-xl">✱</span>
+                <div>
+                  <p className="text-gray-800 font-semibold">लाईटबिल</p>
+                  <p className="text-gray-600 text-base">Light Bill</p>
                 </div>
               </div>
               
@@ -126,33 +131,23 @@ function residence() {
                   <p className="text-gray-600 text-base">1 Passport Size Photograph</p>
                 </div>
               </div>
-              
-              <div className="flex items-start gap-3">
-                <span className="text-green-600 font-bold text-xl">✱</span>
-                <div>
-                  <p className="text-gray-800 font-semibold">शाळा सोडल्याचा दाखला (वडिलांचा व स्वतःचा)</p>
-                  <p className="text-gray-600 text-base">School Leaving Certificate (of Parents and Applicant)</p>
-                </div>
-              </div>
-              
-             
             </div>
-            
-           
           </div>
         </div>
       </section>
 
 
     {/* Form Section */}
-<section id="pan-form" className="py-10 px-4 md:px-8 bg-[#f8faff] scroll-mt-24">
+<section id="shopact-form" className="py-10 px-4 md:px-8 bg-[#f8faff]">
   <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow p-8 md:p-12 mb-20">
-    
-    <h2 className="text-3xl font-bold mb-6">Residence Certificate Application Form</h2>
+
+    <h2 className="text-3xl font-bold mb-6">Shop Act License Application Form</h2>
 
     <form className="space-y-8">
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
+
+        {/* Name */}
         <div>
           <label className="block font-bold mb-2">Full Name (पूर्ण नाव)</label>
           <input
@@ -162,6 +157,7 @@ function residence() {
           />
         </div>
 
+        {/* Mobile */}
         <div>
           <label className="block font-bold mb-2">Mobile Number (मोबाईल क्रमांक)</label>
           <input
@@ -171,12 +167,50 @@ function residence() {
           />
         </div>
 
-        <UploadBox label="Ration Card (रेशन कार्ड)" fileData={files.rationCard} onChange={(e) => handleFileChange(e, "rationCard")} />
-        <UploadBox label="Light Bill (लाइट बिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
-        <UploadBox label="Consent Letter (समंतीपत्र)" fileData={files.consentLetter} onChange={(e) => handleFileChange(e, "consentLetter")} />
-        <UploadBox label="Aadhaar / PAN / Voter ID (आधार / पॅन / मतदान कार्ड)" fileData={files.idProof} onChange={(e) => handleFileChange(e, "idProof")} />
-        <UploadBox label="Passport Size Photograph (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
-        <UploadBox label="School Leaving Certificate (शाळा सोडल्याचा दाखला)" fileData={files.schoolCert} onChange={(e) => handleFileChange(e, "schoolCert")} />
+        {/* Email */}
+        <div>
+          <label className="block font-bold mb-2">Email ID (ई-मेल आय.डी.)</label>
+          <input
+            type="email"
+            placeholder="Enter Email ID"
+            className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
+          />
+        </div>
+
+        {/* PAN Card */}
+        <UploadBox
+          label="PAN Card (पॅनकार्ड)"
+          fileData={files.pan}
+          onChange={(e) => handleFileChange(e, "pan")}
+        />
+
+        {/* Aadhaar Card */}
+        <UploadBox
+          label="Aadhaar Card (आधारकार्ड)"
+          fileData={files.aadhaar}
+          onChange={(e) => handleFileChange(e, "aadhaar")}
+        />
+
+        {/* Bank Passbook */}
+        <UploadBox
+          label="Bank Passbook (बँक पासबुक)"
+          fileData={files.bankPassbook}
+          onChange={(e) => handleFileChange(e, "bankPassbook")}
+        />
+
+        {/* Light Bill */}
+        <UploadBox
+          label="Light Bill (लाईटबिल)"
+          fileData={files.lightBill}
+          onChange={(e) => handleFileChange(e, "lightBill")}
+        />
+
+        {/* Passport Photo */}
+        <UploadBox
+          label="1 Passport Size Photograph (१ पासपोर्ट साईज फोटो)"
+          fileData={files.photo}
+          onChange={(e) => handleFileChange(e, "photo")}
+        />
 
       </div>
 
@@ -188,6 +222,7 @@ function residence() {
           Submit Application
         </button>
       </div>
+
     </form>
   </div>
 </section>
@@ -195,8 +230,10 @@ function residence() {
   ); 
 };
 
-export default residence;
+export default ShopAct;
 
+
+/* Reusable Upload Component */
 function UploadBox({ label, fileData, onChange }) {
   return (
     <div className="bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200">
@@ -204,9 +241,15 @@ function UploadBox({ label, fileData, onChange }) {
         <span className="font-semibold">{label}</span>
         <label className="bg-[#f07e1b] text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all">
           Upload
-          <input type="file" accept="image/*,.pdf" className="hidden" onChange={onChange} />
+          <input
+            type="file"
+            accept="image/*,.pdf"
+            className="hidden"
+            onChange={onChange}
+          />
         </label>
       </div>
+
       {fileData && (
         <p
           className="text-blue-600 text-sm mt-2 cursor-pointer hover:text-blue-800"

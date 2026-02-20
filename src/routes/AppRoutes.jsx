@@ -6,9 +6,6 @@ import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 
-import Pan from "../components/services/Pan";
-import Aadhar from "../components/services/AadhaarForm";
-import Voterid from "../components/services/VoterForm";
 
 
 
