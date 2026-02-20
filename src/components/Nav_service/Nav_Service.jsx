@@ -12,10 +12,11 @@ import birthImg from "../../assets/services/birth-cer.png";
 import gazetteImg from "../../assets/services/gazette.png";
 import shopImg from "../../assets/services/shop.png";
 import udyamImg from "../../assets/services/udyam.png";
-import gstImg from "../../assets/services/gst.png";
+import domicileImg from "../../assets/services/domicile.png";
 import foodImg from "../../assets/services/food.png";
 import notaryImg from "../../assets/services/notary.png";
 import downloadImg from "../../assets/services/download.png"; 
+import noncremenalImg from "../../assets/services/noncremenal.png";
 
 export default function Nav_Service() {
   const navigate = useNavigate();
@@ -87,10 +88,10 @@ const services = [
     slug: "udyam",
   },
   {
-    title: "GST Registration",
-    desc: "Apply and manage GST registration.",
-    img: gstImg,
-    slug: "gst",
+    title: "Domicile Certificate (निवास प्रमाणपत्र)",
+    desc: "Apply for a Domicile Certificate.",
+    img: domicileImg,
+    slug: "domicile",
   },
   {
     title: "Food Registration",
@@ -105,10 +106,10 @@ const services = [
     slug: "notary",
   },
   {
-    title: "Gap Certificate",
-    desc: "Get gap certificate for education or job.",
-    img: voterImg,
-    slug: "gap-certificate",
+    title: "Non-Cremenal Certificate",
+    desc: "Get non-cremenal certificate for education or job.",
+    img: noncremenalImg,
+    slug: "Non-Cremenal",
   },
   {
     title: "7/12 Download",
