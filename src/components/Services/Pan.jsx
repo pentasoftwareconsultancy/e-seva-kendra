@@ -12,6 +12,24 @@ import Pan3 from "../../assets/Servicesimg/Pan3.png";
 function PANCardServices() {
   const [activeTab, setActiveTab] = useState('new');
   
+  const [files, setFiles] = useState({
+    aadhaar: null,
+    photos: null,
+    marriageCert: null,
+    oldPan: null,
+  });
+
+  const handleFileChange = (e, field) => {
+    const file = e.target.files[0];
+    if (file) {
+      const fileURL = URL.createObjectURL(file);
+      setFiles((prev) => ({
+        ...prev,
+        [field]: { file, url: fileURL },
+      }));
+    }
+  };
+  
   return (
     <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
 
@@ -127,137 +145,104 @@ function PANCardServices() {
 
 
     {/* Form Section */}
-<section  id="pan-form"
-     className="py-5 px-4 md:px-8 bg-[#f8faff] scroll-mt-24">
-  <div className="max-w-6xl mx-auto bg-white rounded-[40px] shadow-[0_10px_50px_rgba(0,0,0,0.04)] p-8 md:p-12">
-    
-    <h2 className="text-3xl font-bold text-[#0f172a] mb-8">PAN Card Application Form</h2>
-    
-    {/* Tabbed Navigation */}
-    <div className="flex bg-[#f1f5f9] p-1.5 rounded-2xl w-fit mb-10">
-      <button 
+<section id="pan-form" className="py-10 px-4 md:px-8 bg-[#f8faff]">
+  <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow p-8 md:p-12 mb-20">
+
+    <h2 className="text-3xl font-bold mb-6">PAN Card Application Form</h2>
+
+    {/* Tab Buttons */}
+    <div className="flex gap-4 mb-8">
+      <button
+        type="button"
         onClick={() => setActiveTab('new')}
-        className={`px-8 py-3 rounded-xl font-semibold shadow-md transition-all ${
-          activeTab === 'new' ? 'bg-[#1e40af] text-white' : 'text-gray-500 hover:text-[#1e40af]'
+        className={`px-8 py-3 rounded-xl font-semibold transition-all ${
+          activeTab === 'new'
+            ? 'bg-[#1e40af] text-white shadow-md'
+            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
         }`}
       >
-        Apply for a New PAN Card
+        New PAN Card
       </button>
-      <button 
+      <button
+        type="button"
         onClick={() => setActiveTab('update')}
         className={`px-8 py-3 rounded-xl font-semibold transition-all ${
-          activeTab === 'update' ? 'bg-[#1e40af] text-white shadow-md' : 'text-gray-500 hover:text-[#1e40af]'
+          activeTab === 'update'
+            ? 'bg-[#1e40af] text-white shadow-md'
+            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
         }`}
       >
-        Update/Correction PAN Card
+        Update/Correction
       </button>
     </div>
-     
-       <p className="text-sm text-gray-600 mb-10">
-      Fill the full form below to provide  your neccessary details for your PAN card application.
-    </p>
+
     <form className="space-y-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
-        
-        {/* Left Column */}
-        <div className="space-y-6">
-          <div>
-            <label className="block text-lg font-bold text-[#0f172a] mb-2">
-              Full Name (पूर्ण नाव) <span className="text-yellow-500 text-sm">★★★★★</span>
-            </label>
-            <div className="relative">
-              <input 
-                type="text" 
-                placeholder="Full Name" 
-                className="w-full bg-[#f8faff] border-none p-3 rounded-xl outline-none ring-1 ring-gray-100 focus:ring-2 focus:ring-[#1e40af]/20 transition-all shadow-sm pl-12 h-[52px]" 
-              />
-              <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 fill-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M144 128a80 80 0 1 1 160 0 80 80 0 1 1 -160 0zm208 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0zM48 480c0-70.7 57.3-128 128-128l96 0c70.7 0 128 57.3 128 128l0 8c0 13.3 10.7 24 24 24s24-10.7 24-24l0-8c0-97.2-78.8-176-176-176l-96 0C78.8 304 0 382.8 0 480l0 8c0 13.3 10.7 24 24 24s24-10.7 24-24l0-8z"/></svg>
-            </div>
-          </div>
 
-          <div>
-            <label className="block text-lg font-bold text-[#0f172a] mb-2">Mobile Number (मोबाईल क्रमांक)</label>
-            <div className="flex gap-3">
-              <div className="relative">
-                <select className="appearance-none bg-[#f8faff] pl-4 pr-10 py-3 rounded-xl ring-1 ring-gray-100 text-gray-600 font-medium outline-none cursor-pointer focus:ring-2 focus:ring-[#1e40af]/20 h-[52px]">
-                  <option value="+91">+91</option>
-            
-                </select>
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-gray-400 pointer-events-none"></span>
-              </div>
-              <input 
-                type="text" 
-                placeholder="Mobile Number" 
-                className="w-full bg-[#f8faff] border-none p-3 rounded-xl outline-none ring-1 ring-gray-100 focus:ring-2 focus:ring-[#1e40af]/20 shadow-sm h-[52px]" 
-              />
-            </div>
-          </div>
-            
-          {activeTab === 'update' && (
-            <div className="flex items-center justify-between bg-[#f8faff] p-3 pl-5 rounded-xl ring-1 ring-gray-100">
-              <div className="flex items-center gap-3">
-                <svg className="w-4 h-4 fill-[#f59e0b]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM80 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm16 96H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm0 32v64H288V256H96zM240 416h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H240c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg>
-              <span className="font-semibold text-gray-600">Marriage Certificate (विवाह प्रमाणपत्र)</span>
-              </div>
-              <label className="bg-[#f07e1b] text-white px-6 py-2.5 rounded-lg font-bold shadow-sm hover:bg-[#d4ac5b] transition-all cursor-pointer">
-                Upload File
-                <input type="file" className="hidden" accept="image/*,.pdf" />
-              </label>
-            </div>
-          )}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
+        {/* Name */}
+        <div>
+          <label className="block font-bold mb-2">Full Name (पूर्ण नाव)</label>
+          <input
+            type="text"
+            placeholder="Enter Full Name"
+            className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
+          />
         </div>
 
-        {/* Right Column - Document Upload */}
-        <div className="space-y-6">
-          <h3 className="text-xl font-bold text-[#0f172a] mb-2">Upload Required Documents</h3>
-          
-          <div className="flex items-center justify-between bg-[#f8faff] p-3 pl-5 rounded-xl ring-1 ring-gray-100 min-h-[52px]">
-            <div className="flex items-center gap-3">
-              <svg className="w-4 h-4 fill-[#10b981]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M144 128a80 80 0 1 1 160 0 80 80 0 1 1 -160 0zm208 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0zM48 480c0-70.7 57.3-128 128-128l96 0c70.7 0 128 57.3 128 128l0 8c0 13.3 10.7 24 24 24s24-10.7 24-24l0-8c0-97.2-78.8-176-176-176l-96 0C78.8 304 0 382.8 0 480l0 8c0 13.3 10.7 24 24 24s24-10.7 24-24l0-8z"/></svg>
-              <span className="font-semibold text-gray-600">Aadhaar Card (आधार कार्ड)</span>
-            </div>
-            <label className="bg-[#f07e1b] text-white px-6 py-2.5 rounded-lg font-bold shadow-sm hover:bg-[#d4ac5b] transition-all cursor-pointer">
-              Upload File
-              <input type="file" className="hidden" accept="image/*,.pdf" />
-            </label>
-          </div>
-          
-          <div className="flex items-center justify-between bg-[#f8faff] p-3 pl-5 rounded-xl ring-1 ring-gray-100 min-h-[52px]">
-            <div className="flex items-center gap-3">
-              <svg className="w-4 h-4 fill-[#3b82f6]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg>
-              <span className="font-semibold text-gray-600">2 Passport  Photographs(२ पासपोर्ट फोटो) </span>
-            </div>
-            <label className="bg-[#f07e1b] text-white px-6 py-2.5 rounded-lg font-bold shadow-sm hover:bg-[#d4ac5b] transition-all cursor-pointer">
-              Upload Files
-              <input type="file" className="hidden" accept="image/*" multiple />
-            </label>
-          </div>
-
-          {activeTab === 'update' && (
-            <>
-              
-              <div className="flex items-center justify-between bg-[#f8faff] p-3 pl-5 rounded-xl ring-1 ring-gray-100">
-                <div className="flex items-center gap-3">
-                  <svg className="w-4 h-4 fill-[#ef4444]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M64 32C28.7 32 0 60.7 0 96v32H576V96c0-35.3-28.7-64-64-64H64zM576 224H0V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V224zM112 352h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm112 16c0-8.8 7.2-16 16-16H368c8.8 0 16 7.2 16 16s-7.2 16-16 16H240c-8.8 0-16-7.2-16-16z"/></svg>
-                  <span className="font-semibold text-gray-600">Old PAN Card (जुने पॅन कार्ड)</span>
-                </div>
-                <label className="bg-[#f07e1b] text-white px-6 py-2.5 rounded-lg font-bold shadow-sm hover:bg-[#d4ac5b] transition-all cursor-pointer">
-                  Upload File
-                  <input type="file" className="hidden" accept="image/*,.pdf" />
-                </label>
-              </div>
-            </>
-          )}
+        {/* Mobile */}
+        <div>
+          <label className="block font-bold mb-2">Mobile Number  (मोबाईल क्रमांक)</label>
+          <input
+            type="text"
+            placeholder="Enter Mobile Number"
+            className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
+          />
         </div>
+
+        {/* Aadhaar Card */}
+        <UploadBox
+          label="Aadhaar Card (आधार कार्ड)"
+          fileData={files.aadhaar}
+          onChange={(e) => handleFileChange(e, "aadhaar")}
+        />
+
+        {/* Passport Photos */}
+        <UploadBox
+          label="2 Passport Photos (२ पासपोर्ट फोटो)"
+          fileData={files.photos}
+          onChange={(e) => handleFileChange(e, "photos")}
+        />
+
+        {/* Marriage Certificate - Only for Update */}
+        {activeTab === 'update' && (
+          <UploadBox
+            label="Marriage Certificate (विवाह प्रमाणपत्र)"
+            fileData={files.marriageCert}
+            onChange={(e) => handleFileChange(e, "marriageCert")}
+          />
+        )}
+
+        {/* Old PAN Card - Only for Update */}
+        {activeTab === 'update' && (
+          <UploadBox
+            label="Old PAN Card (जुने पॅन कार्ड)"
+            fileData={files.oldPan}
+            onChange={(e) => handleFileChange(e, "oldPan")}
+          />
+        )}
+
       </div>
 
-      <div className="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-xs text-gray-400">Note: Please ensure all details are accurate. Additional fees may apply for correction or updates.</p>
-        <button type="submit" className="bg-[#f07e1b] text-white px-12 py-4 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all transform hover:-translate-y-1">
+      <div className="pt-6 flex justify-end">
+        <button
+          type="submit"
+          className="bg-[#f07e1b] text-white px-12 py-4 rounded-xl font-bold text-lg hover:bg-[#d4ac5b] transition-all"
+        >
           Submit Application
         </button>
       </div>
+
     </form>
   </div>
 </section>
@@ -266,3 +251,33 @@ function PANCardServices() {
 };
 
 export default PANCardServices;
+
+
+/* Reusable Upload Component */
+function UploadBox({ label, fileData, onChange }) {
+  return (
+    <div className="bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200">
+      <div className="flex justify-between items-center">
+        <span className="font-semibold">{label}</span>
+        <label className="bg-[#f07e1b] text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all">
+          Upload
+          <input
+            type="file"
+            accept="image/*,.pdf"
+            className="hidden"
+            onChange={onChange}
+          />
+        </label>
+      </div>
+
+      {fileData && (
+        <p
+          className="text-blue-600 text-sm mt-2 cursor-pointer hover:text-blue-800"
+          onClick={() => window.open(fileData.url, "_blank")}
+        >
+          {fileData.file.name}
+        </p>
+      )}
+    </div>
+  );
+}

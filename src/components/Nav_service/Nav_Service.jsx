@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import panImg from "../../assets/services/pan-img.jpg";
-import aadhaarImg from "../../assets/services/adhar_img.jpg";
+import Marriage from "../../assets/services/Marriage.jpg";
 import bannerImg from "../../assets/services/services-banner.png";
 import voterImg from "../../assets/services/voter-id.png";
 import Rahivashi from "../../assets/services/rahivashi.jpg";
@@ -27,10 +27,10 @@ const services = [
     slug: "pan",
   },
   {
-    title: "Aadhaar Card",
-    desc: "New enrollment, updates.",
-    img: aadhaarImg,
-    slug: "aadhaar",
+    title: "Marriage Certificate (लग्न प्रमाणपत्र)",
+    desc: "Apply for an official marriage certificate.",
+    img: Marriage,
+    slug: "marriage",
   },
   {
     title: "Voter ID",
@@ -75,13 +75,13 @@ const services = [
     slug: "gazette",
   },
   {
-    title: "Shop Act",
+    title: "Shop Act(दुकान नोंदणी)",
     desc: "Register your business under Shop Act.",
     img: shopImg,
     slug: "shop-act",
   },
   {
-    title: "Udyam Registration",
+    title: "Udyog Aadhaar(उद्योग आधार)",
     desc: "Register your MSME for benefits.",
     img: udyamImg,
     slug: "udyam",
@@ -172,6 +172,18 @@ return (
                 {service.title === "PAN Card(पॅन कार्ड)" ? (
                   <>
                     PAN Card<br />(पॅन कार्ड)
+                  </>
+                ) : service.title === "Marriage Certificate (लग्न प्रमाणपत्र)" ? (
+                  <>
+                    Marriage Certificate<br />(लग्न प्रमाणपत्र)
+                  </>
+                ) : service.title === "Residence Certificate (रहिवासी दाखला)" ? (
+                  <>
+                    Residence Certificate<br />(रहिवासी दाखला)
+                  </>
+                ) : service.title === "Shop Act(दुकान नोंदणी)" ? (
+                  <>
+                    Shop Act<br />(दुकान नोंदणी)
                   </>
                 ) : (
                   service.title
