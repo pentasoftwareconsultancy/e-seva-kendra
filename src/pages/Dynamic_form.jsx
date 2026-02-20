@@ -5,6 +5,8 @@ import VoterForm from "../components/Services/VoterForm";
 import PassportForm from "../components/Services/PassportForm";
 import GazetteForm from "../components/Services/GazetteForm";
 import Residence from "../components/Services/residence";
+import RationCardForm from "../components/Services/RationCardForm";
+import IncomeForm from "../components/Services/IncomeForm";
 
 function Dynamic_form() {
   const { serviceName } = useParams();
@@ -16,7 +18,8 @@ function Dynamic_form() {
   if (serviceName === "voter") return <VoterForm />;
   if (serviceName === "passport") return <PassportForm />;
     if (serviceName === "gazette") return <GazetteForm />;
-
+    if (serviceName === "ration-card") return <RationCardForm />;
+if (serviceName === "income-certificate") return <IncomeForm />;
 
   if (serviceName === "residence") return <Residence />;
 

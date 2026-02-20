@@ -1,17 +1,43 @@
 import React, { useState } from "react";
+import IncomeHero from "../../assets/Servicesimg/Panhero.png"; // change image if needed
 
-import Panhero from "../../assets/Servicesimg/Panhero.png";
-import Pan1 from "../../assets/Servicesimg/Pan1.png";
-import Pan2 from "../../assets/Servicesimg/Pan2.png";
-import Pan3 from "../../assets/Servicesimg/Pan3.png";
+/* ================= REUSABLE UPLOAD COMPONENT ================= */
+function UploadBox({ label, field, fileData, onFileChange }) {
+    return (
+        <div className="bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200">
+            <div className="flex justify-between items-center">
+                <span className="font-semibold text-sm">{label}</span>
+                <label className="bg-[#f07e1b] text-white px-5 py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all">
+                    Upload
+                    <input
+                        type="file"
+                        accept="image/*,.pdf"
+                        className="hidden"
+                        onChange={(e) => onFileChange(e, field)}
+                    />
+                </label>
+            </div>
 
-function PassportForm() {
+            {fileData && (
+                <p
+                    className="text-blue-600 text-sm mt-2 cursor-pointer hover:text-blue-800"
+                    onClick={() => window.open(fileData.url, "_blank")}
+                >
+                    {fileData.file.name}
+                </p>
+            )}
+        </div>
+    );
+}
+
+function IncomeForm() {
 
     const [files, setFiles] = useState({
-        pan: null,
+        rationCard: null,
         aadhaar: null,
         photo: null,
         lightBill: null,
+        tahasildarCertificate: null,
     });
 
     const handleFileChange = (e, field) => {
@@ -33,13 +59,13 @@ function PassportForm() {
     return (
         <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
 
-            {/* Hero Section */}
+            {/* ================= HERO SECTION ================= */}
             <section className="relative w-full h-[550px] flex items-center">
                 <div className="absolute inset-0">
                     <img
-                        src={Panhero}
-                        alt="Hero"
-                        className="w-full h-full object-cover object-[20%_center]"
+                        src={IncomeHero}
+                        alt="Income Certificate"
+                        className="w-full h-full object-cover"
                     />
                 </div>
 
@@ -47,11 +73,15 @@ function PassportForm() {
 
                 <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
                     <div className="w-full md:w-1/2 space-y-6 text-white">
-                        <h1 className="text-5xl font-bold">Passport Services</h1>
-                        <p className="text-xl text-gray-200">
-                            We provide fast and reliable assistance for Passport application and renewal services.
+                        <h1 className="text-4xl md:text-6xl font-bold">
+                            Income Certificate Services
+                        </h1>
+
+                        <p className="text-lg md:text-xl text-gray-200">
+                            Get your Income Certificate quickly and without hassle.
                         </p>
-                        <a href="#passport-form">
+
+                        <a href="#income-cerificate">
                             <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
                                 Apply Now
                             </button>
@@ -59,26 +89,28 @@ function PassportForm() {
                     </div>
                 </div>
             </section>
+
             {/* ================= DOCUMENT REQUIREMENTS ================= */}
             <section className="bg-white py-16 px-4 md:px-8">
                 <div className="max-w-4xl mx-auto">
                     <div className="bg-white border-4 border-green-700 rounded-3xl p-8 md:p-12 shadow-xl">
 
                         <h2 className="text-3xl font-bold text-green-600 text-center mb-2">
-                            पासपोर्ट साठी लागणारी कागदपत्रे
+                            उत्पन्न दाखल्यासाठी लागणारी कागदपत्रे
                         </h2>
 
                         <h3 className="text-2xl font-bold text-green-600 text-center mb-8 border-b-4 border-green-700 pb-4">
-                            Documents Required for Passport
+                            Documents Required for Income Certificate
                         </h3>
 
                         <div className="space-y-4 text-lg">
 
                             {[
-                                ["आधार कार्ड", "Aadhaar Card (Identity Proof)"],
-                                ["पॅन कार्ड", "PAN Card (Mandatory for Application)"],
-                                ["लाईट बिल", "Address Proof (Electricity Bill /)"],
-                                ["पासपोर्ट साईज फोटो", "Recent Passport Size Photographs"],
+                                ["रेशन कार्ड", "Ration Card"],
+                                ["आधार कार्ड", "Aadhaar Card"],
+                                ["१ पासपोर्ट साईज फोटो", "1 Passport Size Photograph"],
+                                ["लाईट बिल", "Electricity Bill"],
+                                ["तहसीलदार उत्पन्न दाखला", "Tahasildar Income Certificate"]
                             ].map((item, index) => (
                                 <div key={index} className="flex items-start gap-3">
                                     <span className="text-green-600 font-bold text-xl">✱</span>
@@ -93,32 +125,36 @@ function PassportForm() {
                     </div>
                 </div>
             </section>
-            {/* Form Section */}
-            <section id="passport-form" className="py-10 px-4 md:px-8 bg-[#f8faff]">
-                <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow p-8 md:p-12 mb-20">
 
+            {/* ================= FORM SECTION ================= */}
+            <section
+                id="income-form"
+                className="py-16 px-4 md:px-8 bg-[#f8faff]"
+            >
+                <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow p-8 md:p-12">
 
-                    <h2 className="text-3xl font-bold mb-6">
-                        Passport Application Form
+                    <h2 className="text-3xl font-bold mb-6 text-center">
+                        Income Certificate Application Form
                     </h2>
 
                     <form className="space-y-8">
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                            {/* Name */}
                             <div>
-                                <label className="block font-bold mb-2">Full Name (पूर्ण नाव)</label>
+                                <label className="block font-bold mb-2">
+                                    Full Name (पूर्ण नाव)
+                                </label>
                                 <input
                                     type="text"
-                                    placeholder="Enter Full Name"
+                                    placeholder="Enter Full Name "
                                     className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                                 />
                             </div>
 
-                            {/* Mobile */}
                             <div>
-                                <label className="block font-bold mb-2">Mobile Number (मोबाईल क्रमांक)</label>
+                                <label className="block font-bold mb-2">
+                                    Mobile Number (मोबाईल क्रमांक)
+                                </label>
                                 <input
                                     type="text"
                                     placeholder="Enter Mobile Number"
@@ -126,32 +162,39 @@ function PassportForm() {
                                 />
                             </div>
 
-                            {/* PAN Card */}
                             <UploadBox
-                                label="Pan Card (पॅन कार्ड)"
-                                fileData={files.pan}
-                                onChange={(e) => handleFileChange(e, "pan")}
+                                label="Ration Card (रेशन कार्ड)"
+                                field="rationCard"
+                                fileData={files.rationCard}
+                                onFileChange={handleFileChange}
                             />
 
-                            {/* Aadhaar */}
                             <UploadBox
                                 label="Aadhaar Card (आधार कार्ड)"
+                                field="aadhaar"
                                 fileData={files.aadhaar}
-                                onChange={(e) => handleFileChange(e, "aadhaar")}
+                                onFileChange={handleFileChange}
                             />
 
-                            {/* Passport Photo */}
                             <UploadBox
-                                label="Passport Photo (पासपोर्ट फोटो)"
+                                label="1 Passport Photo (१ पासपोर्ट फोटो)"
+                                field="photo"
                                 fileData={files.photo}
-                                onChange={(e) => handleFileChange(e, "photo")}
+                                onFileChange={handleFileChange}
                             />
 
-                            {/* Light Bill */}
                             <UploadBox
-                                label="Light Bill (लाइट बिल)"
+                                label="Light Bill (लाईट बिल)"
+                                field="lightBill"
                                 fileData={files.lightBill}
-                                onChange={(e) => handleFileChange(e, "lightBill")}
+                                onFileChange={handleFileChange}
+                            />
+
+                            <UploadBox
+                                label="Tahasildar Income Certificate (तहसीलदार उत्पन्न दाखला)"
+                                field="tahasildarCertificate"
+                                fileData={files.tahasildarCertificate}
+                                onFileChange={handleFileChange}
                             />
 
                         </div>
@@ -173,33 +216,4 @@ function PassportForm() {
     );
 }
 
-/* Reusable Upload Component */
-function UploadBox({ label, fileData, onChange }) {
-    return (
-        <div className="bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200">
-            <div className="flex justify-between items-center">
-                <span className="font-semibold">{label}</span>
-                <label className="bg-[#f07e1b] text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all">
-                    Upload
-                    <input
-                        type="file"
-                        accept="image/*,.pdf"
-                        className="hidden"
-                        onChange={onChange}
-                    />
-                </label>
-            </div>
-
-            {fileData && (
-                <p
-                    className="text-blue-600 text-sm mt-2 cursor-pointer hover:text-blue-800"
-                    onClick={() => window.open(fileData.url, "_blank")}
-                >
-                    {fileData.file.name}
-                </p>
-            )}
-        </div>
-    );
-}
-
-export default PassportForm;
+export default IncomeForm;
