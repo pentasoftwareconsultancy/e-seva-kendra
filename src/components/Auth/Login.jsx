@@ -123,14 +123,6 @@ export default function Login() {
   </div>
 </section>
 
-
-      {/* FLOATING WHATSAPP */}
-      <a
-        href="https://wa.me/919876543310"
-        className="fixed bottom-5 right-5 h-14 w-14 bg-green-600 rounded-full text-white flex items-center justify-center shadow-lg text-xl"
-      >
-        💬
-      </a>
     </>
   );
 }
