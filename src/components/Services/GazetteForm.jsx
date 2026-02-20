@@ -91,66 +91,7 @@ function GazetteForm() {
         </div>
       </section>
 
-    {/* Steps Section */}
-      <section className="bg-[#f8faff] py-20 px-4 md:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0f172a] mb-3">
-            Steps to Apply for Gazette Certificate
-          </h2>
-           <h6  className="text-lg md:text-xl text-gray-500 leading-relaxed">Follow these simple steps to get your Gazette certificate easily and quickly.</h6>
-        </div>
 
-       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-
-  {/* Card 1 */}
-  <div className="bg-white rounded-[32px] shadow overflow-hidden">
-    <div className="w-full h-44 flex items-center justify-center bg-gray-50">
-      <img 
-        src={Pan1} 
-        alt="" 
-        className="max-h-full max-w-full object-contain"
-      />
-    </div>
-    <div className="p-4">
-      <h3 className="font-bold text-xl mb-1">1. Fill Application</h3>
-      <p className="text-gray-500">Provide required details.</p>
-    </div>
-  </div>
-
-  {/* Card 2 */}
-  <div className="bg-white rounded-[32px] shadow overflow-hidden">
-    <div className="w-full h-44 flex items-center justify-center bg-gray-50">
-      <img 
-        src={Pan2} 
-        alt="" 
-        className="max-h-full max-w-full object-contain"
-      />
-    </div>
-    <div className="p-4">
-      <h3 className="font-bold text-xl mb-1">2. Submit Documents</h3>
-      <p className="text-gray-500">Upload identity proof.</p>
-    </div>
-  </div>
-
-  {/* Card 3 */}
-  <div className="bg-white rounded-[32px] shadow overflow-hidden">
-    <div className="w-full h-44 flex items-center justify-center bg-gray-50">
-      <img 
-        src={Pan3} 
-        alt="" 
-        className="max-h-full max-w-full object-contain"
-      />
-    </div>
-    <div className="p-4">
-      <h3 className="font-bold text-xl mb-1">3. Receive Card</h3>
-      <p className="text-gray-500">Delivered to your address.</p>
-    </div>
-  </div>
-
-</div>
-
-
-      </section>
       {/* FORM SECTION */}
       <section
         id="gajet-form"
