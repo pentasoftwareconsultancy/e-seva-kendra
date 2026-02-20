@@ -83,9 +83,9 @@ const services = [
   },
   {
     title: "Udyog Aadhaar(उद्योग आधार)",
-    desc: "Register your MSME for benefits.",
+    desc: "Register your Udyog Aadhaar MSME for benefits.",
     img: udyamImg,
-    slug: "udyam",
+    slug: "udyog-aadhaar",
   },
   {
     title: "Domicile Certificate (निवास प्रमाणपत्र)",
@@ -94,16 +94,16 @@ const services = [
     slug: "domicile",
   },
   {
-    title: "Food Registration",
-    desc: "Apply for FSSAI food license.",
+    title: "Food License (फूड लायसन्स)",
+    desc: "Get your FSSAI license to run a food business legally.",
     img: foodImg,
     slug: "food",
   },
   {
-    title: "Notary Agreement",
-    desc: "Create and notarize legal agreements.",
+    title: "Senior Certificate(ज्येष्ठ नागरिक दाखला)",
+    desc: "Get your senior citizen certificate for government benefits.",
     img: notaryImg,
-    slug: "notary",
+    slug: "senior",
   },
   {
     title: "Non-Cremenal Certificate",
@@ -112,10 +112,10 @@ const services = [
     slug: "Non-Cremenal",
   },
   {
-    title: "7/12 Download",
-    desc: "Download your 7/12 land record online.",
+    title: "EWS Certificate (ईडब्ल्यूएस प्रमाणपत्र)",
+    desc: "Apply for and download your EWS certificate government schemes",
     img: downloadImg,
-    slug: "7-12",
+    slug: "ews-certificate",
   },
 ];
 
@@ -185,6 +185,18 @@ return (
                 ) : service.title === "Shop Act(दुकान नोंदणी)" ? (
                   <>
                     Shop Act<br />(दुकान नोंदणी)
+                  </>
+                ) : service.title === "Udyog Aadhaar(उद्योग आधार)" ? (
+                  <>
+                    Udyog Aadhaar<br />(उद्योग आधार)
+                  </>
+                ) : service.title === "Food License (फूड लायसन्स)" ? (
+                  <>
+                    Food License<br />(फूड लायसन्स)
+                  </>
+                ) : service.title === "Senior Certificate(ज्येष्ठ नागरिक दाखला)" ? (
+                  <>
+                    Senior Certificate<br />(ज्येष्ठ नागरिक दाखला)
                   </>
                 ) : (
                   service.title
