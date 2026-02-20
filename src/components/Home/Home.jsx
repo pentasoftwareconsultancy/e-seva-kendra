@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import heroImg from "../../assets/Home/hero.png";
 
 import panImg from "../../assets/services/pan-img.jpg";
-import aadhaarImg from "../../assets/services/adhar_img.jpg";
+import Marriage from "../../assets/services/Marriage.jpg";
 import voterImg from "../../assets/services/voter-id.png";
 import residence from "../../assets/services/rahivashi.jpg";
 import passImg from "../../assets/services/pass.png";
@@ -88,11 +88,11 @@ export default function Home() {
 
                             },
                             {
-                                title: "Aadhaar Card",
-                                desc: "New enrollment, updates, and mobile linking.",
-                                img: aadhaarImg,
+                                title: "Marriage Certificate (लग्न प्रमाणपत्र)",
+                                desc: "Apply for an official marriage certificate.",
+                                img: Marriage,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
-                                slug: "aadhaar"
+                                slug: "marriage"
                             },
                             {
                                 title: "Voter ID",
@@ -157,6 +157,14 @@ export default function Home() {
                                         {service.title === "PAN Card (पॅन कार्ड)" ? (
                                             <>
                                                 PAN Card<br />(पॅन कार्ड)
+                                            </>
+                                        ) : service.title === "Marriage Certificate (लग्न प्रमाणपत्र)" ? (
+                                            <>
+                                                Marriage Certificate<br />(लग्न प्रमाणपत्र)
+                                            </>
+                                        ) : service.title === "Residence Certificate (रहिवासी दाखला)" ? (
+                                            <>
+                                                Residence Certificate<br />(रहिवासी दाखला)
                                             </>
                                         ) : (
                                             service.title
