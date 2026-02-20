@@ -4,7 +4,7 @@ import panImg from "../../assets/services/pan-img.jpg";
 import aadhaarImg from "../../assets/services/adhar_img.jpg";
 import bannerImg from "../../assets/services/services-banner.png";
 import voterImg from "../../assets/services/voter-id.png";
-import drivingImg from "../../assets/services/driving-li.png";
+import Rahivashi from "../../assets/services/rahivashi.jpg";
 import passImg from "../../assets/services/pass.png";
 import rationImg from "../../assets/services/ration.png";
 import incomeImg from "../../assets/services/income.png";
@@ -21,8 +21,8 @@ export default function Nav_Service() {
   const navigate = useNavigate();
 const services = [
   {
-    title: "PAN Card",
-    desc: "Apply, update your card .",
+    title: "PAN Card(पॅन कार्ड)",
+    desc: "Apply, update, or reprint your PAN card easily.",
     img: panImg,
     slug: "pan",
   },
@@ -39,37 +39,37 @@ const services = [
     slug: "voter",
   },
   {
-    title: "Driving License",
-    desc: "Apply your driving license.",
-    img: drivingImg,
-    slug: "driving-license",
+    title: "Residence Certificate (रहिवासी दाखला)",
+    desc: "Apply for a domicile/residence certificate ",
+    img: Rahivashi,
+    slug: "residence",
   },
   {
-    title: "Passport",
+    title: "Passport (पासपोर्ट)",
     desc: "Apply for a new passport, renew an existing one, or update personal details quickly.",
     img: passImg,
     slug: "passport",
   },
   {
-    title: "Ration Card",
-    desc: "Apply or update your ration card details.",
+    title: "Ration Card (रेशन कार्ड)",
+    desc: "Apply for a new ration card or  name addition, deletion, or correction",
     img: rationImg,
     slug: "ration-card",
   },
   {
-    title: "Income Certificate",
-    desc: "Get income certificate for official purposes.",
+    title: "Income Certificate (उत्पन्न दाखला)",
+    desc: "Apply for an Income Certificate required for  loans, and other official documentation.",
     img: incomeImg,
     slug: "income-certificate",
   },
   {
-    title: "Birth Certificate",
-    desc: "Register or correct birth certificate details.",
+    title: "Birth Certificate (जन्म प्रमाणपत्र)",
+    desc: "Apply for a new Birth Certificate or update existing details or spelling errors.",
     img: birthImg,
     slug: "birth-certificate",
   },
   {
-    title: "Gazette Certificate",
+    title: "Gazette Certificate (गॅझेट प्रमाणपत्र)",
     desc: "Apply for Gazette publication for name change, correction record updates.",
     img: gazetteImg,
     slug: "gazette",
@@ -169,7 +169,13 @@ return (
 
             <div className="p-5 flex flex-col">
               <h3 className="font-bold text-lg text-slate-800 mb-2">
-                {service.title}
+                {service.title === "PAN Card(पॅन कार्ड)" ? (
+                  <>
+                    PAN Card<br />(पॅन कार्ड)
+                  </>
+                ) : (
+                  service.title
+                )}
               </h3>
 
               <p className="text-sm text-slate-600 mb-4 flex-grow leading-relaxed">
