@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import logo from "../../assets/Home/omsai_logo.png";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,13 +11,13 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
 
           {/* LOGO */}
-          <Link to="/" className="flex items-center gap-2 sm:gap-3 sm:ml-4">
-            <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-full bg-gradient-to-br from-green-600 to-green-700 text-white grid place-items-center font-bold text-base sm:text-lg shadow-md">
-              ES
-            </div>
-            <span className="font-bold text-base sm:text-xl text-slate-800">
-              E-Suvidha
-            </span>
+          <Link to="/" className="flex items-center sm:ml-4">
+            <img
+              src={logo}
+              alt="Shree Om Sai Multi Services"
+              className="h-16 sm:h-45 mt-7 w-auto object-contain"
+              style={{ imageRendering: "auto" }}
+            />
           </Link>
 
 
