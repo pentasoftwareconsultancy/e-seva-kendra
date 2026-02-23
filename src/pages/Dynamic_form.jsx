@@ -1,48 +1,65 @@
 import { useParams } from "react-router-dom";
+
 import PANCardServices from "../components/Services/Pan";
 import PassportForm from "../components/Services/PassportForm";
 import GazetteForm from "../components/Services/GazetteForm";
-import Residence from "../components/Services/residence";
-import Marriage from "../components/Services/Marriage";
 import VoterForm from "../components/Services/VoterForm";
 import ShopAct from "../components/Services/ShopAct";
 import UdyogAadhaar from "../components/Services/UdyogAadhaar";
 import RationCardForm from "../components/Services/RationCardForm";
-import IncomeForm from "../components/Services/IncomeForm";
 import Food from "../components/Services/Food";
 import Senior from "../components/Services/Senior";
-import EWSCertificate from "../components/Services/EWSCertificate";
-import BirthDeathForm from "../components/Services/BirthDeathForm";
-import DomicileForm from "../components/Services/DomicileForm";
-import NonCremenalForm from "../components/Services/NonCremenalForm";
+
+/* Newly Mentioned Services */
+// import ITR from "../components/Services/ITR";
+// import IEC from "../components/Services/IEC";
+// import GST from "../components/Services/GST";
+// import Trademark from "../components/Services/Trademark";
+// import HealthInsurance from "../components/Services/HealthInsurance";
+// import LifeInsurance from "../components/Services/LifeInsurance";
+// import SIP from "../components/Services/SIP";
+// import MutualFund from "../components/Services/MutualFund";
+// import RentAgreement from "../components/Services/RentAgreement";
+// import Eshram from "../components/Services/Eshram";
+// import Ayushman from "../components/Services/Ayushman";
+// import VehicleInsurance from "../components/Services/VehicleInsurance";
+// import DematAccount from "../components/Services/DematAccount";
+// import Loan from "../components/Services/Loan";
+// import PFS from "../components/Services/PFS";
 
 function Dynamic_form() {
   const { serviceName } = useParams();
 
-  if (serviceName === "pan") return <PANCardServices />;
-  if (serviceName === "marriage") return <Marriage />;
-  if (serviceName === "voter") return <VoterForm />;
-  if (serviceName === "udyog-aadhaar") return <UdyogAadhaar />;
-    if (serviceName === "shop-act") return <ShopAct />;
-  if (serviceName === "passport") return <PassportForm />;
-    if (serviceName === "gazette") return <GazetteForm />;
-    if (serviceName === "ration-card") return <RationCardForm />;
-if (serviceName === "income-certificate") return <IncomeForm />;
-if (serviceName === "food") return <Food />;
-  if (serviceName === "residence") return <Residence />;
-  if (serviceName === "senior") return <Senior />;
-  if (serviceName === "ews-certificate") return <EWSCertificate />;
-  if (serviceName === "shop-act") return <ShopAct />;
-  if (serviceName === "passport") return <PassportForm />;
-  if (serviceName === "gazette") return <GazetteForm />;
-  if (serviceName === "ration-card") return <RationCardForm />;
-  if (serviceName === "income-certificate") return <IncomeForm />;
-  if (serviceName === "birth-certificate") return <BirthDeathForm />;
-  if (serviceName === "domicile") return <DomicileForm />;
-  if (serviceName === "residence") return <Residence />;
-  if (serviceName === "Non-Cremenal") return <NonCremenalForm />;
+  const serviceComponents = {
+    pan: PANCardServices,
+    // itr: ITR,
+    // iec: IEC,
+    // gst: GST,
+    // trademark: Trademark,
+    // "health-insurance": HealthInsurance,
+    // "life-insurance": LifeInsurance,
+    // sip: SIP,
+    // "mutual-fund": MutualFund,
+    // "rent-agreement": RentAgreement,
+    // "e-shram": Eshram,
+    // ayushman: Ayushman,
+    // "vehicle-insurance": VehicleInsurance,
+    // "dmat-account": DematAccount,
+    // loan: Loan,
+    // pfs: PFS,
+    passport: PassportForm,
+    "ration-card": RationCardForm,
+    gazette: GazetteForm,
+    "shop-act": ShopAct,
+    "udyog-aadhaar": UdyogAadhaar,
+    food: Food,
+    senior: Senior,
+    voter: VoterForm,
+  };
 
-  return <h1>Service Not Found</h1>;
+  const Component = serviceComponents[serviceName];
+
+  return Component ? <Component /> : <h1>Service Not Found</h1>;
 }
 
-export default Dynamic_form
+export default Dynamic_form;

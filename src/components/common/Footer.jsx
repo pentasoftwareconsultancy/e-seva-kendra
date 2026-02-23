@@ -1,8 +1,8 @@
 export default function Footer() {
   return (
     <footer className="bg-slate-900 text-slate-300">
-      <div className="max-w-7xl mx-auto px-6 py-10">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Company Info */}
           <div>
             <h4 className="font-bold text-white mb-3">E-Suvidha</h4>

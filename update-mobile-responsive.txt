@@ -1,0 +1,113 @@
+MOBILE RESPONSIVE UPDATE PATTERN FOR ALL SERVICE FILES
+======================================================
+
+Apply these find-and-replace patterns to ALL files in src/components/Services/
+
+1. HERO SECTION HEIGHT:
+   Find: h-[550px]
+   Replace: h-[350px] sm:h-[450px] md:h-[550px]
+
+2. HERO PADDING:
+   Find: px-6 w-full
+   Replace: px-4 sm:px-6 w-full
+
+3. HERO SPACING:
+   Find: space-y-6 text-white
+   Replace: space-y-4 sm:space-y-6 text-white
+
+4. HERO TITLE:
+   Find: text-4xl md:text-5xl lg:text-6xl
+   Replace: text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl
+
+5. HERO PARAGRAPH:
+   Find: text-lg md:text-xl
+   Replace: text-sm sm:text-base md:text-lg lg:text-xl
+
+6. HERO BUTTON:
+   Find: px-10 py-3.5 rounded-xl font-bold text-lg
+   Replace: px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 rounded-xl font-bold text-sm sm:text-base md:text-lg
+
+7. DOCUMENT SECTION PADDING:
+   Find: py-16 px-4
+   Replace: py-12 sm:py-16 px-4
+
+8. DOCUMENT BOX ROUNDED:
+   Find: rounded-3xl p-8 md:p-12
+   Replace: rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12
+
+9. DOCUMENT TITLE:
+   Find: text-3xl font-bold
+   Replace: text-xl sm:text-2xl md:text-3xl font-bold
+
+10. DOCUMENT SUBTITLE:
+    Find: text-2xl font-bold
+    Replace: text-lg sm:text-xl md:text-2xl font-bold
+
+11. DOCUMENT SPACING:
+    Find: mb-8 border-b-4
+    Replace: mb-6 sm:mb-8 border-b-4
+
+12. DOCUMENT LIST:
+    Find: space-y-4 text-lg
+    Replace: space-y-3 sm:space-y-4 text-sm sm:text-base md:text-lg
+
+13. FORM SECTION:
+    Find: py-10 px-4 md:px-8
+    Replace: py-8 sm:py-10 px-4 md:px-8
+
+14. FORM CONTAINER:
+    Find: rounded-[40px] shadow p-8 md:p-12 mb-20
+    Replace: rounded-3xl sm:rounded-[40px] shadow p-6 sm:p-8 md:p-12 mb-12 sm:mb-20
+
+15. FORM TITLE:
+    Find: text-3xl font-bold mb-6
+    Replace: text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6
+
+16. FORM SPACING:
+    Find: space-y-8
+    Replace: space-y-6 sm:space-y-8
+
+17. FORM GRID:
+    Find: gap-6
+    Replace: gap-4 sm:gap-6
+
+18. FORM LABEL:
+    Find: block font-bold mb-2
+    Replace: block font-bold mb-2 text-sm sm:text-base
+
+19. FORM INPUT:
+    Find: p-4 rounded-xl
+    Replace: p-3 sm:p-4 rounded-xl text-sm sm:text-base
+
+20. SUBMIT BUTTON:
+    Find: px-12 py-4 rounded-xl font-bold text-lg
+    Replace: px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg
+
+21. UPLOAD BOX:
+    Find: p-4 rounded-xl ring-1
+    Replace: p-3 sm:p-4 rounded-xl ring-1
+
+22. UPLOAD LABEL:
+    Find: <span className="font-semibold">
+    Replace: <span className="font-semibold text-xs sm:text-sm md:text-base">
+
+23. UPLOAD BUTTON:
+    Find: px-6 py-2 rounded-lg
+    Replace: px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm
+
+FILES TO UPDATE:
+- BirthDeathForm.jsx
+- DomicileForm.jsx
+- EWSCertificate.jsx
+- Food.jsx
+- GazetteForm.jsx
+- IncomeForm.jsx
+- Marriage.jsx
+- NonCremenalForm.jsx
+- PassportForm.jsx
+- RationCardForm.jsx
+- residence.jsx
+- Senior.jsx
+- ShopAct.jsx
+- UdyogAadhaar.jsx
+- VoterForm.jsx
