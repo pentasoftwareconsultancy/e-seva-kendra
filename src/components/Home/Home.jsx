@@ -3,7 +3,7 @@ import heroImg from "../../assets/Home/hero.png";
 
 import panImg from "../../assets/services/pan-img.jpg";
 import Marriage from "../../assets/services/Marriage.jpg";
-import voterImg from "../../assets/services/voter-id.png";
+import gazetteImg from "../../assets/services/gazette.png";
 import residence from "../../assets/services/rahivashi.jpg";
 import passImg from "../../assets/services/pass.png";
 import rationImg from "../../assets/services/ration.png";
@@ -94,13 +94,13 @@ export default function Home() {
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "marriage"
                             },
-                            {
-                                title: "Voter ID",
-                                desc: "Register or correct voter details quickly and easily.",
-                                img: voterImg,
-                                btnColor: "bg-blue-900 hover:bg-blue-700",
-                                slug: "voter"
-                            },
+                            // {
+                            //     title: "Voter ID",
+                            //     desc: "Register or correct voter details quickly and easily.",
+                            //     img: voterImg,
+                            //     btnColor: "bg-blue-900 hover:bg-blue-700",
+                            //     slug: "voter"
+                            // },
                             {
                                    title: "Residence Certificate (रहिवासी दाखला)",
                                    desc: "Apply for a domicile/residence certificate ",
@@ -109,32 +109,39 @@ export default function Home() {
                                    slug: "residence"
                             },
                             {
-                                title: "Passport",
+                                title: "Passport (पासपोर्ट)",
                                 desc: "New passport & renewal assistance passport",
                                 img: passImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "passport"
                             },
                             {
-                                title: "Ration Card",
+                                title: "Ration Card (रेशन कार्ड)",
                                 desc: "Apply or update your ration card details.",
                                 img: rationImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "ration-card",
                             },
                             {
-                                title: "Income Certificate",
+                                title: "Income Certificate (उत्पन्न दाखला)",
                                 desc: "Get income certificate for various purposes",
                                 img: incomeImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "income-certificate",
                             },
                             {
-                                title: "Birth Certificate",
+                                title: "Birth Certificate (जन्म प्रमाणपत्र)",
                                 desc: "Birth certificate registration & corrections",
                                 img: birthImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "birth-certificate",
+                            },
+                             {
+                                title: "Gazette Certificate (गॅझेट प्रमाणपत्र)",
+                                desc: "Apply for Gazette publication for name change, correction record updates.",
+                                img: gazetteImg,
+                                btnColor: "bg-blue-900 hover:bg-blue-700",
+                                slug: "gazette"
                             },
                         ].map((service) => (
                             <div
@@ -154,20 +161,8 @@ export default function Home() {
                                 <div className="p-5 flex flex-col">
                                     {/* TITLE */}
                                     <h3 className="font-bold text-lg text-slate-800 mb-2">
-                                        {service.title === "PAN Card (पॅन कार्ड)" ? (
-                                            <>
-                                                PAN Card<br />(पॅन कार्ड)
-                                            </>
-                                        ) : service.title === "Marriage Certificate (लग्न प्रमाणपत्र)" ? (
-                                            <>
-                                                Marriage Certificate<br />(लग्न प्रमाणपत्र)
-                                            </>
-                                        ) : service.title === "Residence Certificate (रहिवासी दाखला)" ? (
-                                            <>
-                                                Residence Certificate<br />(रहिवासी दाखला)
-                                            </>
-                                        ) : (
-                                            service.title
+                                        {service.title.split('(').map((part, i) => 
+                                            i === 0 ? part : <><br />({part}</>
                                         )}
                                     </h3>
 
