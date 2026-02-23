@@ -1,36 +1,37 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import panImg from "../../assets/services/pan-img.jpg";
-import aadhaarImg from "../../assets/services/adhar_img.jpg";
+import Marriage from "../../assets/services/Marriage.jpg";
 import bannerImg from "../../assets/services/services-banner.png";
 import voterImg from "../../assets/services/voter-id.png";
-import drivingImg from "../../assets/services/driving-li.png";
+import Rahivashi from "../../assets/services/rahivashi.jpg";
 import passImg from "../../assets/services/pass.png";
 import rationImg from "../../assets/services/ration.png";
 import incomeImg from "../../assets/services/income.png";
 import birthImg from "../../assets/services/birth-cer.png"; 
-import cowinImg from "../../assets/services/cowin.png";
+import gazetteImg from "../../assets/services/gazette.png";
 import shopImg from "../../assets/services/shop.png";
 import udyamImg from "../../assets/services/udyam.png";
-import gstImg from "../../assets/services/gst.png";
+import domicileImg from "../../assets/services/domicile.png";
 import foodImg from "../../assets/services/food.png";
 import notaryImg from "../../assets/services/notary.png";
 import downloadImg from "../../assets/services/download.png"; 
+import noncremenalImg from "../../assets/services/noncremenal.png";
 
 export default function Nav_Service() {
   const navigate = useNavigate();
 const services = [
   {
-    title: "PAN Card",
+    title: "PAN Card(पॅन कार्ड)",
     desc: "Apply, update, or reprint your PAN card easily.",
     img: panImg,
     slug: "pan",
   },
   {
-    title: "Aadhaar Card",
-    desc: "New enrollment, updates, and mobile linking.",
-    img: aadhaarImg,
-    slug: "aadhaar",
+    title: "Marriage Certificate (लग्न प्रमाणपत्र)",
+    desc: "Apply for an official marriage certificate.",
+    img: Marriage,
+    slug: "marriage",
   },
   {
     title: "Voter ID",
@@ -39,82 +40,82 @@ const services = [
     slug: "voter",
   },
   {
-    title: "Driving License",
-    desc: "Apply or renew your driving license.",
-    img: drivingImg,
-    slug: "driving-license",
+    title: "Residence Certificate (रहिवासी दाखला)",
+    desc: "Apply for a domicile/residence certificate ",
+    img: Rahivashi,
+    slug: "residence",
   },
   {
-    title: "Passport",
-    desc: "Apply or renew your passport.",
+    title: "Passport (पासपोर्ट)",
+    desc: "Apply for a new passport, renew an existing one, or update personal details quickly.",
     img: passImg,
     slug: "passport",
   },
   {
-    title: "Ration Card",
-    desc: "Apply or update your ration card details.",
+    title: "Ration Card (रेशन कार्ड)",
+    desc: "Apply for a new ration card or  name addition, deletion, or correction",
     img: rationImg,
     slug: "ration-card",
   },
   {
-    title: "Income Certificate",
-    desc: "Get income certificate for official purposes.",
+    title: "Income Certificate (उत्पन्न दाखला)",
+    desc: "Apply for an Income Certificate required for  loans, and other official documentation.",
     img: incomeImg,
     slug: "income-certificate",
   },
   {
-    title: "Birth Certificate",
-    desc: "Register or correct birth certificate details.",
+    title: "Birth Certificate (जन्म प्रमाणपत्र)",
+    desc: "Apply for a new Birth Certificate or update existing details or spelling errors.",
     img: birthImg,
     slug: "birth-certificate",
   },
   {
-    title: "Cowin Certificate",
-    desc: "Download your vaccination certificate.",
-    img: cowinImg,
-    slug: "cowin",
+    title: "Gazette Certificate (गॅझेट प्रमाणपत्र)",
+    desc: "Apply for Gazette publication for name change, correction record updates.",
+    img: gazetteImg,
+    slug: "gazette",
   },
   {
-    title: "Shop Act",
+    title: "Shop Act(दुकान नोंदणी)",
     desc: "Register your business under Shop Act.",
     img: shopImg,
     slug: "shop-act",
   },
   {
-    title: "Udyam Registration",
-    desc: "Register your MSME for benefits.",
+    title: "Udyog Aadhaar(उद्योग आधार)",
+    desc: "Register your Udyog Aadhaar MSME for benefits.",
     img: udyamImg,
-    slug: "udyam",
+    slug: "udyog-aadhaar",
   },
   {
-    title: "GST Registration",
-    desc: "Apply and manage GST registration.",
-    img: gstImg,
-    slug: "gst",
+    title: "Domicile Certificate (निवास प्रमाणपत्र)",
+    desc: "Apply for a Domicile Certificate.",
+    img: domicileImg,
+    slug: "domicile",
   },
   {
-    title: "Food Registration",
-    desc: "Apply for FSSAI food license.",
+    title: "Food License (फूड लायसन्स)",
+    desc: "Get your FSSAI license to run a food business legally.",
     img: foodImg,
     slug: "food",
   },
   {
-    title: "Notary Agreement",
-    desc: "Create and notarize legal agreements.",
+    title: "Senior Certificate(ज्येष्ठ नागरिक दाखला)",
+    desc: "Get your senior citizen certificate for government benefits.",
     img: notaryImg,
-    slug: "notary",
+    slug: "senior",
   },
   {
-    title: "Gap Certificate",
-    desc: "Get gap certificate for education or job.",
-    img: voterImg,
-    slug: "gap-certificate",
+    title: "Non-Cremenal Certificate",
+    desc: "Get non-cremenal certificate for education or job.",
+    img: noncremenalImg,
+    slug: "Non-Cremenal",
   },
   {
-    title: "7/12 Download",
-    desc: "Download your 7/12 land record online.",
+    title: "EWS Certificate (ईडब्ल्यूएस प्रमाणपत्र)",
+    desc: "Apply for and download your EWS certificate government schemes",
     img: downloadImg,
-    slug: "7-12",
+    slug: "ews-certificate",
   },
 ];
 
@@ -169,7 +170,37 @@ return (
 
             <div className="p-5 flex flex-col">
               <h3 className="font-bold text-lg text-slate-800 mb-2">
-                {service.title}
+                {service.title === "PAN Card(पॅन कार्ड)" ? (
+                  <>
+                    PAN Card<br />(पॅन कार्ड)
+                  </>
+                ) : service.title === "Marriage Certificate (लग्न प्रमाणपत्र)" ? (
+                  <>
+                    Marriage Certificate<br />(लग्न प्रमाणपत्र)
+                  </>
+                ) : service.title === "Residence Certificate (रहिवासी दाखला)" ? (
+                  <>
+                    Residence Certificate<br />(रहिवासी दाखला)
+                  </>
+                ) : service.title === "Shop Act(दुकान नोंदणी)" ? (
+                  <>
+                    Shop Act<br />(दुकान नोंदणी)
+                  </>
+                ) : service.title === "Udyog Aadhaar(उद्योग आधार)" ? (
+                  <>
+                    Udyog Aadhaar<br />(उद्योग आधार)
+                  </>
+                ) : service.title === "Food License (फूड लायसन्स)" ? (
+                  <>
+                    Food License<br />(फूड लायसन्स)
+                  </>
+                ) : service.title === "Senior Certificate(ज्येष्ठ नागरिक दाखला)" ? (
+                  <>
+                    Senior Certificate<br />(ज्येष्ठ नागरिक दाखला)
+                  </>
+                ) : (
+                  service.title
+                )}
               </h3>
 
               <p className="text-sm text-slate-600 mb-4 flex-grow leading-relaxed">

@@ -29,14 +29,14 @@ export default function Aboutus() {
       </h1>
 
       <p className="text-lg md:text-xl">
-        Your Trusted Partner for Government & Legal Services.At E-Suvidha, we are committed to providing fast, reliable, and hassle-free digital services to our customers.
+      At E-Suvidha, we provide fast, reliable, affordable
+              documentation solutions for all government and
+              legal needs.
       </p>
 
     </div>
   </div>
 </div>
-
-
 
 
       {/* ABOUT SECTION */}
@@ -48,9 +48,8 @@ export default function Aboutus() {
             </h2>
 
             <p className="text-gray-600 leading-relaxed text-lg">
-              At E-Suvidha, we provide fast, reliable, affordable
-              documentation solutions for all government and
-              legal needs.
+                     Your Trusted Partner for Government & Legal Services.At E-Suvidha, we are committed to providing fast, reliable, and hassle-free digital services to our customers.
+
             </p>
           </div>
 
@@ -76,27 +75,6 @@ export default function Aboutus() {
         </div>
       </div>
 
-      {/* GET IN TOUCH */}
-      <div className="max-w-6xl mx-auto px-6 py-14">
-        <h2 className="text-3xl font-semibold mb-8">
-          Get in Touch
-        </h2>
-
-        <div className="grid md:grid-cols-3 gap-5">
-          <input type="text" placeholder="Name" className="p-3 border rounded-lg" />
-
-          <select className="p-3 border rounded-lg">
-            <option>Select Service</option>
-            <option>PAN Card</option>
-            <option>Aadhaar</option>
-            <option>Passport</option>
-          </select>
-
-          <button className="bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800">
-            Submit
-          </button>
-        </div>
-      </div>
 
     </div>
   );

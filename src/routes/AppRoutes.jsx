@@ -6,6 +6,9 @@ import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 
+
+
+
 import AdminLogin from "../pages/admin/AdminLogin";
 import ProtectedRoute from "../components/common/ProtectedRoute";
 import AdminDashboard from "../pages/admin/AdminDashboard";
@@ -16,6 +19,7 @@ import AdminReports from "../pages/admin/AdminReports";
 import AdminSettings from "../pages/admin/AdminSettings";
 import Service_navpage from "../pages/ServicePage_nav";
 import Dynamic_form from "../pages/Dynamic_form";
+import AdminMessages from "../pages/admin/AdminMessages";
 
 
 const AppRoutes = () => {
@@ -56,6 +60,11 @@ const AppRoutes = () => {
        <Route path="/admin/reports" element={
         <ProtectedRoute>
           <AdminReports />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/messages" element={
+        <ProtectedRoute>
+          <AdminMessages />
         </ProtectedRoute>
       } />
        <Route path="/admin/settings" element={
