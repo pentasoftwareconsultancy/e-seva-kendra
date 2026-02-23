@@ -12,7 +12,7 @@ export default function Aboutus() {
 
    {/* HERO SECTION */}
 <div
-  className="relative w-full min-h-[350px] sm:min-h-[420px] md:min-h-[520px] lg:min-h-[500px] bg-cover bg-center text-white flex items-center"
+  className="relative w-full min-h-[420px] md:min-h-[520px] lg:min-h-[500px] bg-cover bg-center text-white flex items-center"
   style={{
     backgroundImage: `url(${top})`,
   }}
@@ -21,14 +21,14 @@ export default function Aboutus() {
 
   
 
-  <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full">
-    <div className="w-full md:w-1/2 space-y-4 sm:space-y-6 text-white">
+  <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+    <div className="w-full md:w-1/2 space-y-6 text-white">
       
-      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
         About Us
       </h1>
 
-      <p className="text-sm sm:text-base md:text-lg lg:text-xl">
+      <p className="text-lg md:text-xl">
       At E-Suvidha, we provide fast, reliable, affordable
               documentation solutions for all government and
               legal needs.
@@ -41,13 +41,13 @@ export default function Aboutus() {
 
       {/* ABOUT SECTION */}
       <div className="bg-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-semibold mb-4 sm:mb-5">
+            <h2 className="text-3xl font-semibold mb-5">
               About E-Suvidha
             </h2>
 
-            <p className="text-gray-600 leading-relaxed text-sm sm:text-base md:text-lg">
+            <p className="text-gray-600 leading-relaxed text-lg">
                      Your Trusted Partner for Government & Legal Services.At E-Suvidha, we are committed to providing fast, reliable, and hassle-free digital services to our customers.
 
             </p>
@@ -62,12 +62,12 @@ export default function Aboutus() {
       </div>
 
       {/* WHY CHOOSE US */}
-      <div className="bg-white py-12 sm:py-16">
-        <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-8 sm:mb-12 px-4">
+      <div className="bg-white py-16">
+        <h2 className="text-3xl font-semibold text-center mb-12">
           Why Choose Us?
         </h2>
 
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-8 px-6">
           <FeatureCard title="Trusted Service" desc="Reliable & Secure Solutions" img={img2} />
           <FeatureCard title="Fast Processing" desc="Quick & Hassle-Free Procedures" img={img1} />
           <FeatureCard title="Affordable Charges" desc="Transparent & Reasonable Fees" img={img3} />
@@ -82,11 +82,11 @@ export default function Aboutus() {
 
 function FeatureCard({ img, title, desc }) {
   return (
-    <div className="flex items-center gap-3 sm:gap-5 p-4 sm:p-6 bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition">
-      <img src={img} alt={title} className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
+    <div className="flex items-center gap-5 p-6 bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition">
+      <img src={img} alt={title} className="w-20 h-20 object-contain" />
       <div>
-        <h3 className="font-semibold text-base sm:text-lg">{title}</h3>
-        <p className="text-xs sm:text-sm text-gray-600">{desc}</p>
+        <h3 className="font-semibold text-lg">{title}</h3>
+        <p className="text-sm text-gray-600">{desc}</p>
       </div>
     </div>
   );
