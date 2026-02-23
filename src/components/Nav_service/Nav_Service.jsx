@@ -33,45 +33,45 @@ const services = [
     img: Marriage,
     slug: "marriage",
   },
-  {
-    title: "Voter ID",
-    desc: "Register or correct voter details.",
-    img: voterImg,
-    slug: "voter",
-  },
+  // {
+  //   title: "Voter ID",
+  //   desc: "Register or correct voter details.",
+  //   img: voterImg,
+  //   slug: "voter",
+  // },
   {
     title: "Residence Certificate (रहिवासी दाखला)",
-    desc: "Apply for a domicile/residence certificate ",
+    desc: "Apply for a domicile/residence certificate.",
     img: Rahivashi,
     slug: "residence",
   },
   {
     title: "Passport (पासपोर्ट)",
-    desc: "Apply for a new passport, renew an existing one, or update personal details quickly.",
+    desc: "Apply for a new passport, or update personal details quickly.",
     img: passImg,
     slug: "passport",
   },
   {
     title: "Ration Card (रेशन कार्ड)",
-    desc: "Apply for a new ration card or  name addition, deletion, or correction",
+    desc: "Apply or update your ration card details.",
     img: rationImg,
     slug: "ration-card",
   },
   {
     title: "Income Certificate (उत्पन्न दाखला)",
-    desc: "Apply for an Income Certificate required for  loans, and other official documentation.",
+    desc: "Get income certificate for various purposes",
     img: incomeImg,
     slug: "income-certificate",
   },
   {
     title: "Birth Certificate (जन्म प्रमाणपत्र)",
-    desc: "Apply for a new Birth Certificate or update existing details or spelling errors.",
+    desc: "Birth certificate registration & corrections.",
     img: birthImg,
     slug: "birth-certificate",
   },
   {
     title: "Gazette Certificate (गॅझेट प्रमाणपत्र)",
-    desc: "Apply for Gazette publication for name change, correction record updates.",
+    desc: "Apply for Gazette publication for name change, record updates.",
     img: gazetteImg,
     slug: "gazette",
   },
@@ -89,7 +89,7 @@ const services = [
   },
   {
     title: "Domicile Certificate (निवास प्रमाणपत्र)",
-    desc: "Apply for a Domicile Certificate.",
+    desc: "Apply for a New Domicile Certificate.",
     img: domicileImg,
     slug: "domicile",
   },
@@ -116,6 +116,12 @@ const services = [
     desc: "Apply for and download your EWS certificate government schemes",
     img: downloadImg,
     slug: "ews-certificate",
+  },
+  {
+    title: "Voter ID",
+    desc: "Register or correct voter details.",
+    img: voterImg,
+    slug: "voter",
   },
 ];
 
@@ -170,36 +176,8 @@ return (
 
             <div className="p-5 flex flex-col">
               <h3 className="font-bold text-lg text-slate-800 mb-2">
-                {service.title === "PAN Card(पॅन कार्ड)" ? (
-                  <>
-                    PAN Card<br />(पॅन कार्ड)
-                  </>
-                ) : service.title === "Marriage Certificate (लग्न प्रमाणपत्र)" ? (
-                  <>
-                    Marriage Certificate<br />(लग्न प्रमाणपत्र)
-                  </>
-                ) : service.title === "Residence Certificate (रहिवासी दाखला)" ? (
-                  <>
-                    Residence Certificate<br />(रहिवासी दाखला)
-                  </>
-                ) : service.title === "Shop Act(दुकान नोंदणी)" ? (
-                  <>
-                    Shop Act<br />(दुकान नोंदणी)
-                  </>
-                ) : service.title === "Udyog Aadhaar(उद्योग आधार)" ? (
-                  <>
-                    Udyog Aadhaar<br />(उद्योग आधार)
-                  </>
-                ) : service.title === "Food License (फूड लायसन्स)" ? (
-                  <>
-                    Food License<br />(फूड लायसन्स)
-                  </>
-                ) : service.title === "Senior Certificate(ज्येष्ठ नागरिक दाखला)" ? (
-                  <>
-                    Senior Certificate<br />(ज्येष्ठ नागरिक दाखला)
-                  </>
-                ) : (
-                  service.title
+                {service.title.split('(').map((part, i) => 
+                  i === 0 ? part : <><br />({part}</>  
                 )}
               </h3>
 
