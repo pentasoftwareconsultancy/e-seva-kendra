@@ -106,7 +106,7 @@ const services = [
     slug: "senior",
   },
   {
-    title: "Non-Cremenal Certificate",
+    title: "Non-Cremenal Certificate(नॉन-क्रिमिनल सर्टिफिकेट)",
     desc: "Get non-cremenal certificate for education or job.",
     img: noncremenalImg,
     slug: "Non-Cremenal",
