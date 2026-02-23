@@ -1,17 +1,20 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur border-b">
-      <div className="w-full px-8">
+      <div className="w-full px-4 sm:px-8">
         <div className="flex items-center justify-between h-16">
 
           {/* LOGO */}
-          <Link to="/" className="flex items-center gap-3 ml-4">
-            <div className="h-11 w-11 rounded-full bg-gradient-to-br from-green-600 to-green-700 text-white grid place-items-center font-bold text-lg shadow-md">
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 sm:ml-4">
+            <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-full bg-gradient-to-br from-green-600 to-green-700 text-white grid place-items-center font-bold text-base sm:text-lg shadow-md">
               ES
             </div>
-            <span className="font-bold text-xl text-slate-800">
+            <span className="font-bold text-base sm:text-xl text-slate-800">
               E-Suvidha
             </span>
           </Link>
@@ -43,7 +46,7 @@ export default function Header() {
           </nav>
 
           {/* SEARCH + CTA */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             {/* SEARCH */}
             <div className="hidden md:flex items-center border rounded-lg px-3 py-1.5 text-sm text-slate-500 bg-white">
               <svg
@@ -67,15 +70,52 @@ export default function Header() {
             </div>
 
             {/* CTA */}
-            <Link to="/login" className="px-5 py-2 rounded-lg border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-50">
+            <Link to="/login" className="hidden sm:block px-3 sm:px-5 py-2 rounded-lg border border-slate-300 text-slate-700 text-xs sm:text-sm font-medium hover:bg-slate-50">
               Login
             </Link>
-            <Link to="/Register" className="px-5 py-2 rounded-lg bg-yellow-500 text-white text-sm font-medium hover:bg-yellow-600">
+            <Link to="/Register" className="hidden sm:block px-3 sm:px-5 py-2 rounded-lg bg-yellow-500 text-white text-xs sm:text-sm font-medium hover:bg-yellow-600">
               Get Started
             </Link>
+
+            {/* MOBILE MENU BUTTON */}
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-slate-700">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
           </div>
 
         </div>
+
+        {/* MOBILE MENU */}
+        {isMenuOpen && (
+          <div className="md:hidden border-t py-4">
+            <nav className="flex flex-col space-y-3">
+              <Link to="/" onClick={() => setIsMenuOpen(false)} className="px-4 py-2 hover:bg-slate-100 rounded">
+                Home
+              </Link>
+              <Link to="/service" onClick={() => setIsMenuOpen(false)} className="px-4 py-2 hover:bg-slate-100 rounded">
+                Services
+              </Link>
+              <Link to="/about" onClick={() => setIsMenuOpen(false)} className="px-4 py-2 hover:bg-slate-100 rounded">
+                About Us
+              </Link>
+              <Link to="/contact" onClick={() => setIsMenuOpen(false)} className="px-4 py-2 hover:bg-slate-100 rounded">
+                Contact Us
+              </Link>
+              <Link to="/login" onClick={() => setIsMenuOpen(false)} className="mx-4 px-4 py-2 rounded-lg border border-slate-300 text-slate-700 text-center hover:bg-slate-50">
+                Login
+              </Link>
+              <Link to="/Register" onClick={() => setIsMenuOpen(false)} className="mx-4 px-4 py-2 rounded-lg bg-yellow-500 text-white text-center hover:bg-yellow-600">
+                Get Started
+              </Link>
+            </nav>
+          </div>
+        )}
       </div>
     </header>
   );
