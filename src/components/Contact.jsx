@@ -15,7 +15,7 @@ export default function Contact() {
 
           {/* HERO SECTION */}
 <div
-  className="relative w-full min-h-[420px] md:min-h-[520px] lg:min-h-[500px] bg-cover bg-center text-white flex items-center"
+  className="relative w-full min-h-[350px] sm:min-h-[420px] md:min-h-[520px] lg:min-h-[500px] bg-cover bg-center text-white flex items-center"
   style={{
     backgroundImage: `url(${top})`,
   }}
@@ -23,14 +23,14 @@ export default function Contact() {
   {/* Overlay */}
   <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/80 to-transparent"></div>
 
-  <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-    <div className="w-full md:w-1/2 space-y-6">
+  <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full">
+    <div className="w-full md:w-1/2 space-y-4 sm:space-y-6">
 
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
         Contact Us
       </h1>
 
-      <p className="text-lg md:text-xl">
+      <p className="text-sm sm:text-base md:text-lg lg:text-xl">
         Get in touch with us today! <br />
         For all your Government and Legal Needs.
       </p>
@@ -43,17 +43,17 @@ export default function Contact() {
          
 
             {/* MAIN SECTION */}
-            <div className="max-w-7xl mx-auto px-4 md:px-6 py-10 grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10">
 
                 {/* LEFT SIDE */}
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
 
-                    <h2 className="text-2xl font-semibold">
+                    <h2 className="text-xl sm:text-2xl font-semibold">
                         Get in Touch
                     </h2>
 
                     {/* CONTACT CARDS */}
-                    <div className="space-y-4">
+                    <div className="space-y-3 sm:space-y-4">
 
                         <ContactItem
                             text="+91 9084 156368"
@@ -80,34 +80,34 @@ export default function Contact() {
                     </div>
 
                     {/* WHATSAPP BUTTON */}
-                    <button className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold shadow-md transition">
+                    <button className="w-full bg-green-600 hover:bg-green-700 text-white py-2.5 sm:py-3 rounded-lg font-semibold shadow-md transition text-sm sm:text-base">
                         Chat on WhatsApp
                     </button>
 
                 </div>
 
                 {/* RIGHT SIDE FORM */}
-                <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg">
+                <div className="bg-white p-5 sm:p-6 md:p-8 rounded-xl shadow-lg">
 
-                    <h2 className="text-2xl font-semibold mb-6">
+                    <h2 className="text-xl sm:text-2xl font-semibold mb-5 sm:mb-6">
                         Send Us a Message
                     </h2>
 
-                    <div className="space-y-4">
+                    <div className="space-y-3 sm:space-y-4">
 
                         <input
                             type="text"
                             placeholder="Name"
-                            className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full p-2.5 sm:p-3 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none text-sm sm:text-base"
                         />
 
                         <input
                             type="email"
                             placeholder="Email Address"
-                            className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full p-2.5 sm:p-3 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none text-sm sm:text-base"
                         />
 
-                        <select className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none">
+                        <select className="w-full p-2.5 sm:p-3 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none text-sm sm:text-base">
                             <option>Select Service</option>
                             <option>PAN Card</option>
                             <option>Aadhaar</option>
@@ -117,16 +117,16 @@ export default function Contact() {
                         <input
                             type="text"
                             placeholder="Mobile Number"
-                            className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full p-2.5 sm:p-3 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none text-sm sm:text-base"
                         />
 
                         <textarea
                             rows="4"
                             placeholder="Your Message"
-                            className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full p-2.5 sm:p-3 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none text-sm sm:text-base"
                         />
 
-                        <button className="w-full bg-slate-700 hover:bg-slate-800 text-white py-2 rounded-lg">
+                        <button className="w-full bg-slate-700 hover:bg-slate-800 text-white py-2 sm:py-2.5 rounded-lg text-sm sm:text-base">
                             Send Message
                         </button>
 
@@ -142,9 +142,9 @@ export default function Contact() {
 /* CONTACT ITEM COMPONENT */
 function ContactItem({ icon, text }) {
     return (
-        <div className="flex items-center gap-3 bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition">
+        <div className="flex items-center gap-2 sm:gap-3 bg-white p-3 sm:p-4 rounded-lg shadow-sm hover:shadow-md transition">
             <svg
-                className="w-5 h-5 text-blue-700"
+                className="w-4 h-4 sm:w-5 sm:h-5 text-blue-700 flex-shrink-0"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -152,7 +152,7 @@ function ContactItem({ icon, text }) {
             >
                 {icon}
             </svg>
-            <p className="text-gray-700">{text}</p>
+            <p className="text-gray-700 text-xs sm:text-sm md:text-base">{text}</p>
         </div>
     );
 }
