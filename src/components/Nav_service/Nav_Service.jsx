@@ -164,13 +164,14 @@ return (
         {services.map((service) => (
           <div
             key={service.title}
-            className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-slate-300"
+            className="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-blue-500 cursor-pointer transform hover:-translate-y-2 active:scale-95"
           >
-            <div className="h-32 sm:h-40 w-full overflow-hidden bg-slate-100">
+            <div className="h-32 sm:h-40 w-full overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 relative">
+              <div className="absolute inset-0 bg-blue-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
               <img
                 src={service.img}
                 alt={service.title}
-                className="h-full w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                className="h-full w-full object-contain group-hover:scale-110 transition-transform duration-500"
               />
             </div>
 
@@ -188,7 +189,7 @@ return (
 
 <button
   onClick={() => navigate(`/apply/${service.slug}`)}
-  className="w-full bg-blue-900 hover:bg-blue-700 text-white py-2 rounded-lg text-xs sm:text-sm"
+  className="w-full bg-blue-900 hover:bg-blue-700 text-white py-2 rounded-lg text-xs sm:text-sm hover:scale-105 active:scale-95 shadow-md hover:shadow-lg transition-all"
 >
   Apply Now →
 </button>
