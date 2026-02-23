@@ -12,6 +12,9 @@ import birthImg from "../../assets/services/birth-cer.png";
 import serviceImg from "../../assets/Home/service.png";
 import uploadImg from "../../assets/Home/upload.png";
 import deliveryImg from "../../assets/Home/delivery.png";
+import visitingCard from "../../assets/Home/visiting-card.png";
+
+
 
 export default function Home() {
     return (
@@ -102,11 +105,11 @@ export default function Home() {
                             //     slug: "voter"
                             // },
                             {
-                                   title: "Residence Certificate (रहिवासी दाखला)",
-                                   desc: "Apply for a domicile/residence certificate ",
-                                   img: residence,
-                                   btnColor: "bg-blue-900 hover:bg-blue-700",
-                                   slug: "residence"
+                                title: "Residence Certificate (रहिवासी दाखला)",
+                                desc: "Apply for a domicile/residence certificate ",
+                                img: residence,
+                                btnColor: "bg-blue-900 hover:bg-blue-700",
+                                slug: "residence"
                             },
                             {
                                 title: "Passport (पासपोर्ट)",
@@ -136,7 +139,7 @@ export default function Home() {
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "birth-certificate",
                             },
-                             {
+                            {
                                 title: "Gazette Certificate (गॅझेट प्रमाणपत्र)",
                                 desc: "Apply for Gazette publication for name change, correction record updates.",
                                 img: gazetteImg,
@@ -162,7 +165,7 @@ export default function Home() {
                                 <div className="p-4 sm:p-5 flex flex-col">
                                     {/* TITLE */}
                                     <h3 className="font-bold text-base sm:text-lg text-slate-800 mb-2">
-                                        {service.title.split('(').map((part, i) => 
+                                        {service.title.split('(').map((part, i) =>
                                             i === 0 ? part : <><br />({part}</>
                                         )}
                                     </h3>
@@ -328,140 +331,118 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* ================= CONTACT ================= */}
-            <section className="relative py-12 sm:py-16 md:py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 overflow-hidden">
-                {/* Decorative Background Elements */}
-                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full blur-3xl opacity-30"></div>
-                <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full blur-3xl opacity-30"></div>
+           {/* ================= CONTACT ================= */}
+<section className="relative py-12 sm:py-16 md:py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 overflow-hidden">
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-                    {/* Title */}
-                    <div className="text-center mb-8 sm:mb-12">
-                        <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-100 text-blue-700 rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
-                            Get In Touch
-                        </span>
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-3">
-                            Contact Us
-                        </h2>
-                        <p className="text-xs sm:text-sm md:text-base text-slate-600 max-w-2xl mx-auto px-4">
-                            Get in touch with us for any queries or assistance with your documentation needs
+    {/* Decorative Background Elements */}
+    <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full blur-3xl opacity-30"></div>
+    <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-200 rounded-full blur-3xl opacity-30"></div>
+
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+
+        {/* Title */}
+        <div className="text-center mb-8 sm:mb-12">
+            <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-100 text-blue-700 rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
+                Get In Touch
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-3">
+                Contact Us
+            </h2>
+            <p className="text-xs sm:text-sm md:text-base text-slate-600 max-w-2xl mx-auto px-4">
+                Get in touch with us for any queries or assistance with your documentation needs
+            </p>
+        </div>
+
+        {/* Cards Grid */}
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+
+            {/* LEFT CARD - Visiting Card */}
+            <div className="relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all border border-slate-200 overflow-hidden">
+                <img
+                    src={visitingCard}
+                    alt="Shree Om Sai Multi Services Visiting Card"
+                    className="w-full h-full object-cover"
+                />
+            </div>
+
+            {/* RIGHT CARD */}
+            <div className="relative bg-white rounded-xl sm:rounded-2xl shadow-xl hover:shadow-2xl transition-all p-6 sm:p-8 border border-slate-200">
+
+                <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                    <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center shadow-lg">
+                        <i className="fa-solid fa-building text-base sm:text-lg"></i>
+                    </div>
+                    <h3 className="text-lg sm:text-xl font-bold text-slate-900">
+                        Branch Office
+                    </h3>
+                </div>
+
+                <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
+
+                    <div className="flex items-start gap-2 sm:gap-3">
+                        <i className="fa-solid fa-location-dot text-blue-600 text-base sm:text-lg mt-1"></i>
+                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Shop No 6 ,Dagade Patil Complex,<br />
+                            Karle Chowk,Nanded City, Pune
                         </p>
                     </div>
 
-                    {/* Cards */}
-                    <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
-                        {/* LEFT CARD */}
-                        <div className="relative bg-white rounded-xl sm:rounded-2xl shadow-xl hover:shadow-2xl transition-all p-6 sm:p-8 border border-slate-200">
-                            <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gradient-to-br from-green-500 to-green-600 text-white flex items-center justify-center font-bold shadow-lg text-sm sm:text-base">
-                                    ES
-                                </div>
-                                <h3 className="text-lg sm:text-xl font-bold text-slate-900">
-                                    E-Suvidha
-                                </h3>
-                            </div>
-
-                            <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
-                                <div className="flex items-start gap-2 sm:gap-3">
-                                    <i className="fa-solid fa-location-dot text-green-600 text-base sm:text-lg mt-1"></i>
-                                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                                        Office no.8, 4th Floor Pristine,<br />
-                                        Pune, Maharashtra, India
-                                    </p>
-                                </div>
-
-                                <div className="flex items-center gap-2 sm:gap-3">
-                                    <i className="fa-solid fa-phone text-yellow-600 text-base sm:text-lg"></i>
-                                    <a href="tel:+919876543310" className="font-semibold text-sm sm:text-base text-slate-700 hover:text-green-600 transition">
-                                        +91 98765 43310
-                                    </a>
-                                </div>
-
-                                <div className="flex items-center gap-2 sm:gap-3">
-                                    <i className="fa-solid fa-envelope text-blue-600 text-base sm:text-lg"></i>
-                                    <a href="mailto:esuvidha@gmail.com" className="text-xs sm:text-sm text-slate-600 hover:text-blue-600 transition">
-                                        esuvidha@gmail.com
-                                    </a>
-                                </div>
-                            </div>
-
-                            <a
-                                href="https://wa.me/919876543310"
-                                className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-2.5 sm:py-3 rounded-xl transition-all shadow-lg text-sm sm:text-base"
-                            >
-                                <i className="fa-brands fa-whatsapp text-lg sm:text-xl"></i>
-                                WhatsApp Chat
-                            </a>
-                        </div>
-
-                        {/* RIGHT CARD */}
-                        <div className="relative bg-white rounded-xl sm:rounded-2xl shadow-xl hover:shadow-2xl transition-all p-6 sm:p-8 border border-slate-200">
-                            <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center shadow-lg">
-                                    <i className="fa-solid fa-building text-base sm:text-lg"></i>
-                                </div>
-                                <h3 className="text-lg sm:text-xl font-bold text-slate-900">
-                                    Branch Office
-                                </h3>
-                            </div>
-
-                            <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
-                                <div className="flex items-start gap-2 sm:gap-3">
-                                    <i className="fa-solid fa-location-dot text-blue-600 text-base sm:text-lg mt-1"></i>
-                                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                                        Daman – Khaide,<br />
-                                        Pune, Maharashtra, India
-                                    </p>
-                                </div>
-
-                                <div className="flex items-center gap-2 sm:gap-3">
-                                    <i className="fa-solid fa-phone text-yellow-600 text-base sm:text-lg"></i>
-                                    <a href="tel:+919876543310" className="font-semibold text-sm sm:text-base text-slate-700 hover:text-green-600 transition">
-                                        +91 98765 43310
-                                    </a>
-                                </div>
-
-                                <div className="flex items-center gap-2 sm:gap-3">
-                                    <i className="fa-solid fa-clock text-blue-600 text-base sm:text-lg"></i>
-                                    <p className="text-xs sm:text-sm text-slate-600 font-medium">
-                                        Mon - Sat: 9:00 AM - 7:00 PM
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="flex gap-2 sm:gap-3">
-                                <a
-                                    href="tel:+919876543310"
-                                    className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-slate-300 text-slate-700 font-semibold hover:bg-slate-50 transition text-xs sm:text-sm"
-                                >
-                                    <i className="fa-solid fa-phone text-xs sm:text-sm"></i>
-                                    Call Now
-                                </a>
-
-
-                                <Link
-                                    to="/contact"
-                                    className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 rounded-xl bg-gradient-to-r from-blue-900 to-blue-900 hover:from-blue-600 hover:to-blue-700 text-white font-semibold transition shadow-lg text-xs sm:text-sm"
-                                >
-                                    Contact Us
-                                </Link>
-
-                            </div>
-                        </div>
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        <i className="fa-solid fa-phone text-yellow-600 text-base sm:text-lg"></i>
+                        <a
+                            href="tel:+919876543310"
+                            className="font-semibold text-sm sm:text-base text-slate-700 hover:text-green-600 transition"
+                        >
+                            +91 8668266879
+                        </a>
                     </div>
+
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        <i className="fa-solid fa-clock text-blue-600 text-base sm:text-lg"></i>
+                        <p className="text-xs sm:text-sm text-slate-600 font-medium">
+                            Mon - Sat: 9:00 AM - 7:00 PM
+                        </p>
+                    </div>
+
                 </div>
-            </section>
+
+                <div className="flex gap-2 sm:gap-3">
+
+                    <a
+                        href="tel:+918668266879"
+                        className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-slate-300 text-slate-700 font-semibold hover:bg-slate-50 transition text-xs sm:text-sm"
+                    >
+                        <i className="fa-solid fa-phone text-xs sm:text-sm"></i>
+                        Call Now
+                    </a>
+
+                    <Link
+                        to="/contact"
+                        className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 rounded-xl bg-gradient-to-r from-blue-900 to-blue-900 hover:from-blue-600 hover:to-blue-700 text-white font-semibold transition shadow-lg text-xs sm:text-sm"
+                    >
+                        Contact Us
+                    </Link>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
 
-            {/* ================= FLOATING WHATSAPP ================= */}
-            <a
-                href="https://wa.me/919876543310"
-                className="fixed bottom-6 right-6 h-16 w-16 rounded-full bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white flex items-center justify-center shadow-2xl hover:shadow-green-500/50 transition-all duration-300 hover:scale-110 z-50 group"
-                title="Chat on WhatsApp"
-            >
-                <i className="fa-brands fa-whatsapp text-3xl group-hover:scale-110 transition-transform"></i>
-                <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full animate-pulse"></span>
-            </a>
-        </>
+    {/* ================= FLOATING WHATSAPP ================= */}
+<a
+    href="https://wa.me/918668266879"
+    className="fixed bottom-6 right-6 h-16 w-16 rounded-full bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white flex items-center justify-center shadow-2xl hover:shadow-green-500/50 transition-all duration-300 hover:scale-110 z-50 group"
+    title="Chat on WhatsApp"
+>
+    <i className="fa-brands fa-whatsapp text-3xl group-hover:scale-110 transition-transform"></i>
+    <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full animate-pulse"></span>
+</a>
+</>
     );
 }

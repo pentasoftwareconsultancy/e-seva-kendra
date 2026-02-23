@@ -1,14 +1,22 @@
+import logo from "../../assets/Home/omsai_logo.png";
 export default function Footer() {
   return (
     <footer className="bg-slate-900 text-slate-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Company Info */}
-          <div>
-            <h4 className="font-bold text-white mb-3">E-Suvidha</h4>
-            <p className="text-sm text-slate-400 mb-4">
+          {/* Company Info */}
+          <div className="flex flex-col items-start">
+            <img
+              src={logo}
+              alt="Shree Om Sai Multi Services"
+              className="h-14 w-auto mb-1"
+            />
+
+            <p className="text-sm text-slate-400 mb-3">
               All Government & Legal Services
             </p>
+
             {/* Social Media Icons */}
             <div className="flex gap-3">
               <a href="#" className="w-9 h-9 bg-slate-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition">
@@ -22,7 +30,6 @@ export default function Footer() {
               </a>
             </div>
           </div>
-
           {/* Quick Links */}
           <div>
             <h4 className="font-semibold text-white mb-3">Quick Links</h4>
@@ -46,8 +53,8 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h4 className="font-semibold text-white mb-3">Contact</h4>
-            <p className="text-sm text-slate-400 mb-1">+91 98765 43310</p>
-            <p className="text-sm text-slate-400">esuvidha@gmail.com</p>
+            <p className="text-sm text-slate-400 mb-1">+91 8668266879</p>
+            <p className="text-sm text-slate-400">omsaimultiservices411041@gmail.com</p>
           </div>
         </div>
 
