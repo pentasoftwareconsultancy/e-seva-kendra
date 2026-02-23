@@ -130,7 +130,7 @@ return (
   <div>
 
     {/* BANNER */}
-    <div className="relative w-full h-[200px] md:h-[260px] lg:h-[500px] overflow-hidden">
+    <div className="relative w-full h-[180px] sm:h-[200px] md:h-[260px] lg:h-[500px] overflow-hidden">
       <img
         src={bannerImg}
         alt="Our Services"
@@ -138,15 +138,15 @@ return (
       />
       <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/80 to-transparent"></div>  
 <div className="absolute inset-0 flex items-center">
-  <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+  <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full">
     
-    <div className="w-full md:w-1/2 space-y-6 text-white">
+    <div className="w-full md:w-1/2 space-y-3 sm:space-y-6 text-white">
       
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
         Our Services
       </h1>
 
-      <p className="text-lg md:text-xl">
+      <p className="text-sm sm:text-base md:text-lg lg:text-xl">
         Fast, Reliable & Affordable Document Solutions for All Your
         Government and Legal Needs
       </p>
@@ -160,13 +160,13 @@ return (
 
     {/* SERVICES GRID */}
     <div className="px-4 md:px-10 lg:px-16 py-6">
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 mb-16 mt-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-10 mb-16 mt-12 sm:mt-20">
         {services.map((service) => (
           <div
             key={service.title}
             className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-slate-300"
           >
-            <div className="h-40 w-full overflow-hidden bg-slate-100">
+            <div className="h-32 sm:h-40 w-full overflow-hidden bg-slate-100">
               <img
                 src={service.img}
                 alt={service.title}
@@ -174,21 +174,21 @@ return (
               />
             </div>
 
-            <div className="p-5 flex flex-col">
-              <h3 className="font-bold text-lg text-slate-800 mb-2">
+            <div className="p-4 sm:p-5 flex flex-col">
+              <h3 className="font-bold text-sm sm:text-base md:text-lg text-slate-800 mb-2">
                 {service.title.split('(').map((part, i) => 
                   i === 0 ? part : <><br />({part}</>  
                 )}
               </h3>
 
-              <p className="text-sm text-slate-600 mb-4 flex-grow leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 mb-3 sm:mb-4 flex-grow leading-relaxed">
                 {service.desc}
               </p>
 
 
 <button
   onClick={() => navigate(`/apply/${service.slug}`)}
-  className="w-full bg-slate-700 hover:bg-slate-800 text-white py-2 rounded-lg"
+  className="w-full bg-blue-900 hover:bg-blue-700 text-white py-2 rounded-lg text-xs sm:text-sm"
 >
   Apply Now →
 </button>
