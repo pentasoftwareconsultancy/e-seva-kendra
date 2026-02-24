@@ -72,6 +72,11 @@ function LoanServiceForm() {
             <p className="text-lg text-gray-200 mt-6">
                 Apply for Personal Loan, Business Loan, or Home Loan easily and securely with minimal documentation.
             </p>
+             <a href="#loan-form">
+                            <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
+                                Apply Now
+                            </button>
+                        </a>
         </div>
     </div>
 </section>

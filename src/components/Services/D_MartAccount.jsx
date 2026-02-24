@@ -47,14 +47,12 @@ function DMartAccountForm() {
     <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/85 to-transparent"></div>
 
     {/* Content */}
-    <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-        <div className="w-full md:w-1/2 space-y-6 text-white">
-
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight">
-                DMart Account Registration
+            <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+                    <div className="w-full md:w-1/2 space-y-6 text-white">
+                        <h1 className="text-5xl font-bold">DMart Account Registration
             </h1>
 
-            <p className="text-xl text-gray-200">
+                        <p className="text-xl text-gray-200">
                 Register your DMart account easily and enjoy smooth shopping,
                 exclusive offers and faster billing services.
             </p>

@@ -56,24 +56,25 @@ export default function Contact() {
                     <div className="space-y-3 sm:space-y-4">
 
                         <ContactItem
-                            text="+91 9084 156368"
+                            text="+91 8668266879"
                             icon={
                                 <path d="M22 16.92V21a2 2 0 01-2.18 2A19.7 19.7 0 013 4.18 2 2 0 015 2h4.09a2 2 0 012 1.72l.7 4.09a2 2 0 01-.54 1.73L9.9 10.9a16 16 0 006.2 6.2l1.36-1.37a2 2 0 011.74-.54l4.09.7A2 2 0 0122 16.92z" />
                             }
                         />
 
                         <ContactItem
-                            text="contact@esuvidha.com"
+                            text="omsaimultiservices411041@gmail.com"
                             icon={<path d="M4 4h16v16H4zM22 6l-10 7L2 6" />}
                         />
 
                         <ContactItem
-                            text="www.esuvidha.com"
+                            text="www.Om sai multiservices.com"
                             icon={<circle cx="12" cy="12" r="10" />}
                         />
 
                         <ContactItem
-                            text="Westend Mall, Janakpuri, New Delhi – 110058"
+                            text="Shop No 6 ,Dagade Patil Complex,<br />
+                            Karle Chowk,Nanded City, Pune"
                             icon={<path d="M12 21s-6-4.35-6-10a6 6 0 1112 0c0 5.65-6 10-6 10z" />}
                         />
 

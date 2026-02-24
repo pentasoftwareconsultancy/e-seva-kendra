@@ -33,12 +33,12 @@ const services = [
     img: Marriage,
     slug: "marriage",
   },
-  // {
-  //   title: "Voter ID",
-  //   desc: "Register or correct voter details.",
-  //   img: voterImg,
-  //   slug: "voter",
-  // },
+  {
+    title: "Systematic Investment Plan (SIP)(सिस्टेमॅटिक इन्व्हेस्टमेंट प्लान)",
+    desc: "Register or correct SIP details.",
+    img: voterImg,
+    slug: "sip",
+  },
   {
     title: "Residence Certificate (रहिवासी दाखला)",
     desc: "Apply for a domicile/residence certificate.",

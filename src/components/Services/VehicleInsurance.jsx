@@ -51,11 +51,10 @@ function VehicleInsuranceForm() {
                 <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/85 to-transparent"></div>
             
                 {/* Content */}
+               
                 <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
                     <div className="w-full md:w-1/2 space-y-6 text-white">
-            
-                        <h1 className="text-5xl md:text-6xl font-bold leading-tight">
-                           2-Wheeler & 4-Wheeler Insurance
+                        <h1 className="text-5xl font-bold"> 2-Wheeler & 4-Wheeler Insurance
                         </h1>
             
                         <p className="text-xl text-gray-200">
