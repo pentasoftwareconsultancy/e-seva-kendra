@@ -6,36 +6,40 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-8">
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center text-center">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-8 items-start text-left sm:text-center">
 
           {/* Company Info */}
-          <div className="flex flex-col space-y-3 items-center">
+            <div className="flex flex-col space-y-3 items-center text-center col-span-2 sm:col-span-1 justify-self-center">
 
-            <img
-              src={logo}
-              alt="Shree Om Sai Multi Services"
-              className="h-15 w-auto object-contain mix-blend-lighten"
-            />
+              <img
+                src={logo}
+                alt="Shree Om Sai Multi Services"
+                className="h-15 w-auto object-contain mix-blend-lighten"
+              />
 
-            <p className="text-sm text-white leading-relaxed text-center">
-              All Government & Legal Services
-            </p>
+              <p className="text-sm text-white leading-relaxed text-center">
+                All Government & Legal Services
+              </p>
 
-            <div className="flex gap-4 pt-2 justify-center">
-              <a href="#" className="w-10 h-10 bg-slate-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition">
-                <i className="fa-brands fa-facebook-f text-sm"></i>
-              </a>
+              <div className="flex gap-4 pt-2 justify-center">
+                
 
-              <a href="#" className="w-10 h-10 bg-slate-800 hover:bg-pink-600 rounded-full flex items-center justify-center transition">
-                <i className="fa-brands fa-instagram text-sm"></i>
-              </a>
+                <a href="https://www.instagram.com/shree_om_sai_multiservices?igsh=anZvY2ZudWVzYm1n" className="w-10 h-10 bg-slate-800 hover:bg-pink-600 rounded-full flex items-center justify-center transition">
+                  <i className="fa-brands fa-instagram text-sm"></i>
+                </a>
 
-              <a href="#" className="w-10 h-10 bg-slate-800 hover:bg-blue-500 rounded-full flex items-center justify-center transition">
-                <i className="fa-brands fa-linkedin-in text-sm"></i>
-              </a>
+                <a href="https://wa.me/8668266879" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-slate-800 hover:bg-green-600 rounded-full flex items-center justify-center transition">
+                  <i className="fa-brands fa-whatsapp text-sm"></i>
+                </a>
+
+                <a href="tel:+918668266879" className="w-10 h-10 bg-slate-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition">
+                  <i className="fa-solid fa-phone text-sm"></i>
+                </a>
+
+            
+              </div>
+
             </div>
-
-          </div>
 
           {/* Quick Links */}
           <div>
@@ -62,7 +66,7 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="text-left">
+          <div className="text-left col-span-2 sm:col-span-1">
             <h4 className="font-semibold text-white mb-2 text-base">
               Contact
             </h4>
@@ -76,7 +80,7 @@ export default function Footer() {
             </p>
             <p className="text-sm text-slate-400 flex items-center gap-2">
               <i className="fa-solid fa-location-dot text-red-500"></i>
-              <span>Pune, Maharashtra</span>
+              <a href="https://maps.google.com/?q=Shop+No+6+Dagade+Patil+Complex+Karle+Chowk+Nanded+City+Pune" target="_blank" rel="noopener noreferrer" className="hover:text-white transition">Shop No 6, Dagade Patil Complex, Karle Chowk, Nanded City, Pune</a>
             </p>
           </div>
 
