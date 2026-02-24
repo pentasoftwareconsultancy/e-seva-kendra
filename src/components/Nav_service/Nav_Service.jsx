@@ -1,22 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import panImg from "../../assets/services/pan-img.jpg";
-import Marriage from "../../assets/services/Marriage.jpg";
 import bannerImg from "../../assets/services/services-banner.png";
 import voterImg from "../../assets/services/voter-id.png";
-import Rahivashi from "../../assets/services/rahivashi.jpg";
 import passImg from "../../assets/services/pass.png";
 import rationImg from "../../assets/services/ration.png";
-import incomeImg from "../../assets/services/income.png";
-import birthImg from "../../assets/services/birth-cer.png"; 
 import gazetteImg from "../../assets/services/gazette.png";
 import shopImg from "../../assets/services/shop.png";
 import udyamImg from "../../assets/services/udyam.png";
-import domicileImg from "../../assets/services/domicile.png";
 import foodImg from "../../assets/services/food.png";
 import notaryImg from "../../assets/services/notary.png";
-import downloadImg from "../../assets/services/download.png"; 
-import noncremenalImg from "../../assets/services/noncremenal.png";
 
 export default function Nav_Service() {
   const navigate = useNavigate();
@@ -27,23 +20,19 @@ const services = [
     img: panImg,
     slug: "pan",
   },
-  {
-    title: "Marriage Certificate (लग्न प्रमाणपत्र)",
-    desc: "Apply for an official marriage certificate.",
-    img: Marriage,
-    slug: "marriage",
-  },
+  
   {
     title: "Systematic Investment Plan (SIP)(सिस्टेमॅटिक इन्व्हेस्टमेंट प्लान)",
     desc: "Register or correct SIP details.",
     img: voterImg,
-    slug: "sip",
+    slug: "voter",
   },
-  {
-    title: "Residence Certificate (रहिवासी दाखला)",
-    desc: "Apply for a domicile/residence certificate.",
-    img: Rahivashi,
-    slug: "residence",
+ 
+    {
+    title: "Voter ID (मतदार ओळखपत्र)",
+    desc: "Register or correct Voter ID details.",
+    img: voterImg,
+    slug: "voter",
   },
   {
     title: "Passport (पासपोर्ट)",
@@ -57,18 +46,7 @@ const services = [
     img: rationImg,
     slug: "ration-card",
   },
-  {
-    title: "Income Certificate (उत्पन्न दाखला)",
-    desc: "Get income certificate for various purposes",
-    img: incomeImg,
-    slug: "income-certificate",
-  },
-  {
-    title: "Birth Certificate (जन्म प्रमाणपत्र)",
-    desc: "Birth certificate registration & corrections.",
-    img: birthImg,
-    slug: "birth-certificate",
-  },
+
   {
     title: "Gazette Certificate (गॅझेट प्रमाणपत्र)",
     desc: "Apply for Gazette publication for name change, record updates.",
@@ -87,12 +65,7 @@ const services = [
     img: udyamImg,
     slug: "udyog-aadhaar",
   },
-  {
-    title: "Domicile Certificate (निवास प्रमाणपत्र)",
-    desc: "Apply for a New Domicile Certificate.",
-    img: domicileImg,
-    slug: "domicile",
-  },
+ 
   {
     title: "Food License (फूड लायसन्स)",
     desc: "Get your FSSAI license to run a food business legally.",
@@ -105,19 +78,6 @@ const services = [
     img: notaryImg,
     slug: "senior",
   },
-  {
-    title: "Non-Cremenal Certificate(नॉन-क्रिमिनल सर्टिफिकेट)",
-    desc: "Get non-cremenal certificate for education or job.",
-    img: noncremenalImg,
-    slug: "Non-Cremenal",
-  },
-  {
-    title: "EWS Certificate (ईडब्ल्यूएस प्रमाणपत्र)",
-    desc: "Apply for and download your EWS certificate government schemes",
-    img: downloadImg,
-    slug: "ews-certificate",
-  },
- 
   {
     title: "Income tax Return (ITR)(उत्पन्न कर विवरण)",
     desc: "File your Income Tax Return easily.",
