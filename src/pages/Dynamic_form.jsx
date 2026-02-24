@@ -77,7 +77,7 @@ function Dynamic_form() {
     "gazette": GazetteForm,
     "shop-act": ShopAct,
     "udyog-aadhaar": UdyogAadhaar,
-    "food": Food,
+    "food": Food, 
     "senior": Senior,
     "voter": VoterID,
   };
