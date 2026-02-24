@@ -10,6 +10,9 @@ import shopImg from "../../assets/services/shop.png";
 import udyamImg from "../../assets/services/udyam.png";
 import foodImg from "../../assets/services/food.png";
 import notaryImg from "../../assets/services/notary.png";
+import ITRImg from "../../assets/services/itr.png";
+import SIPImg from "../../assets/services/sip.png";
+
 
 export default function Nav_Service() {
   const navigate = useNavigate();
@@ -24,7 +27,7 @@ const services = [
   {
     title: "Systematic Investment Plan (SIP)(सिस्टेमॅटिक इन्व्हेस्टमेंट प्लान)",
     desc: "Register or correct SIP details.",
-    img: voterImg,
+    img: SIPImg,
     slug: "voter",
   },
  
@@ -81,7 +84,7 @@ const services = [
   {
     title: "Income tax Return (ITR)(उत्पन्न कर विवरण)",
     desc: "File your Income Tax Return easily.",
-    img: voterImg,
+    img: ITRImg,
     slug: "ITR",
   },
    {
