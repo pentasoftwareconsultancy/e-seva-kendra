@@ -117,12 +117,86 @@ const services = [
     img: downloadImg,
     slug: "ews-certificate",
   },
+ 
   {
-    title: "Voter ID",
-    desc: "Register or correct voter details.",
+    title: "Income tax Return (ITR)(उत्पन्न कर विवरण)",
+    desc: "File your Income Tax Return easily.",
     img: voterImg,
-    slug: "voter",
+    slug: "ITR",
   },
+   {
+    title: "Inport (IEC) (आयात निर्यात कोड)",
+    desc: "File your Import Export Code (IEC) application.",
+    img: voterImg,
+    slug: "iec",
+  },
+   {
+    title: "Goods and Services Tax (GST) (वस्तू व सेवा कर)",
+    desc: "File your GST registration or update details.",
+    img: voterImg,
+    slug: "gst",
+  },
+   {
+    title: "Trademark (वैयक्तिक किंवा कंपनीचा नांव व चिन्हाची नोंदणी)",
+    desc: "File your trademark registration or update details.",
+    img: voterImg,
+    slug: "trademark",
+  },
+   {
+    title: "Insurance (विमा)",
+    desc: "File your insurance application or update details.",
+    img: voterImg,
+    slug: "insurance",
+  },
+   {
+    title: "mutual fund(म्युच्युअल फंड)",
+    desc: "File your mutual fund application or update details.",
+    img: voterImg,
+    slug: "mutual-fund",
+  },
+    {
+    title: "rent agreement (भाडे करार)",
+    desc: "File your rent agreement application or update details.",
+    img: voterImg,
+    slug: "rent-agreement",
+  },
+    {
+    title: "e-shram card(ई-श्रम कार्ड)",
+    desc: "File your e-shram card application or update details.",
+    img: voterImg,
+    slug: "e-shram-card",
+  },
+    {
+    title: "Ayushman card (आयुष्मान कार्ड)",
+    desc: "File your Ayushman card application or update details.",
+    img: voterImg,
+    slug: "ayushman-card",
+  },
+    {
+    title: "vehicle insurance (वाहन विमा)",
+    desc: "File your vehicle insurance application or update details.",
+    img: voterImg,
+    slug: "vehicle-insurance",
+  },
+    {
+    title: "D-mart Account (डी-मार्ट खाते)",
+    desc: "File your D-mart account application or update details.",
+    img: voterImg,
+    slug: "d-mart-account",
+  },
+    {
+    title: "Loan Services (कर्ज सेवा)",
+    desc: "File your loan application or update details.",
+    img: voterImg,
+    slug: "loan",
+  },
+  {
+      title: "Public Financial Services (सार्वजनिक आर्थिक सेवा)",
+    desc: "Apply for public financial services.",
+    img: voterImg,
+    slug: "public-financial-services",
+  },
+  
 ];
 
 
