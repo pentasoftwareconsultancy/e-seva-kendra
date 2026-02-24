@@ -57,7 +57,7 @@ export default function Header() {
           {/* DESKTOP NAV */}
           <nav className="hidden md:flex items-center text-sm font-medium text-slate-700 ml-auto">
 
-            <Link to="/" className="px-4 hover:text-blue-600">
+            <Link to="/" className="px-4 hover:text-blue-600" onClick={() => setIsDropdownOpen(false)}>
               Home
             </Link>
 
@@ -116,13 +116,13 @@ export default function Header() {
 
             <div className="h-5 w-px bg-slate-300" />
 
-            <Link to="/about" className="px-4 hover:text-blue-600">
+            <Link to="/about" className="px-4 hover:text-blue-600" onClick={() => setIsDropdownOpen(false)}>
               About
             </Link>
 
             <div className="h-5 w-px bg-slate-300" />
 
-            <Link to="/contact" className="px-4 hover:text-blue-600">
+            <Link to="/contact" className="px-4 hover:text-blue-600" onClick={() => setIsDropdownOpen(false)}>
               Contact
             </Link>
 
@@ -144,7 +144,8 @@ export default function Header() {
             {/* Desktop Buttons */}
             <Link
               to="/login"
-              className="hidden md:block px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium hover:bg-slate-50"
+              className="hidden md:block px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium hover:bg-yellow-500"
+              onClick={() => setIsDropdownOpen(false)}
             >
               Login
             </Link>
@@ -152,6 +153,7 @@ export default function Header() {
             <Link
               to="/register"
               className="hidden md:block px-4 py-2 rounded-lg bg-yellow-500 text-white text-sm font-medium hover:bg-yellow-600"
+              onClick={() => setIsDropdownOpen(false)}
             >
               Get Started
             </Link>

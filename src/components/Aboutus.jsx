@@ -4,8 +4,8 @@ import img2 from "../assets/About/about-img2.png";
 import img3 from "../assets/About/about-img3.png";
 import img4 from "../assets/About/about-img4.png";
 import top from "../assets/About/top-img.png";
-
-
+import Front from "../assets/Home/visiting-card-front.jpeg";
+import Back from "../assets/Home/visiting-card-back.jpeg";
 export default function Aboutus() {
   return (
     <div>
@@ -53,11 +53,24 @@ export default function Aboutus() {
             </p>
           </div>
 
-          <img
-            src={img1}
-            alt="office"
-            className="w-full max-w-md mx-auto rounded-xl shadow-md"
-          />
+          <div className="relative w-full max-w-md mx-auto" style={{ perspective: '1000px' }}>
+            <div className="relative w-full h-full transition-transform duration-700 hover:[transform:rotateY(180deg)]" style={{ transformStyle: 'preserve-3d' }}>
+              {/* Front */}
+              <img
+                src={Front}
+                alt="office front"
+                className="w-full rounded-xl shadow-md cursor-pointer border-4 border-green-500"
+                style={{ backfaceVisibility: 'hidden' }}
+              />
+              {/* Back */}
+              <img
+                src={Back}
+                alt="office back"
+                className="w-full rounded-xl shadow-md absolute top-0 left-0 cursor-pointer border-4 border-green-500"
+                style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
