@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import IncomeHero from "../../assets/Servicesimg/Panhero.png"; // change image if needed
+import VoterHero from "../../assets/Servicesimg/Panhero.png";
 
 /* ================= REUSABLE UPLOAD COMPONENT ================= */
 function UploadBox({ label, field, fileData, onFileChange }) {
@@ -30,14 +30,13 @@ function UploadBox({ label, field, fileData, onFileChange }) {
     );
 }
 
-function IncomeForm() {
+function VoterID() {
 
     const [files, setFiles] = useState({
-        rationCard: null,
-        aadhaar: null,
-        photo: null,
-        lightBill: null,
-        tahasildarCertificate: null,
+        aadhaarCard: null,
+        addressProof: null,
+        passportPhoto: null,
+        ageProof: null,
     });
 
     const handleFileChange = (e, field) => {
@@ -63,8 +62,8 @@ function IncomeForm() {
             <section className="relative w-full h-[550px] flex items-center">
                 <div className="absolute inset-0">
                     <img
-                        src={IncomeHero}
-                        alt="Income Certificate"
+                        src={VoterHero}
+                        alt="Voter ID Service"
                         className="w-full h-full object-cover"
                     />
                 </div>
@@ -73,15 +72,15 @@ function IncomeForm() {
 
                 <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
                     <div className="w-full md:w-1/2 space-y-6 text-white">
-                        <h1 className="text-4xl md:text-6xl font-bold">
-                            Income Certificate Services
+                        <h1 className="text-5xl font-bold">
+                            Voter ID Card Services
                         </h1>
 
-                        <p className="text-lg md:text-xl text-gray-200">
-                            Get your Income Certificate quickly and without hassle.
+                        <p className="text-xl text-gray-200">
+                            Apply for new Voter ID card quickly and securely.
                         </p>
 
-                        <a href="#income-cerificate">
+                        <a href="#voter-form">
                             <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
                                 Apply Now
                             </button>
@@ -96,21 +95,21 @@ function IncomeForm() {
                     <div className="bg-white border-4 border-green-700 rounded-3xl p-8 md:p-12 shadow-xl">
 
                         <h2 className="text-3xl font-bold text-green-600 text-center mb-2">
-                            उत्पन्न दाखल्यासाठी लागणारी कागदपत्रे
+                            मतदार ओळखपत्रासाठी लागणारी कागदपत्रे
                         </h2>
 
                         <h3 className="text-2xl font-bold text-green-600 text-center mb-8 border-b-4 border-green-700 pb-4">
-                            Documents Required for Income Certificate
+                            Documents Required for Voter ID Card
                         </h3>
 
                         <div className="space-y-4 text-lg">
 
                             {[
-                                ["रेशन कार्ड", "Ration Card"],
                                 ["आधार कार्ड", "Aadhaar Card"],
+                                ["पत्त्याचा पुरावा", "Address Proof (Light Bill / Rent Agreement / Bank Passbook)"],
+                                ["जन्मतारीख पुरावा", "Age Proof (Birth Certificate / School Leaving Certificate)"],
                                 ["१ पासपोर्ट साईज फोटो", "1 Passport Size Photograph"],
-                                ["लाईट बिल", "Electricity Bill"],
-                                ["तहसीलदार उत्पन्न दाखला", "Tahasildar Income Certificate"]
+                                ["मोबाईल नंबर", "Mobile Number"]
                             ].map((item, index) => (
                                 <div key={index} className="flex items-start gap-3">
                                     <span className="text-green-600 font-bold text-xl">✱</span>
@@ -128,25 +127,26 @@ function IncomeForm() {
 
             {/* ================= FORM SECTION ================= */}
             <section
-                id="income-form"
+                id="voter-form"
                 className="py-16 px-4 md:px-8 bg-[#f8faff]"
             >
                 <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow p-8 md:p-12">
 
                     <h2 className="text-3xl font-bold mb-6 text-center">
-                        Income Certificate Application Form
+                        Voter ID Card Application Form
                     </h2>
 
                     <form className="space-y-8">
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
                             <div>
                                 <label className="block font-bold mb-2">
                                     Full Name (पूर्ण नाव)
                                 </label>
                                 <input
                                     type="text"
-                                    placeholder="Enter Full Name "
+                                    placeholder="Enter Full Name"
                                     className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                                 />
                             </div>
@@ -162,38 +162,52 @@ function IncomeForm() {
                                 />
                             </div>
 
-                            <UploadBox
-                                label="Ration Card (रेशन कार्ड)"
-                                field="rationCard"
-                                fileData={files.rationCard}
-                                onFileChange={handleFileChange}
-                            />
+                            <div>
+                                <label className="block font-bold mb-2">
+                                    Date of Birth (जन्मतारीख)
+                                </label>
+                                <input
+                                    type="date"
+                                    className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block font-bold mb-2">
+                                    Address (पत्ता)
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter Address"
+                                    className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
+                                />
+                            </div>
 
                             <UploadBox
                                 label="Aadhaar Card (आधार कार्ड)"
-                                field="aadhaar"
-                                fileData={files.aadhaar}
+                                field="aadhaarCard"
+                                fileData={files.aadhaarCard}
                                 onFileChange={handleFileChange}
                             />
 
                             <UploadBox
-                                label="1 Passport Photo (१ पासपोर्ट फोटो)"
-                                field="photo"
-                                fileData={files.photo}
+                                label="Address Proof (पत्त्याचा पुरावा)"
+                                field="addressProof"
+                                fileData={files.addressProof}
                                 onFileChange={handleFileChange}
                             />
 
                             <UploadBox
-                                label="Light Bill (लाईट बिल)"
-                                field="lightBill"
-                                fileData={files.lightBill}
+                                label="Age Proof (जन्मतारीख पुरावा)"
+                                field="ageProof"
+                                fileData={files.ageProof}
                                 onFileChange={handleFileChange}
                             />
 
                             <UploadBox
-                                label="Tahasildar Income Certificate (तहसीलदार उत्पन्न दाखला)"
-                                field="tahasildarCertificate"
-                                fileData={files.tahasildarCertificate}
+                                label="Passport Photo (पासपोर्ट फोटो)"
+                                field="passportPhoto"
+                                fileData={files.passportPhoto}
                                 onFileChange={handleFileChange}
                             />
 
@@ -216,4 +230,4 @@ function IncomeForm() {
     );
 }
 
-export default IncomeForm;
+export default VoterID;

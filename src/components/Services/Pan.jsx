@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Panhero from "../../assets/Servicesimg/Panhero.png";
-import Pan1 from "../../assets/Servicesimg/Pan1.png";
-import Pan2 from "../../assets/Servicesimg/Pan2.png";
-import Pan3 from "../../assets/Servicesimg/Pan3.png";
+
 
 function PANCardServices() {
   const navigate = useNavigate();
@@ -46,7 +44,7 @@ function PANCardServices() {
         serviceName: "PAN Card",
         applicantName: formData.fullName,
         mobile: formData.mobile,
-        totalAmount: amount,
+        Amount: amount,
         type: activeTab,
       },
     });
@@ -206,7 +204,7 @@ function PANCardServices() {
                 type="submit"
                 className="bg-[#f07e1b] text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg hover:bg-[#d4ac5b] transition-all"
               >
-                Submit Application & pay ₹150
+                Submit Application 
               </button>
             </div>
 

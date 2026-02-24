@@ -7,7 +7,7 @@ function Payment() {
   const data = location.state;
 
   const [screenshot, setScreenshot] = useState(null);
-  const [utr, setUtr] = useState("");
+  
 
   if (!data) {
     return <div className="p-10 text-center">No Payment Data Found</div>;
@@ -27,9 +27,8 @@ function Payment() {
             <p><strong>Service Name:</strong> {data.serviceName}</p>
             <p><strong>Applicant Name:</strong> {data.applicantName}</p>
             <p><strong>Mobile Number:</strong> {data.mobile}</p>
-            <p><strong>Email:</strong> {data.email}</p>
             <p className="text-lg font-semibold text-green-600">
-              Total Amount: ₹{data.amount}
+              Total Amount: ₹{data.Amount}
             </p>
           </div>
         </div>
@@ -37,7 +36,7 @@ function Payment() {
         {/* AMOUNT SECTION */}
         <div className="bg-gray-100 p-4 rounded-xl text-center">
           <p className="text-lg font-bold">
-            Amount: ₹{data.amount}
+            Amount: ₹{data.Amount}
           </p>
         </div>
 
@@ -65,26 +64,13 @@ function Payment() {
               className="w-full border p-2 rounded-lg"
             />
           </div>
-
-          <div>
-            <label className="block font-semibold mb-2">
-              Enter UTR Number *
-            </label>
-            <input
-              type="text"
-              value={utr}
-              onChange={(e) => setUtr(e.target.value)}
-              placeholder="Enter Transaction ID"
-              className="w-full border p-2 rounded-lg"
-            />
-          </div>
         </div>
 
         {/* CONFIRM BUTTON */}
         <button
-          disabled={!screenshot || !utr}
+          disabled={!screenshot}
           className={`w-full py-3 rounded-xl font-bold text-white ${
-            screenshot && utr
+            screenshot 
               ? "bg-green-600 hover:bg-green-700"
               : "bg-gray-400 cursor-not-allowed"
           }`}

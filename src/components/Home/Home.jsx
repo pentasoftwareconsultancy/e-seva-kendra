@@ -1,18 +1,13 @@
 import { Link } from "react-router-dom";
 import heroImg from "../../assets/Home/hero.png";
-
 import panImg from "../../assets/services/pan-img.jpg";
-import Marriage from "../../assets/services/Marriage.jpg";
 import gazetteImg from "../../assets/services/gazette.png";
-import residence from "../../assets/services/rahivashi.jpg";
 import passImg from "../../assets/services/pass.png";
 import rationImg from "../../assets/services/ration.png";
-import incomeImg from "../../assets/services/income.png";
-import birthImg from "../../assets/services/birth-cer.png";
 import serviceImg from "../../assets/Home/service.png";
 import uploadImg from "../../assets/Home/upload.png";
 import deliveryImg from "../../assets/Home/delivery.png";
-import visitingCard from "../../assets/Home/visiting-card.png";
+import visitingCard from "../../assets/Home/visiting-card-front.jpeg";
 
 
 
@@ -90,27 +85,7 @@ export default function Home() {
                                 slug: "pan"
 
                             },
-                            {
-                                title: "Marriage Certificate (लग्न प्रमाणपत्र)",
-                                desc: "Apply for an official marriage certificate.",
-                                img: Marriage,
-                                btnColor: "bg-blue-900 hover:bg-blue-700",
-                                slug: "marriage"
-                            },
-                            // {
-                            //     title: "Voter ID",
-                            //     desc: "Register or correct voter details quickly and easily.",
-                            //     img: voterImg,
-                            //     btnColor: "bg-blue-900 hover:bg-blue-700",
-                            //     slug: "voter"
-                            // },
-                            {
-                                title: "Residence Certificate (रहिवासी दाखला)",
-                                desc: "Apply for a domicile/residence certificate ",
-                                img: residence,
-                                btnColor: "bg-blue-900 hover:bg-blue-700",
-                                slug: "residence"
-                            },
+                          
                             {
                                 title: "Passport (पासपोर्ट)",
                                 desc: "New passport & renewal assistance passport",
@@ -125,20 +100,8 @@ export default function Home() {
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "ration-card",
                             },
-                            {
-                                title: "Income Certificate (उत्पन्न दाखला)",
-                                desc: "Get income certificate for various purposes",
-                                img: incomeImg,
-                                btnColor: "bg-blue-900 hover:bg-blue-700",
-                                slug: "income-certificate",
-                            },
-                            {
-                                title: "Birth Certificate (जन्म प्रमाणपत्र)",
-                                desc: "Birth certificate registration & corrections",
-                                img: birthImg,
-                                btnColor: "bg-blue-900 hover:bg-blue-700",
-                                slug: "birth-certificate",
-                            },
+                          
+        
                             {
                                 title: "Gazette Certificate (गॅझेट प्रमाणपत्र)",
                                 desc: "Apply for Gazette publication for name change, correction record updates.",
@@ -149,14 +112,15 @@ export default function Home() {
                         ].map((service) => (
                             <div
                                 key={service.title}
-                                className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-slate-300"
+                                className="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-blue-500 cursor-pointer transform hover:-translate-y-2 active:scale-95"
                             >
                                 {/* IMAGE */}
-                                <div className="h-40 w-full overflow-hidden bg-slate-100">
+                                <div className="h-40 w-full overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 relative">
+                                    <div className="absolute inset-0 bg-blue-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                                     <img
                                         src={service.img}
                                         alt={service.title}
-                                        className="h-full w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                                        className="h-full w-full object-contain group-hover:scale-110 transition-transform duration-500"
                                     />
                                 </div>
 
@@ -175,7 +139,7 @@ export default function Home() {
                                     </p>
 
                                     {/* APPLY NOW BUTTON */}
-                                    <Link to={`/apply/${service.slug}`} className={`w-full ${service.btnColor} text-white text-xs sm:text-sm font-semibold py-2 sm:py-2.5 rounded-lg transition-all block text-center`}>
+                                    <Link to={`/apply/${service.slug}`} className={`w-full ${service.btnColor} text-white text-xs sm:text-sm font-semibold py-2 sm:py-2.5 rounded-lg transition-all block text-center hover:scale-105 active:scale-95 shadow-md hover:shadow-lg`}>
                                         Apply Now →
                                     </Link>
                                 </div>
@@ -372,7 +336,7 @@ export default function Home() {
                         <i className="fa-solid fa-building text-base sm:text-lg"></i>
                     </div>
                     <h3 className="text-lg sm:text-xl font-bold text-slate-900">
-                        Branch Office
+                       Office
                     </h3>
                 </div>
 
