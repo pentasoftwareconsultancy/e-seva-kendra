@@ -7,7 +7,7 @@ import rationImg from "../../assets/services/ration.png";
 import serviceImg from "../../assets/Home/service.png";
 import uploadImg from "../../assets/Home/upload.png";
 import deliveryImg from "../../assets/Home/delivery.png";
-import visitingCard from "../../assets/Home/visiting-card.png";
+import visitingCard from "../../assets/Home/visiting-card-front.jpeg";
 
 
 
