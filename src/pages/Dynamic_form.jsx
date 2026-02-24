@@ -47,14 +47,14 @@ function Dynamic_form() {
     // "dmat-account": DematAccount,
     // loan: Loan,
     // pfs: PFS,
-    passport: PassportForm,
+    "passport": PassportForm,
     "ration-card": RationCardForm,
-    gazette: GazetteForm,
+    "gazette": GazetteForm,
     "shop-act": ShopAct,
     "udyog-aadhaar": UdyogAadhaar,
-    food: Food,
-    senior: Senior,
-    voter: VoterForm,
+    "food": Food,
+    "senior": Senior,
+    "voter": VoterForm,
   };
 
   const Component = serviceComponents[serviceName];
