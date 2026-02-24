@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import logo from "../../assets/Home/omsai_logo-footer.png";
+import logo from "../../assets/Home/new logo.png";
 
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -39,7 +39,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur border-b">
+    <header className="fixed top-0 z-50 w-full bg-white backdrop-blur border-b">
       <div className="w-full px-4 sm:px-8">
 
         {/* TOP ROW */}

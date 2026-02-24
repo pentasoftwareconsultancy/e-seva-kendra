@@ -29,7 +29,7 @@ export default function Aboutus() {
       </h1>
 
       <p className="text-lg md:text-xl">
-      At E-Suvidha, we provide fast, reliable, affordable
+      At Shree Om Sai Multiservices, we provide fast, reliable, affordable
               documentation solutions for all government and
               legal needs.
       </p>
@@ -44,11 +44,11 @@ export default function Aboutus() {
         <div className="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl font-semibold mb-5">
-              About E-Suvidha
+              About Shree Om Sai Multiservices
             </h2>
 
             <p className="text-gray-600 leading-relaxed text-lg">
-                     Your Trusted Partner for Government & Legal Services.At E-Suvidha, we are committed to providing fast, reliable, and hassle-free digital services to our customers.
+                     Your Trusted Partner for Government & Legal Services. At Shree Om Sai Multiservices, we are committed to providing fast, reliable, and hassle-free digital services to our customers.
 
             </p>
           </div>
