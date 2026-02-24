@@ -12,6 +12,7 @@ import foodImg from "../../assets/services/food.png";
 import notaryImg from "../../assets/services/notary.png";
 import ITRImg from "../../assets/services/itr.png";
 import SIPImg from "../../assets/services/sip.png";
+import IECImg from "../../assets/services/iec.png";
 
 
 export default function Nav_Service() {
@@ -88,9 +89,9 @@ const services = [
     slug: "ITR",
   },
    {
-    title: "Inport (IEC) (आयात निर्यात कोड)",
+    title: "Import export card (IEC) (आयात निर्यात कोड)",
     desc: "File your Import Export Code (IEC) application.",
-    img: voterImg,
+    img: IECImg,
     slug: "iec",
   },
    {
