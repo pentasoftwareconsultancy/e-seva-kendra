@@ -373,7 +373,7 @@ export default function Home() {
                         <i className="fa-solid fa-building text-base sm:text-lg"></i>
                     </div>
                     <h3 className="text-lg sm:text-xl font-bold text-slate-900">
-                        Branch Office
+                       Office
                     </h3>
                 </div>
 
