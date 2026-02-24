@@ -9,11 +9,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 items-start">
 
           {/* Company Info */}
-          <div className="flex flex-col space-y-5">
+          <div className="flex flex-col space-y-5 pl-2 md:pl-0">
+
             <img
               src={logo}
               alt="Shree Om Sai Multi Services"
-              className="h-20 w-auto "
+              className="h-16 w-auto object-contain"
             />
 
             <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
@@ -33,6 +34,7 @@ export default function Footer() {
                 <i className="fa-brands fa-linkedin-in text-sm"></i>
               </a>
             </div>
+
           </div>
 
           {/* Quick Links */}
