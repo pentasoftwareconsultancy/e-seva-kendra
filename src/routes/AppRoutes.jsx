@@ -7,6 +7,7 @@ import LoginPage from "../pages/LoginPage";
 
 import Payment from "../pages/Payment";
 
+import Notifications from "../pages/Notifications";
 
 import AdminLogin from "../pages/admin/AdminLogin";
 import ProtectedRoute from "../components/common/ProtectedRoute";
@@ -32,6 +33,7 @@ const AppRoutes = () => {
       <Route path="/contact" element={<Contactpage />} />
       <Route path="/service" element={<Service_navpage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/notifications" element={<Notifications />} />
 
       <Route path="/login" element={<LoginPage />} />
       <Route path="/apply/:serviceName" element={<Dynamic_form />} />  
