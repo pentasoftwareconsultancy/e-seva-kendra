@@ -36,7 +36,7 @@ function Payment() {
         {/* AMOUNT SECTION */}
         <div className="bg-gray-100 p-4 rounded-xl text-center">
           <p className="text-lg font-bold">
-            Amount: ₹{data.Amount}
+            Amount: ₹{data.Amount  }
           </p>
         </div>
 
