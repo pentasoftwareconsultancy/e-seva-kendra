@@ -140,7 +140,7 @@ function Insurance() {
 
       {/* Form Section */}
       <section id="insurance-form" className="py-10 px-4 md:px-8 bg-[#f8faff]">
-        <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow p-8 md:p-12 mb-20">
+        <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow-2xl p-8 md:p-12 mb-20">
           <h2 className="text-3xl font-bold mb-6">
             {activeTab === "health"
               ? "आरोग्य विमा अर्ज फॉर्म / Health Insurance Application Form"

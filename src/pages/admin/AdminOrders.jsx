@@ -127,22 +127,63 @@ const AdminOrders = () => {
 
           {/* Order Details Modal */}
           {selectedOrder && (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setSelectedOrder(null)}>
-              <div className="bg-white rounded-lg p-6 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
-                <h3 className="text-xl font-bold mb-4">Order Details</h3>
-                <div className="space-y-3">
-                  <p><span className="font-semibold">Order ID:</span> {selectedOrder.id}</p>
-                  <p><span className="font-semibold">Customer:</span> {selectedOrder.name}</p>
-                  <p><span className="font-semibold">Service:</span> {selectedOrder.service}</p>
-                  <p><span className="font-semibold">Status:</span> <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(selectedOrder.status)}`}>{selectedOrder.status}</span></p>
-                  <p><span className="font-semibold">Date:</span> {selectedOrder.date}</p>
+            <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-2 md:p-4" onClick={() => setSelectedOrder(null)}>
+              <div className="bg-white rounded-lg shadow-2xl w-full max-w-[95vw] md:max-w-2xl max-h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+                
+                {/* Header */}
+                <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-3 md:px-6 py-2 md:py-3 flex items-center justify-between rounded-t-lg">
+                  <h3 className="text-sm md:text-lg font-semibold text-white flex items-center gap-2">
+                    <ShoppingBag className="w-4 h-4 md:w-5 md:h-5" />
+                    Order Details
+                  </h3>
+                  <button 
+                    onClick={() => setSelectedOrder(null)}
+                    className="text-white/80 hover:text-white text-2xl leading-none"
+                  >
+                    ×
+                  </button>
                 </div>
-                <button 
-                  onClick={() => setSelectedOrder(null)}
-                  className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-                >
-                  Close
-                </button>
+
+                {/* Content */}
+                <div className="flex-1 p-3 md:p-6 overflow-y-auto">
+                  <div className="bg-gray-50 rounded-lg p-3 md:p-4 space-y-2 md:space-y-3">
+                    <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
+                      <span className="text-xs md:text-sm text-gray-600 font-medium">Order ID</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">#{selectedOrder.id}</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
+                      <span className="text-xs md:text-sm text-gray-600 font-medium">Customer Name</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">{selectedOrder.name}</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
+                      <span className="text-xs md:text-sm text-gray-600 font-medium">Service Type</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">{selectedOrder.service}</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
+                      <span className="text-xs md:text-sm text-gray-600 font-medium">Date</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">{selectedOrder.date}</span>
+                    </div>
+                    <div className="flex justify-between items-center pt-1">
+                      <span className="text-xs md:text-sm text-gray-600 font-medium">Status</span>
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(selectedOrder.status)}`}>
+                        {selectedOrder.status}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="px-3 md:px-6 py-2 md:py-3 bg-gray-50 border-t flex gap-2 md:gap-3 rounded-b-lg">
+                  <button 
+                    onClick={() => setSelectedOrder(null)}
+                    className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 rounded-lg font-medium text-xs md:text-sm transition"
+                  >
+                    Close
+                  </button>
+                  <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition">
+                    Update Status
+                  </button>
+                </div>
               </div>
             </div>
           )}

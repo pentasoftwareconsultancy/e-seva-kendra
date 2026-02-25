@@ -123,7 +123,7 @@ function VehicleInsuranceForm() {
                     </div>
 
                     {/* Form */}
-                    <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <form className="grid grid-cols-1 md:grid-cols-2 gap-6 shadow-2xl">
 
                         <InputField label="Full Name (पूर्ण नाव)" />
                         <InputField label="Mobile Number (मोबाईल नंबर)" />
