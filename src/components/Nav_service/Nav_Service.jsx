@@ -143,10 +143,10 @@ const services = [
     slug: "vehicle-insurance",
   },
     {
-    title: "D-mart Account (डी-मार्ट खाते)",
-    desc: "File your D-mart account application or update details.",
+    title: "Demat Account (डीमॅट खाते)",
+    desc: "File your De-mat account application or update details.",
     img: voterImg,
-    slug: "d-mart-account",
+    slug: "demat-account",
   },
     {
     title: "Loan Services (कर्ज सेवा)",
