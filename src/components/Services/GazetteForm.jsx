@@ -1,12 +1,8 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import Panhero from "../../assets/Servicesimg/Panhero.png";
-import Pan1 from "../../assets/Servicesimg/Pan1.png";
-import Pan2 from "../../assets/Servicesimg/Pan2.png";
-import Pan3 from "../../assets/Servicesimg/Pan3.png";
 
-
-// ✅ MOVE UploadBox OUTSIDE main component
+// ✅ UploadBox (UI untouched)
 function UploadBox({ label, field, fileData, onFileChange }) {
   return (
     <div className="bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200">
@@ -37,6 +33,13 @@ function UploadBox({ label, field, fileData, onFileChange }) {
 
 function GazetteForm() {
 
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    mobile: "",
+  });
+
   const [files, setFiles] = useState({
     aadhaar: null,
     pan: null,
@@ -44,6 +47,13 @@ function GazetteForm() {
     marriageCard: null,
     stampPaper: null,
   });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
@@ -61,6 +71,36 @@ function GazetteForm() {
     }
   };
 
+  // ✅ Submit Handler
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // 🔴 Check text fields
+    if (!formData.fullName || !formData.mobile) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    // 🔴 Check all uploads mandatory
+    for (let key in files) {
+      if (!files[key]) {
+        alert("Please upload all required documents");
+        return;
+      }
+    }
+
+    // ✅ Redirect to Payment Page
+    navigate("/payment", {
+      state: {
+        serviceName: "Gazette Service",
+        applicantName: formData.fullName,
+         mobile: formData.mobile,
+        Amount: 600, // You can change amount here
+        formData,
+      },
+    });
+  };
+
   return (
     <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
 
@@ -73,7 +113,6 @@ function GazetteForm() {
             className="w-full h-full object-cover object-[20%_center]"
           />
         </div>
-
         <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/80 to-transparent"></div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
@@ -82,7 +121,7 @@ function GazetteForm() {
             <p className="text-xl text-gray-200">
               Apply for official Gazette documentation easily.
             </p>
-            <a href="#gazette-form">
+            <a href="#gajet-form">
               <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
                 Apply Now
               </button>
@@ -90,7 +129,7 @@ function GazetteForm() {
           </div>
         </div>
       </section>
-      {/* ================= DOCUMENT REQUIREMENTS ================= */}
+ {/* ================= DOCUMENT REQUIREMENTS ================= */}
       <section className="bg-white py-16 px-4 md:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white border-4 border-green-700 rounded-3xl p-8 md:p-12 shadow-xl">
@@ -127,24 +166,29 @@ function GazetteForm() {
         </div>
       </section>
 
+
       {/* FORM SECTION */}
-      <section
-        id="gajet-form"
-        className="py-10 px-4 md:px-8 bg-[#f8faff]"
-      >
+      <section id="gajet-form" className="py-10 px-4 md:px-8 bg-[#f8faff]">
         <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow p-8 md:p-12 mb-20">
           <h2 className="text-3xl font-bold mb-6">
             Gazette Application Form
           </h2>
 
-          <form className="space-y-8">
+          <form className="space-y-8" onSubmit={handleSubmit}>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Name */}
+
+              {/* Full Name */}
               <div>
-                <label className="block font-bold mb-2">Full Name (पूर्ण नाव)</label>
+                <label className="block font-bold mb-2">
+                  Full Name (पूर्ण नाव)
+                </label>
                 <input
                   type="text"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  required
                   placeholder="Enter Full Name"
                   className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                 />
@@ -152,47 +196,26 @@ function GazetteForm() {
 
               {/* Mobile */}
               <div>
-                <label className="block font-bold mb-2">Mobile Number (मोबाईल क्रमांक)</label>
+                <label className="block font-bold mb-2">
+                  Mobile Number (मोबाईल क्रमांक)
+                </label>
                 <input
                   type="text"
+                  name="mobile"
+                  value={formData.mobile}
+                  onChange={handleChange}
+                  required
                   placeholder="Enter Mobile Number"
                   className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                 />
               </div>
-              <UploadBox
-                label="aadhaar card (आधार कार्ड)"
-                field="aadhaar"
-                fileData={files.aadhaar}
-                onFileChange={handleFileChange}
-              />
 
-              <UploadBox
-                label="pan card (पॅन कार्ड)"
-                field="pan"
-                fileData={files.pan}
-                onFileChange={handleFileChange}
-              />
-
-              <UploadBox
-                label="passport photo (पासपोर्ट फोटो)"
-                field="photo"
-                fileData={files.photo}
-                onFileChange={handleFileChange}
-              />
-
-              <UploadBox
-                label="marriage certificate (विवाह पत्रिका)"
-                field="marriageCard"
-                fileData={files.marriageCard}
-                onFileChange={handleFileChange}
-              />
-
-              <UploadBox
-                label="Stamp Paper ( स्टॅम्प पेपर पत्र)"
-                field="stampPaper"
-                fileData={files.stampPaper}
-                onFileChange={handleFileChange}
-              />
+              {/* Uploads */}
+              <UploadBox label="aadhaar card (आधार कार्ड)" field="aadhaar" fileData={files.aadhaar} onFileChange={handleFileChange} />
+              <UploadBox label="pan card (पॅन कार्ड)" field="pan" fileData={files.pan} onFileChange={handleFileChange} />
+              <UploadBox label="passport photo (पासपोर्ट फोटो)" field="photo" fileData={files.photo} onFileChange={handleFileChange} />
+              <UploadBox label="marriage certificate (विवाह पत्रिका)" field="marriageCard" fileData={files.marriageCard} onFileChange={handleFileChange} />
+              <UploadBox label="Stamp Paper ( स्टॅम्प पेपर पत्र)" field="stampPaper" fileData={files.stampPaper} onFileChange={handleFileChange} />
 
             </div>
 
@@ -201,7 +224,7 @@ function GazetteForm() {
                 type="submit"
                 className="bg-[#f07e1b] text-white px-12 py-4 rounded-xl font-bold text-lg hover:bg-[#d4ac5b] transition-all"
               >
-                Submit Application
+                Submit Application 
               </button>
             </div>
 
