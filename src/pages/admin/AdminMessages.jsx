@@ -83,27 +83,79 @@ const AdminMessages = () => {
 
       {/* Message Details Modal */}
       {selectedMessage && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setSelectedMessage(null)}>
-          <div className="bg-white rounded-lg p-6 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
-            <h3 className="text-xl font-bold mb-4">Message Details</h3>
-            <div className="space-y-3">
-              <p><span className="font-semibold">Name:</span> {selectedMessage.name}</p>
-              <p><span className="font-semibold">Email:</span> {selectedMessage.email}</p>
-              <p><span className="font-semibold">Mobile:</span> {selectedMessage.mobile}</p>
-              <p><span className="font-semibold">Service:</span> {selectedMessage.service}</p>
-              <p><span className="font-semibold">Status:</span> <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(selectedMessage.status)}`}>{selectedMessage.status}</span></p>
-              <p><span className="font-semibold">Date:</span> {selectedMessage.date}</p>
-              <div className="mt-4">
-                <p className="font-semibold mb-2">Message:</p>
-                <p className="text-gray-700 bg-gray-50 p-3 rounded">{selectedMessage.message}</p>
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-2 md:p-4" onClick={() => setSelectedMessage(null)}>
+          <div className="bg-white rounded-lg shadow-2xl w-full max-w-[98vw] md:max-w-4xl h-[95vh] md:h-[85vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+            
+            {/* Header */}
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-3 md:px-6 py-2 md:py-3 flex items-center justify-between rounded-t-lg">
+              <h3 className="text-sm md:text-lg font-semibold text-white flex items-center gap-2">
+                <MessageSquare className="w-4 h-4 md:w-5 md:h-5" />
+                Message Details
+              </h3>
+              <button 
+                onClick={() => setSelectedMessage(null)}
+                className="text-white/80 hover:text-white text-2xl leading-none"
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Content - Two Column Layout */}
+            <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+              
+              {/* Left: Contact Info */}
+              <div className="w-full md:w-2/5 p-3 md:p-6 md:border-r bg-gray-50 overflow-y-auto">
+                <div className="space-y-2 md:space-y-4">
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">Name</p>
+                    <p className="text-xs md:text-sm font-semibold text-gray-900">{selectedMessage.name}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">Email</p>
+                    <p className="text-xs md:text-sm font-semibold text-gray-900">{selectedMessage.email}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">Mobile</p>
+                    <p className="text-xs md:text-sm font-semibold text-gray-900">{selectedMessage.mobile}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">Service</p>
+                    <p className="text-xs md:text-sm font-semibold text-gray-900">{selectedMessage.service}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">Date</p>
+                    <p className="text-xs md:text-sm font-semibold text-gray-900">{selectedMessage.date}</p>
+                  </div>
+                  <div className="pt-2 border-t">
+                    <p className="text-xs text-gray-500 mb-2">Status</p>
+                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(selectedMessage.status)}`}>
+                      {selectedMessage.status}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: Message Content */}
+              <div className="w-full md:w-3/5 p-3 md:p-6 flex flex-col overflow-y-auto">
+                <p className="text-xs md:text-sm font-semibold text-gray-700 mb-2 md:mb-3">Message</p>
+                <div className="flex-1 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 p-3 md:p-4">
+                  <p className="text-xs md:text-sm text-gray-800 leading-relaxed">{selectedMessage.message}</p>
+                </div>
               </div>
             </div>
-            <button 
-              onClick={() => setSelectedMessage(null)}
-              className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-            >
-              Close
-            </button>
+
+            {/* Footer */}
+            <div className="px-3 md:px-6 py-2 md:py-3 bg-gray-50 border-t flex gap-2 md:gap-3 rounded-b-lg">
+              <button 
+                onClick={() => setSelectedMessage(null)}
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 rounded-lg font-medium text-xs md:text-sm transition"
+              >
+                Close
+              </button>
+              <button className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition">
+                Mark as Read
+              </button>
+            </div>
           </div>
         </div>
       )}

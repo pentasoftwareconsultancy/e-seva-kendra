@@ -135,23 +135,65 @@ const AdminUsers = () => {
 
       {/* User Details Modal */}
       {selectedUser && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setSelectedUser(null)}>
-          <div className="bg-white rounded-lg p-6 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
-            <h3 className="text-xl font-bold mb-4">User Details</h3>
-            <div className="space-y-3">
-              <p><span className="font-semibold">User ID:</span> {selectedUser.id}</p>
-              <p><span className="font-semibold">Name:</span> {selectedUser.name}</p>
-              <p><span className="font-semibold">Email:</span> {selectedUser.email}</p>
-              <p><span className="font-semibold">Mobile:</span> {selectedUser.mobile}</p>
-              <p><span className="font-semibold">Role:</span> {selectedUser.role}</p>
-              <p><span className="font-semibold">Joined:</span> {selectedUser.date}</p>
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-2 md:p-4" onClick={() => setSelectedUser(null)}>
+          <div className="bg-white rounded-lg shadow-2xl w-full max-w-[95vw] md:max-w-2xl max-h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+            
+            {/* Header */}
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-3 md:px-6 py-2 md:py-3 flex items-center justify-between rounded-t-lg">
+              <h3 className="text-sm md:text-lg font-semibold text-white flex items-center gap-2">
+                <User className="w-4 h-4 md:w-5 md:h-5" />
+                User Details
+              </h3>
+              <button 
+                onClick={() => setSelectedUser(null)}
+                className="text-white/80 hover:text-white text-2xl leading-none"
+              >
+                ×
+              </button>
             </div>
-            <button 
-              onClick={() => setSelectedUser(null)}
-              className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-            >
-              Close
-            </button>
+
+            {/* Content */}
+            <div className="flex-1 p-3 md:p-6 overflow-y-auto">
+              <div className="bg-gray-50 rounded-lg p-3 md:p-4 space-y-2 md:space-y-3">
+                <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
+                  <span className="text-xs md:text-sm text-gray-600 font-medium">User ID</span>
+                  <span className="text-xs md:text-sm font-semibold text-gray-900">#{selectedUser.id}</span>
+                </div>
+                <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
+                  <span className="text-xs md:text-sm text-gray-600 font-medium">Name</span>
+                  <span className="text-xs md:text-sm font-semibold text-gray-900">{selectedUser.name}</span>
+                </div>
+                <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
+                  <span className="text-xs md:text-sm text-gray-600 font-medium">Email</span>
+                  <span className="text-xs md:text-sm font-semibold text-gray-900">{selectedUser.email}</span>
+                </div>
+                <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
+                  <span className="text-xs md:text-sm text-gray-600 font-medium">Mobile</span>
+                  <span className="text-xs md:text-sm font-semibold text-gray-900">{selectedUser.mobile}</span>
+                </div>
+                <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
+                  <span className="text-xs md:text-sm text-gray-600 font-medium">Role</span>
+                  <span className="text-xs md:text-sm font-semibold text-gray-900">{selectedUser.role}</span>
+                </div>
+                <div className="flex justify-between items-center pt-1">
+                  <span className="text-xs md:text-sm text-gray-600 font-medium">Joined Date</span>
+                  <span className="text-xs md:text-sm font-semibold text-gray-900">{selectedUser.date}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="px-3 md:px-6 py-2 md:py-3 bg-gray-50 border-t flex gap-2 md:gap-3 rounded-b-lg">
+              <button 
+                onClick={() => setSelectedUser(null)}
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 rounded-lg font-medium text-xs md:text-sm transition"
+              >
+                Close
+              </button>
+              <button className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition">
+                Block User
+              </button>
+            </div>
           </div>
         </div>
       )}
