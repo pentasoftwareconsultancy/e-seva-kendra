@@ -9,10 +9,21 @@ import gazetteImg from "../../assets/services/gazette.png";
 import shopImg from "../../assets/services/shop.png";
 import udyamImg from "../../assets/services/udyam.png";
 import foodImg from "../../assets/services/food.png";
-import notaryImg from "../../assets/services/notary.png";
-import ITRImg from "../../assets/services/itr.png";
-import SIPImg from "../../assets/services/sip.png";
-import IECImg from "../../assets/services/iec.png";
+import Incomtax from "../../assets/services/Incomtax.jpg";
+import loan from "../../assets/services/loan.png";
+import Demat from "../../assets/services/demat.png";
+import Finance from "../../assets/services/Finance.png";
+import Insurance from "../../assets/services/Insurance.png";
+import  Eshram from "../../assets/services/Eshram.png";
+import Mutualfunds from "../../assets/services/Mutualfunds.jpg";
+import Scitizen from "../../assets/services/Scitizen.jpg";
+import Agriment from "../../assets/services/Agriment.png";
+import Trademark from "../../assets/services/Trademark.jpg";
+import Gst from "../../assets/services/Gst.png";
+import Vinsurance from "../../assets/services/Vinsurance.png";
+import Ayushman from "../../assets/services/Ayushman.png";
+import SIPImg from "../../assets/services/SIP.png";
+import IECImg from "../../assets/services/IEC.png";
 
 
 export default function Nav_Service() {
@@ -79,13 +90,13 @@ const services = [
   {
     title: "Senior Certificate(ज्येष्ठ नागरिक दाखला)",
     desc: "Get your senior citizen certificate for government benefits.",
-    img: notaryImg,
+    img: Scitizen,
     slug: "senior",
   },
   {
     title: "Income tax Return (ITR)(उत्पन्न कर विवरण)",
     desc: "File your Income Tax Return easily.",
-    img: ITRImg,
+    img: Incomtax,
     slug: "ITR",
   },
    {
@@ -97,67 +108,67 @@ const services = [
    {
     title: "Goods and Services Tax (GST) (वस्तू व सेवा कर)",
     desc: "File your GST registration or update details.",
-    img: voterImg,
+    img: Gst,
     slug: "gst",
   },
    {
     title: "Trademark (वैयक्तिक किंवा कंपनीचा नांव व चिन्हाची नोंदणी)",
     desc: "File your trademark registration or update details.",
-    img: voterImg,
+    img: Trademark,
     slug: "trademark",
   },
    {
     title: "Insurance (विमा)",
     desc: "File your insurance application or update details.",
-    img: voterImg,
+    img: Insurance,
     slug: "insurance",
   },
    {
     title: "mutual fund(म्युच्युअल फंड)",
     desc: "File your mutual fund application or update details.",
-    img: voterImg,
+    img: Mutualfunds,
     slug: "mutual-fund",
   },
     {
     title: "rent agreement (भाडे करार)",
     desc: "File your rent agreement application or update details.",
-    img: voterImg,
+    img: Agriment,
     slug: "rent-agreement",
   },
     {
     title: "e-shram card(ई-श्रम कार्ड)",
     desc: "File your e-shram card application or update details.",
-    img: voterImg,
+    img: Eshram,
     slug: "e-shram-card",
   },
     {
     title: "Ayushman card (आयुष्मान कार्ड)",
     desc: "File your Ayushman card application or update details.",
-    img: voterImg,
+    img: Ayushman,
     slug: "ayushman-card",
   },
     {
     title: "vehicle insurance (वाहन विमा)",
     desc: "File your vehicle insurance application or update details.",
-    img: voterImg,
+    img: Vinsurance,
     slug: "vehicle-insurance",
   },
     {
-    title: "D-mart Account (डी-मार्ट खाते)",
+    title: "Demat Account (डीमॅट खाते)",
     desc: "File your D-mart account application or update details.",
-    img: voterImg,
-    slug: "d-mart-account",
+    img: Demat,
+    slug: "demat-account",
   },
     {
     title: "Loan Services (कर्ज सेवा)",
     desc: "File your loan application or update details.",
-    img: voterImg,
+    img: loan,
     slug: "loan",
   },
   {
       title: "Public Financial Services (सार्वजनिक आर्थिक सेवा)",
     desc: "Apply for public financial services.",
-    img: voterImg,
+    img: Finance,
     slug: "public-financial-services",
   },
   
