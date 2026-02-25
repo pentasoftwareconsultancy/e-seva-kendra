@@ -6,21 +6,21 @@ function LoanServiceForm() {
     const [selectedLoan, setSelectedLoan] = useState("personal");
 
     const loanTypes = [
-        { 
-            id: "personal", 
-            title: "वैयक्तिक कर्ज", 
+        {
+            id: "personal",
+            title: "वैयक्तिक कर्ज",
             subtitle: "Personal Loan",
             desc: "For personal expenses & emergencies"
         },
-        { 
-            id: "business", 
-            title: "व्यवसाय कर्ज", 
+        {
+            id: "business",
+            title: "व्यवसाय कर्ज",
             subtitle: "Business Loan",
             desc: "For business growth & working capital"
         },
-        { 
-            id: "home", 
-            title: "गृहकर्ज", 
+        {
+            id: "home",
+            title: "गृहकर्ज",
             subtitle: "Home Loan",
             desc: "For purchasing or constructing house"
         },
@@ -49,37 +49,37 @@ function LoanServiceForm() {
 
     return (
         <div className="min-h-screen bg-[#f8faff] text-[#1e293b]">
-{/* Hero Section */}
-<section className="relative w-full h-[550px] flex items-center">
-    <div className="absolute inset-0">
-        <img
-            src={PanHero}
-            alt="Loan Services"
-            className="w-full h-full object-cover"
-        />
-    </div>
+            {/* Hero Section */}
+            <section className="relative w-full h-[550px] flex items-center">
+                <div className="absolute inset-0">
+                    <img
+                        src={PanHero}
+                        alt="Loan Services"
+                        className="w-full h-full object-cover"
+                    />
+                </div>
 
-    <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/85 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/85 to-transparent"></div>
 
-    {/* LEFT ALIGNED CONTENT */}
-    <div className="relative z-10 w-full px-10 md:px-20 text-white">
-        <div className="max-w-2xl">
-            
-            <h1 className="text-5xl font-bold leading-tight">
-                Loan Services <br />
-            </h1>
+                {/* LEFT ALIGNED CONTENT */}
+                <div className="relative z-10 w-full px-10 md:px-20 text-white">
+                    <div className="max-w-2xl">
 
-            <p className="text-lg text-gray-200 mt-6">
-                Apply for Personal Loan, Business Loan, or Home Loan easily and securely with minimal documentation.
-            </p>
-             <a href="#loan-form">
+                        <h1 className="text-5xl font-bold leading-tight">
+                            Loan Services <br />
+                        </h1>
+
+                        <p className="text-lg text-gray-200 mt-6">
+                            Apply for Personal Loan, Business Loan, or Home Loan easily and securely with minimal documentation.
+                        </p>
+                        <a href="#loan-form">
                             <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
                                 Apply Now
                             </button>
                         </a>
-        </div>
-    </div>
-</section>
+                    </div>
+                </div>
+            </section>
             {/* Loan Selection Cards */}
             <section className="py-12 px-4">
                 <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
@@ -88,11 +88,10 @@ function LoanServiceForm() {
                         <div
                             key={loan.id}
                             onClick={() => setSelectedLoan(loan.id)}
-                            className={`cursor-pointer p-6 rounded-2xl shadow-lg transition-all border-2 ${
-                                selectedLoan === loan.id
+                            className={`cursor-pointer p-6 rounded-2xl shadow-lg transition-all border-2 ${selectedLoan === loan.id
                                     ? "border-[#f07e1b] bg-white"
                                     : "border-gray-200 bg-white hover:shadow-xl"
-                            }`}
+                                }`}
                         >
                             <h3 className="text-xl font-bold">{loan.title}</h3>
                             <p className="text-[#f07e1b] font-semibold">{loan.subtitle}</p>
@@ -104,11 +103,11 @@ function LoanServiceForm() {
             </section>
 
             {/* Documents + Form Section */}
-            <section className="py-10 px-4">
+            <section id="loan-form" className="py-10 px-4">
                 <div className="max-w-6xl mx-auto bg-white rounded-[40px] shadow p-8 md:p-12 mb-20">
 
                     <h2 className="text-3xl font-bold mb-6 capitalize">
-                        {loanTypes.find(l => l.id === selectedLoan)?.title} Application Form
+                        {loanTypes.find(l => l.id === selectedLoan)?.title} फॉर्म
                     </h2>
 
                     {/* Documents */}
