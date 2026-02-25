@@ -1,12 +1,13 @@
-import { Routes, Route, Navigate } from "react-router-dom";import Aboutpage from "../pages/Aboutpage";
+import { Routes, Route, Navigate } from "react-router-dom"; import Aboutpage from "../pages/Aboutpage";
 import Contactpage from "../pages/Contactpage";
 import React from "react";
 import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
-
+import Terms from "../components/common/Terms";
 import Payment from "../pages/Payment";
-
+import Privacy from "../components/common/Privacy";
+import Refund from "../components/common/Refund";
 
 import AdminLogin from "../pages/admin/AdminLogin";
 import ProtectedRoute from "../components/common/ProtectedRoute";
@@ -34,9 +35,12 @@ const AppRoutes = () => {
       <Route path="/register" element={<RegisterPage />} />
 
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/apply/:serviceName" element={<Dynamic_form />} />  
-   
+      <Route path="/apply/:serviceName" element={<Dynamic_form />} />
+
       <Route path="/payment" element={<Payment />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/refund" element={<Refund />} />
 
 
 
@@ -50,10 +54,6 @@ const AppRoutes = () => {
           )
         }
       />
-
-
-
-
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={
         <ProtectedRoute>

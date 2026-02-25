@@ -52,7 +52,7 @@ function Dynamic_form() {
   if (serviceName === "rent-agreement") return <RentAgreementForm />;
   if (serviceName === "ayushman-card") return <AyushmanCardForm />;
   if (serviceName === "vehicle-insurance") return <VehicleInsurance />;
-  if (serviceName === "d-mart-account") return <DMartAccountForm />;
+  if (serviceName === "demat-account") return <DMartAccountForm />;
   if (serviceName === "loan") return <LoanServiceForm />;
   if (serviceName === "public-financial-services") return <PublicFinancialServices />;
 
@@ -69,7 +69,7 @@ function Dynamic_form() {
     "e-shram": EShramCardForm,
     "ayushman": AyushmanCardForm,
     "vehicle-insurance": VehicleInsurance,
-    "dmat-account": DMartAccountForm,
+    "demat-account": DMartAccountForm,
     "loan": LoanServiceForm,
     "pfs": PublicFinancialServices,
     "passport": PassportForm,

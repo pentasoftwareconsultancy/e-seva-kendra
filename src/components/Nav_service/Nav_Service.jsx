@@ -22,6 +22,8 @@ import Trademark from "../../assets/services/Trademark.jpg";
 import Gst from "../../assets/services/Gst.png";
 import Vinsurance from "../../assets/services/Vinsurance.png";
 import Ayushman from "../../assets/services/Ayushman.png";
+import SIPImg from "../../assets/services/SIP.png";
+import IECImg from "../../assets/services/IEC.png";
 
 
 export default function Nav_Service() {
@@ -94,7 +96,7 @@ const services = [
   {
     title: "Income tax Return (ITR)(उत्पन्न कर विवरण)",
     desc: "File your Income Tax Return easily.",
-    img: ITRImg,
+    img: Incomtax,
     slug: "ITR",
   },
    {
@@ -152,10 +154,10 @@ const services = [
     slug: "vehicle-insurance",
   },
     {
-    title: "D-mart Account (डी-मार्ट खाते)",
+    title: "Demat Account (डीमॅट खाते)",
     desc: "File your D-mart account application or update details.",
     img: Demat,
-    slug: "d-mart-account",
+    slug: "demat-account",
   },
     {
     title: "Loan Services (कर्ज सेवा)",
