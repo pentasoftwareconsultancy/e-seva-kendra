@@ -81,6 +81,7 @@ export default function Notifications() {
   const unreadCount = notifications.filter(n => !n.isRead).length;
 
   const markAsRead = async (id) => {
+    
 
     // 🔵 Immediately update UI
     setNotifications(prev =>
