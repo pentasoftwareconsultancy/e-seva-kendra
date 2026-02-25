@@ -74,7 +74,7 @@ const AdminPayments = () => {
             <table className="w-full text-xs md:text-sm">
               <thead>
                 <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 text-left">
-                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs">Payment ID</th>
+                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs hidden md:table-cell">Payment ID</th>
                   <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs">User</th>
                   <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs hidden sm:table-cell">Service</th>
                   <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs hidden sm:table-cell">Amount</th>
@@ -87,7 +87,7 @@ const AdminPayments = () => {
               <tbody className="divide-y divide-gray-100">
                 {filteredPayments.map((pay) => (
                   <tr key={pay.id} className="hover:bg-blue-50/50 transition-colors duration-150">
-                    <td className="px-4 md:px-6 py-4 font-semibold text-blue-600">#{pay.id}</td>
+                    <td className="px-4 md:px-6 py-4 font-semibold text-blue-600 hidden md:table-cell">#{pay.id}</td>
                     <td className="px-4 md:px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
@@ -147,71 +147,91 @@ const AdminPayments = () => {
 
       {/* Payment Details Modal */}
       {selectedPayment && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 md:p-4" onClick={() => setSelectedPayment(null)}>
-          <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl p-4 md:p-8 w-full max-w-[95vw] md:max-w-3xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-2 md:p-4" onClick={() => setSelectedPayment(null)}>
+          <div className="bg-white rounded-lg shadow-2xl w-full max-w-[98vw] md:max-w-4xl h-[95vh] md:h-[85vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+            
             {/* Header */}
-            <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-blue-100">
-              <h3 className="text-base md:text-2xl font-bold text-gray-800 flex items-center gap-2">
-                <CreditCard className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-3 md:px-6 py-2 md:py-3 flex items-center justify-between rounded-t-lg">
+              <h3 className="text-sm md:text-lg font-semibold text-white flex items-center gap-2">
+                <CreditCard className="w-4 h-4 md:w-5 md:h-5" />
                 Payment Details
               </h3>
               <button 
                 onClick={() => setSelectedPayment(null)}
-                className="text-gray-400 hover:text-gray-600 transition"
+                className="text-white/80 hover:text-white text-2xl leading-none"
               >
-                <span className="text-2xl">×</span>
+                ×
               </button>
             </div>
 
-            {/* Content Grid */}
-            <div className="grid md:grid-cols-2 gap-4 mb-6">
-              <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
-                <p className="text-xs text-gray-500 mb-1">Payment ID</p>
-                <p className="text-sm md:text-base font-bold text-blue-600">#{selectedPayment.id}</p>
+            {/* Content - Two Column Layout (stacked on mobile) */}
+            <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+              
+              {/* Left: Payment Info */}
+              <div className="w-full md:w-2/5 p-3 md:p-6 md:border-r bg-gray-50 overflow-y-auto">
+                <div className="space-y-2 md:space-y-4">
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">Payment ID</p>
+                    <p className="text-xs md:text-sm font-bold text-gray-900">#{selectedPayment.id}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">Customer Name</p>
+                    <p className="text-xs md:text-sm font-semibold text-gray-900">{selectedPayment.user}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">Service</p>
+                    <p className="text-xs md:text-sm font-semibold text-gray-900">{selectedPayment.service}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">Payment Method</p>
+                    <p className="text-xs md:text-sm font-semibold text-gray-900">{selectedPayment.method}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">Date</p>
+                    <p className="text-xs md:text-sm font-semibold text-gray-900">{selectedPayment.date}</p>
+                  </div>
+                  <div className="pt-2 border-t">
+                    <p className="text-xs text-gray-500 mb-1">Amount</p>
+                    <p className="text-xl md:text-2xl font-bold text-green-600">{selectedPayment.amount}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 mb-2">Status</p>
+                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${statusStyle[selectedPayment.status]}`}>
+                      {selectedPayment.status}
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div className="bg-green-50 rounded-xl p-4 border border-green-100">
-                <p className="text-xs text-gray-500 mb-1">Amount</p>
-                <p className="text-sm md:text-base font-bold text-green-600">{selectedPayment.amount}</p>
-              </div>
-              <div className="bg-purple-50 rounded-xl p-4 border border-purple-100">
-                <p className="text-xs text-gray-500 mb-1">User</p>
-                <p className="text-sm md:text-base font-semibold text-gray-800">{selectedPayment.user}</p>
-              </div>
-              <div className="bg-orange-50 rounded-xl p-4 border border-orange-100">
-                <p className="text-xs text-gray-500 mb-1">Service</p>
-                <p className="text-sm md:text-base font-semibold text-gray-800">{selectedPayment.service}</p>
-              </div>
-              <div className="bg-gray-50 rounded-xl p-4 border border-gray-200 md:col-span-2">
-                <p className="text-xs text-gray-500 mb-1">Date</p>
-                <p className="text-sm md:text-base font-semibold text-gray-800">{selectedPayment.date}</p>
+
+              {/* Right: Screenshot */}
+              <div className="w-full md:w-3/5 p-3 md:p-6 flex flex-col items-center overflow-y-auto">
+                <p className="text-xs md:text-sm font-semibold text-gray-700 mb-2 md:mb-3 self-start">Payment Screenshot</p>
+                <div className="w-full max-w-[280px] md:w-80 flex-1 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden">
+                  {selectedPayment.screenshot ? (
+                    <img
+                      src={selectedPayment.screenshot}
+                      alt="Payment Screenshot"
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  ) : (
+                    <p className="text-gray-400 text-xs md:text-sm">No screenshot available</p>
+                  )}
+                </div>
               </div>
             </div>
-              
-            {/* Screenshot Section */}
-            {selectedPayment.screenshot && (
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 border-2 border-dashed border-gray-300">
-                <p className="font-bold text-xs md:text-sm text-gray-700 mb-3 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
-                  Payment Screenshot
-                </p>
-                <img
-                  src={selectedPayment.screenshot}
-                  alt="Payment Screenshot"
-                  onMouseEnter={() => setViewScreenshot(selectedPayment.screenshot)}
-                  onMouseLeave={() => setViewScreenshot(null)}
-                  className="w-full border-2 border-gray-300 rounded-xl max-h-[35vh] object-contain cursor-pointer hover:border-blue-400 hover:shadow-lg transition-all duration-300"
-                />
-                <p className="text-xs text-gray-500 mt-2 text-center">Hover to view full size</p>
-              </div>
-            )}
 
-            {/* Close Button */}
-            <button 
-              onClick={() => setSelectedPayment(null)}
-              className="mt-6 w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-xl hover:from-blue-700 hover:to-blue-800 font-semibold text-xs md:text-sm shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              Close
-            </button>
+            {/* Footer */}
+            <div className="px-3 md:px-6 py-2 md:py-3 bg-gray-50 border-t flex gap-2 md:gap-3 rounded-b-lg">
+              <button 
+                onClick={() => setSelectedPayment(null)}
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 rounded-lg font-medium text-xs md:text-sm transition"
+              >
+                Close
+              </button>
+              <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition">
+                Mark as Verified
+              </button>
+            </div>
           </div>
         </div>
       )}
