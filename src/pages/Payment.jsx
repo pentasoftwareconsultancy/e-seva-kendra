@@ -7,6 +7,15 @@ function Payment() {
   const data = location.state;
 
   const [screenshot, setScreenshot] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setScreenshot(file);
+      setPreviewUrl(URL.createObjectURL(file));
+    }
+  };
   
 
   if (!data) {
@@ -60,10 +69,22 @@ function Payment() {
             <input
               type="file"
               accept="image/*"
-              onChange={(e) => setScreenshot(e.target.files[0])}
+              onChange={handleFileChange}
               className="w-full border p-2 rounded-lg"
             />
           </div>
+
+          {/* SCREENSHOT PREVIEW */}
+          {previewUrl && (
+            <div className="mt-4">
+              <p className="font-semibold mb-2">Screenshot Preview:</p>
+              <img
+                src={previewUrl}
+                alt="Payment Screenshot"
+                className="w-full max-w-md mx-auto border-2 border-gray-300 rounded-lg"
+              />
+            </div>
+          )}
         </div>
 
         {/* CONFIRM BUTTON */}

@@ -21,6 +21,9 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [navSearch, setNavSearch] = useState("");
+  const [mobileSearch, setMobileSearch] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   const services = [
@@ -54,16 +57,61 @@ export default function Header() {
       <div className="w-full px-4 sm:px-8">
 
         {/* TOP ROW */}
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 gap-2">
 
           {/* LOGO */}
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center flex-shrink-0">
             <img
               src={logo}
               alt="Shree Om Sai Multi Services"
-              className="h-15 w-auto object-contain"
+              className="h-12 w-auto object-contain"
             />
           </Link>
+
+          {/* MOBILE SEARCH */}
+          <div className="md:hidden flex-1 relative">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={mobileSearch}
+              onChange={(e) => setMobileSearch(e.target.value)}
+              onFocus={() => setIsMobileSearchOpen(true)}
+              onBlur={() => setTimeout(() => setIsMobileSearchOpen(false), 200)}
+              className="w-full px-2 py-1.5 border rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            {isMobileSearchOpen && mobileSearch && (
+              <div className="absolute top-full mt-2 left-[-2rem] right-[-2rem] bg-white shadow-xl rounded-xl z-50 border">
+                <div className="max-h-60 overflow-y-auto">
+                  {services
+                    .filter(service =>
+                      service.name
+                        .toLowerCase()
+                        .includes(mobileSearch.toLowerCase())
+                    )
+                    .map((service, index) => (
+                      <Link
+                        key={index}
+                        to={`/apply/${service.slug}`}
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          window.location.href = `/apply/${service.slug}`;
+                        }}
+                        className="block px-3 py-2 text-xs hover:bg-blue-50 hover:text-blue-600"
+                      >
+                        {service.name}
+                      </Link>
+                    ))}
+                  {services.filter(service =>
+                    service.name
+                      .toLowerCase()
+                      .includes(mobileSearch.toLowerCase())
+                  ).length === 0 && (
+                    <div className="px-3 py-2 text-xs text-gray-500">No services found</div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* DESKTOP NAV */}
           <nav className="hidden md:flex items-center text-sm font-medium text-slate-700 ml-auto">
@@ -156,13 +204,49 @@ export default function Header() {
             <div className="h-5 w-px bg-slate-300 mx-4" />
 
             {/* SEARCH */}
-            <input
-              type="text"
-              placeholder="Search..."
-              value={navSearch}
-              onChange={(e) => setNavSearch(e.target.value)}
-              className="px-3 py-1.5 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500 mr-6"
-            />
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search services..."
+                value={navSearch}
+                onChange={(e) => setNavSearch(e.target.value)}
+                onFocus={() => setIsSearchOpen(true)}
+                onBlur={() => setTimeout(() => setIsSearchOpen(false), 200)}
+                className="px-3 py-1.5 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500 mr-6 w-48"
+              />
+              {isSearchOpen && navSearch && (
+                <div className="absolute top-full mt-2 w-72 bg-white shadow-xl rounded-xl z-50 right-0">
+                  <div className="max-h-80 overflow-y-auto">
+                    {services
+                      .filter(service =>
+                        service.name
+                          .toLowerCase()
+                          .includes(navSearch.toLowerCase())
+                      )
+                      .map((service, index) => (
+                        <Link
+                          key={index}
+                          to={`/apply/${service.slug}`}
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            window.location.href = `/apply/${service.slug}`;
+                          }}
+                          className="block px-4 py-2 text-sm hover:bg-blue-50 hover:text-blue-600"
+                        >
+                          {service.name}
+                        </Link>
+                      ))}
+                    {services.filter(service =>
+                      service.name
+                        .toLowerCase()
+                        .includes(navSearch.toLowerCase())
+                    ).length === 0 && (
+                      <div className="px-4 py-2 text-sm text-gray-500">No services found</div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
           </nav>
 
           {/* RIGHT SIDE */}
@@ -207,21 +291,23 @@ export default function Header() {
 
             {/* Mobile Hamburger */}
             <button
-              className="md:hidden flex flex-col gap-1"
+              className="md:hidden flex flex-col gap-1 flex-shrink-0"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              <span className="w-6 h-0.5 bg-slate-800"></span>
-              <span className="w-6 h-0.5 bg-slate-800"></span>
-              <span className="w-6 h-0.5 bg-slate-800"></span>
+              <span className="w-5 h-0.5 bg-slate-800"></span>
+              <span className="w-5 h-0.5 bg-slate-800"></span>
+              <span className="w-5 h-0.5 bg-slate-800"></span>
             </button>
           </div>
 
           {/* MOBILE SLIDE MENU */}
-          <div
-            className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${isMobileMenuOpen ? "max-h-screen py-4" : "max-h-0"
-              }`}
-          >
-            <div className="flex flex-col space-y-4 px-4 text-sm font-medium text-slate-700">
+        </div>
+
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${isMobileMenuOpen ? "max-h-screen py-4" : "max-h-0"
+            }`}
+        >
+          <div className="flex flex-col space-y-4 px-4 text-sm font-medium text-slate-700">
 
               <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
                 Home
@@ -279,9 +365,7 @@ export default function Header() {
                   </button>
                 </>
               )}
-            </div>
           </div>
-
         </div>
 
       </div>
