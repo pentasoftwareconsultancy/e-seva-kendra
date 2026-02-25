@@ -34,21 +34,22 @@ function PANCardServices() {
   };
 
   // ✅ UPDATED SUBMIT LOGIC (UI unchanged)
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-    const amount = activeTab === "new" ? 110 : 150;
 
-    navigate("/payment", {
-      state: {
-        serviceName: "PAN Card",
-        applicantName: formData.fullName,
-        mobile: formData.mobile,
-        Amount: amount,
-        type: activeTab,
-      },
-    });
-  };
+  const amount = activeTab === "new" ? 110 : 150;
+
+  navigate("/payment", {
+    state: {
+      serviceName: "PAN Card",
+      applicantName: formData.fullName,
+      mobile: formData.mobile,
+      Amount: amount,
+      type: activeTab,
+    },
+  });
+};
 
   return (
     <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
@@ -82,11 +83,12 @@ function PANCardServices() {
               Get your PAN card in a hassle-free manner.
             </h6>
 
-            <a href="#pan-form">
-              <button className="bg-[#f07e1b] text-black px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 rounded-xl font-bold text-sm sm:text-base md:text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
-                Apply Now
-              </button>
-            </a>
+           <button
+              onClick={() => document.getElementById("pan-form").scrollIntoView({ behavior: "smooth" })}
+  className="bg-[#f07e1b] text-black px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 rounded-xl font-bold text-sm sm:text-base md:text-lg shadow-lg hover:bg-[#d4ac5b] transition-all"
+>
+  Apply Now
+</button>
           </div>
         </div>
       </section>
