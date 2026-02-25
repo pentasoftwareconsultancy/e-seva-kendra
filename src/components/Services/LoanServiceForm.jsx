@@ -104,7 +104,7 @@ function LoanServiceForm() {
 
             {/* Documents + Form Section */}
             <section id="loan-form" className="py-10 px-4">
-                <div className="max-w-6xl mx-auto bg-white rounded-[40px] shadow p-8 md:p-12 mb-20">
+                <div className="max-w-6xl mx-auto bg-white rounded-[40px] shadow-2xl p-8 md:p-12 mb-20">
 
                     <h2 className="text-3xl font-bold mb-6 capitalize">
                         {loanTypes.find(l => l.id === selectedLoan)?.title} फॉर्म
