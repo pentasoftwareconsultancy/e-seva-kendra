@@ -1,6 +1,6 @@
 import AdminLayout from '../../components/common/AdminLayout';
 import React, { useState } from 'react';
-import { User, LayoutDashboard, Eye } from 'lucide-react';
+import { User } from 'lucide-react';
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('All Orders');
   const [searchQuery, setSearchQuery] = useState('');
@@ -37,7 +37,7 @@ const AdminDashboard = () => {
   return (
     <AdminLayout>
       <div className="flex items-center gap-2 mb-4 md:mb-6">
-        <LayoutDashboard className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
+        <i className="fas fa-chart-line text-2xl md:text-3xl text-blue-600"></i>
         <h2 className="text-xl md:text-3xl font-bold"><span className="text-green-600">Welcome</span> <span className="text-gray-800">Admin Dashboard!</span></h2>
       </div>
           
@@ -198,7 +198,7 @@ const AdminDashboard = () => {
                           onClick={() => setSelectedOrder(order)}
                           className="inline-flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
                         >
-                          <Eye size={15} className="md:w-3.5 md:h-3.5 cursor-pointer" />
+                          <i className="fas fa-eye text-xs"></i>
                           <span className="hidden md:inline cursor-pointer">View</span>
                         </button>
                       </td>
