@@ -62,7 +62,7 @@ function Dynamic_form() {
     "iec": IECForm,
     "gst": GSTForm,
     "trademark": TrademarkForm,
-    "Insurance": Insurance,
+    "insurance": Insurance,
     "sip": SIPForm,
     "mutual-fund": MutualFund,
     "rent-agreement": RentAgreementForm,
