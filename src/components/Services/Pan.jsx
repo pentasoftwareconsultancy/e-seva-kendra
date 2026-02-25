@@ -37,6 +37,28 @@ function PANCardServices() {
 const handleSubmit = (e) => {
   e.preventDefault();
 
+  // 🔴 File validation
+  if (!files.aadhaar) {
+    alert("Please upload Aadhaar Card");
+    return;
+  }
+
+  if (!files.photos) {
+    alert("Please upload Passport Photos");
+    return;
+  }
+
+  if (activeTab === "update") {
+    if (!files.marriageCert) {
+      alert("Please upload Marriage Certificate");
+      return;
+    }
+
+    if (!files.oldPan) {
+      alert("Please upload Old PAN Card");
+      return;
+    }
+  }
 
   const amount = activeTab === "new" ? 110 : 150;
 
@@ -174,14 +196,14 @@ const handleSubmit = (e) => {
               {/* Uploads remain same */}
               <UploadBox
                 label="Aadhaar Card (आधार कार्ड)"
-                required
+             
                 fileData={files.aadhaar}
                 onChange={(e) => handleFileChange(e, "aadhaar")}
               />
 
               <UploadBox
                 label="2 Passport Photos (२ पासपोर्ट फोटो)"
-                required
+             
                 fileData={files.photos}
                 onChange={(e) => handleFileChange(e, "photos")}
               />
@@ -190,14 +212,13 @@ const handleSubmit = (e) => {
                 <>
                   <UploadBox
                     label="Marriage Certificate (विवाह प्रमाणपत्र)"
-                    required
+                 
                     fileData={files.marriageCert}
                     onChange={(e) => handleFileChange(e, "marriageCert")}
                   />
 
                   <UploadBox
                     label="Old PAN Card (जुने पॅन कार्ड)"
-                    required
                     fileData={files.oldPan}
                     onChange={(e) => handleFileChange(e, "oldPan")}
                   />

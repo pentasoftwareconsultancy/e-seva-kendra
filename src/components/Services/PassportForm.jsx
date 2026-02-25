@@ -1,11 +1,16 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Panhero from "../../assets/Servicesimg/Panhero.png";
-import Pan1 from "../../assets/Servicesimg/Pan1.png";
-import Pan2 from "../../assets/Servicesimg/Pan2.png";
-import Pan3 from "../../assets/Servicesimg/Pan3.png";
 
 function PassportForm() {
+
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        fullName: "",
+        mobile: "",
+    });
 
     const [files, setFiles] = useState({
         pan: null,
@@ -16,18 +21,58 @@ function PassportForm() {
 
     const handleFileChange = (e, field) => {
         const file = e.target.files[0];
-
         if (file) {
             const fileURL = URL.createObjectURL(file);
-
             setFiles((prev) => ({
                 ...prev,
-                [field]: {
-                    file: file,
-                    url: fileURL,
-                },
+                [field]: { file, url: fileURL },
             }));
         }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!formData.fullName.trim()) {
+            alert("Please enter Full Name");
+            return;
+        }
+
+        if (!formData.mobile.trim()) {
+            alert("Please enter Mobile Number");
+            return;
+        }
+
+        if (!files.pan) {
+            alert("Please upload PAN Card");
+            return;
+        }
+
+        if (!files.aadhaar) {
+            alert("Please upload Aadhaar Card");
+            return;
+        }
+
+        if (!files.photo) {
+            alert("Please upload Passport Photo");
+            return;
+        }
+
+        if (!files.lightBill) {
+            alert("Please upload Light Bill");
+            return;
+        }
+
+        const amount = 1500; // Passport Service Amount
+
+        navigate("/payment", {
+            state: {
+                serviceName: "Passport Service",
+                applicantName: formData.fullName,
+                mobile: formData.mobile,
+                Amount: amount,
+            },
+        });
     };
 
     return (
@@ -59,6 +104,7 @@ function PassportForm() {
                     </div>
                 </div>
             </section>
+
             {/* ================= DOCUMENT REQUIREMENTS ================= */}
             <section className="bg-white py-16 px-4 md:px-8">
                 <div className="max-w-4xl mx-auto">
@@ -93,66 +139,51 @@ function PassportForm() {
                     </div>
                 </div>
             </section>
-            {/* Form Section */}
+
+            {/* ================= FORM SECTION ================= */}
             <section id="passport-form" className="py-10 px-4 md:px-8 bg-[#f8faff]">
                 <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow-2xl p-8 md:p-12 mb-20">
-
 
                     <h2 className="text-3xl font-bold mb-6">
                         Passport Application Form
                     </h2>
 
-                    <form className="space-y-8">
+                    <form onSubmit={handleSubmit} className="space-y-8">
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                            {/* Name */}
                             <div>
                                 <label className="block font-bold mb-2">Full Name (पूर्ण नाव)</label>
                                 <input
                                     type="text"
+                                    required
+                                    value={formData.fullName}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, fullName: e.target.value })
+                                    }
                                     placeholder="Enter Full Name"
-                                    className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
+                                    className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200"
                                 />
                             </div>
 
-                            {/* Mobile */}
                             <div>
                                 <label className="block font-bold mb-2">Mobile Number (मोबाईल क्रमांक)</label>
                                 <input
                                     type="text"
+                                    required
+                                    value={formData.mobile}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, mobile: e.target.value })
+                                    }
                                     placeholder="Enter Mobile Number"
-                                    className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
+                                    className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200"
                                 />
                             </div>
 
-                            {/* PAN Card */}
-                            <UploadBox
-                                label="Pan Card (पॅन कार्ड)"
-                                fileData={files.pan}
-                                onChange={(e) => handleFileChange(e, "pan")}
-                            />
-
-                            {/* Aadhaar */}
-                            <UploadBox
-                                label="Aadhaar Card (आधार कार्ड)"
-                                fileData={files.aadhaar}
-                                onChange={(e) => handleFileChange(e, "aadhaar")}
-                            />
-
-                            {/* Passport Photo */}
-                            <UploadBox
-                                label="Passport Photo (पासपोर्ट फोटो)"
-                                fileData={files.photo}
-                                onChange={(e) => handleFileChange(e, "photo")}
-                            />
-
-                            {/* Light Bill */}
-                            <UploadBox
-                                label="Light Bill (लाइट बिल)"
-                                fileData={files.lightBill}
-                                onChange={(e) => handleFileChange(e, "lightBill")}
-                            />
+                            <UploadBox label="Pan Card (पॅन कार्ड)" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} />
+                            <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
+                            <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
+                            <UploadBox label="Light Bill (लाइट बिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
 
                         </div>
 
@@ -173,7 +204,8 @@ function PassportForm() {
     );
 }
 
-/* Reusable Upload Component */
+export default PassportForm;
+
 function UploadBox({ label, fileData, onChange }) {
     return (
         <div className="bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200">
@@ -201,5 +233,3 @@ function UploadBox({ label, fileData, onChange }) {
         </div>
     );
 }
-
-export default PassportForm;
