@@ -139,7 +139,7 @@ function SIPForm() {
 
                     <form className="space-y-8">
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 shadow-2xl">
 
                             <div>
                                 <label className="block font-bold mb-2">

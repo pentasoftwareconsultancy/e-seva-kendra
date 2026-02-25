@@ -100,7 +100,7 @@ const handleSubmit = (e) => {
 
       {/* ---------------- FORM SECTION ---------------- */}
       <section id="pan-form" className="py-8 sm:py-10 px-4 md:px-8 bg-[#f8faff]">
-        <div className="max-w-7xl mx-auto bg-white rounded-3xl sm:rounded-[40px] shadow p-6 sm:p-8 md:p-12 mb-12 sm:mb-20">
+        <div className="max-w-7xl mx-auto bg-white rounded-3xl sm:rounded-[40px] shadow-2xl p-6 sm:p-8 md:p-12 mb-12 sm:mb-20">
 
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6">
             PAN Card Application Form

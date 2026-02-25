@@ -86,7 +86,7 @@ function DMartAccountForm() {
 
             {/* Form Section */}
             <section className="py-10 px-4 md:px-8">
-                <div className="max-w-6xl mx-auto bg-white rounded-[40px] shadow p-8 md:p-12 mb-20">
+                <div className="max-w-6xl mx-auto bg-white rounded-[40px] shadow-2xl p-8 md:p-12 mb-20">
 
                     <h2 className="text-3xl font-bold mb-8">
                         DMart Account Application Form
