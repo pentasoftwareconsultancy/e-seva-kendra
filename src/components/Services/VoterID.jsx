@@ -130,7 +130,7 @@ function VoterID() {
                 id="voter-form"
                 className="py-16 px-4 md:px-8 bg-[#f8faff]"
             >
-                <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow p-8 md:p-12">
+                <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow-2xl p-8 md:p-12">
 
                     <h2 className="text-3xl font-bold mb-6 text-center">
                         Voter ID Card Application Form

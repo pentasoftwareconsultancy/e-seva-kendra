@@ -122,7 +122,7 @@ function VoterID() {
             </button>
           </div>
 
-          <form className="space-y-8">
+          <form className="space-y-8 shadow-2xl">
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
 

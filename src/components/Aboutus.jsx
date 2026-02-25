@@ -59,14 +59,14 @@ export default function Aboutus() {
               <img
                 src={Front}
                 alt="office front"
-                className="w-full rounded-xl shadow-md cursor-pointer border-4 border-green-500"
+                className="w-full rounded-xl shadow-md cursor-pointer border-2 border-black"
                 style={{ backfaceVisibility: 'hidden' }}
               />
               {/* Back */}
               <img
                 src={Back}
                 alt="office back"
-                className="w-full rounded-xl shadow-md absolute top-0 left-0 cursor-pointer border-4 border-green-500"
+                className="w-full rounded-xl shadow-md absolute top-0 left-0 cursor-pointer border-2 border-black"
                 style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
               />
             </div>
