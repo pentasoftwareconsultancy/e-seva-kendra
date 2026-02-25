@@ -1,4 +1,4 @@
-import React from "react";    
+import React from "react";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import ScrollToTop from "./components/common/ScrollToTop";
@@ -7,14 +7,23 @@ import { useLocation } from "react-router-dom";
 
 function App() {
   const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  // Hide Header & Footer for admin and customer dashboard areas
+  const hideLayout =
+    location.pathname.startsWith("/admin") ||
+    location.pathname.startsWith("/customer");
 
   return (
     <>
       <ScrollToTop />
-      {!isAdminRoute && <Header />}
+
+      {/* Show Header only on public pages */}
+      {!hideLayout && <Header />}
+
       <AppRoutes />
-      {!isAdminRoute && <Footer />}
+
+      {/* Show Footer only on public pages */}
+      {!hideLayout && <Footer />}
     </>
   );
 }

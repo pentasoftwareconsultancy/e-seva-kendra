@@ -2,9 +2,7 @@ import React, { useState } from "react";
 
 
 import Panhero from "../../assets/Servicesimg/Panhero.png";
-import Pan1 from "../../assets/Servicesimg/Pan1.png";
-import Pan2 from "../../assets/Servicesimg/Pan2.png";
-import Pan3 from "../../assets/Servicesimg/Pan3.png";
+
 
 /* =====================================
    PAN SERVICE FUNCTION (YOUR FULL UI)

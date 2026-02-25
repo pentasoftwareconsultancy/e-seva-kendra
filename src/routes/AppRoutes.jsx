@@ -1,6 +1,5 @@
-import { Routes, Route } from "react-router-dom";
-import Aboutpage from "../pages/Aboutpage";
-import Contactpage from "../pages/Contactpage"; 
+import { Routes, Route, Navigate } from "react-router-dom";import Aboutpage from "../pages/Aboutpage";
+import Contactpage from "../pages/Contactpage";
 import React from "react";
 import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
@@ -21,6 +20,8 @@ import Service_navpage from "../pages/ServicePage_nav";
 import Dynamic_form from "../pages/Dynamic_form";
 import AdminMessages from "../pages/admin/AdminMessages";
 
+import AccountPage from "../pages/AccountPage";
+
 
 const AppRoutes = () => {
   return (
@@ -31,6 +32,7 @@ const AppRoutes = () => {
       <Route path="/contact" element={<Contactpage />} />
       <Route path="/service" element={<Service_navpage />} />
       <Route path="/register" element={<RegisterPage />} />
+
       <Route path="/login" element={<LoginPage />} />
       <Route path="/apply/:serviceName" element={<Dynamic_form />} />  
    
@@ -38,9 +40,21 @@ const AppRoutes = () => {
 
 
 
-      
+      <Route
+        path="/account"
+        element={
+          localStorage.getItem("isLoggedIn") ? (
+            <AccountPage />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
 
-        <Route path="/admin" element={<AdminLogin />} />
+
+
+
+      <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={
         <ProtectedRoute>
           <AdminDashboard />
@@ -61,7 +75,7 @@ const AppRoutes = () => {
           <AdminPayments />
         </ProtectedRoute>
       } />
-       <Route path="/admin/reports" element={
+      <Route path="/admin/reports" element={
         <ProtectedRoute>
           <AdminReports />
         </ProtectedRoute>
@@ -71,12 +85,19 @@ const AppRoutes = () => {
           <AdminMessages />
         </ProtectedRoute>
       } />
-       <Route path="/admin/settings" element={
+      <Route path="/admin/settings" element={
         <ProtectedRoute>
           <AdminSettings />
         </ProtectedRoute>
-      } />  
+      } />
+
+
+
+
     </Routes>
+
+
+
   );
 };
 
