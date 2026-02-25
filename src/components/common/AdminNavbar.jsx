@@ -17,6 +17,17 @@ const AdminNavbar = ({ onMenuClick, isDark, setIsDark }) => {
 
       {/* Right */}
       <div className="flex items-center space-x-3 md:space-x-6">
+        {/* Notification Bell */}
+        <button 
+          onClick={() => window.location.href = '/admin/orders'}
+          className="relative p-2 hover:bg-white/10 rounded-lg transition-colors"
+        >
+          <Bell className="w-5 h-5 text-white" />
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+            3
+          </span>
+        </button>
+
         <button
           onClick={() => {
             localStorage.removeItem('adminAuth');
