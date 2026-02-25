@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NonCremenalHero from "../../assets/Servicesimg/Panhero.png"; // change image if needed
+import SIPHero from "../../assets/Servicesimg/Panhero.png"; // change image if needed
 
 /* ================= REUSABLE UPLOAD COMPONENT ================= */
 function UploadBox({ label, field, fileData, onFileChange }) {
@@ -30,28 +30,29 @@ function UploadBox({ label, field, fileData, onFileChange }) {
     );
 }
 
-function NonCremenalForm() {
+function SIPForm() {
+
     const [files, setFiles] = useState({
-        aadhaarUser: null,
-        aadhaarFather: null,
-        schoolUser: null,
-        schoolFather: null,
-        casteUser: null,
-        casteFather: null,
-        rationCard: null,
-        incomeCertificate: null,
-        form16_IT: null,
-        casteNamuna1967: null,
-        lightBill: null,
+        panCard: null,
+        aadhaarCard: null,
+        bankProof: null,
+        passportPhoto: null,
+        addressProof: null,
+        cancelledCheque: null,
     });
 
     const handleFileChange = (e, field) => {
         const file = e.target.files[0];
+
         if (file) {
             const fileURL = URL.createObjectURL(file);
+
             setFiles((prev) => ({
                 ...prev,
-                [field]: { file: file, url: fileURL },
+                [field]: {
+                    file: file,
+                    url: fileURL,
+                },
             }));
         }
     };
@@ -63,25 +64,23 @@ function NonCremenalForm() {
             <section className="relative w-full h-[550px] flex items-center">
                 <div className="absolute inset-0">
                     <img
-                        src={NonCremenalHero}
-                        alt="Non Cremenal Certificate"
+                        src={SIPHero}
+                        alt="SIP Investment"
                         className="w-full h-full object-cover"
                     />
                 </div>
 
                 <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/80 to-transparent"></div>
-
-                <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+<div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
                     <div className="w-full md:w-1/2 space-y-6 text-white">
-                        <h1 className="text-4xl md:text-6xl font-bold">
-                            Non-Cremenal Certificate Services
+                        <h1 className="text-5xl font-bold"> SIP (Systematic Investment Plan) Services
                         </h1>
 
-                        <p className="text-lg md:text-xl text-gray-200">
-                            Apply for Non-Cremenal Certificate with all required documents.
+                        <p className="text-xl text-gray-200">
+                            Start your SIP investment easily and securely.
                         </p>
 
-                        <a href="#noncremenal-form">
+                        <a href="#sip-form">
                             <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
                                 Apply Now
                             </button>
@@ -96,27 +95,22 @@ function NonCremenalForm() {
                     <div className="bg-white border-4 border-green-700 rounded-3xl p-8 md:p-12 shadow-xl">
 
                         <h2 className="text-3xl font-bold text-green-600 text-center mb-2">
-                            नॉन-क्रिमिनल सर्टिफिकेटसाठी लागणारी कागदपत्रे
+                            SIP साठी लागणारी कागदपत्रे
                         </h2>
 
                         <h3 className="text-2xl font-bold text-green-600 text-center mb-8 border-b-4 border-green-700 pb-4">
-                            Documents Required for Non-Cremenal Certificate
+                            Documents Required for SIP
                         </h3>
 
                         <div className="space-y-4 text-lg">
 
                             {[
-                                ["आधार कार्ड (वापरकर्ता)", "Aadhaar Card (User)"],
-                                ["आधार कार्ड (वडील)", "Aadhaar Card (Father)"],
-                                ["शाळा सोडल्याचा दाखला (वापरकर्ता)", "School Leaving Certificate (User)"],
-                                ["शाळा सोडल्याचा दाखला (वडील)", "School Leaving Certificate (Father)"],
-                                ["जात प्रमाणपत्र (वापरकर्ता)", "Caste Certificate (User)"],
-                                ["जात प्रमाणपत्र (वडील)", "Caste Certificate (Father)"],
-                                ["रेशन कार्ड", "Ration Card"],
-                                ["उत्पन्न दाखला", "Income Certificate"],
-                                ["Form 16 / IT Return (3 वर्षे)", "Form 16 / IT Return (Last 3 Years)"],
-                                ["१९६७ जात नमुना", "1967 Caste Namuna"],
-                                ["लाईट बिल", "Electricity Bill"]
+                                ["पॅन कार्ड", "PAN Card"],
+                                ["आधार कार्ड", "Aadhaar Card"],
+                                ["बँक पासबुक / बँक स्टेटमेंट", "Bank Passbook / Bank Statement"],
+                                ["रद्द केलेला चेक", "Cancelled Cheque"],
+                                ["१ पासपोर्ट साईज फोटो", "1 Passport Size Photograph"],
+                                ["पत्त्याचा पुरावा", "Address Proof"]
                             ].map((item, index) => (
                                 <div key={index} className="flex items-start gap-3">
                                     <span className="text-green-600 font-bold text-xl">✱</span>
@@ -134,31 +128,30 @@ function NonCremenalForm() {
 
             {/* ================= FORM SECTION ================= */}
             <section
-                id="noncremenal-form"
+                id="sip-form"
                 className="py-16 px-4 md:px-8 bg-[#f8faff]"
             >
                 <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow p-8 md:p-12">
 
                     <h2 className="text-3xl font-bold mb-6 text-center">
-                        Non-Cremenal Certificate Application Form
+                        SIP Application Form
                     </h2>
 
                     <form className="space-y-8">
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/* Name */}
+
                             <div>
                                 <label className="block font-bold mb-2">
                                     Full Name (पूर्ण नाव)
                                 </label>
                                 <input
                                     type="text"
-                                    placeholder="Enter Full Name "
+                                    placeholder="Enter Full Name"
                                     className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                                 />
                             </div>
 
-                            {/* Mobile */}
                             <div>
                                 <label className="block font-bold mb-2">
                                     Mobile Number (मोबाईल क्रमांक)
@@ -170,81 +163,45 @@ function NonCremenalForm() {
                                 />
                             </div>
 
-                            {/* File Uploads */}
                             <UploadBox
-                                label="Aadhaar Card (User) (आधार कार्ड वापरकर्ता)"
-                                field="aadhaarUser"
-                                fileData={files.aadhaarUser}
+                                label="PAN Card (पॅन कार्ड)"
+                                field="panCard"
+                                fileData={files.panCard}
                                 onFileChange={handleFileChange}
                             />
 
                             <UploadBox
-                                label="Aadhaar Card (Father) (आधार कार्ड वडील)"
-                                field="aadhaarFather"
-                                fileData={files.aadhaarFather}
+                                label="Aadhaar Card (आधार कार्ड)"
+                                field="aadhaarCard"
+                                fileData={files.aadhaarCard}
                                 onFileChange={handleFileChange}
                             />
 
                             <UploadBox
-                                label="School Leaving Certificate (User) (शाळा सोडल्याचा दाखला वापरकर्ता)"
-                                field="schoolUser"
-                                fileData={files.schoolUser}
+                                label="Bank Passbook / Statement"
+                                field="bankProof"
+                                fileData={files.bankProof}
                                 onFileChange={handleFileChange}
                             />
 
                             <UploadBox
-                                label="School Leaving Certificate (Father) (शाळा सोडल्याचा दाखला वडील)"
-                                field="schoolFather"
-                                fileData={files.schoolFather}
+                                label="Cancelled Cheque (रद्द केलेला चेक)"
+                                field="cancelledCheque"
+                                fileData={files.cancelledCheque}
                                 onFileChange={handleFileChange}
                             />
 
                             <UploadBox
-                                label="Caste Certificate (User) (जात प्रमाणपत्र वापरकर्ता)"
-                                field="casteUser"
-                                fileData={files.casteUser}
+                                label="Passport Photo (पासपोर्ट फोटो)"
+                                field="passportPhoto"
+                                fileData={files.passportPhoto}
                                 onFileChange={handleFileChange}
                             />
 
                             <UploadBox
-                                label="Caste Certificate (Father) (जात प्रमाणपत्र वडील)"
-                                field="casteFather"
-                                fileData={files.casteFather}
-                                onFileChange={handleFileChange}
-                            />
-
-                            <UploadBox
-                                label="Ration Card (रेशन कार्ड)"
-                                field="rationCard"
-                                fileData={files.rationCard}
-                                onFileChange={handleFileChange}
-                            />
-
-                            <UploadBox
-                                label="Income Certificate (उत्पन्न दाखला)"
-                                field="incomeCertificate"
-                                fileData={files.incomeCertificate}
-                                onFileChange={handleFileChange}
-                            />
-
-                            <UploadBox
-                                label="Form 16 / IT Return (Last 3 Years) (Form 16 / IT Return 3 वर्षे)"
-                                field="form16_IT"
-                                fileData={files.form16_IT}
-                                onFileChange={handleFileChange}
-                            />
-
-                            <UploadBox
-                                label="1967 Caste Namuna (१९६७ जात नमुना)"
-                                field="casteNamuna1967"
-                                fileData={files.casteNamuna1967}
-                                onFileChange={handleFileChange}
-                            />
-
-                            <UploadBox
-                                label="Light Bill (लाईट बिल)"
-                                field="lightBill"
-                                fileData={files.lightBill}
+                                label="Address Proof (पत्त्याचा पुरावा)"
+                                field="addressProof"
+                                fileData={files.addressProof}
                                 onFileChange={handleFileChange}
                             />
 
@@ -267,4 +224,4 @@ function NonCremenalForm() {
     );
 }
 
-export default NonCremenalForm;
+export default SIPForm;

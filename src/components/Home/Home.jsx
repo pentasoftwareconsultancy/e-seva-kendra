@@ -1,22 +1,21 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import heroImg from "../../assets/Home/hero.png";
-
 import panImg from "../../assets/services/pan-img.jpg";
-import Marriage from "../../assets/services/Marriage.jpg";
 import gazetteImg from "../../assets/services/gazette.png";
-import residence from "../../assets/services/rahivashi.jpg";
 import passImg from "../../assets/services/pass.png";
 import rationImg from "../../assets/services/ration.png";
-import incomeImg from "../../assets/services/income.png";
-import birthImg from "../../assets/services/birth-cer.png";
 import serviceImg from "../../assets/Home/service.png";
 import uploadImg from "../../assets/Home/upload.png";
 import deliveryImg from "../../assets/Home/delivery.png";
-import visitingCard from "../../assets/Home/visiting-card-front.jpeg";
+import Front from "../../assets/Home/visiting-card-front.jpeg";
+import Back from "../../assets/Home/visiting-card-back.jpeg";
 
 
 
 export default function Home() {
+    const [isFlipped, setIsFlipped] = useState(false);
+
     return (
         <>
             {/* ================= HERO SECTION ================= */}
@@ -90,27 +89,7 @@ export default function Home() {
                                 slug: "pan"
 
                             },
-                            {
-                                title: "Marriage Certificate (लग्न प्रमाणपत्र)",
-                                desc: "Apply for an official marriage certificate.",
-                                img: Marriage,
-                                btnColor: "bg-blue-900 hover:bg-blue-700",
-                                slug: "marriage"
-                            },
-                            // {
-                            //     title: "Voter ID",
-                            //     desc: "Register or correct voter details quickly and easily.",
-                            //     img: voterImg,
-                            //     btnColor: "bg-blue-900 hover:bg-blue-700",
-                            //     slug: "voter"
-                            // },
-                            {
-                                title: "Residence Certificate (रहिवासी दाखला)",
-                                desc: "Apply for a domicile/residence certificate ",
-                                img: residence,
-                                btnColor: "bg-blue-900 hover:bg-blue-700",
-                                slug: "residence"
-                            },
+                          
                             {
                                 title: "Passport (पासपोर्ट)",
                                 desc: "New passport & renewal assistance passport",
@@ -125,20 +104,8 @@ export default function Home() {
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "ration-card",
                             },
-                            {
-                                title: "Income Certificate (उत्पन्न दाखला)",
-                                desc: "Get income certificate for various purposes",
-                                img: incomeImg,
-                                btnColor: "bg-blue-900 hover:bg-blue-700",
-                                slug: "income-certificate",
-                            },
-                            {
-                                title: "Birth Certificate (जन्म प्रमाणपत्र)",
-                                desc: "Birth certificate registration & corrections",
-                                img: birthImg,
-                                btnColor: "bg-blue-900 hover:bg-blue-700",
-                                slug: "birth-certificate",
-                            },
+                          
+        
                             {
                                 title: "Gazette Certificate (गॅझेट प्रमाणपत्र)",
                                 desc: "Apply for Gazette publication for name change, correction record updates.",
@@ -149,14 +116,15 @@ export default function Home() {
                         ].map((service) => (
                             <div
                                 key={service.title}
-                                className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-slate-300"
+                                className="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-blue-500 cursor-pointer transform hover:-translate-y-2 active:scale-95"
                             >
                                 {/* IMAGE */}
-                                <div className="h-40 w-full overflow-hidden bg-slate-100">
+                                <div className="h-40 w-full overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 relative">
+                                    <div className="absolute inset-0 bg-blue-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                                     <img
                                         src={service.img}
                                         alt={service.title}
-                                        className="h-full w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                                        className="h-full w-full object-contain group-hover:scale-110 transition-transform duration-500"
                                     />
                                 </div>
 
@@ -165,7 +133,7 @@ export default function Home() {
                                     {/* TITLE */}
                                     <h3 className="font-bold text-base sm:text-lg text-slate-800 mb-2">
                                         {service.title.split('(').map((part, i) =>
-                                            i === 0 ? part : <><br />({part}</>
+                                            i === 0 ? part : <><br />{part}</>
                                         )}
                                     </h3>
 
@@ -175,7 +143,7 @@ export default function Home() {
                                     </p>
 
                                     {/* APPLY NOW BUTTON */}
-                                    <Link to={`/apply/${service.slug}`} className={`w-full ${service.btnColor} text-white text-xs sm:text-sm font-semibold py-2 sm:py-2.5 rounded-lg transition-all block text-center`}>
+                                    <Link to={`/apply/${service.slug}`} className={`w-full ${service.btnColor} text-white text-xs sm:text-sm font-semibold py-2 sm:py-2.5 rounded-lg transition-all block text-center hover:scale-105 active:scale-95 shadow-md hover:shadow-lg`}>
                                         Apply Now →
                                     </Link>
                                 </div>
@@ -356,38 +324,58 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
 
             {/* LEFT CARD - Visiting Card */}
-            <div className="relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all border border-slate-200 overflow-hidden">
-                <img
-                    src={visitingCard}
-                    alt="Shree Om Sai Multi Services Visiting Card"
-                    className="w-full h-full object-cover"
-                />
+            <div className="relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all  overflow-hidden " style={{ perspective: '1000px' }}>
+                <div 
+                    className="relative w-full h-full transition-transform duration-700 cursor-pointer" 
+                    style={{ transformStyle: 'preserve-3d', transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+                    onClick={() => setIsFlipped(!isFlipped)}
+                >
+                    {/* Front */}
+                    <img
+                        src={Front}
+                        alt="Shree Om Sai Multi Services Visiting Card Front"
+                        className="w-full h-full object-cover border-1 border-blue-900 rounded-2xl"
+                        style={{ backfaceVisibility: 'hidden' }}
+                    />
+                    {/* Back */}
+                    <img
+                        src={Back}
+                        alt="Shree Om Sai Multi Services Visiting Card Back"
+                        className="w-full h-full object-cover absolute top-0 left-0 border-1 border-blue-900 rounded-2xl"
+                        style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+                    />
+                </div>
             </div>
 
             {/* RIGHT CARD */}
-            <div className="relative bg-white rounded-xl sm:rounded-2xl shadow-xl hover:shadow-2xl transition-all p-6 sm:p-8 border border-slate-200">
+            <div className="relative bg-white rounded-xl sm:rounded-2xl shadow-xl hover:shadow-2xl transition-all p-6 sm:p-8 border-1 border-blue-900">
 
                 <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                    <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center shadow-lg">
+                    <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-blue-900 text-white flex items-center justify-center shadow-lg">
                         <i className="fa-solid fa-building text-base sm:text-lg"></i>
                     </div>
                     <h3 className="text-lg sm:text-xl font-bold text-slate-900">
-                        Branch Office
+                       Office
                     </h3>
                 </div>
 
                 <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
 
                     <div className="flex items-start gap-2 sm:gap-3">
-                        <i className="fa-solid fa-location-dot text-blue-600 text-base sm:text-lg mt-1"></i>
-                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                            Shop No 6 ,Dagade Patil Complex,<br />
-                            Karle Chowk,Nanded City, Pune
-                        </p>
+                        <i className="fa-solid fa-location-dot text-green-600 text-base sm:text-lg mt-1"></i>
+                        <a 
+                            href="https://maps.google.com/?q=Shop+No+6+Dagade+Patil+Complex+Karle+Chowk+Nanded+City+Pune"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs sm:text-sm text-slate-600 leading-relaxed hover:text-blue-600 transition"
+                        >
+                            Shop No 6, Dagade Patil Complex,<br />
+                            Karle Chowk, Nanded City, Pune
+                        </a>
                     </div>
 
                     <div className="flex items-center gap-2 sm:gap-3">
-                        <i className="fa-solid fa-phone text-yellow-600 text-base sm:text-lg"></i>
+                        <i className="fa-solid fa-phone text-blue-600 text-base sm:text-lg"></i>
                         <a
                             href="tel:+919876543310"
                             className="font-semibold text-sm sm:text-base text-slate-700 hover:text-green-600 transition"
@@ -397,7 +385,7 @@ export default function Home() {
                     </div>
 
                     <div className="flex items-center gap-2 sm:gap-3">
-                        <i className="fa-solid fa-clock text-blue-600 text-base sm:text-lg"></i>
+                        <i className="fa-solid fa-clock text-blue-900 text-base sm:text-lg"></i>
                         <p className="text-xs sm:text-sm text-slate-600 font-medium">
                             Mon - Sat: 9:00 AM - 7:00 PM
                         </p>
@@ -409,7 +397,7 @@ export default function Home() {
 
                     <a
                         href="tel:+918668266879"
-                        className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-slate-300 text-slate-700 font-semibold hover:bg-slate-50 transition text-xs sm:text-sm"
+                        className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-slate-300 text-slate-700 font-semibold transition text-xs sm:text-sm hover:bg-blue-900 hover:text-white"
                     >
                         <i className="fa-solid fa-phone text-xs sm:text-sm"></i>
                         Call Now

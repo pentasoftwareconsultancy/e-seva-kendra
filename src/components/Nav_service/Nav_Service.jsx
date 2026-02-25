@@ -1,22 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import panImg from "../../assets/services/pan-img.jpg";
-import Marriage from "../../assets/services/Marriage.jpg";
 import bannerImg from "../../assets/services/services-banner.png";
 import voterImg from "../../assets/services/voter-id.png";
-import Rahivashi from "../../assets/services/rahivashi.jpg";
 import passImg from "../../assets/services/pass.png";
 import rationImg from "../../assets/services/ration.png";
-import incomeImg from "../../assets/services/income.png";
-import birthImg from "../../assets/services/birth-cer.png"; 
 import gazetteImg from "../../assets/services/gazette.png";
 import shopImg from "../../assets/services/shop.png";
 import udyamImg from "../../assets/services/udyam.png";
-import domicileImg from "../../assets/services/domicile.png";
 import foodImg from "../../assets/services/food.png";
 import notaryImg from "../../assets/services/notary.png";
-import downloadImg from "../../assets/services/download.png"; 
-import noncremenalImg from "../../assets/services/noncremenal.png";
 
 export default function Nav_Service() {
   const navigate = useNavigate();
@@ -27,23 +20,19 @@ const services = [
     img: panImg,
     slug: "pan",
   },
+  
   {
-    title: "Marriage Certificate (लग्न प्रमाणपत्र)",
-    desc: "Apply for an official marriage certificate.",
-    img: Marriage,
-    slug: "marriage",
+    title: "Systematic Investment Plan (SIP)(सिस्टेमॅटिक इन्व्हेस्टमेंट प्लान)",
+    desc: "Register or correct SIP details.",
+    img: voterImg,
+    slug: "voter",
   },
-  // {
-  //   title: "Voter ID",
-  //   desc: "Register or correct voter details.",
-  //   img: voterImg,
-  //   slug: "voter",
-  // },
-  {
-    title: "Residence Certificate (रहिवासी दाखला)",
-    desc: "Apply for a domicile/residence certificate.",
-    img: Rahivashi,
-    slug: "residence",
+ 
+    {
+    title: "Voter ID (मतदार ओळखपत्र)",
+    desc: "Register or correct Voter ID details.",
+    img: voterImg,
+    slug: "voter",
   },
   {
     title: "Passport (पासपोर्ट)",
@@ -57,18 +46,7 @@ const services = [
     img: rationImg,
     slug: "ration-card",
   },
-  {
-    title: "Income Certificate (उत्पन्न दाखला)",
-    desc: "Get income certificate for various purposes",
-    img: incomeImg,
-    slug: "income-certificate",
-  },
-  {
-    title: "Birth Certificate (जन्म प्रमाणपत्र)",
-    desc: "Birth certificate registration & corrections.",
-    img: birthImg,
-    slug: "birth-certificate",
-  },
+
   {
     title: "Gazette Certificate (गॅझेट प्रमाणपत्र)",
     desc: "Apply for Gazette publication for name change, record updates.",
@@ -87,12 +65,7 @@ const services = [
     img: udyamImg,
     slug: "udyog-aadhaar",
   },
-  {
-    title: "Domicile Certificate (निवास प्रमाणपत्र)",
-    desc: "Apply for a New Domicile Certificate.",
-    img: domicileImg,
-    slug: "domicile",
-  },
+ 
   {
     title: "Food License (फूड लायसन्स)",
     desc: "Get your FSSAI license to run a food business legally.",
@@ -106,23 +79,84 @@ const services = [
     slug: "senior",
   },
   {
-    title: "Non-Cremenal Certificate",
-    desc: "Get non-cremenal certificate for education or job.",
-    img: noncremenalImg,
-    slug: "Non-Cremenal",
-  },
-  {
-    title: "EWS Certificate (ईडब्ल्यूएस प्रमाणपत्र)",
-    desc: "Apply for and download your EWS certificate government schemes",
-    img: downloadImg,
-    slug: "ews-certificate",
-  },
-  {
-    title: "Voter ID",
-    desc: "Register or correct voter details.",
+    title: "Income tax Return (ITR)(उत्पन्न कर विवरण)",
+    desc: "File your Income Tax Return easily.",
     img: voterImg,
-    slug: "voter",
+    slug: "ITR",
   },
+   {
+    title: "Inport (IEC) (आयात निर्यात कोड)",
+    desc: "File your Import Export Code (IEC) application.",
+    img: voterImg,
+    slug: "iec",
+  },
+   {
+    title: "Goods and Services Tax (GST) (वस्तू व सेवा कर)",
+    desc: "File your GST registration or update details.",
+    img: voterImg,
+    slug: "gst",
+  },
+   {
+    title: "Trademark (वैयक्तिक किंवा कंपनीचा नांव व चिन्हाची नोंदणी)",
+    desc: "File your trademark registration or update details.",
+    img: voterImg,
+    slug: "trademark",
+  },
+   {
+    title: "Insurance (विमा)",
+    desc: "File your insurance application or update details.",
+    img: voterImg,
+    slug: "insurance",
+  },
+   {
+    title: "mutual fund(म्युच्युअल फंड)",
+    desc: "File your mutual fund application or update details.",
+    img: voterImg,
+    slug: "mutual-fund",
+  },
+    {
+    title: "rent agreement (भाडे करार)",
+    desc: "File your rent agreement application or update details.",
+    img: voterImg,
+    slug: "rent-agreement",
+  },
+    {
+    title: "e-shram card(ई-श्रम कार्ड)",
+    desc: "File your e-shram card application or update details.",
+    img: voterImg,
+    slug: "e-shram-card",
+  },
+    {
+    title: "Ayushman card (आयुष्मान कार्ड)",
+    desc: "File your Ayushman card application or update details.",
+    img: voterImg,
+    slug: "ayushman-card",
+  },
+    {
+    title: "vehicle insurance (वाहन विमा)",
+    desc: "File your vehicle insurance application or update details.",
+    img: voterImg,
+    slug: "vehicle-insurance",
+  },
+    {
+    title: "D-mart Account (डी-मार्ट खाते)",
+    desc: "File your D-mart account application or update details.",
+    img: voterImg,
+    slug: "d-mart-account",
+  },
+    {
+    title: "Loan Services (कर्ज सेवा)",
+    desc: "File your loan application or update details.",
+    img: voterImg,
+    slug: "loan",
+  },
+  {
+      title: "Public Financial Services (सार्वजनिक आर्थिक सेवा)",
+    desc: "Apply for public financial services.",
+    img: voterImg,
+    slug: "public-financial-services",
+  },
+  
 ];
 
 
@@ -164,13 +198,14 @@ return (
         {services.map((service) => (
           <div
             key={service.title}
-            className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-slate-300"
+            className="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-blue-500 cursor-pointer transform hover:-translate-y-2 active:scale-95"
           >
-            <div className="h-32 sm:h-40 w-full overflow-hidden bg-slate-100">
+            <div className="h-32 sm:h-40 w-full overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 relative">
+              <div className="absolute inset-0 bg-blue-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
               <img
                 src={service.img}
                 alt={service.title}
-                className="h-full w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                className="h-full w-full object-contain group-hover:scale-110 transition-transform duration-500"
               />
             </div>
 
@@ -188,7 +223,7 @@ return (
 
 <button
   onClick={() => navigate(`/apply/${service.slug}`)}
-  className="w-full bg-blue-900 hover:bg-blue-700 text-white py-2 rounded-lg text-xs sm:text-sm"
+  className="w-full bg-blue-900 hover:bg-blue-700 text-white py-2 rounded-lg text-xs sm:text-sm hover:scale-105 active:scale-95 shadow-md hover:shadow-lg transition-all"
 >
   Apply Now →
 </button>

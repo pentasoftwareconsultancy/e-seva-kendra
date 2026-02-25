@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 
+import Payment from "../pages/Payment";
 
 
 import AdminLogin from "../pages/admin/AdminLogin";
@@ -33,7 +34,11 @@ const AppRoutes = () => {
       <Route path="/register" element={<RegisterPage />} />
 
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/apply/:serviceName" element={<Dynamic_form />} />
+      <Route path="/apply/:serviceName" element={<Dynamic_form />} />  
+   
+      <Route path="/payment" element={<Payment />} />
+
+
 
       <Route
         path="/account"

@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import logo from "../../assets/Home/omsai_logo-footer.png";
+import logo from "../../assets/Home/new logo.png";
 
 
 
@@ -53,7 +53,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur border-b">
+    <header className="sticky top-0 z-50 w-full bg-white backdrop-blur border-b">
       <div className="w-full px-4 sm:px-8">
 
         {/* TOP ROW */}
@@ -73,6 +73,7 @@ export default function Header() {
 
             <Link
               to="/"
+              onClick={() => setIsDropdownOpen(false)}
               className="px-4 flex items-center gap-2 hover:text-blue-600"
             >
               <FontAwesomeIcon icon={faHouse} className="text-xs" />
@@ -138,22 +139,22 @@ export default function Header() {
             <div className="h-5 w-px bg-slate-300" />
 
             <Link
-  to="/about"
-  className="px-4 flex items-center gap-2 hover:text-blue-600"
->
-  <FontAwesomeIcon icon={faCircleInfo} className="text-xs" />
-  About
-</Link>
+              to="/about"
+              className="px-4 flex items-center gap-2 hover:text-blue-600"
+            >
+              <FontAwesomeIcon icon={faCircleInfo} className="text-xs" />
+              About
+            </Link>
 
             <div className="h-5 w-px bg-slate-300" />
 
             <Link
-  to="/contact"
-  className="px-4 flex items-center gap-2 hover:text-blue-600"
->
-  <FontAwesomeIcon icon={faAddressBook} className="text-xs" />
-  Contact
-</Link>
+              to="/contact"
+              className="px-4 flex items-center gap-2 hover:text-blue-600"
+            >
+              <FontAwesomeIcon icon={faAddressBook} className="text-xs" />
+              Contact
+            </Link>
 
             <div className="h-5 w-px bg-slate-300 mx-4" />
 
@@ -197,7 +198,7 @@ export default function Header() {
                   </span>
                 </button>
 
-                 <Link
+                <Link
                   to="/account"
                   className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition text-sm font-medium"
                 >

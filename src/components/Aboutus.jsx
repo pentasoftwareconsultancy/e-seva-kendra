@@ -4,8 +4,8 @@ import img2 from "../assets/About/about-img2.png";
 import img3 from "../assets/About/about-img3.png";
 import img4 from "../assets/About/about-img4.png";
 import top from "../assets/About/top-img.png";
-
-
+import Front from "../assets/Home/visiting-card-front.jpeg";
+import Back from "../assets/Home/visiting-card-back.jpeg";
 export default function Aboutus() {
   return (
     <div>
@@ -29,7 +29,7 @@ export default function Aboutus() {
       </h1>
 
       <p className="text-lg md:text-xl">
-      At E-Suvidha, we provide fast, reliable, affordable
+      At Shree Om Sai Multiservices, we provide fast, reliable, affordable
               documentation solutions for all government and
               legal needs.
       </p>
@@ -44,20 +44,33 @@ export default function Aboutus() {
         <div className="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl font-semibold mb-5">
-              About E-Suvidha
+              About Shree Om Sai Multiservices
             </h2>
 
             <p className="text-gray-600 leading-relaxed text-lg">
-                     Your Trusted Partner for Government & Legal Services.At E-Suvidha, we are committed to providing fast, reliable, and hassle-free digital services to our customers.
+                     Your Trusted Partner for Government & Legal Services. At Shree Om Sai Multiservices, we are committed to providing fast, reliable, and hassle-free digital services to our customers.
 
             </p>
           </div>
 
-          <img
-            src={img1}
-            alt="office"
-            className="w-full max-w-md mx-auto rounded-xl shadow-md"
-          />
+          <div className="relative w-full max-w-md mx-auto" style={{ perspective: '1000px' }}>
+            <div className="relative w-full h-full transition-transform duration-700 hover:[transform:rotateY(180deg)]" style={{ transformStyle: 'preserve-3d' }}>
+              {/* Front */}
+              <img
+                src={Front}
+                alt="office front"
+                className="w-full rounded-xl shadow-md cursor-pointer border-4 border-green-500"
+                style={{ backfaceVisibility: 'hidden' }}
+              />
+              {/* Back */}
+              <img
+                src={Back}
+                alt="office back"
+                className="w-full rounded-xl shadow-md absolute top-0 left-0 cursor-pointer border-4 border-green-500"
+                style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
