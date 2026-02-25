@@ -6,6 +6,8 @@ import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 import Terms from "../components/common/Terms";
 import Payment from "../pages/Payment";
+
+import Notifications from "../pages/Notifications";
 import Privacy from "../components/common/Privacy";
 import Refund from "../components/common/Refund";
 
@@ -33,6 +35,7 @@ const AppRoutes = () => {
       <Route path="/contact" element={<Contactpage />} />
       <Route path="/service" element={<Service_navpage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/notifications" element={<Notifications />} />
 
       <Route path="/login" element={<LoginPage />} />
       <Route path="/apply/:serviceName" element={<Dynamic_form />} />

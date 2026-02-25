@@ -188,12 +188,15 @@ export default function Header() {
             ) : (
               <>
                 {/* Notification */}
-                <button className="relative hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition">
+                <Link
+                  to="/notifications"
+                  className="relative hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition"
+                >
                   <FontAwesomeIcon icon={faBell} className="text-gray-600" />
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
                     3
                   </span>
-                </button>
+                </Link>
 
                 <Link
                   to="/account"
