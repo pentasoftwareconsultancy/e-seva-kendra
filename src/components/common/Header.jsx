@@ -264,7 +264,7 @@ export default function Header() {
 
                 <Link
                   to="/register"
-                  className="hidden md:block px-4 py-2 rounded-lg bg-yellow-500 text-white text-sm font-medium hover:bg-yellow-600"
+                  className="hidden md:block px-4 py-2 rounded-lg bg-[#f07e1b] text-black text-sm font-medium hover:bg-[#d4ac5b] transition-all"
                 >
                   Get Started
                 </Link>

@@ -59,9 +59,9 @@ export default function Footer() {
               Support
             </h4>
             <ul className="space-y-2 text-sm text-slate-400">
-              <li><a href="#" className="hover:text-white transition">Terms</a></li>
-              <li><a href="#" className="hover:text-white transition">Privacy</a></li>
-              <li><a href="#" className="hover:text-white transition">Refund</a></li>
+              <li><a href="/terms" className="hover:text-white transition">Terms</a></li>
+              <li><a href="/privacy" className="hover:text-white transition">Privacy</a></li>
+              <li><a href="/refund" className="hover:text-white transition">Refund</a></li>
             </ul>
           </div>
 
