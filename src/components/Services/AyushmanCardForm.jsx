@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PanHero from "../../assets/Servicesimg/PanHero.png";
+import PanHero from "../../assets/Servicesimg/Panhero.png";
 
 function AyushmanCardForm() {
 
