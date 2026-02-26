@@ -1,8 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import PanHero from "../../assets/Servicesimg/Panhero.png";
 
 function Trademark() {
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({ fullName: "", mobile: "" });
+    const [errors, setErrors] = useState({ fullName: "", mobile: "" });
 
     const [files, setFiles] = useState({
         pan: null,
@@ -27,6 +32,27 @@ function Trademark() {
                 },
             }));
         }
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+        if (!formData.fullName.trim() || formData.fullName.trim().length < 3) newErrors.fullName = "Name must be at least 3 characters";
+        if (!/^[0-9]{10}$/.test(formData.mobile)) newErrors.mobile = "Mobile number must be exactly 10 digits";
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!validateForm()) return;
+        navigate("/payment", {
+            state: {
+                serviceName: "Trademark Registration",
+                applicantName: formData.fullName,
+                mobile: formData.mobile,
+                Amount: 5000,
+            },
+        });
     };
 
     return (
@@ -104,26 +130,20 @@ function Trademark() {
                         Trademark Registration Application Form
                     </h2>
 
-                    <form className="space-y-8">
+                    <form onSubmit={handleSubmit} className="space-y-8">
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                             <div>
-                                <label className="block font-bold mb-2">पूर्ण नाव(Applicant Name)</label>
-                                <input
-                                    type="text"
-                                    placeholder="Enter Name"
-                                    className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
-                                />
+                                <label className="block font-bold mb-2">पूर्ण नाव(Applicant Name) <span className="text-red-500">*</span></label>
+                                <input type="text" required minLength={3} value={formData.fullName} onChange={(e) => { setFormData({...formData, fullName: e.target.value}); setErrors({...errors, fullName: ""}); }} placeholder="Enter Name" className={`w-full bg-[#f8faff] p-4 rounded-xl ring-1 ${errors.fullName ? 'ring-red-500' : 'ring-gray-200'} focus:ring-2 focus:ring-[#1e40af]/20`} />
+                                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
                             </div>
 
                             <div>
-                                <label className="block font-bold mb-2">मोबाईल नंबर(Mobile Number)</label>
-                                <input
-                                    type="text"
-                                    placeholder="Enter Mobile Number"
-                                    className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
-                                />
+                                <label className="block font-bold mb-2">मोबाईल नंबर(Mobile Number) <span className="text-red-500">*</span></label>
+                                <input type="tel" required pattern="[0-9]{10}" maxLength={10} value={formData.mobile} onChange={(e) => { const value = e.target.value.replace(/[^0-9]/g, ''); setFormData({...formData, mobile: value}); setErrors({...errors, mobile: ""}); }} placeholder="Enter Mobile Number" className={`w-full bg-[#f8faff] p-4 rounded-xl ring-1 ${errors.mobile ? 'ring-red-500' : 'ring-gray-200'} focus:ring-2 focus:ring-[#1e40af]/20`} />
+                                {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
                             </div>
 <UploadBox 
     label="पॅन कार्ड (PAN Card - Applicant)" 
