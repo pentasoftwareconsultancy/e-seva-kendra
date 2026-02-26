@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom"; import Aboutpage from "../pages/Aboutpage";
-import Contactpage from "../pages/Contactpage";
+
 import React from "react";
 import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
@@ -24,6 +24,7 @@ import Dynamic_form from "../pages/Dynamic_form";
 import AdminMessages from "../pages/admin/AdminMessages";
 
 import AccountPage from "../pages/AccountPage";
+import ContactPage from "../pages/ContactPage";
 
 
 const AppRoutes = () => {
@@ -32,7 +33,8 @@ const AppRoutes = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/Home" element={<HomePage />} />
       <Route path="/about" element={<Aboutpage />} />
-      <Route path="/contact" element={<Contactpage />} />
+         <Route path="/contact" element={<ContactPage/>} />
+      {/* <Route path="/contact" element={<Contactpage />} /> */}
       <Route path="/service" element={<Service_navpage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/notifications" element={<Notifications />} />
