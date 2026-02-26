@@ -95,7 +95,7 @@ function GazetteForm() {
         serviceName: "Gazette Service",
         applicantName: formData.fullName,
          mobile: formData.mobile,
-        Amount: 600, // You can change amount here
+        Amount: 2000, // You can change amount here
         formData,
       },
     });

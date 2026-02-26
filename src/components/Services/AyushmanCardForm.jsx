@@ -1,7 +1,18 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PanHero from "../../assets/Servicesimg/Panhero.png";
 
 function AyushmanCardForm() {
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        fullName: "",
+        aadhaarNumber: "",
+        mobile: "",
+        familyMembers: "",
+        village: "",
+        district: "",
+    });
 
     const [files, setFiles] = useState({
         aadhaar: null,
@@ -23,6 +34,24 @@ function AyushmanCardForm() {
                 },
             }));
         }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!files.aadhaar || !files.rationCard || !files.photo) {
+            alert("Please upload all required documents");
+            return;
+        }
+
+        navigate("/payment", {
+            state: {
+                serviceName: "Ayushman Card",
+                applicantName: formData.fullName,
+                mobile: formData.mobile,
+                Amount: 350,
+            },
+        });
     };
 
     return (
@@ -93,16 +122,16 @@ function AyushmanCardForm() {
                         Ayushman Card Application Form
                     </h2>
 
-                    <form className="space-y-8">
+                    <form onSubmit={handleSubmit} className="space-y-8">
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                            <InputField label="Full Name (पूर्ण नाव)" />
-                            <InputField label="Aadhaar Number (आधार क्रमांक)" />
-                            <InputField label="Mobile Number (मोबाईल नंबर)" />
-                            <InputField label="Family Members Count (कुटुंब सदस्य संख्या)" />
-                            <InputField label="Village / City (गाव / शहर)" />
-                            <InputField label="District (जिल्हा)" />
+                            <InputField label="Full Name (पूर्ण नाव)" value={formData.fullName} onChange={(e) => setFormData({...formData, fullName: e.target.value})} required />
+                            <InputField label="Aadhaar Number (आधार क्रमांक)" value={formData.aadhaarNumber} onChange={(e) => setFormData({...formData, aadhaarNumber: e.target.value})} required />
+                            <InputField label="Mobile Number (मोबाईल नंबर)" value={formData.mobile} onChange={(e) => setFormData({...formData, mobile: e.target.value})} required />
+                            <InputField label="Family Members Count (कुटुंब सदस्य संख्या)" value={formData.familyMembers} onChange={(e) => setFormData({...formData, familyMembers: e.target.value})} required />
+                            <InputField label="Village / City (गाव / शहर)" value={formData.village} onChange={(e) => setFormData({...formData, village: e.target.value})} required />
+                            <InputField label="District (जिल्हा)" value={formData.district} onChange={(e) => setFormData({...formData, district: e.target.value})} required />
 
                             <UploadBox
                                 label="Aadhaar Card (आधार कार्ड)"
@@ -142,12 +171,15 @@ function AyushmanCardForm() {
 }
 
 /* Input Component */
-function InputField({ label, type = "text" }) {
+function InputField({ label, type = "text", value, onChange, required }) {
     return (
         <div>
             <label className="block font-bold mb-2">{label}</label>
             <input
                 type={type}
+                value={value}
+                onChange={onChange}
+                required={required}
                 placeholder={`Enter ${label}`}
                 className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
             />

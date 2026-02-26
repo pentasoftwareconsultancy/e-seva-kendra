@@ -63,7 +63,7 @@ function PassportForm() {
             return;
         }
 
-        const amount = 1500; // Passport Service Amount
+        const amount = 2500; // Passport Service Amount
 
         navigate("/payment", {
             state: {

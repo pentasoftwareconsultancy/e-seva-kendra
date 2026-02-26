@@ -19,7 +19,7 @@ import RentAgreementForm from "../components/Services/RentAgreementForm";
 import EShramCardForm from "../components/Services/EShramForm";
 import AyushmanCardForm from "../components/Services/AyushmanCardForm";
 import VehicleInsurance from "../components/Services/VehicleInsurance";
-import DMartAccountForm from "../components/Services/D_MartAccount";
+import DMartAccountForm from "../components/Services/DMartAccountForm";
 import LoanServiceForm from "../components/Services/LoanServiceForm";
 import PublicFinancialServices from "../components/Services/PublicFinanceService";
 

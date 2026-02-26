@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import VoterHero from "../../assets/Servicesimg/Panhero.png";
 
 /* ================= REUSABLE UPLOAD COMPONENT ================= */
@@ -31,6 +32,14 @@ function UploadBox({ label, field, fileData, onFileChange }) {
 }
 
 function VoterID() {
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        fullName: "",
+        mobile: "",
+        dob: "",
+        address: "",
+    });
 
     const [files, setFiles] = useState({
         aadhaarCard: null,
@@ -53,6 +62,39 @@ function VoterID() {
                 },
             }));
         }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!files.aadhaarCard) {
+            alert("Please upload Aadhaar Card");
+            return;
+        }
+
+        if (!files.addressProof) {
+            alert("Please upload Address Proof");
+            return;
+        }
+
+        if (!files.ageProof) {
+            alert("Please upload Age Proof");
+            return;
+        }
+
+        if (!files.passportPhoto) {
+            alert("Please upload Passport Photo");
+            return;
+        }
+
+        navigate("/payment", {
+            state: {
+                serviceName: "Voter ID Card",
+                applicantName: formData.fullName,
+                mobile: formData.mobile,
+                Amount: 300,
+            },
+        });
     };
 
     return (
@@ -136,7 +178,7 @@ function VoterID() {
                         Voter ID Card Application Form
                     </h2>
 
-                    <form className="space-y-8">
+                    <form onSubmit={handleSubmit} className="space-y-8">
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
@@ -146,6 +188,9 @@ function VoterID() {
                                 </label>
                                 <input
                                     type="text"
+                                    required
+                                    value={formData.fullName}
+                                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                                     placeholder="Enter Full Name"
                                     className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                                 />
@@ -157,6 +202,9 @@ function VoterID() {
                                 </label>
                                 <input
                                     type="text"
+                                    required
+                                    value={formData.mobile}
+                                    onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
                                     placeholder="Enter Mobile Number"
                                     className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                                 />
@@ -168,6 +216,9 @@ function VoterID() {
                                 </label>
                                 <input
                                     type="date"
+                                    required
+                                    value={formData.dob}
+                                    onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
                                     className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                                 />
                             </div>
@@ -178,6 +229,9 @@ function VoterID() {
                                 </label>
                                 <input
                                     type="text"
+                                    required
+                                    value={formData.address}
+                                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                                     placeholder="Enter Address"
                                     className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                                 />

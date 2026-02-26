@@ -51,11 +51,13 @@ function Payment() {
 
         {/* QR CODE */}
         <div className="text-center space-y-4">
-          <img
-            src={QR}
-            alt="QR Code"
-            className="w-48 mx-auto"
-          />
+          <div className="inline-block bg-white p-6 rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 transform hover:-translate-y-1">
+            <img
+              src={QR}
+              alt="QR Code"
+              className="w-48 mx-auto rounded-lg"
+            />
+          </div>
           <p className="font-semibold text-lg">Scan & Pay</p>
           <p className="text-gray-600">UPI ID: esuvidha@upi</p>
         </div>

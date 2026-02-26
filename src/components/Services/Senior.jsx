@@ -4,7 +4,7 @@ import VoterHero from "../../assets/Servicesimg/Panhero.png"; // change image if
 /* =====================================
    VOTER ID SERVICE FUNCTION
 ===================================== */
-function VoterID() {
+function Senior() {
 
   const [activeTab, setActiveTab] = useState("new");
 
@@ -174,7 +174,7 @@ function VoterID() {
   );
 }
 
-export default VoterID;
+export default Senior;
 
 
 /* Reusable Components */
