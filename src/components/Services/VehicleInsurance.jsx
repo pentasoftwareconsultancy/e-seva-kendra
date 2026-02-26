@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PanHero from "../../assets/Servicesimg/Panhero.png";
 
-function VehicleInsuranceForm() {
+function VehicleInsurance() {
 
     const [vehicleType, setVehicleType] = useState("two");
 
@@ -221,4 +221,4 @@ function UploadBox({ label, fileData, onChange }) {
     );
 }
 
-export default VehicleInsuranceForm;
+export default VehicleInsurance;

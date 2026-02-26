@@ -103,7 +103,7 @@ function RationCardForm() {
       return;
     }
 
-    const amount = 800; // 🔥 Ration Card Service Amount
+    const amount = 4000; // 🔥 Ration Card Service Amount
 
     navigate("/payment", {
       state: {
