@@ -15,6 +15,8 @@ function EShramForm() {
         ifsc: "",
     });
 
+    const [errors, setErrors] = useState({ fullName: "", mobile: "" });
+
     const [files, setFiles] = useState({
         aadhaar: null,
         bankPassbook: null,
@@ -37,8 +39,18 @@ function EShramForm() {
         }
     };
 
+    const validateForm = () => {
+        const newErrors = {};
+        if (!formData.fullName.trim() || formData.fullName.trim().length < 3) newErrors.fullName = "Name must be at least 3 characters";
+        if (!/^[0-9]{10}$/.test(formData.mobile)) newErrors.mobile = "Mobile number must be exactly 10 digits";
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!validateForm()) return;
 
         if (!files.aadhaar || !files.bankPassbook || !files.photo) {
             alert("Please upload all required documents");
@@ -127,9 +139,9 @@ function EShramForm() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                            <InputField label="Full Name (पूर्ण नाव)" value={formData.fullName} onChange={(e) => setFormData({...formData, fullName: e.target.value})} required />
+                            <InputField label="Full Name (पूर्ण नाव)" value={formData.fullName} onChange={(e) => { setFormData({...formData, fullName: e.target.value}); setErrors({...errors, fullName: ""}); }} required minLength={3} error={errors.fullName} />
                             <InputField label="Aadhaar Number (आधार क्रमांक)" value={formData.aadhaarNumber} onChange={(e) => setFormData({...formData, aadhaarNumber: e.target.value})} required />
-                            <InputField label="Mobile Number (मोबाईल नंबर)" value={formData.mobile} onChange={(e) => setFormData({...formData, mobile: e.target.value})} required />
+                            <InputField label="Mobile Number (मोबाईल नंबर)" type="tel" value={formData.mobile} onChange={(e) => { const value = e.target.value.replace(/[^0-9]/g, ''); setFormData({...formData, mobile: value}); setErrors({...errors, mobile: ""}); }} required maxLength={10} pattern="[0-9]{10}" error={errors.mobile} />
                             <InputField label="Date of Birth (जन्मतारीख)" type="date" value={formData.dob} onChange={(e) => setFormData({...formData, dob: e.target.value})} required />
                             <InputField label="Occupation (व्यवसाय)" value={formData.occupation} onChange={(e) => setFormData({...formData, occupation: e.target.value})} required />
                             <InputField label="Bank Account Number (बँक खाते क्रमांक)" value={formData.bankAccount} onChange={(e) => setFormData({...formData, bankAccount: e.target.value})} required />
@@ -159,18 +171,22 @@ function EShramForm() {
 }
 
 /* Input Field */
-function InputField({ label, type = "text", value, onChange, required }) {
+function InputField({ label, type = "text", value, onChange, required, minLength, maxLength, pattern, error }) {
     return (
         <div>
-            <label className="block font-bold mb-2">{label}</label>
+            <label className="block font-bold mb-2">{label} {required && <span className="text-red-500">*</span>}</label>
             <input
                 type={type}
                 value={value}
                 onChange={onChange}
                 required={required}
+                minLength={minLength}
+                maxLength={maxLength}
+                pattern={pattern}
                 placeholder={`Enter ${label}`}
-                className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
+                className={`w-full bg-[#f8faff] p-4 rounded-xl ring-1 ${error ? 'ring-red-500 focus:ring-red-500' : 'ring-gray-200 focus:ring-[#1e40af]/20'} focus:ring-2`}
             />
+            {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
         </div>
     );
 }
