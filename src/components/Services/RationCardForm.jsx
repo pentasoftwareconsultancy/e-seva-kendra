@@ -40,6 +40,8 @@ function RationCardForm() {
     mobile: "",
   });
 
+  const [errors, setErrors] = useState({ fullName: "", mobile: "" });
+
   const [files, setFiles] = useState({
     nameRemoval: null,
     familyAadhaar: null,
@@ -60,8 +62,18 @@ function RationCardForm() {
     }
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.fullName.trim() || formData.fullName.trim().length < 3) newErrors.fullName = "Name must be at least 3 characters";
+    if (!/^[0-9]{10}$/.test(formData.mobile)) newErrors.mobile = "Mobile number must be exactly 10 digits";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!validateForm()) return;
 
     if (!formData.fullName.trim()) {
       alert("Please enter Full Name");
@@ -103,7 +115,7 @@ function RationCardForm() {
       return;
     }
 
-    const amount = 800; // 🔥 Ration Card Service Amount
+    const amount = 4000; // 🔥 Ration Card Service Amount
 
     navigate("/payment", {
       state: {
@@ -273,34 +285,42 @@ function RationCardForm() {
 
               <div>
                 <label className="block font-bold mb-2">
-                  Full Name (पूर्ण नाव)
+                  Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   required
+                  minLength={3}
                   value={formData.fullName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, fullName: e.target.value })
-                  }
+                  onChange={(e) => {
+                    setFormData({ ...formData, fullName: e.target.value });
+                    setErrors({ ...errors, fullName: "" });
+                  }}
                   placeholder="Enter Full Name"
-                  className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200"
+                  className={`w-full bg-[#f8faff] p-4 rounded-xl ring-1 ${errors.fullName ? 'ring-red-500' : 'ring-gray-200'}`}
                 />
+                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
               </div>
 
               <div>
                 <label className="block font-bold mb-2">
-                  Mobile Number (मोबाईल क्रमांक)
+                  Mobile Number (मोबाईल क्रमांक) <span className="text-red-500">*</span>
                 </label>
                 <input
-                  type="text"
+                  type="tel"
                   required
+                  pattern="[0-9]{10}"
+                  maxLength={10}
                   value={formData.mobile}
-                  onChange={(e) =>
-                    setFormData({ ...formData, mobile: e.target.value })
-                  }
-                  placeholder="Enter Mobile Number"
-                  className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200"
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9]/g, '');
+                    setFormData({ ...formData, mobile: value });
+                    setErrors({ ...errors, mobile: "" });
+                  }}
+                  placeholder="Enter 10-digit Mobile Number"
+                  className={`w-full bg-[#f8faff] p-4 rounded-xl ring-1 ${errors.mobile ? 'ring-red-500' : 'ring-gray-200'}`}
                 />
+                {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
               </div>
 
               <UploadBox label="1st Ration Card Name Removal Certificate (1ले रेशन कार्ड नाव कमी केलेला दाखला)" field="nameRemoval" fileData={files.nameRemoval} onFileChange={handleFileChange} />

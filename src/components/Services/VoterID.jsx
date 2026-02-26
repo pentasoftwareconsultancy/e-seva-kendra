@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import VoterHero from "../../assets/Servicesimg/Panhero.png";
 
 /* ================= REUSABLE UPLOAD COMPONENT ================= */
@@ -31,6 +32,19 @@ function UploadBox({ label, field, fileData, onFileChange }) {
 }
 
 function VoterID() {
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        fullName: "",
+        mobile: "",
+        dob: "",
+        address: "",
+    });
+
+    const [errors, setErrors] = useState({
+        fullName: "",
+        mobile: "",
+    });
 
     const [files, setFiles] = useState({
         aadhaarCard: null,
@@ -53,6 +67,62 @@ function VoterID() {
                 },
             }));
         }
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+
+        if (!formData.fullName.trim()) {
+            newErrors.fullName = "Full name is required";
+        } else if (formData.fullName.trim().length < 3) {
+            newErrors.fullName = "Name must be at least 3 characters";
+        }
+
+        if (!formData.mobile.trim()) {
+            newErrors.mobile = "Mobile number is required";
+        } else if (!/^[0-9]{10}$/.test(formData.mobile)) {
+            newErrors.mobile = "Mobile number must be exactly 10 digits";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
+
+        if (!files.aadhaarCard) {
+            alert("Please upload Aadhaar Card");
+            return;
+        }
+
+        if (!files.addressProof) {
+            alert("Please upload Address Proof");
+            return;
+        }
+
+        if (!files.ageProof) {
+            alert("Please upload Age Proof");
+            return;
+        }
+
+        if (!files.passportPhoto) {
+            alert("Please upload Passport Photo");
+            return;
+        }
+
+        navigate("/payment", {
+            state: {
+                serviceName: "Voter ID Card",
+                applicantName: formData.fullName,
+                mobile: formData.mobile,
+                Amount: 300,
+            },
+        });
     };
 
     return (
@@ -136,30 +206,48 @@ function VoterID() {
                         Voter ID Card Application Form
                     </h2>
 
-                    <form className="space-y-8">
+                    <form onSubmit={handleSubmit} className="space-y-8">
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                             <div>
                                 <label className="block font-bold mb-2">
-                                    Full Name (पूर्ण नाव)
+                                    Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
                                 </label>
                                 <input
                                     type="text"
+                                    required
+                                    minLength={3}
+                                    value={formData.fullName}
+                                    onChange={(e) => {
+                                        setFormData({ ...formData, fullName: e.target.value });
+                                        setErrors({ ...errors, fullName: "" });
+                                    }}
                                     placeholder="Enter Full Name"
-                                    className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
+                                    className={`w-full bg-[#f8faff] p-4 rounded-xl ring-1 ${errors.fullName ? 'ring-red-500 focus:ring-red-500' : 'ring-gray-200 focus:ring-[#1e40af]/20'} focus:ring-2`}
                                 />
+                                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
                             </div>
 
                             <div>
                                 <label className="block font-bold mb-2">
-                                    Mobile Number (मोबाईल क्रमांक)
+                                    Mobile Number (मोबाईल क्रमांक) <span className="text-red-500">*</span>
                                 </label>
                                 <input
-                                    type="text"
-                                    placeholder="Enter Mobile Number"
-                                    className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
+                                    type="tel"
+                                    required
+                                    pattern="[0-9]{10}"
+                                    maxLength={10}
+                                    value={formData.mobile}
+                                    onChange={(e) => {
+                                        const value = e.target.value.replace(/[^0-9]/g, '');
+                                        setFormData({ ...formData, mobile: value });
+                                        setErrors({ ...errors, mobile: "" });
+                                    }}
+                                    placeholder="Enter 10-digit Mobile Number"
+                                    className={`w-full bg-[#f8faff] p-4 rounded-xl ring-1 ${errors.mobile ? 'ring-red-500 focus:ring-red-500' : 'ring-gray-200 focus:ring-[#1e40af]/20'} focus:ring-2`}
                                 />
+                                {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
                             </div>
 
                             <div>
@@ -168,6 +256,9 @@ function VoterID() {
                                 </label>
                                 <input
                                     type="date"
+                                    required
+                                    value={formData.dob}
+                                    onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
                                     className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                                 />
                             </div>
@@ -178,6 +269,9 @@ function VoterID() {
                                 </label>
                                 <input
                                     type="text"
+                                    required
+                                    value={formData.address}
+                                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                                     placeholder="Enter Address"
                                     className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                                 />

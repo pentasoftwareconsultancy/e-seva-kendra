@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PanHero from "../../assets/Servicesimg/Panhero.png";
 
-function VehicleInsuranceForm() {
+function VehicleInsurance() {
 
     const [vehicleType, setVehicleType] = useState("two");
 
@@ -123,7 +123,7 @@ function VehicleInsuranceForm() {
                     </div>
 
                     {/* Form */}
-                    <form className="grid grid-cols-1 md:grid-cols-2 gap-6 shadow-2xl">
+                    <form className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
 
                         <InputField label="Full Name (पूर्ण नाव)" />
                         <InputField label="Mobile Number (मोबाईल नंबर)" />
@@ -221,4 +221,4 @@ function UploadBox({ label, fileData, onChange }) {
     );
 }
 
-export default VehicleInsuranceForm;
+export default VehicleInsurance;

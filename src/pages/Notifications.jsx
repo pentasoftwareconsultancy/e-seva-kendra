@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import NotificationCard from "../components/common/NotificationCard";
-import notificationService from "../api/notificationService";
+import notificationService from "../api/NotificationService";
 
 export default function Notifications() {
 

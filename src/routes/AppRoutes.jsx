@@ -19,7 +19,7 @@ import AdminUsers from "../pages/admin/AdminUsers";
 import AdminPayments from "../pages/admin/AdminPayments";
 import AdminReports from "../pages/admin/AdminReports";
 import AdminSettings from "../pages/admin/AdminSettings";
-import Service_navpage from "../pages/ServicePage_nav";
+import Service_navpage from "../pages/ServicePagenav";
 import Dynamic_form from "../pages/Dynamic_form";
 import AdminMessages from "../pages/admin/AdminMessages";
 

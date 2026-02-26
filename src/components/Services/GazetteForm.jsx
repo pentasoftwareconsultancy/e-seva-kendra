@@ -40,6 +40,8 @@ function GazetteForm() {
     mobile: "",
   });
 
+  const [errors, setErrors] = useState({ fullName: "", mobile: "" });
+
   const [files, setFiles] = useState({
     aadhaar: null,
     pan: null,
@@ -49,10 +51,11 @@ function GazetteForm() {
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    if (name === 'fullName' || name === 'mobile') {
+      setErrors({ ...errors, [name]: "" });
+    }
   };
 
   const handleFileChange = (e, field) => {
@@ -71,17 +74,24 @@ function GazetteForm() {
     }
   };
 
-  // ✅ Submit Handler
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.fullName.trim() || formData.fullName.trim().length < 3) newErrors.fullName = "Name must be at least 3 characters";
+    if (!/^[0-9]{10}$/.test(formData.mobile)) newErrors.mobile = "Mobile number must be exactly 10 digits";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // 🔴 Check text fields
+    if (!validateForm()) return;
+
     if (!formData.fullName || !formData.mobile) {
       alert("Please fill all fields");
       return;
     }
 
-    // 🔴 Check all uploads mandatory
     for (let key in files) {
       if (!files[key]) {
         alert("Please upload all required documents");
@@ -89,13 +99,12 @@ function GazetteForm() {
       }
     }
 
-    // ✅ Redirect to Payment Page
     navigate("/payment", {
       state: {
         serviceName: "Gazette Service",
         applicantName: formData.fullName,
          mobile: formData.mobile,
-        Amount: 600, // You can change amount here
+        Amount: 2000,
         formData,
       },
     });
@@ -181,10 +190,9 @@ function GazetteForm() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-              {/* Full Name */}
               <div>
                 <label className="block font-bold mb-2">
-                  Full Name (पूर्ण नाव)
+                  Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -192,25 +200,33 @@ function GazetteForm() {
                   value={formData.fullName}
                   onChange={handleChange}
                   required
+                  minLength={3}
                   placeholder="Enter Full Name"
-                  className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
+                  className={`w-full bg-[#f8faff] p-4 rounded-xl ring-1 ${errors.fullName ? 'ring-red-500' : 'ring-gray-200'} focus:ring-2 focus:ring-[#1e40af]/20`}
                 />
+                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
               </div>
 
-              {/* Mobile */}
               <div>
                 <label className="block font-bold mb-2">
-                  Mobile Number (मोबाईल क्रमांक)
+                  Mobile Number (मोबाईल क्रमांक) <span className="text-red-500">*</span>
                 </label>
                 <input
-                  type="text"
+                  type="tel"
                   name="mobile"
                   value={formData.mobile}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9]/g, '');
+                    setFormData({ ...formData, mobile: value });
+                    setErrors({ ...errors, mobile: "" });
+                  }}
                   required
-                  placeholder="Enter Mobile Number"
-                  className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
+                  pattern="[0-9]{10}"
+                  maxLength={10}
+                  placeholder="Enter 10-digit Mobile Number"
+                  className={`w-full bg-[#f8faff] p-4 rounded-xl ring-1 ${errors.mobile ? 'ring-red-500' : 'ring-gray-200'} focus:ring-2 focus:ring-[#1e40af]/20`}
                 />
+                {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
               </div>
 
               {/* Uploads */}
