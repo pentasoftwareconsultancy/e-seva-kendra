@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import VoterHero from "../../assets/Servicesimg/panhero.png";
+import VoterHero from "../../assets/Servicesimg/Panhero.png"; // change image if needed
 
 /* =====================================
    VOTER ID SERVICE FUNCTION
