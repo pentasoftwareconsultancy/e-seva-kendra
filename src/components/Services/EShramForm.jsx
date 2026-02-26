@@ -1,7 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PanHero from "../../assets/Servicesimg/Panhero.png";
 
-function EshramCardForm() {
+function EShramForm() {
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        fullName: "",
+        aadhaarNumber: "",
+        mobile: "",
+        dob: "",
+        occupation: "",
+        bankAccount: "",
+        ifsc: "",
+    });
 
     const [files, setFiles] = useState({
         aadhaar: null,
@@ -23,6 +35,24 @@ function EshramCardForm() {
                 },
             }));
         }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!files.aadhaar || !files.bankPassbook || !files.photo) {
+            alert("Please upload all required documents");
+            return;
+        }
+
+        navigate("/payment", {
+            state: {
+                serviceName: "E-Shram Card",
+                applicantName: formData.fullName,
+                mobile: formData.mobile,
+                Amount: 250,
+            },
+        });
     };
 
     return (
@@ -93,17 +123,17 @@ function EshramCardForm() {
                         E-Shram Card Application Form
                     </h2>
 
-                    <form className="space-y-8">
+                    <form onSubmit={handleSubmit} className="space-y-8">
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                            <InputField label="Full Name (पूर्ण नाव)" />
-                            <InputField label="Aadhaar Number (आधार क्रमांक)" />
-                            <InputField label="Mobile Number (मोबाईल नंबर)" />
-                            <InputField label="Date of Birth (जन्मतारीख)" type="date" />
-                            <InputField label="Occupation (व्यवसाय)" />
-                            <InputField label="Bank Account Number (बँक खाते क्रमांक)" />
-                            <InputField label="IFSC Code (IFSC कोड)" />
+                            <InputField label="Full Name (पूर्ण नाव)" value={formData.fullName} onChange={(e) => setFormData({...formData, fullName: e.target.value})} required />
+                            <InputField label="Aadhaar Number (आधार क्रमांक)" value={formData.aadhaarNumber} onChange={(e) => setFormData({...formData, aadhaarNumber: e.target.value})} required />
+                            <InputField label="Mobile Number (मोबाईल नंबर)" value={formData.mobile} onChange={(e) => setFormData({...formData, mobile: e.target.value})} required />
+                            <InputField label="Date of Birth (जन्मतारीख)" type="date" value={formData.dob} onChange={(e) => setFormData({...formData, dob: e.target.value})} required />
+                            <InputField label="Occupation (व्यवसाय)" value={formData.occupation} onChange={(e) => setFormData({...formData, occupation: e.target.value})} required />
+                            <InputField label="Bank Account Number (बँक खाते क्रमांक)" value={formData.bankAccount} onChange={(e) => setFormData({...formData, bankAccount: e.target.value})} required />
+                            <InputField label="IFSC Code (IFSC कोड)" value={formData.ifsc} onChange={(e) => setFormData({...formData, ifsc: e.target.value})} required />
 
                             <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
                             <UploadBox label="Bank Passbook (बँक पासबुक)" fileData={files.bankPassbook} onChange={(e) => handleFileChange(e, "bankPassbook")} />
@@ -129,12 +159,15 @@ function EshramCardForm() {
 }
 
 /* Input Field */
-function InputField({ label, type = "text" }) {
+function InputField({ label, type = "text", value, onChange, required }) {
     return (
         <div>
             <label className="block font-bold mb-2">{label}</label>
             <input
                 type={type}
+                value={value}
+                onChange={onChange}
+                required={required}
                 placeholder={`Enter ${label}`}
                 className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
             />
@@ -171,4 +204,4 @@ function UploadBox({ label, fileData, onChange }) {
     );
 }
 
-export default EshramCardForm;
+export default EShramForm;

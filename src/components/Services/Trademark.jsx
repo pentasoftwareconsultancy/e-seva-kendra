@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import PanHero from "../../assets/Servicesimg/Panhero.png";
 
-function TrademarkForm() {
+function Trademark() {
 
     const [files, setFiles] = useState({
         pan: null,
@@ -208,4 +208,4 @@ function UploadBox({ label, fileData, onChange }) {
     );
 }
 
-export default TrademarkForm;
+export default Trademark;

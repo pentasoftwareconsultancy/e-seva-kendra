@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 import Panhero from "../../assets/Servicesimg/Panhero.png";
@@ -10,11 +11,20 @@ import Panhero from "../../assets/Servicesimg/Panhero.png";
    PAN SERVICE FUNCTION (YOUR FULL UI)
 ===================================== */
 function UdyogAadhaar() {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    mobile: "",
+    email: "",
+  });
+
   const [files, setFiles] = useState({
+    pan: null,
     aadhaar: null,
-    photos: null,
-    marriageCert: null,
-    oldPan: null,
+    bankPassbook: null,
+    lightBill: null,
+    photo: null,
   });
 
   const handleFileChange = (e, field) => {
@@ -26,6 +36,24 @@ function UdyogAadhaar() {
         [field]: { file, url: fileURL },
       }));
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!files.pan || !files.aadhaar || !files.bankPassbook || !files.lightBill || !files.photo) {
+      alert("Please upload all required documents");
+      return;
+    }
+
+    navigate("/payment", {
+      state: {
+        serviceName: "Udyam Registration",
+        applicantName: formData.fullName,
+        mobile: formData.mobile,
+        Amount: 500,
+      },
+    });
   };
 
   return (
@@ -141,7 +169,7 @@ function UdyogAadhaar() {
 
           <h2 className="text-3xl font-bold mb-6">Udyog Aadhaar Registration Form</h2>
 
-          <form className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-8">
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
@@ -150,6 +178,9 @@ function UdyogAadhaar() {
                 <label className="block font-bold mb-2">Full Name (पूर्ण नाव)</label>
                 <input
                   type="text"
+                  required
+                  value={formData.fullName}
+                  onChange={(e) => setFormData({...formData, fullName: e.target.value})}
                   placeholder="Enter Full Name"
                   className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                 />
@@ -160,6 +191,9 @@ function UdyogAadhaar() {
                 <label className="block font-bold mb-2">Mobile Number (मोबाईल क्रमांक)</label>
                 <input
                   type="text"
+                  required
+                  value={formData.mobile}
+                  onChange={(e) => setFormData({...formData, mobile: e.target.value})}
                   placeholder="Enter Mobile Number"
                   className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                 />
@@ -170,6 +204,9 @@ function UdyogAadhaar() {
                 <label className="block font-bold mb-2">Email ID (ई-मेल आय.डी.)</label>
                 <input
                   type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
                   placeholder="Enter Email ID"
                   className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                 />
