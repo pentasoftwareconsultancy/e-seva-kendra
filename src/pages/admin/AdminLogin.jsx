@@ -9,14 +9,35 @@ const AdminLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // Simulate login and redirect to the dashboard
-    if (email && password) {
+  const handleLogin = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch("http://localhost:8080/api/admin/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    });
+
+    const result = await response.text();
+
+    if (result === "Login Successful") {
       localStorage.setItem('adminAuth', 'true');
       navigate('/admin/dashboard');
+    } else {
+      alert("Invalid email or password");
     }
-  };
+
+  } catch (error) {
+    console.error("Login error:", error);
+    alert("Server error. Please try again.");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center p-4 relative overflow-hidden " style={{backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
