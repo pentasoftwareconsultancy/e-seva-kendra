@@ -13,6 +13,7 @@ const AdminLogin = () => {
   e.preventDefault();
 
   try {
+
     const response = await fetch("http://localhost:8080/api/admin/login", {
       method: "POST",
       headers: {
@@ -27,15 +28,24 @@ const AdminLogin = () => {
     const result = await response.text();
 
     if (result === "Login Successful") {
-      localStorage.setItem('adminAuth', 'true');
-      navigate('/admin/dashboard');
+
+      alert("Login Successful ✅");
+
+      localStorage.setItem("adminAuth", "true");
+
+      navigate("/admin/dashboard");
+
     } else {
-      alert("Invalid email or password");
+
+      alert("Invalid Email or Password ❌");
+
     }
 
   } catch (error) {
-    console.error("Login error:", error);
-    alert("Server error. Please try again.");
+
+    console.error(error);
+    alert("Server Error");
+
   }
 };
 
