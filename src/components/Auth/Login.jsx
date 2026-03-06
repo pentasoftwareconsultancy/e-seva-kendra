@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import illustrationImg from "../../assets/Auth/register-illustration.png";
@@ -8,20 +9,38 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleLogin = (e) => {
+const handleLogin = async (e) => {
   e.preventDefault();
 
-  if (email && password) {
-    localStorage.setItem("isLoggedIn", "true");
+  try {
 
-    alert("Login Successful!");
+    const response = await axios.post(
+      "http://localhost:8080/api/users/login",
+      {
+        email: email,
+        password: password
+      }
+    );
 
-    navigate("/") ;
-  } else {
-    alert("Please enter email and password");
+    alert(response.data);
+
+    if (response.data === "Login Successful") {
+
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userEmail", email);
+
+      navigate("/");
+
+    }
+
+  } catch (error) {
+
+    console.error(error);
+    alert("Login failed");
+
   }
 };
+
   return (
     <>
       {/* ================= HERO SECTION ================= */}
