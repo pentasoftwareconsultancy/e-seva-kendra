@@ -22,7 +22,6 @@ import AdminSettings from "../pages/admin/AdminSettings";
 import Service_navpage from "../pages/ServicePagenav";
 import Dynamic_form from "../pages/Dynamic_form";
 import AdminMessages from "../pages/admin/AdminMessages";
-
 import AccountPage from "../pages/AccountPage";
 import ContactPage from "../pages/ContactPage";
 

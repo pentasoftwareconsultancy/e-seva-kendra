@@ -141,10 +141,6 @@ const handleLogin = async (e) => {
                   <input type="checkbox" className="w-4 h-4" />
                   <span className="text-gray-600">Remember me</span>
                 </label>
-
-                <span className="text-blue-600 font-medium cursor-pointer hover:underline">
-                  Forgot Password?
-                </span>
               </div>
 
               <button
