@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminLayout from "../../components/common/AdminLayout";
 import { BarChart2 } from 'lucide-react';
 import {
@@ -84,26 +84,32 @@ const COLORS = ["#5BA45E", "#3B82F6", "#F59E0B", "#EF4444", "#8B5CF6", "#EC4899"
 const AdminReports = () => {
   const [filter, setFilter] = useState("year");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [chartData, setChartData] = useState([]);
+  const [pieChartData, setPieChartData] = useState([]);
+
+  useEffect(() => {
+    let url = "http://localhost:8080/api/reports/year";
+
+    if(filter === "week") {
+      url = "http://localhost:8080/api/reports/week";
+    }
+    else if(filter === "month") {
+      url = "http://localhost:8080/api/reports/month";
+    }
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        setChartData(data);
+        setPieChartData(data);
+      });
+  }, [filter]);
 
   React.useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  const chartData =
-    filter === "week"
-      ? weeklyData
-      : filter === "month"
-      ? monthlyData
-      : yearlyData;
-
-  const pieChartData =
-    filter === "week"
-      ? pieDataWeek
-      : filter === "month"
-      ? pieDataMonth
-      : pieData;
 
   const totalEarning = chartData.reduce((sum, item) => sum + item.value, 0);
 
