@@ -1,20 +1,64 @@
 import AdminLayout from '../../components/common/AdminLayout';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Eye, ShoppingBag } from 'lucide-react';
 const AdminOrders = () => {
   const [activeTab, setActiveTab] = useState('All Orders');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedOrder, setSelectedOrder] = useState(null);
-  
-  const orders = [
-    { id: 2375, name: 'Rajesh Kumar', service: 'PAN Card', status: 'Pending', date: 'Mar 28, 2024' },
-    { id: 2374, name: 'Priya Sharma', service: 'Aadhaar Card', status: 'Completed', date: 'Mar 28, 2024' },
-    { id: 2373, name: 'Amit Patil', service: 'Voter ID Card', status: 'In Progress', date: 'Mar 28, 2024' },
-    { id: 2372, name: 'Sunita Verma', service: 'Aadhaar Card', status: 'Cancelled', date: 'Mar 28, 2024' },
-    { id: 2371, name: 'Deepak Singh', service: 'Driving License', status: 'Completed', date: 'Mar 27, 2024' },
-    { id: 2370, name: 'Anjali Deshmukh', service: 'PAN Card', status: 'Pending', date: 'Mar 27, 2024' },
-    { id: 2369, name: 'Mahesh Joshi', service: 'Voter ID Card', status: 'Completed', date: 'Mar 28, 2024' },
-  ];
+  const [orders, setOrders] = useState([]);
+  const [newStatus, setNewStatus] = useState('');
+
+  const handleUpdateStatus = () => {
+    if (!newStatus) {
+      alert('Please select a status');
+      return;
+    }
+
+    fetch(`http://localhost:8080/api/orders/${selectedOrder.id}/status`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: newStatus })
+    })
+      .then(res => res.text())
+      .then(result => {
+        alert(result);
+        setSelectedOrder(null);
+        setNewStatus('');
+        // Refresh orders
+        fetch("http://localhost:8080/api/orders")
+          .then(res => res.json())
+          .then(data => {
+            const formatted = data.map(order => ({
+              id: order.id,
+              name: order.name,
+              service: order.serviceName,
+              status: order.status,
+              date: new Date(order.createdAt).toLocaleDateString()
+            }));
+            setOrders(formatted.reverse());
+          });
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Failed to update status');
+      });
+  };
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/orders")
+      .then(res => res.json())
+      .then(data => {
+        const formatted = data.map(order => ({
+          id: order.id,
+          name: order.name,
+          service: order.serviceName,
+          status: order.status,
+          date: new Date(order.createdAt).toLocaleDateString()
+        }));
+        setOrders(formatted.reverse());
+      })
+      .catch(err => console.error(err));
+  }, []);
 
   const filteredOrders = orders
     .filter(order => activeTab === 'All Orders' ? true : order.status === activeTab)
@@ -169,6 +213,20 @@ const AdminOrders = () => {
                         {selectedOrder.status}
                       </span>
                     </div>
+                    <div className="pt-3 border-t">
+                      <label className="text-xs md:text-sm text-gray-600 font-medium mb-2 block">Update Status</label>
+                      <select
+                        value={newStatus}
+                        onChange={(e) => setNewStatus(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg text-xs md:text-sm"
+                      >
+                        <option value="">Select Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -180,7 +238,10 @@ const AdminOrders = () => {
                   >
                     Close
                   </button>
-                  <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition">
+                  <button 
+                    onClick={handleUpdateStatus}
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition"
+                  >
                     Update Status
                   </button>
                 </div>

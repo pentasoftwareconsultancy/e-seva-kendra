@@ -16,6 +16,35 @@ function Payment() {
       setPreviewUrl(URL.createObjectURL(file));
     }
   };
+
+  const handleConfirmPayment = async () => {
+    if (!screenshot) {
+      alert("Please upload payment screenshot");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", data.applicantName);
+    formData.append("mobile", data.mobile);
+    formData.append("serviceName", data.serviceName);
+    formData.append("extraData", "Form Submitted");
+    formData.append("amount", data.Amount);
+    formData.append("screenshot", screenshot);
+
+    try {
+      const response = await fetch("http://localhost:8080/api/payment/confirm", {
+        method: "POST",
+        body: formData
+      });
+
+      const result = await response.text();
+      alert(result);
+      window.location.href = "/service";
+    } catch (error) {
+      console.error(error);
+      alert("Payment Failed");
+    }
+  };
   
 
   if (!data) {
@@ -91,6 +120,7 @@ function Payment() {
 
         {/* CONFIRM BUTTON */}
         <button
+          onClick={handleConfirmPayment}
           disabled={!screenshot}
           className={`w-full py-3 rounded-xl font-bold text-white ${
             screenshot 

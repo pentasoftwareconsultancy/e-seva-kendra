@@ -1,39 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminLayout from '../../components/common/AdminLayout';
 import { CreditCard, User, Eye } from 'lucide-react';
-const payments = [
-  {
-    id: 1001,
-    user: "Rajesh Kumar",
-    service: "PAN Card",
-    amount: "₹110",
-    method: "UPI",
-    date: "Mar 29, 2024",
-    status: "Success",
-    screenshot: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=600&fit=crop",
-  },
-  {
-    id: 1002,
-    user: "Priya Sharma",
-    service: "Aadhaar Card",
-    amount: "₹50",
-    method: "Card",
-    date: "Mar 28, 2024",
-    status: "Success",
-    screenshot: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=600&fit=crop",
-  },
-  {
-    id: 1003,
-    user: "Amit Patil",
-    service: "Voter ID",
-    amount: "₹60",
-    method: "UPI",
-    date: "Mar 28, 2024",
-    status: "Failed",
-    screenshot: "https://images.unsplash.com/photo-1554224311-beee460c201f?w=400&h=600&fit=crop",
-  },
-];
-
 const statusStyle = {
   Success: "bg-green-100 text-green-700",
   Failed: "bg-red-100 text-red-700",
@@ -43,6 +10,26 @@ const AdminPayments = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [viewScreenshot, setViewScreenshot] = useState(null);
+  const [payments, setPayments] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/payment")
+      .then(res => res.json())
+      .then(data => {
+        const formatted = data.map(pay => ({
+          id: pay.id,
+          user: pay.name,
+          service: pay.serviceName,
+          amount: "₹" + pay.amount,
+          method: "UPI",
+          date: new Date(pay.createdAt).toLocaleDateString(),
+          status: pay.paymentStatus,
+          screenshot: "http://localhost:8080/uploads/" + pay.screenshot
+        }));
+        setPayments(formatted.reverse());
+      })
+      .catch(err => console.error(err));
+  }, []);
 
   const filteredPayments = payments.filter(pay => 
     searchQuery === '' ? true : 
@@ -87,7 +74,7 @@ const AdminPayments = () => {
               <tbody className="divide-y divide-gray-100">
                 {filteredPayments.map((pay) => (
                   <tr key={pay.id} className="hover:bg-blue-50/50 transition-colors duration-150">
-                    <td className="px-4 md:px-6 py-4 font-semibold text-blue-600 hidden md:table-cell">#{pay.id}</td>
+                    <td className="px-4 md:px-6 py-4 font-semibold text-blue-600 hidden md:table-cell">{pay.id}</td>
                     <td className="px-4 md:px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
