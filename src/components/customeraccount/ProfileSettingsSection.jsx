@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function ProfileSettingsSection() {
   const [formData, setFormData] = useState({
     name: "Snehal Kulkarni",
-    email: "snehal@example.com",
+    email: "snehal@example.com", // now editable
     currentPassword: "",
     newPassword: "",
   });
@@ -15,10 +15,36 @@ export default function ProfileSettingsSection() {
     });
   };
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    alert("Profile Updated Successfully!");
-    // Later: send to backend
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/users/update-by-email`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email, // include editable email
+          currentPassword: formData.currentPassword,
+          newPassword: formData.newPassword,
+        }),
+      });
+
+      const data = await response.text();
+      alert(data);
+
+      setFormData({
+        ...formData,
+        currentPassword: "",
+        newPassword: "",
+      });
+
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Something went wrong!");
+    }
   };
 
   return (
@@ -50,9 +76,11 @@ export default function ProfileSettingsSection() {
           </label>
           <input
             type="email"
+            name="email"
             value={formData.email}
-            disabled
-            className="w-full border bg-gray-100 rounded-lg px-4 py-2.5 text-sm text-gray-500 cursor-not-allowed"
+            onChange={handleChange}
+            placeholder="Enter your email"
+            className="w-full border rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
           />
         </div>
 
