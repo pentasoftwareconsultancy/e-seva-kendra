@@ -1,4 +1,6 @@
 import React from "react";
+import { QrCode } from "lucide-react";
+import logo from "../../assets/Home/new logo.png";
 import { Link, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -20,6 +22,7 @@ const menuItems = [
   { icon: CreditCard, label: "Payments", path: "/admin/payments" },
   { icon: BarChart2, label: "Reports", path: "/admin/reports" },
   { icon: MessageSquare, label: "Messages", path: "/admin/messages" },
+  { icon: QrCode, label: "UPI QR", path: "/admin/upi-qr" },
   { icon: Settings, label: "Settings", path: "/admin/settings" },
 ];
 
@@ -44,11 +47,9 @@ const AdminSidebar = ({ isOpen, setIsOpen, isDark }) => {
       >
       {/* Logo */}
       <div className="px-6 py-5 flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <div className="bg-green-500 px-2.5 py-1.5 rounded-lg font-bold text-xs">
-            RE
-          </div>
-          <span className="text-lg font-bold">Raut Enterprises</span>
+        <div className="flex items-center space-x-2 cursor-pointer" onClick={() => window.location.href = '/admin/dashboard'}>
+          <img src={logo} alt="Logo" className="h-15 w-100% rounded-lg" />
+          
         </div>
         <button
           onClick={() => setIsOpen(false)}

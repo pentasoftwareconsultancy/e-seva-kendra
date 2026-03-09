@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import QR from "../assets/Servicesimg/QR.png";
+
 
 function Payment() {
   const location = useLocation();
@@ -8,12 +8,49 @@ function Payment() {
 
   const [screenshot, setScreenshot] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [qrImage, setQrImage] = useState("");
+
+    useEffect(() => {
+    fetch("http://localhost:8080/api/payment/qr")
+      .then(res => res.text())
+      .then(data => setQrImage(data))
+      .catch(err => console.error(err));
+  }, []);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setScreenshot(file);
       setPreviewUrl(URL.createObjectURL(file));
+    }
+  };
+
+  const handleConfirmPayment = async () => {
+    if (!screenshot) {
+      alert("Please upload payment screenshot");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", data.applicantName);
+    formData.append("mobile", data.mobile);
+    formData.append("serviceName", data.serviceName);
+    formData.append("extraData", "Form Submitted");
+    formData.append("amount", data.Amount);
+    formData.append("screenshot", screenshot);
+
+    try {
+      const response = await fetch("http://localhost:8080/api/payment/confirm", {
+        method: "POST",
+        body: formData
+      });
+
+      const result = await response.text();
+      alert(result);
+      window.location.href = "/service";
+    } catch (error) {
+      console.error(error);
+      alert("Payment Failed");
     }
   };
   
@@ -52,11 +89,11 @@ function Payment() {
         {/* QR CODE */}
         <div className="text-center space-y-4">
           <div className="inline-block bg-white p-6 rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 transform hover:-translate-y-1">
-            <img
-              src={QR}
-              alt="QR Code"
-              className="w-48 mx-auto rounded-lg"
-            />
+           <img
+  src={`http://localhost:8080${qrImage}`}
+  alt="QR Code"
+  className="w-48 mx-auto rounded-lg"
+/>
           </div>
           <p className="font-semibold text-lg">Scan & Pay</p>
           <p className="text-gray-600">UPI ID: esuvidha@upi</p>
@@ -91,6 +128,7 @@ function Payment() {
 
         {/* CONFIRM BUTTON */}
         <button
+          onClick={handleConfirmPayment}
           disabled={!screenshot}
           className={`w-full py-3 rounded-xl font-bold text-white ${
             screenshot 
