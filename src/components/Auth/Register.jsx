@@ -42,7 +42,9 @@ const handleRegister = async (e) => {
     setPassword("");
     setConfirmPassword("");
 
-  } catch (error) {
+  } 
+  
+  catch (error) {
     console.error(error);
     alert("Registration failed");
   }
