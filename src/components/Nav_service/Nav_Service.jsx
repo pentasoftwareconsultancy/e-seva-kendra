@@ -178,7 +178,7 @@ const handleApplyClick = (slug) => {
     },
     {
       title: "Demat Account (डीमॅट खाते)",
-      desc: "File your D-mart account application or update details.",
+      desc: "Open or manage your Demat account.",
       img: Demat,
       slug: "demat-account",
     },
