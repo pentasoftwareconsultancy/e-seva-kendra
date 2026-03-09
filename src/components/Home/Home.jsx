@@ -92,7 +92,7 @@ export default function Home() {
                           
                             {
                                 title: "Passport (पासपोर्ट)",
-                                desc: "New passport & renewal assistance passport",
+                                desc: "New passport application & renewal assistance",
                                 img: passImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "passport"
@@ -108,7 +108,7 @@ export default function Home() {
         
                             {
                                 title: "Gazette Certificate (गॅझेट प्रमाणपत्र)",
-                                desc: "Apply for Gazette publication for name change, correction record updates.",
+                                desc: "Apply for Gazette publication for name change or correction.",
                                 img: gazetteImg,
                                 btnColor: "bg-blue-900 hover:bg-blue-700",
                                 slug: "gazette"
@@ -277,7 +277,7 @@ export default function Home() {
                                             STEP 03
                                         </span>
                                         <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2 sm:mb-3">
-                                            Get Update & Delivery
+                                            Get Updates & Delivery
                                         </h3>
                                         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                                             Track your application status in real-time through our portal. Receive instant notifications at every stage. Once processed, get your documents delivered safely to your doorstep or download them digitally.

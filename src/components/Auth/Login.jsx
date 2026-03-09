@@ -15,32 +15,23 @@ export default function Login() {
 
     try {
 
-      const response = await axios.post(
-        "http://localhost:8080/api/users/login",
-        {
-          email: email,
-          password: password
-        }
-      );
+    alert(response.data);
+if (response.data === "Login Successful") {
 
-      const data = response.data;
+  localStorage.setItem("isLoggedIn", "true");
+  localStorage.setItem("userEmail", email);
 
-      if (data.message === "Login Successful") {
+  // check if user clicked service before login
+  const redirectService = localStorage.getItem("redirectService");
 
-        // Store login info
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userEmail", data.email);
-        localStorage.setItem("userId", data.id);
+  if (redirectService) {
+    localStorage.removeItem("redirectService");
+    navigate(`/apply/${redirectService}`);
+  } else {
+    navigate("/service");
+  }
 
-        alert("Login Successful");
-
-        navigate("/");
-
-      } else {
-
-        alert(data.message || "Invalid credentials");
-
-      }
+}
 
     } catch (error) {
 
