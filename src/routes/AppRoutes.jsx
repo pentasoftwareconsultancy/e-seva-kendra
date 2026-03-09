@@ -16,6 +16,7 @@ import ProtectedRoute from "../components/common/ProtectedRoute";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminOrders from "../pages/admin/AdminOrders";
 import AdminUsers from "../pages/admin/AdminUsers";
+import AdminUpiQR from "../pages/admin/AdminUpiQR";
 import AdminPayments from "../pages/admin/AdminPayments";
 import AdminReports from "../pages/admin/AdminReports";
 import AdminSettings from "../pages/admin/AdminSettings";
@@ -87,6 +88,11 @@ const AppRoutes = () => {
       <Route path="/admin/messages" element={
         <ProtectedRoute>
           <AdminMessages />
+        </ProtectedRoute>
+      } />
+       <Route path="/admin/upi-qr" element={
+        <ProtectedRoute>
+          <AdminUpiQR />
         </ProtectedRoute>
       } />
       <Route path="/admin/settings" element={
