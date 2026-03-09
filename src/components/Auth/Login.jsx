@@ -23,15 +23,22 @@ const handleLogin = async (e) => {
     );
 
     alert(response.data);
+if (response.data === "Login Successful") {
 
-    if (response.data === "Login Successful") {
+  localStorage.setItem("isLoggedIn", "true");
+  localStorage.setItem("userEmail", email);
 
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userEmail", email);
+  // check if user clicked service before login
+  const redirectService = localStorage.getItem("redirectService");
 
-      navigate("/");
+  if (redirectService) {
+    localStorage.removeItem("redirectService");
+    navigate(`/apply/${redirectService}`);
+  } else {
+    navigate("/service");
+  }
 
-    }
+}
 
   } catch (error) {
 
