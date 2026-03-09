@@ -257,16 +257,11 @@ function RationCardForm() {
 );
 
       {/* ================= FORM SECTION ================= */}
-<<<<<<< HEAD
-      <section id="ration-form" className="py-16 px-4 md:px-8 bg-[#f8faff]">
-        <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow p-8 md:p-12">
-=======
       <section
         id="ration-form"
         className="py-16 px-4 md:px-8 bg-[#f8faff]"
       >
         <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow-2xl p-8 md:p-12">
->>>>>>> 26dc62f37d0486845062520513c50043e1d677e5
 
           <h2 className="text-3xl font-bold mb-6 text-center">
             Ration Card Application Form
