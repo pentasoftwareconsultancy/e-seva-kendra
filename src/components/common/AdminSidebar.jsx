@@ -1,4 +1,5 @@
 import React from "react";
+import { QrCode } from "lucide-react";
 import logo from "../../assets/Home/new logo.png";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -21,6 +22,7 @@ const menuItems = [
   { icon: CreditCard, label: "Payments", path: "/admin/payments" },
   { icon: BarChart2, label: "Reports", path: "/admin/reports" },
   { icon: MessageSquare, label: "Messages", path: "/admin/messages" },
+  { icon: QrCode, label: "UPI QR", path: "/admin/upi-qr" },
   { icon: Settings, label: "Settings", path: "/admin/settings" },
 ];
 
