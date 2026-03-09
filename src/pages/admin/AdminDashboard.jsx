@@ -1,20 +1,46 @@
 import AdminLayout from '../../components/common/AdminLayout';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User } from 'lucide-react';
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('All Orders');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedOrder, setSelectedOrder] = useState(null);
-  
-  const orders = [
-    { id: 2375, name: 'Rajesh Kumar', service: 'PAN Card', status: 'Pending', date: 'Mar 28, 2024' },
-    { id: 2374, name: 'Priya Sharma', service: 'Aadhaar Card', status: 'Completed', date: 'Mar 28, 2024' },
-    { id: 2373, name: 'Amit Patil', service: 'Voter ID Card', status: 'In Progress', date: 'Mar 28, 2024' },
-    { id: 2372, name: 'Sunita Verma', service: 'Aadhaar Card', status: 'Cancelled', date: 'Mar 28, 2024' },
-    { id: 2371, name: 'Deepak Singh', service: 'Driving License', status: 'Completed', date: 'Mar 27, 2024' },
-    { id: 2370, name: 'Anjali Deshmukh', service: 'PAN Card', status: 'Pending', date: 'Mar 27, 2024' },
-    { id: 2369, name: 'Mahesh Joshi', service: 'Voter ID Card', status: 'Completed', date: 'Mar 28, 2024' },
-  ];
+  const [stats, setStats] = useState({
+    totalOrders: 0,
+    pendingOrders: 0,
+    inProgressOrders: 0,
+    completedOrders: 0
+  });
+  const [todayEarnings, setTodayEarnings] = useState(0);
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/dashboard/stats")
+      .then(res => res.json())
+      .then(data => setStats(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/payment/today-earnings")
+      .then(res => res.json())
+      .then(data => setTodayEarnings(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/orders")
+      .then(res => res.json())
+      .then(data => {
+        const formatted = data.map(order => ({
+          id: order.id,
+          name: order.name,
+          service: order.serviceName,
+          status: order.status,
+          date: new Date(order.createdAt).toLocaleDateString()
+        }));
+        setOrders(formatted.reverse());
+      })
+      .catch(err => console.error(err));
+  }, []);
 
   const filteredOrders = orders
     .filter(order => activeTab === 'All Orders' || order.status === activeTab)
@@ -56,7 +82,7 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600 font-medium">Total Orders</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">152</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalOrders}</p>
                 </div>
               </div>
             </div>
@@ -73,7 +99,7 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600 font-medium">Pending Orders</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">32</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.pendingOrders}</p>
                 </div>
               </div>
             </div>
@@ -90,7 +116,7 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600 font-medium">In Progress Orders</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">15</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.inProgressOrders}</p>
                 </div>
               </div>
             </div>
@@ -107,7 +133,7 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600 font-medium">Completed Orders</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">98</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.completedOrders}</p>
                 </div>
               </div>
             </div>
@@ -129,7 +155,7 @@ const AdminDashboard = () => {
               <div className="text-6xl animate-bounce">💰</div>
             </div>
             <h3 className="text-lg font-semibold text-gray-800 mb-2">Earnings Today</h3>
-            <p className="text-3xl font-bold text-gray-800">₹ 12,450</p>
+            <p className="text-3xl font-bold text-gray-800">₹ {todayEarnings}</p>
           
           </div>
 
@@ -177,7 +203,7 @@ const AdminDashboard = () => {
                 <tbody className="divide-y divide-gray-100">
                   {filteredOrders.map((order) => (
                     <tr key={order.id} className="hover:bg-blue-50/50 transition-colors duration-150">
-                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600">#{order.id}</td>
+                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600">{order.id}</td>
                       <td className="px-4 md:px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white">

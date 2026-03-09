@@ -11,7 +11,7 @@ import udyamImg from "../../assets/services/udyam.png";
 import foodImg from "../../assets/services/food.png";
 import Incomtax from "../../assets/services/Incomtax.jpg";
 import loan from "../../assets/services/loan.png";
-import Demat from "../../assets/services/demat.png";
+import Demat from "../../assets/services/Demat.png";
 import Finance from "../../assets/services/Finance.png";
 import Insurance from "../../assets/services/Insurance.png";
 import Eshram from "../../assets/services/Eshram.png";
@@ -19,7 +19,7 @@ import Mutualfunds from "../../assets/services/Mutualfunds.jpg";
 import Scitizen from "../../assets/services/Scitizen.jpg";
 import Agriment from "../../assets/services/Agriment.png";
 import Trademark from "../../assets/services/Trademark.jpg";
-import Gst from "../../assets/services/Gst.png";
+import Gst from "../../assets/services/gst.png";
 import Vinsurance from "../../assets/services/Vinsurance.png";
 import Ayushman from "../../assets/services/Ayushman.png";
 import SIPImg from "../../assets/services/SIP.png";
@@ -209,7 +209,7 @@ export default function Nav_Service() {
 
       {/* SERVICES GRID */}
       <div className="px-4 md:px-10 lg:px-16 py-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-10 mb-16 mt-12 sm:mt-20 items-stretch">        {services.map((service) => (
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-10 mb-16 mt-12 sm:mt-20 items-stretch">        {services.map((service) => (
           <div
             key={service.title}
             className="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-blue-500 cursor-pointer transform hover:-translate-y-2 active:scale-95 flex flex-col h-full"          >

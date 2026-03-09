@@ -1,7 +1,7 @@
 import React from "react";
 import Nav_Service from "../components/Nav_service/Nav_Service";
 
-const Service_navpage = () => {
+const ServicePagenav= () => {
   return (
     <div>
       <Nav_Service />
@@ -9,4 +9,4 @@ const Service_navpage = () => {
   );
 };
 
-export default Service_navpage;
+export default ServicePagenav;
