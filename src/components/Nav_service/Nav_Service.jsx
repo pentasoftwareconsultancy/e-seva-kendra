@@ -29,18 +29,28 @@ import IECImg from "../../assets/services/IEC.png";
 export default function Nav_Service() {
   const navigate = useNavigate();
   const [showLoginAlert, setShowLoginAlert] = useState(false);
+const handleApplyClick = (slug) => {
 
-  const isLoggedIn = () => {
-    return localStorage.getItem('token') !== null;
-  };
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-  const handleApplyClick = (slug) => {
-    if (isLoggedIn()) {
-      navigate(`/apply/${slug}`);
-    } else {
-      setShowLoginAlert(true);
-    }
-  };
+  // if user not logged in
+  if (isLoggedIn !== "true") {
+
+    alert("Please login first to apply for this service");
+
+    // store which service user wanted
+    localStorage.setItem("redirectService", slug);
+
+    navigate("/login");
+
+    return;
+  }
+
+  // if logged in
+  navigate(`/apply/${slug}`);
+};
+
+
   const services = [
     {
       title: "PAN Card(पॅन कार्ड)",
@@ -186,7 +196,6 @@ export default function Nav_Service() {
     },
 
   ];
-
 
   return (
     <div>
