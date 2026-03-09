@@ -31,7 +31,10 @@ function Payment() {
       return;
     }
 
+    const userId = localStorage.getItem("userId");
+
     const formData = new FormData();
+    formData.append("userId", userId || "");
     formData.append("name", data.applicantName);
     formData.append("mobile", data.mobile);
     formData.append("serviceName", data.serviceName);

@@ -9,18 +9,11 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-const handleLogin = async (e) => {
-  e.preventDefault();
 
-  try {
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-    const response = await axios.post(
-      "http://localhost:8080/api/users/login",
-      {
-        email: email,
-        password: password
-      }
-    );
+    try {
 
     alert(response.data);
 if (response.data === "Login Successful") {
@@ -40,13 +33,13 @@ if (response.data === "Login Successful") {
 
 }
 
-  } catch (error) {
+    } catch (error) {
 
-    console.error(error);
-    alert("Login failed");
+      console.error(error);
+      alert("Login failed");
 
-  }
-};
+    }
+  };
 
   return (
     <>
@@ -96,6 +89,7 @@ if (response.data === "Login Successful") {
 
       {/* ================= LOGIN SECTION ================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-0 pt-12 sm:pt-16 md:pt-24 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-end">
+
         {/* LEFT CONTENT */}
         <div className="flex flex-col justify-between pb-0 order-2 md:order-1">
           <div>
@@ -122,11 +116,13 @@ if (response.data === "Login Successful") {
           className="flex items-center md:-ml-10 mb-6 md:mb-10 order-1 md:order-2"
         >
           <div className="w-full bg-white rounded-2xl p-6 sm:p-8 md:p-10 shadow-[0_30px_70px_rgba(0,0,0,0.15)]">
+
             <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-slate-900">
               Login to Continue
             </h3>
 
             <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5">
+
               <input
                 type="email"
                 placeholder="Email Address"
@@ -156,6 +152,7 @@ if (response.data === "Login Successful") {
               >
                 Login
               </button>
+
             </form>
 
             <p className="text-sm text-center mt-4 sm:mt-5 text-gray-600">
@@ -167,9 +164,11 @@ if (response.data === "Login Successful") {
                 Register here
               </Link>
             </p>
+
           </div>
         </div>
       </section>
     </>
   );
 }
+
