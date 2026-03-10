@@ -6,32 +6,30 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
 
-  const userId = 1; // later replace with logged-in user id
+  const userId = localStorage.getItem("userId");
 
-  // Fetch notifications
-  const fetchNotifications = async () => {
-    try {
-      const res = await fetch(`http://localhost:8080/notifications/${userId}`);
-      const data = await res.json();
-      setNotifications(data);
-    } catch (error) {
-      console.error("Error fetching notifications:", error);
-    }
-  };
-
-  // Fetch unread count
-  const fetchUnreadCount = async () => {
-    try {
-      const res = await fetch(`http://localhost:8080/notifications/unread-count/${userId}`);
-      const count = await res.json();
-      setUnreadCount(count);
-    } catch (error) {
-      console.error("Error fetching unread count:", error);
-    }
-  };
-
-  // Run on page load
   useEffect(() => {
+    if (!userId) return;
+
+    const fetchNotifications = async () => {
+      try {
+        const res = await fetch(`http://localhost:8080/notifications/${userId}`);
+        const data = await res.json();
+        setNotifications(data);
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+      }
+    };
+
+    const fetchUnreadCount = async () => {
+      try {
+        const res = await fetch(`http://localhost:8080/notifications/unread-count/${userId}`);
+        const count = await res.json();
+        setUnreadCount(count);
+      } catch (error) {
+        console.error("Error fetching unread count:", error);
+      }
+    };
 
     fetchNotifications();
     fetchUnreadCount();
@@ -42,13 +40,10 @@ export default function Notifications() {
     }, 10000);
 
     return () => clearInterval(interval);
+  }, [userId]);
 
-  }, []);
-
-  // Mark one notification as read
   const markAsRead = async (id) => {
     try {
-
       await fetch(`http://localhost:8080/notifications/read/${id}`, {
         method: "PATCH"
       });
@@ -59,18 +54,34 @@ export default function Notifications() {
         )
       );
 
-      fetchUnreadCount();
-
+      setUnreadCount(prev => prev - 1);
     } catch (error) {
       console.error("Error marking notification as read:", error);
     }
   };
 
-  const markAllAsRead = () => {
-    setNotifications(prev =>
-      prev.map(n => ({ ...n, read: true }))
-    );
-    setUnreadCount(0);
+  const markAllAsRead = async () => {
+    try {
+      // Mark all unread notifications one by one
+      const unreadNotifications = notifications.filter(n => !n.read);
+      
+      // Call backend for each unread notification
+      await Promise.all(
+        unreadNotifications.map(n => 
+          fetch(`http://localhost:8080/notifications/read/${n.id}`, {
+            method: "PATCH"
+          })
+        )
+      );
+
+      // Update local state immediately
+      setNotifications(prev =>
+        prev.map(n => ({ ...n, read: true }))
+      );
+      setUnreadCount(0);
+    } catch (error) {
+      console.error("Error marking all as read:", error);
+    }
   };
 
   return (

@@ -39,14 +39,13 @@ export default function Header() {
     try {
       const res = await fetch(`http://localhost:8080/notifications/${userId}`);
       const data = await res.json();
-      setNotifications(data.slice(0, 5));
+      setNotifications(data.slice(0, 2));
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }
   };
 
   useEffect(() => {
-
     if (!userId) return;
 
     const fetchUnreadCount = async () => {
@@ -68,7 +67,6 @@ export default function Header() {
     }, 10000);
 
     return () => clearInterval(interval);
-
   }, [userId]);
 
   const services = [
@@ -333,8 +331,9 @@ export default function Header() {
                   >
                     <FontAwesomeIcon icon={faBell} className="text-gray-600" />
 
+                    {/* Always show badge for testing */}
                     {unreadCount > 0 && (
-                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold min-w-[18px] h-[18px] flex items-center justify-center rounded-full">
                         {unreadCount}
                       </span>
                     )}
