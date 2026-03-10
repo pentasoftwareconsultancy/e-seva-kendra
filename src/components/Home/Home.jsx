@@ -48,14 +48,14 @@ export default function Home() {
             <div className="mt-4 md:mt-6 flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4">
               <Link
                 to="/Register"
-                className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium text-center text-sm sm:text-base"
+                className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-5 sm:px-7 py-2.5 sm:py-3 rounded-xl font-semibold text-center text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
                 Get Started
               </Link>
 
               <a
                 href="https://wa.me/919876543310"
-                className="bg-green-600 hover:bg-green-700 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium text-center text-sm sm:text-base"
+                className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-5 sm:px-7 py-2.5 sm:py-3 rounded-xl font-semibold text-center text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
                 WhatsApp Now
               </a>
@@ -113,7 +113,7 @@ export default function Home() {
             ].map((service) => (
               <div
                 key={service.title}
-                className="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-blue-500 cursor-pointer transform hover:-translate-y-2 active:scale-95"
+                className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden border border-slate-200 hover:border-blue-500 cursor-pointer transform hover:-translate-y-3 hover:scale-[1.02]"
               >
                 {/* IMAGE */}
                 <div className="h-40 w-full overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 relative">
@@ -192,10 +192,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           {/* Section Heading */}
           <div className="text-center mb-8 sm:mb-12 ">
-<span className="inline-block mt-6 px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-100 text-blue-700 rounded-full text-xs sm:text-sm font-semibold mb-2 sm:mb-3">              Simple Process
+            <span className="inline-block mt-6 px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-100 text-blue-700 rounded-full text-xs sm:text-sm font-semibold mb-2 sm:mb-3">
+              {" "}
+              Simple Process
             </span>
 
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
               How It Works
             </h2>
 
@@ -422,7 +424,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
             {/* LEFT CARD - Visiting Card */}
             <div
-              className="relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all  overflow-hidden "
+              className="relative bg-white/90 backdrop-blur rounded-2xl shadow-xl hover:shadow-2xl transition-all p-6 sm:p-8 border border-blue-900/30"
               style={{ perspective: "1000px" }}
             >
               <div
@@ -521,7 +523,7 @@ export default function Home() {
       {/* ================= FLOATING WHATSAPP ================= */}
       <a
         href="https://wa.me/918668266879"
-        className="fixed bottom-6 right-6 h-16 w-16 rounded-full bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white flex items-center justify-center shadow-2xl hover:shadow-green-500/50 transition-all duration-300 hover:scale-110 z-50 group"
+        className="fixed bottom-6 right-6 h-16 w-16 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-2xl hover:shadow-green-500/40 transition-all duration-300 hover:scale-110 animate-bounce"
         title="Chat on WhatsApp"
       >
         <i className="fa-brands fa-whatsapp text-3xl group-hover:scale-110 transition-transform"></i>

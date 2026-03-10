@@ -82,7 +82,7 @@ const AdminOrders = () => {
     <AdminLayout>
       <div className="flex items-center gap-2 mb-4 md:mb-6">
         <ShoppingBag className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
-        <h2 className="text-xl md:text-3xl font-bold"><span className="text-gray-800">Orders</span> <span className="text-green-600">Management</span></h2>
+        <h2 className="text-xl md:text-3xl font-bold"><span className="text-gray-800">Orders Management</span> </h2>
       </div>
 
           {/* Tabs */}
