@@ -39,7 +39,7 @@ const AdminSidebar = ({ isOpen, setIsOpen, isDark }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-40 w-64  min-h-screen ${isDark ? 'bg-gradient-to-b from-gray-800 to-gray-900' : 'bg-gradient-to-b from-[#2D3A5F] to-[#223054]'} text-white flex flex-col transition-transform duration-300 overflow-y-auto ${
+        className={`fixed lg:static inset-y-0 left-0 z-40 w-64  min-h-screen ${isDark ? 'bg-gradient-to-b from-gray-800  to-gray-900' : 'bg-gradient-to-b from-[#2D3A5F] to-[#223054]'} text-white flex flex-col transition-transform duration-300 overflow-y-auto ${
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
@@ -66,7 +66,7 @@ const AdminSidebar = ({ isOpen, setIsOpen, isDark }) => {
             className={`flex items-center justify-between px-4 py-2.5 rounded-xl cursor-pointer transition-all duration-200 text-sm lg:text-lg  ${
               location.pathname === item.path
                 ? "bg-green-500 shadow-lg text-white scale-105 font-bold"
-                : "hover:bg-white/10 text-gray-300 hover:scale-102"
+                : "hover:bg-white/10 hover:border-1 border-green-500 text-gray-300 hover:scale-102"
             }`}
           >
             <div className="flex items-center space-x-3">
@@ -88,7 +88,7 @@ const AdminSidebar = ({ isOpen, setIsOpen, isDark }) => {
             localStorage.removeItem('adminAuth');
             window.location.href = '/admin';
           }}
-          className="w-full flex items-center justify-center space-x-2 py-2.5 rounded-xl bg-white/10 hover:bg-white/10 hover:border border-green-500  transition text-sm"
+          className="w-full flex items-center justify-center space-x-2 py-2.5 rounded-xl bg-white/10 hover:bg-white/10 hover:border-2 border-green-500  transition text-sm"
         >
           <LogOut size={18} />
           <span className="font-semibold">Logout</span>

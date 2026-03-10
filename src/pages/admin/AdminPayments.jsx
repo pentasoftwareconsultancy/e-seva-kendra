@@ -159,7 +159,7 @@ const AdminPayments = () => {
                 <div className="space-y-2 md:space-y-4">
                   <div>
                     <p className="text-xs text-gray-500 mb-1">Payment ID</p>
-                    <p className="text-xs md:text-sm font-bold text-gray-900">#{selectedPayment.id}</p>
+                    <p className="text-xs md:text-sm font-bold text-gray-900">{selectedPayment.id}</p>
                   </div>
                   <div>
                     <p className="text-xs text-gray-500 mb-1">Customer Name</p>

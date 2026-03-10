@@ -41,7 +41,7 @@ const AdminNavbar = ({ onMenuClick, isDark, setIsDark }) => {
         <div className="flex items-center space-x-2 md:space-x-3">
           <button 
             onClick={() => window.location.href = '/admin/settings'}
-            className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-green-600 hover:bg-green-700 flex items-center justify-center transition-colors cursor-pointer"
+            className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-green-600 hover:bg-blue-600 flex items-center justify-center transition-colors cursor-pointer "
           >
             <User className="w-4 h-4 md:w-6 md:h-6 text-white" />
           </button>
