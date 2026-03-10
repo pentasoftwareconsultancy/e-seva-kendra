@@ -62,19 +62,10 @@ export default function Notifications() {
 
   const markAllAsRead = async () => {
     try {
-      // Mark all unread notifications one by one
-      const unreadNotifications = notifications.filter(n => !n.read);
-      
-      // Call backend for each unread notification
-      await Promise.all(
-        unreadNotifications.map(n => 
-          fetch(`http://localhost:8080/notifications/read/${n.id}`, {
-            method: "PATCH"
-          })
-        )
-      );
+      await fetch(`http://localhost:8080/notifications/read-all/${userId}`, {
+        method: "PATCH"
+      });
 
-      // Update local state immediately
       setNotifications(prev =>
         prev.map(n => ({ ...n, read: true }))
       );
@@ -104,7 +95,7 @@ export default function Notifications() {
           {unreadCount > 0 && (
             <button
               onClick={markAllAsRead}
-              className="text-sm text-blue-600 hover:underline"
+              className="text-sm text-blue-600 hover:underline font-medium"
             >
               Mark all as read
             </button>
