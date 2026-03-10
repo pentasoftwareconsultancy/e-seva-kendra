@@ -102,7 +102,7 @@ export default function Contact() {
             </h1>
 
             <p className="text-sm sm:text-base md:text-lg lg:text-xl">
-              Get in touch with us today! <br />
+             Need Help with PAN Card, Passport, or GST?<br/> Contact Shree Om Sai Multiservices for fast and reliable service. <br />
               For all your Government and Legal Needs.
             </p>
           </div>

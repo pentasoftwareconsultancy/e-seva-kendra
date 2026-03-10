@@ -32,6 +32,7 @@ export default function Aboutus() {
       At Shree Om Sai Multiservices, we provide fast, reliable, affordable
               documentation solutions for all government and
               legal needs.
+              <p>Trusted Digital Service Center for Government & Legal Documentation in Pune.</p>
       </p>
 
     </div>

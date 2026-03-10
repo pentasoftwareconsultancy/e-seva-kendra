@@ -42,13 +42,31 @@ export default function Login() {
 
       }
 
-    } catch (error) {
+    alert(response.data);
+if (response.data === "Login Successful") {
 
-      console.error(error);
-      alert("Login failed");
+  localStorage.setItem("isLoggedIn", "true");
+  localStorage.setItem("userEmail", email);
 
-    }
-  };
+  // check if user clicked service before login
+  const redirectService = localStorage.getItem("redirectService");
+
+  if (redirectService) {
+    localStorage.removeItem("redirectService");
+    navigate(`/apply/${redirectService}`);
+  } else {
+    navigate("/service");
+  }
+
+}
+
+  } catch (error) {
+
+    console.error(error);
+    alert("Login failed");
+
+  }
+};
 
   return (
     <>
