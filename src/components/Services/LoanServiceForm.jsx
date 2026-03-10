@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 import PanHero from "../../assets/Servicesimg/Panhero.png";
+import { useNavigate } from "react-router-dom";
 
 function LoanServiceForm() {
 
+    const navigate = useNavigate();
+
     const [selectedLoan, setSelectedLoan] = useState("personal");
+
+    const [formData, setFormData] = useState({
+        fullName: "",
+        mobile: "",
+        pan: "",
+        income: ""
+    });
 
     const loanTypes = [
         {
@@ -47,6 +57,28 @@ function LoanServiceForm() {
         ]
     };
 
+    /* PAYMENT FLOW */
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!formData.fullName || !formData.mobile) {
+            alert("Please fill all required fields");
+            return;
+        }
+
+        const amount = 500;
+
+        navigate("/payment", {
+            state: {
+                serviceName: "Loan Service",
+                applicantName: formData.fullName,
+                mobile: formData.mobile,
+                Amount: amount,
+                type: selectedLoan,
+            },
+        });
+    };
+
     return (
         <div className="min-h-screen bg-[#f8faff] text-[#1e293b]">
             {/* Hero Section */}
@@ -61,7 +93,6 @@ function LoanServiceForm() {
 
                 <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/85 to-transparent"></div>
 
-                {/* LEFT ALIGNED CONTENT */}
                 <div className="relative z-10 w-full px-10 md:px-20 text-white">
                     <div className="max-w-2xl">
 
@@ -72,14 +103,17 @@ function LoanServiceForm() {
                         <p className="text-lg text-gray-200 mt-6">
                             Apply for Personal Loan, Business Loan, or Home Loan easily and securely with minimal documentation.
                         </p>
+
                         <a href="#loan-form">
                             <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
                                 Apply Now
                             </button>
                         </a>
+
                     </div>
                 </div>
             </section>
+
             {/* Loan Selection Cards */}
             <section className="py-12 px-4">
                 <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
@@ -88,10 +122,11 @@ function LoanServiceForm() {
                         <div
                             key={loan.id}
                             onClick={() => setSelectedLoan(loan.id)}
-                            className={`cursor-pointer p-6 rounded-2xl shadow-lg transition-all border-2 ${selectedLoan === loan.id
+                            className={`cursor-pointer p-6 rounded-2xl shadow-lg transition-all border-2 ${
+                                selectedLoan === loan.id
                                     ? "border-[#f07e1b] bg-white"
                                     : "border-gray-200 bg-white hover:shadow-xl"
-                                }`}
+                            }`}
                         >
                             <h3 className="text-xl font-bold">{loan.title}</h3>
                             <p className="text-[#f07e1b] font-semibold">{loan.subtitle}</p>
@@ -130,12 +165,31 @@ function LoanServiceForm() {
                     </div>
 
                     {/* Form */}
-                    <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                        <InputField label="Full Name (पूर्ण नाव)" />
-                        <InputField label="Mobile Number (मोबाईल नंबर)" />
-                        <InputField label="PAN Card Number (पॅन क्रमांक)" />
-                        <InputField label="Monthly Income (मासिक उत्पन्न)" />
+                        <InputField
+                            label="Full Name (पूर्ण नाव)"
+                            value={formData.fullName}
+                            onChange={(e)=>setFormData({...formData, fullName:e.target.value})}
+                        />
+
+                        <InputField
+                            label="Mobile Number (मोबाईल नंबर)"
+                            value={formData.mobile}
+                            onChange={(e)=>setFormData({...formData, mobile:e.target.value})}
+                        />
+
+                        <InputField
+                            label="PAN Card Number (पॅन क्रमांक)"
+                            value={formData.pan}
+                            onChange={(e)=>setFormData({...formData, pan:e.target.value})}
+                        />
+
+                        <InputField
+                            label="Monthly Income (मासिक उत्पन्न)"
+                            value={formData.income}
+                            onChange={(e)=>setFormData({...formData, income:e.target.value})}
+                        />
 
                         <div className="md:col-span-2 flex justify-end pt-6">
                             <button
@@ -156,12 +210,14 @@ function LoanServiceForm() {
 }
 
 /* Input Component */
-function InputField({ label }) {
+function InputField({ label, value, onChange }) {
     return (
         <div>
             <label className="block font-bold mb-2">{label}</label>
             <input
                 type="text"
+                value={value}
+                onChange={onChange}
                 placeholder={`Enter ${label}`}
                 className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
             />

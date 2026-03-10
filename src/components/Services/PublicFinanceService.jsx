@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import PanHero from "../../assets/Servicesimg/Panhero.png";
+import { useNavigate } from "react-router-dom";
 
 function PublicFinancialServices() {
+
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        fullName: "",
+        mobile: "",
+        aadhaar: "",
+        pan: "",
+        address: "",
+        income: ""
+    });
 
     const documents = [
         ["आधार कार्ड", "Aadhaar Card"],
@@ -11,6 +23,28 @@ function PublicFinancialServices() {
         ["बँक पासबुक", "Bank Passbook Copy"],
         ["पासपोर्ट साईज फोटो", "Passport Size Photo"]
     ];
+
+    /* PAYMENT FLOW (same as Senior.jsx) */
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!formData.fullName || !formData.mobile) {
+            alert("Please fill all required fields");
+            return;
+        }
+
+        const amount = 400;
+
+        navigate("/payment", {
+            state: {
+                serviceName: "Public Financial Services",
+                applicantName: formData.fullName,
+                mobile: formData.mobile,
+                Amount: amount,
+                type: "PFS",
+            },
+        });
+    };
 
     return (
         <div className="min-h-screen bg-[#f8faff] text-[#1e293b]">
@@ -27,7 +61,6 @@ function PublicFinancialServices() {
 
                 <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/85 to-transparent"></div>
 
-                {/* LEFT SIDE CONTENT */}
                 <div className="relative z-10 w-full px-10 md:px-20 text-white">
                     <div className="max-w-2xl">
                         <h1 className="text-5xl font-bold leading-tight">
@@ -85,14 +118,43 @@ function PublicFinancialServices() {
                         PFS Application Form (सार्वजनिक आर्थिक सेवा अर्ज)
                     </h2>
 
-                    <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                        <InputField label="Full Name (पूर्ण नाव)" />
-                        <InputField label="Mobile Number (मोबाईल नंबर)" />
-                        <InputField label="Aadhaar Number (आधार क्रमांक)" />
-                        <InputField label="PAN Number (पॅन क्रमांक)" />
-                        <InputField label="Address (पत्ता)" />
-                        <InputField label="Income Details (उत्पन्न तपशील)" />
+                        <InputField
+                            label="Full Name (पूर्ण नाव)"
+                            value={formData.fullName}
+                            onChange={(e)=>setFormData({...formData, fullName:e.target.value})}
+                        />
+
+                        <InputField
+                            label="Mobile Number (मोबाईल नंबर)"
+                            value={formData.mobile}
+                            onChange={(e)=>setFormData({...formData, mobile:e.target.value})}
+                        />
+
+                        <InputField
+                            label="Aadhaar Number (आधार क्रमांक)"
+                            value={formData.aadhaar}
+                            onChange={(e)=>setFormData({...formData, aadhaar:e.target.value})}
+                        />
+
+                        <InputField
+                            label="PAN Number (पॅन क्रमांक)"
+                            value={formData.pan}
+                            onChange={(e)=>setFormData({...formData, pan:e.target.value})}
+                        />
+
+                        <InputField
+                            label="Address (पत्ता)"
+                            value={formData.address}
+                            onChange={(e)=>setFormData({...formData, address:e.target.value})}
+                        />
+
+                        <InputField
+                            label="Income Details (उत्पन्न तपशील)"
+                            value={formData.income}
+                            onChange={(e)=>setFormData({...formData, income:e.target.value})}
+                        />
 
                         <div className="md:col-span-2 flex justify-end pt-6">
                             <button
@@ -113,12 +175,14 @@ function PublicFinancialServices() {
 }
 
 /* Reusable Input Field */
-function InputField({ label }) {
+function InputField({ label, value, onChange }) {
     return (
         <div>
             <label className="block font-bold mb-2">{label}</label>
             <input
                 type="text"
+                value={value}
+                onChange={onChange}
                 placeholder={`Enter ${label}`}
                 className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
             />
