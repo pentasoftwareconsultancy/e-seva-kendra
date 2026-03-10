@@ -66,7 +66,19 @@ export default function Header() {
       fetchNotifications();
     }, 10000);
 
-    return () => clearInterval(interval);
+    // Close notification dropdown when clicking outside
+    const handleClickOutside = (e) => {
+      if (!e.target.closest('.notification-dropdown')) {
+        setIsNotificationOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('click', handleClickOutside);
+    };
   }, [userId]);
 
   const services = [
@@ -321,64 +333,70 @@ export default function Header() {
                 {/* Notification */}
 
 
-                {/* 🔔 NOTIFICATION BELL */}
+               {/* 🔔 NOTIFICATION BELL */}
 
-                <div className="relative hidden md:flex">
+<div className="relative hidden md:flex notification-dropdown">
 
-                  <button
-                    onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-                    className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition"
-                  >
-                    <FontAwesomeIcon icon={faBell} className="text-gray-600" />
+  <button
+    onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+    className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition"
+  >
+    <FontAwesomeIcon icon={faBell} className="text-gray-600" />
 
-                    {/* Always show badge for testing */}
-                    {unreadCount > 0 && (
-                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold min-w-[18px] h-[18px] flex items-center justify-center rounded-full">
-                        {unreadCount}
-                      </span>
-                    )}
+    {unreadCount > 0 && (
+      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold min-w-[18px] h-[18px] flex items-center justify-center rounded-full">
+        {unreadCount}
+      </span>
+    )}
+  </button>
 
-                  </button>
-                   {/* 🔔 DROPDOWN */}
+  {/* 🔔 DROPDOWN */}
 
-                  {isNotificationOpen && (
-                    <div className="absolute right-0 mt-12 w-80 bg-white shadow-xl rounded-xl border z-50">
+  {isNotificationOpen && (
+    <div className="absolute right-0 mt-12 w-80 bg-white shadow-xl rounded-xl border z-50">
 
-                      <div className="p-3 border-b font-semibold">
-                        Notifications
-                      </div>
+      <div className="p-3 border-b font-semibold">
+        Notifications
+      </div>
 
-                      {notifications.length === 0 ? (
-                        <div className="p-4 text-sm text-gray-500">
-                          No notifications
-                        </div>
-                      ) : (
-                        notifications.map((n) => (
-                          <div
-                            key={n.id}
-                            className="p-3 border-b hover:bg-gray-50 cursor-pointer"
-                          >
-                            <div className="text-sm font-medium">
-                              {n.title}
-                            </div>
-                             <div className="text-xs text-gray-500">
-                              {n.message}
-                            </div>
-                          </div>
-                        ))
-                      )}
+      {notifications.length === 0 ? (
+        <div className="p-4 text-sm text-gray-500">
+          No notifications
+        </div>
+      ) : (
 
-                      <Link
-                        to="/notifications"
-                        className="block text-center text-sm text-blue-600 p-3 hover:bg-gray-50"
-                      >
-                        View all notifications
-                      </Link>
+        notifications.slice(0,2).map((n) => (   // ✅ only latest 2
 
-                    </div>
-                  )}
+          <div
+            key={n.id}
+            className="p-3 border-b hover:bg-gray-50 cursor-pointer"
+          >
 
-                </div>
+            <div className="text-sm font-medium">
+              {n.title}
+            </div>
+
+            <div className="text-xs text-gray-500">
+              {n.message}
+            </div>
+
+          </div>
+
+        ))
+
+      )}
+
+      <Link
+        to="/notifications"
+        className="block text-center text-sm text-blue-600 p-3 hover:bg-gray-50"
+      >
+        View all notifications
+      </Link>
+
+    </div>
+  )}
+
+</div>
 
                 <Link
                   to="/account"
