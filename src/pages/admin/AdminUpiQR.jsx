@@ -137,7 +137,7 @@ const AdminUpiQR = () => {
             className={`w-full py-3 rounded-xl font-semibold text-white transition ${
               uploading
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-gradient-to-r from-green-500 to-emerald-600 hover:scale-105 shadow-lg"
+                : "bg-gradient-to-r from-blue-600 to-blue-600 hover:scale-105 shadow-lg"
             }`}
           >
 
