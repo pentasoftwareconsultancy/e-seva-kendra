@@ -180,7 +180,7 @@ const AdminSettings = () => {
           <div className="mt-8 text-center">
             <button
               onClick={handleSave}
-              className="inline-flex items-center gap-2 px-6 py-2 bg-[#5BA45E] text-white font-semibold rounded-lg shadow hover:bg-[#4e9151] transition"
+              className="inline-flex items-center gap-2 px-6 py-2  bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition"
             >
               <Save size={18} />
               Save Changes
