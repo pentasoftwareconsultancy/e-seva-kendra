@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import PanHero from "../../assets/Servicesimg/Panhero.png";
+import { useNavigate } from "react-router-dom";
 
 function DMartAccountForm() {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+    fullName: "",
+    mobile: "",
+    email: "",
+    address: "",
+});
 
     const [files, setFiles] = useState({
         aadhaar: null,
@@ -28,6 +36,32 @@ function DMartAccountForm() {
         ["पत्ता पुरावा (लाईट बिल / भाडे करार)", "Address Proof (Light Bill / Rent Agreement)"],
         ["पासपोर्ट साइज फोटो", "Passport Size Photo"],
     ];
+
+    const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formData.fullName || !formData.mobile) {
+        alert("Please fill all required fields");
+        return;
+    }
+
+    if (!files.aadhaar || !files.addressProof || !files.photo) {
+        alert("Please upload all required documents");
+        return;
+    }
+
+    const amount = 250;
+
+    navigate("/payment", {
+        state: {
+            serviceName: "DMart Account Registration",
+            applicantName: formData.fullName,
+            mobile: formData.mobile,
+            Amount: amount,
+            type: "dmart",
+        },
+    });
+};
 
     return (
         <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
@@ -91,13 +125,39 @@ function DMartAccountForm() {
                     <h2 className="text-3xl font-bold mb-8">
                         DMart Account Application Form
                     </h2>
+<form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <InputField
+        label="Full Name (पूर्ण नाव)"
+        value={formData.fullName}
+        onChange={(e) =>
+            setFormData({ ...formData, fullName: e.target.value })
+        }
+    />
 
-                        <InputField label="Full Name (पूर्ण नाव)" />
-                        <InputField label="Mobile Number (मोबाईल नंबर)" />
-                        <InputField label="Email ID (ईमेल आयडी)" />
-                        <InputField label="Address (पत्ता)" />
+    <InputField
+        label="Mobile Number (मोबाईल नंबर)"
+        value={formData.mobile}
+        onChange={(e) =>
+            setFormData({ ...formData, mobile: e.target.value })
+        }
+    />
+
+    <InputField
+        label="Email ID (ईमेल आयडी)"
+        value={formData.email}
+        onChange={(e) =>
+            setFormData({ ...formData, email: e.target.value })
+        }
+    />
+
+    <InputField
+        label="Address (पत्ता)"
+        value={formData.address}
+        onChange={(e) =>
+            setFormData({ ...formData, address: e.target.value })
+        }
+    />
 
                         <UploadBox
                             label="आधार कार्ड / Aadhaar Card"
@@ -135,12 +195,14 @@ function DMartAccountForm() {
 }
 
 /* Input Component */
-function InputField({ label }) {
+function InputField({ label, value, onChange }) {
     return (
         <div>
             <label className="block font-bold mb-2">{label}</label>
             <input
                 type="text"
+                value={value}
+                onChange={onChange}
                 placeholder={`Enter ${label}`}
                 className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
             />

@@ -1,8 +1,15 @@
 import React, { useState } from "react";
-
 import PanHero from "../../assets/Servicesimg/Panhero.png";
+import { useNavigate } from "react-router-dom";
 
 function IECForm() {
+
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        fullName: "",
+        mobile: "",
+    });
 
     const [files, setFiles] = useState({
         pan: null,
@@ -26,6 +33,34 @@ function IECForm() {
                 },
             }));
         }
+    };
+
+    /* ================= FORM SUBMIT ================= */
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!formData.fullName || !formData.mobile) {
+            alert("Please fill all required fields");
+            return;
+        }
+
+        if (!files.pan || !files.aadhaar || !files.addressProof || !files.bankProof || !files.photo) {
+            alert("Please upload all required documents");
+            return;
+        }
+
+        const amount = 500;
+
+        navigate("/payment", {
+            state: {
+                serviceName: "Import Export Code (IEC)",
+                applicantName: formData.fullName,
+                mobile: formData.mobile,
+                Amount: amount,
+                type: "iec",
+            },
+        });
     };
 
     return (
@@ -58,7 +93,7 @@ function IECForm() {
                 </div>
             </section>
 
-            {/* ================= DOCUMENT REQUIREMENTS ================= */}
+            {/* Documents Section */}
             <section className="bg-white py-16 px-4 md:px-8">
                 <div className="max-w-4xl mx-auto">
                     <div className="bg-white border-4 border-green-700 rounded-3xl p-8 md:p-12 shadow-xl">
@@ -95,7 +130,7 @@ function IECForm() {
                 </div>
             </section>
 
-            {/* Form Section */}
+            {/* FORM */}
             <section id="iec-form" className="py-10 px-4 md:px-8 bg-[#f8faff]">
                 <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow-2xl p-8 md:p-12 mb-20">
 
@@ -103,7 +138,7 @@ function IECForm() {
                         Import Export Code (IEC) Application Form
                     </h2>
 
-                    <form className="space-y-8">
+                    <form onSubmit={handleSubmit} className="space-y-8">
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
@@ -111,6 +146,10 @@ function IECForm() {
                                 <label className="block font-bold mb-2">पूर्ण नाव(Applicant Name)</label>
                                 <input
                                     type="text"
+                                    value={formData.fullName}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, fullName: e.target.value })
+                                    }
                                     placeholder="Enter Name"
                                     className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                                 />
@@ -120,39 +159,21 @@ function IECForm() {
                                 <label className="block font-bold mb-2">मोबाईल नंबर(Mobile Number)</label>
                                 <input
                                     type="text"
+                                    value={formData.mobile}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, mobile: e.target.value })
+                                    }
                                     placeholder="Enter Mobile Number"
                                     className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                                 />
                             </div>
-<UploadBox 
-    label="पॅन कार्ड (PAN Card - Individual / Business)" 
-    fileData={files.pan} 
-    onChange={(e) => handleFileChange(e, "pan")} 
-/>
 
-<UploadBox 
-    label="आधार कार्ड (Aadhaar Card)" 
-    fileData={files.aadhaar} 
-    onChange={(e) => handleFileChange(e, "aadhaar")} 
-/>
+                            <UploadBox label="पॅन कार्ड (PAN Card - Individual / Business)" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} />
+                            <UploadBox label="आधार कार्ड (Aadhaar Card)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
+                            <UploadBox label="व्यवसाय पत्ता पुरावा (Business Address Proof)" fileData={files.addressProof} onChange={(e) => handleFileChange(e, "addressProof")} />
+                            <UploadBox label="बँक पुरावा (Bank Certificate / Cancelled Cheque)" fileData={files.bankProof} onChange={(e) => handleFileChange(e, "bankProof")} />
+                            <UploadBox label="पासपोर्ट साईज फोटो (Passport Size Photograph)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
 
-<UploadBox 
-    label="व्यवसाय पत्ता पुरावा (Business Address Proof - Light Bill / Rent Agreement)" 
-    fileData={files.addressProof} 
-    onChange={(e) => handleFileChange(e, "addressProof")} 
-/>
-
-<UploadBox 
-    label="बँक पुरावा (Bank Certificate / Cancelled Cheque)" 
-    fileData={files.bankProof} 
-    onChange={(e) => handleFileChange(e, "bankProof")} 
-/>
-
-<UploadBox 
-    label="पासपोर्ट साईज फोटो (Passport Size Photograph)" 
-    fileData={files.photo} 
-    onChange={(e) => handleFileChange(e, "photo")} 
-/>
                         </div>
 
                         <div className="pt-6 flex justify-end">
@@ -172,7 +193,8 @@ function IECForm() {
     );
 }
 
-/* Reusable Upload Component */
+/* Upload Component */
+
 function UploadBox({ label, fileData, onChange }) {
     return (
         <div className="bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200">
