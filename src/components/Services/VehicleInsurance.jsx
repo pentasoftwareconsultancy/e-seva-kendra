@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 import PanHero from "../../assets/Servicesimg/Panhero.png";
+import { useNavigate } from "react-router-dom";
 
 function VehicleInsurance() {
 
+    const navigate = useNavigate();
+
     const [vehicleType, setVehicleType] = useState("two");
+
+    const [formData, setFormData] = useState({
+        fullName: "",
+        mobile: "",
+        vehicleNumber: "",
+        vehicleModel: "",
+    });
 
     const [files, setFiles] = useState({
         rc: null,
@@ -25,6 +35,33 @@ function VehicleInsurance() {
         }
     };
 
+    /* PAYMENT FLOW SUBMIT */
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!formData.fullName || !formData.mobile) {
+            alert("Please fill all required fields");
+            return;
+        }
+
+        if (!files.rc || !files.license || !files.aadhaar || !files.photo) {
+            alert("Please upload all required documents");
+            return;
+        }
+
+        const amount = vehicleType === "two" ? 800 : 1200;
+
+        navigate("/payment", {
+            state: {
+                serviceName: "Vehicle Insurance",
+                applicantName: formData.fullName,
+                mobile: formData.mobile,
+                Amount: amount,
+                type: vehicleType,
+            },
+        });
+    };
+
     const documents = [
         ["वाहन नोंदणी प्रमाणपत्र (RC बुक)", "Vehicle Registration Certificate (RC Book)"],
         ["ड्रायव्हिंग लायसन्स", "Driving License"],
@@ -36,33 +73,27 @@ function VehicleInsurance() {
     return (
         <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
 
-                       {/* Hero Section */}
+            {/* Hero Section */}
             <section className="relative w-full h-[550px] flex items-center">
-                {/* Background Image */}
                 <div className="absolute inset-0">
                     <img
                         src={PanHero}
-                        alt="DMart Account"
+                        alt="Vehicle Insurance"
                         className="w-full h-full object-cover object-[20%_center]"
                     />
                 </div>
-            
-                {/* Gradient Overlay */}
+
                 <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/85 to-transparent"></div>
-            
-                {/* Content */}
-               
+
                 <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
                     <div className="w-full md:w-1/2 space-y-6 text-white">
-                        <h1 className="text-5xl font-bold"> 2-Wheeler & 4-Wheeler Insurance
+                        <h1 className="text-5xl font-bold">
+                            2-Wheeler & 4-Wheeler Insurance
                         </h1>
-            
+
                         <p className="text-xl text-gray-200">
-                           Motor Insurance Service
+                            Motor Insurance Service
                         </p>
-            
-                       
-            
                     </div>
                 </div>
             </section>
@@ -84,6 +115,7 @@ function VehicleInsurance() {
                             >
                                 2-Wheeler
                             </button>
+
                             <button
                                 onClick={() => setVehicleType("four")}
                                 className={`px-6 py-2 rounded-full font-semibold transition ${
@@ -103,7 +135,7 @@ function VehicleInsurance() {
                             : "4-Wheeler Insurance Form"}
                     </h2>
 
-                    {/* Documents Section */}
+                    {/* Documents */}
                     <div className="border-4 border-green-600 rounded-2xl p-6 mb-8">
                         <h3 className="text-2xl font-bold text-green-600 text-center mb-6">
                             आवश्यक कागदपत्रे / Required Documents
@@ -122,43 +154,38 @@ function VehicleInsurance() {
                         </div>
                     </div>
 
-                    {/* Form */}
-                    <form className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
+                    {/* FORM */}
+                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                        <InputField label="Full Name (पूर्ण नाव)" />
-                        <InputField label="Mobile Number (मोबाईल नंबर)" />
-                        <InputField label="Vehicle Number (वाहन क्रमांक)" />
-                        <InputField label="Vehicle Model (वाहन मॉडेल)" />
-
-                        <UploadBox
-                            label="वाहन नोंदणी प्रमाणपत्र (RC बुक) / Vehicle Registration Certificate"
-                            fileData={files.rc}
-                            onChange={(e) => handleFileChange(e, "rc")}
+                        <InputField
+                            label="Full Name (पूर्ण नाव)"
+                            value={formData.fullName}
+                            onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                         />
 
-                        <UploadBox
-                            label="ड्रायव्हिंग लायसन्स / Driving License"
-                            fileData={files.license}
-                            onChange={(e) => handleFileChange(e, "license")}
+                        <InputField
+                            label="Mobile Number (मोबाईल नंबर)"
+                            value={formData.mobile}
+                            onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
                         />
 
-                        <UploadBox
-                            label="आधार कार्ड / Aadhaar Card"
-                            fileData={files.aadhaar}
-                            onChange={(e) => handleFileChange(e, "aadhaar")}
+                        <InputField
+                            label="Vehicle Number (वाहन क्रमांक)"
+                            value={formData.vehicleNumber}
+                            onChange={(e) => setFormData({ ...formData, vehicleNumber: e.target.value })}
                         />
 
-                        <UploadBox
-                            label="पासपोर्ट साइज फोटो / Passport Size Photo"
-                            fileData={files.photo}
-                            onChange={(e) => handleFileChange(e, "photo")}
+                        <InputField
+                            label="Vehicle Model (वाहन मॉडेल)"
+                            value={formData.vehicleModel}
+                            onChange={(e) => setFormData({ ...formData, vehicleModel: e.target.value })}
                         />
 
-                        <UploadBox
-                            label="जुनी विमा पॉलिसी (असल्यास) / Previous Insurance Policy"
-                            fileData={files.previousPolicy}
-                            onChange={(e) => handleFileChange(e, "previousPolicy")}
-                        />
+                        <UploadBox label="RC Book" fileData={files.rc} onChange={(e)=>handleFileChange(e,"rc")}/>
+                        <UploadBox label="Driving License" fileData={files.license} onChange={(e)=>handleFileChange(e,"license")}/>
+                        <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e)=>handleFileChange(e,"aadhaar")}/>
+                        <UploadBox label="Passport Photo" fileData={files.photo} onChange={(e)=>handleFileChange(e,"photo")}/>
+                        <UploadBox label="Previous Policy" fileData={files.previousPolicy} onChange={(e)=>handleFileChange(e,"previousPolicy")}/>
 
                         <div className="md:col-span-2 flex justify-end pt-6">
                             <button
@@ -178,13 +205,15 @@ function VehicleInsurance() {
     );
 }
 
-/* Input */
-function InputField({ label }) {
+/* INPUT */
+function InputField({ label, value, onChange }) {
     return (
         <div>
             <label className="block font-bold mb-2">{label}</label>
             <input
                 type="text"
+                value={value}
+                onChange={onChange}
                 placeholder={`Enter ${label}`}
                 className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
             />
@@ -192,12 +221,13 @@ function InputField({ label }) {
     );
 }
 
-/* Upload */
+/* UPLOAD */
 function UploadBox({ label, fileData, onChange }) {
     return (
         <div className="bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200">
             <div className="flex justify-between items-center">
                 <span className="font-semibold text-sm">{label}</span>
+
                 <label className="bg-[#f07e1b] text-white px-5 py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all">
                     Upload
                     <input

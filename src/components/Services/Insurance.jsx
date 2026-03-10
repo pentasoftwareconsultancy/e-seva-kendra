@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
 import PanHero from "../../assets/Servicesimg/Panhero.png";
+import { useNavigate } from "react-router-dom";
 
 function Insurance() {
+
+  const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState("health");
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    mobile: "",
+  });
 
   const [files, setFiles] = useState({
     aadhaar: null,
@@ -41,6 +50,32 @@ function Insurance() {
     };
   }, [files]);
 
+  /* ================= SUBMIT ================= */
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formData.fullName || !formData.mobile) {
+      alert("Please fill all required fields");
+      return;
+    }
+
+    const amount = activeTab === "health" ? 300 : 400;
+
+    navigate("/payment", {
+      state: {
+        serviceName:
+          activeTab === "health"
+            ? "Health Insurance"
+            : "Life Insurance",
+        applicantName: formData.fullName,
+        mobile: formData.mobile,
+        Amount: amount,
+        type: "insurance",
+      },
+    });
+  };
+
   // Document lists
   const healthDocuments = [
     { label: "Aadhaar Card (आधार कार्ड)", field: "aadhaar" },
@@ -76,6 +111,7 @@ function Insurance() {
 
   return (
     <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
+
       {/* Hero Section */}
       <section className="relative w-full h-[500px] flex items-center">
         <div className="absolute inset-0">
@@ -100,6 +136,7 @@ function Insurance() {
       {/* Toggle Section */}
       <section className="py-16 px-4 md:px-8 bg-white">
         <div className="max-w-4xl mx-auto bg-white border-4 border-green-700 rounded-3xl p-8 shadow-xl">
+
           <div className="flex justify-center mb-8">
             <button
               onClick={() => setActiveTab("health")}
@@ -109,6 +146,7 @@ function Insurance() {
             >
               Health Insurance
             </button>
+
             <button
               onClick={() => setActiveTab("life")}
               className={`px-6 py-3 font-bold rounded-r-xl ${
@@ -135,41 +173,46 @@ function Insurance() {
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
-      {/* Form Section */}
+      {/* FORM */}
       <section id="insurance-form" className="py-10 px-4 md:px-8 bg-[#f8faff]">
         <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow-2xl p-8 md:p-12 mb-20">
+
           <h2 className="text-3xl font-bold mb-6">
             {activeTab === "health"
               ? "आरोग्य विमा अर्ज फॉर्म / Health Insurance Application Form"
               : "जीवन विमा अर्ज फॉर्म / Life Insurance Application Form"}
           </h2>
 
-          <form className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-8">
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Full Name */}
+
               <div>
                 <label className="block font-bold mb-2">Full Name (पूर्ण नाव)</label>
                 <input
                   type="text"
+                  value={formData.fullName}
+                  onChange={(e)=>setFormData({...formData, fullName:e.target.value})}
                   placeholder="Enter Full Name"
                   className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                 />
               </div>
 
-              {/* Mobile Number */}
               <div>
                 <label className="block font-bold mb-2">Mobile Number (मोबाईल क्रमांक)</label>
                 <input
                   type="text"
+                  value={formData.mobile}
+                  onChange={(e)=>setFormData({...formData, mobile:e.target.value})}
                   placeholder="Enter Mobile Number"
                   className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
                 />
               </div>
 
-              {/* Upload Fields */}
               {documents.map((doc, i) => (
                 <UploadBox
                   key={i}
@@ -179,9 +222,9 @@ function Insurance() {
                   onFileChange={handleFileChange}
                 />
               ))}
+
             </div>
 
-            {/* Submit Button */}
             <div className="pt-6 flex justify-end">
               <button
                 type="submit"
@@ -190,6 +233,7 @@ function Insurance() {
                 Submit Application
               </button>
             </div>
+
           </form>
         </div>
       </section>
@@ -198,11 +242,14 @@ function Insurance() {
 }
 
 /* Upload Component */
+
 function UploadBox({ label, field, fileData, onFileChange }) {
   return (
     <div className="bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200">
+
       <div className="flex justify-between items-center">
         <span className="font-semibold">{label}</span>
+
         <label className="bg-[#f07e1b] text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all">
           Upload
           <input
@@ -222,6 +269,7 @@ function UploadBox({ label, field, fileData, onFileChange }) {
           {fileData.file.name}
         </p>
       )}
+
     </div>
   );
 }

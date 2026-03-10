@@ -37,7 +37,7 @@ export default function Header() {
     try {
       const res = await fetch(`http://localhost:8080/notifications/${userId}`);
       const data = await res.json();
-      setNotifications(data.slice(0, 2));
+      setNotifications(data.slice(0, 5));
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }
@@ -105,7 +105,8 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b shadow-sm">
       <div className="w-full px-4 sm:px-8">
         {/* TOP ROW */}
-<div className="flex items-center justify-between h-[70px] gap-2">          {/* LOGO */}
+        <div className="flex items-center justify-between h-16 gap-2">
+          {/* LOGO */}
           <Link to="/" className="flex items-center flex-shrink-0">
             <img
               src={logo}
@@ -327,19 +328,19 @@ export default function Header() {
             {/* Desktop Buttons */}
             {!isLoggedIn ? (
               <>
-                <Link
-                  to="/login"
-                  className="hidden md:block px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium hover:bg-slate-50"
-                >
-                  Login
-                </Link>
-
-                <Link
-                  to="/register"
-                  className="hidden md:block px-4 py-2 rounded-lg bg-[#f07e1b] text-black text-sm font-medium hover:bg-[#d4ac5b] transition-all"
-                >
-                  Get Started
-                </Link>
+               <Link
+  to="/login"
+  className="hidden md:block px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium hover:bg-slate-50"
+>
+  Login
+</Link>
+<Link
+  to="/register"
+  className="hidden md:block px-5 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 text-white text-sm font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
+>
+  Get Started
+</Link>
+              
               </>
             ) : (
               <>

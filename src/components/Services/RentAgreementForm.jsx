@@ -1,8 +1,18 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import PanHero from "../../assets/Servicesimg/Panhero.png";
 
 function RentAgreementForm() {
+
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        ownerName: "",
+        tenantName: "",
+        propertyAddress: "",
+        rentAmount: "",
+        agreementDuration: "",
+    });
 
     const [files, setFiles] = useState({
         ownerAadhaar: null,
@@ -29,6 +39,40 @@ function RentAgreementForm() {
                 },
             }));
         }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (
+            !formData.ownerName ||
+            !formData.tenantName ||
+            !formData.propertyAddress
+        ) {
+            alert("Please fill all required fields");
+            return;
+        }
+
+        const missingDocs = Object.values(files).some((f) => !f);
+
+        if (missingDocs) {
+            alert("Please upload all required documents");
+            return;
+        }
+
+    const amount = 700;
+
+navigate("/payment", {
+    state: {
+        serviceName: "Rent Agreement",
+        applicantName: formData.ownerName,
+        mobile: formData.tenantName, 
+        Amount: amount,
+        type: "Rent Agreement",
+        formData: formData,
+        files: files
+    },
+});
     };
 
     return (
@@ -102,15 +146,52 @@ function RentAgreementForm() {
                         Rent Agreement Application Form
                     </h2>
 
-                    <form className="space-y-8">
+                    <form className="space-y-8" onSubmit={handleSubmit}>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                            <InputField label="Owner Full Name (मालक पूर्ण नाव)" />
-                            <InputField label="Tenant Full Name (भाडेकरू पूर्ण नाव)" />
-                            <InputField label="Property Address (मालमत्तेचा पत्ता)" />
-                            <InputField label="Monthly Rent Amount (मासिक भाडे)" />
-                            <InputField label="Agreement Duration (करार कालावधी)" />
+                            <InputField
+                                label="Owner Full Name (मालक पूर्ण नाव)"
+                                value={formData.ownerName}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, ownerName: e.target.value })
+                                }
+                            />
+
+                            <InputField
+                                label="Tenant Full Name (भाडेकरू पूर्ण नाव)"
+                                value={formData.tenantName}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, tenantName: e.target.value })
+                                }
+                            />
+
+                            <InputField
+                                label="Property Address (मालमत्तेचा पत्ता)"
+                                value={formData.propertyAddress}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, propertyAddress: e.target.value })
+                                }
+                            />
+
+                            <InputField
+                                label="Monthly Rent Amount (मासिक भाडे)"
+                                value={formData.rentAmount}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, rentAmount: e.target.value })
+                                }
+                            />
+
+                            <InputField
+                                label="Agreement Duration (करार कालावधी)"
+                                value={formData.agreementDuration}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        agreementDuration: e.target.value,
+                                    })
+                                }
+                            />
 
                             <UploadBox label="Owner Aadhaar Card (मालक आधार कार्ड)" fileData={files.ownerAadhaar} onChange={(e) => handleFileChange(e, "ownerAadhaar")} />
                             <UploadBox label="Tenant Aadhaar Card (भाडेकरू आधार कार्ड)" fileData={files.tenantAadhaar} onChange={(e) => handleFileChange(e, "tenantAadhaar")} />
@@ -141,12 +222,14 @@ function RentAgreementForm() {
 }
 
 /* Input Field */
-function InputField({ label }) {
+function InputField({ label, value, onChange }) {
     return (
         <div>
             <label className="block font-bold mb-2">{label}</label>
             <input
                 type="text"
+                value={value}
+                onChange={onChange}
                 placeholder={`Enter ${label}`}
                 className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
             />
