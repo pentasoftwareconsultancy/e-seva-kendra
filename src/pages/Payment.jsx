@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
-
+ 
+ 
 function Payment() {
   const location = useLocation();
   const data = location.state;
-
+ 
   const [screenshot, setScreenshot] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [qrImage, setQrImage] = useState("");
-
+ 
     useEffect(() => {
     fetch("http://localhost:8080/api/payment/qr")
       .then(res => res.text())
       .then(data => setQrImage(data))
       .catch(err => console.error(err));
   }, []);
-
+ 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -24,15 +24,15 @@ function Payment() {
       setPreviewUrl(URL.createObjectURL(file));
     }
   };
-
+ 
   const handleConfirmPayment = async () => {
     if (!screenshot) {
       alert("Please upload payment screenshot");
       return;
     }
-
+ 
     const userId = localStorage.getItem("userId");
-
+ 
     const formData = new FormData();
     formData.append("userId", userId || "");
     formData.append("name", data.applicantName);
@@ -41,13 +41,13 @@ function Payment() {
     formData.append("extraData", "Form Submitted");
     formData.append("amount", data.Amount);
     formData.append("screenshot", screenshot);
-
+ 
     try {
       const response = await fetch("http://localhost:8080/api/payment/confirm", {
         method: "POST",
         body: formData
       });
-
+ 
       const result = await response.text();
       alert(result);
       window.location.href = "/service";
@@ -56,22 +56,22 @@ function Payment() {
       alert("Payment Failed");
     }
   };
-  
-
+ 
+ 
   if (!data) {
     return <div className="p-10 text-center">No Payment Data Found</div>;
   }
-
+ 
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4">
       <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-2xl p-8 space-y-8">
-
+ 
         {/* SERVICE SUMMARY */}
         <div>
           <h2 className="text-2xl font-bold mb-4 border-b pb-2">
             Service Summary
           </h2>
-
+ 
           <div className="space-y-2 text-gray-700">
             <p><strong>Service Name:</strong> {data.serviceName}</p>
             <p><strong>Applicant Name:</strong> {data.applicantName}</p>
@@ -81,14 +81,14 @@ function Payment() {
             </p>
           </div>
         </div>
-
+ 
         {/* AMOUNT SECTION */}
         <div className="bg-gray-100 p-4 rounded-xl text-center">
           <p className="text-lg font-bold">
             Amount: ₹{data.Amount  }
           </p>
         </div>
-
+ 
         {/* QR CODE */}
         <div className="text-center space-y-4">
           <div className="inline-block bg-white p-6 rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 transform hover:-translate-y-1">
@@ -101,7 +101,7 @@ function Payment() {
           <p className="font-semibold text-lg">Scan & Pay</p>
           <p className="text-gray-600">UPI ID: esuvidha@upi</p>
         </div>
-
+ 
         {/* UPLOAD SECTION */}
         <div className="space-y-4">
           <div>
@@ -115,7 +115,7 @@ function Payment() {
               className="w-full border p-2 rounded-lg"
             />
           </div>
-
+ 
           {/* SCREENSHOT PREVIEW */}
           {previewUrl && (
             <div className="mt-4">
@@ -128,28 +128,28 @@ function Payment() {
             </div>
           )}
         </div>
-
+ 
         {/* CONFIRM BUTTON */}
         <button
           onClick={handleConfirmPayment}
           disabled={!screenshot}
           className={`w-full py-3 rounded-xl font-bold text-white ${
-            screenshot 
+            screenshot
               ? "bg-green-600 hover:bg-green-700"
               : "bg-gray-400 cursor-not-allowed"
           }`}
         >
           Confirm Payment
         </button>
-
+ 
         {/* SUPPORT */}
         <div className="text-center text-sm text-gray-500 border-t pt-4">
           Need Help? Contact Support: +91 9876543210
         </div>
-
+ 
       </div>
     </div>
   );
 }
-
+ 
 export default Payment;
