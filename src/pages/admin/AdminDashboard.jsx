@@ -64,7 +64,7 @@ const AdminDashboard = () => {
     <AdminLayout>
       <div className="flex items-center gap-2 mb-4 md:mb-6">
         <i className="fas fa-chart-line text-2xl md:text-3xl text-blue-600"></i>
-        <h2 className="text-xl md:text-3xl font-bold"><span className="text-green-600">Welcome</span> <span className="text-gray-800">Admin Dashboard!</span></h2>
+        <h2 className="text-xl md:text-3xl font-bold"><span className="text-green-600">Welcome to the</span> <span className="text-gray-800">Admin Dashboard!</span></h2>
       </div>
           
           {/* Stats Cards */}
@@ -140,7 +140,7 @@ const AdminDashboard = () => {
           </div>
 
           {/* Earnings Card */}
-          <div className="bg-gradient-to-r from-green-400 to-green-300 rounded-lg shadow p-6 mb-6 relative overflow-hidden hover:shadow-lg hover:scale-102 transition-all duration-300 cursor-pointer">
+          <div className="bg-gradient-to-r from-green-500 to-green-200 rounded-lg shadow p-4 mb-6 relative overflow-hidden hover:shadow-lg hover:scale-102 transition-all duration-300 cursor-pointer">
             <div className="absolute right-0 bottom-0 opacity-20">
               <svg width="200" height="100" viewBox="0 0 200 100">
                 <rect x="10" y="60" width="15" height="30" fill="#fb923c" opacity="0.5"/>
