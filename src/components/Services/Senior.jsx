@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import VoterHero from "../../assets/Servicesimg/Panhero.png"; // change image if needed
+import VoterHero from "../../assets/Servicesimg/Panhero.png";
+import { useNavigate } from "react-router-dom";
 
-/* =====================================
-   VOTER ID SERVICE FUNCTION
-===================================== */
 function Senior() {
 
+  const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState("new");
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    mobile: "",
+    email: "",
+    address: "",
+  });
 
   const [files, setFiles] = useState({
     aadhaar: null,
@@ -24,6 +31,33 @@ function Senior() {
         [field]: { file, url: fileURL },
       }));
     }
+  };
+
+  /* SUBMIT FUNCTION (PAYMENT FLOW) */
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formData.fullName || !formData.mobile) {
+      alert("Please fill all required fields");
+      return;
+    }
+
+    if (!files.aadhaar || !files.addressProof || !files.ageProof || !files.photo) {
+      alert("Please upload all required documents");
+      return;
+    }
+
+    const amount = 300;
+
+    navigate("/payment", {
+      state: {
+        serviceName: "Voter ID Card",
+        applicantName: formData.fullName,
+        mobile: formData.mobile,
+        Amount: amount,
+        type: activeTab,
+      },
+    });
   };
 
   return (
@@ -122,38 +156,19 @@ function Senior() {
             </button>
           </div>
 
-          <form className="space-y-8 shadow-2xl">
+          <form onSubmit={handleSubmit} className="space-y-8 shadow-2xl">
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
 
-              <InputField label="Full Name (पूर्ण नाव)" />
-              <InputField label="Mobile Number (मोबाईल क्रमांक)" />
-              <InputField label="Email ID (ई-मेल आय.डी.)" />
-              <InputField label="Address (पत्ता)" />
+              <InputField label="Full Name (पूर्ण नाव)" value={formData.fullName} onChange={(e)=>setFormData({...formData,fullName:e.target.value})}/>
+              <InputField label="Mobile Number (मोबाईल क्रमांक)" value={formData.mobile} onChange={(e)=>setFormData({...formData,mobile:e.target.value})}/>
+              <InputField label="Email ID (ई-मेल आय.डी.)" value={formData.email} onChange={(e)=>setFormData({...formData,email:e.target.value})}/>
+              <InputField label="Address (पत्ता)" value={formData.address} onChange={(e)=>setFormData({...formData,address:e.target.value})}/>
 
-              <UploadBox
-                label="Aadhaar Card (आधारकार्ड)"
-                fileData={files.aadhaar}
-                onChange={(e) => handleFileChange(e, "aadhaar")}
-              />
-
-              <UploadBox
-                label="Address Proof (पत्त्याचा पुरावा)"
-                fileData={files.addressProof}
-                onChange={(e) => handleFileChange(e, "addressProof")}
-              />
-
-              <UploadBox
-                label="Age Proof (वयाचा पुरावा)"
-                fileData={files.ageProof}
-                onChange={(e) => handleFileChange(e, "ageProof")}
-              />
-
-              <UploadBox
-                label="Passport Photo (पासपोर्ट साईज फोटो)"
-                fileData={files.photo}
-                onChange={(e) => handleFileChange(e, "photo")}
-              />
+              <UploadBox label="Aadhaar Card (आधारकार्ड)" fileData={files.aadhaar} onChange={(e)=>handleFileChange(e,"aadhaar")}/>
+              <UploadBox label="Address Proof (पत्त्याचा पुरावा)" fileData={files.addressProof} onChange={(e)=>handleFileChange(e,"addressProof")}/>
+              <UploadBox label="Age Proof (वयाचा पुरावा)" fileData={files.ageProof} onChange={(e)=>handleFileChange(e,"ageProof")}/>
+              <UploadBox label="Passport Photo (पासपोर्ट साईज फोटो)" fileData={files.photo} onChange={(e)=>handleFileChange(e,"photo")}/>
 
             </div>
 
@@ -177,7 +192,7 @@ function Senior() {
 export default Senior;
 
 
-/* Reusable Components */
+/* Components */
 
 function DocItem({ marathi, english }) {
   return (
@@ -191,12 +206,14 @@ function DocItem({ marathi, english }) {
   );
 }
 
-function InputField({ label }) {
+function InputField({ label, value, onChange }) {
   return (
     <div className="h-[88px]">
       <label className="block font-bold mb-2">{label}</label>
       <input
         type="text"
+        value={value}
+        onChange={onChange}
         className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
       />
     </div>

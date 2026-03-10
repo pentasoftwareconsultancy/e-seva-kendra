@@ -1,7 +1,18 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PanHero from "../../assets/Servicesimg/Panhero.png";
 
 function MutualFund() {
+
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    mobile: "",
+    investmentAmount: "",
+    investmentType: "",
+  });
+
   const [files, setFiles] = useState({
     pan: null,
     aadhaar: null,
@@ -22,6 +33,35 @@ function MutualFund() {
     }
   };
 
+ /* SUBMIT HANDLER */
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  if (!formData.fullName || !formData.mobile) {
+    alert("Please fill required fields");
+    return;
+  }
+
+  const missingDocs = Object.values(files).some((f) => !f);
+  if (missingDocs) {
+    alert("Please upload all required documents");
+    return;
+  }
+
+  const amount = 600;
+
+  navigate("/payment", {
+    state: {
+      serviceName: "Mutual Fund",
+      applicantName: formData.fullName,
+      mobile: formData.mobile,
+      Amount: amount,
+      type: "Mutual Fund",
+      formData: formData,
+      files: files
+    },
+  });
+};
   const formFields = [
     { marathi: "पूर्ण नाव", english: "Full Name" },
     { marathi: "मोबाईल क्रमांक", english: "Mobile Number" },
@@ -46,13 +86,17 @@ function MutualFund() {
         <div className="absolute inset-0">
           <img src={PanHero} alt="Mutual Fund Hero" className="w-full h-full object-cover object-center" />
         </div>
+
         <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/80 to-transparent"></div>
+
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
           <div className="w-full md:w-1/2 space-y-6 text-white">
             <h1 className="text-5xl font-bold">Mutual Fund Investment Services</h1>
+
             <p className="text-xl text-gray-200">
               Start your investment journey with safe and diversified Mutual Fund options.
             </p>
+
             <a href="#mutualfund-form">
               <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
                 Invest Now
@@ -79,10 +123,12 @@ function MutualFund() {
               {documentFields.map((doc, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-xl">✱</span>
+
                   <div>
                     <p className="text-gray-800 font-semibold">{doc.marathi}</p>
                     <p className="text-gray-600 text-base">{doc.english}</p>
                   </div>
+
                 </div>
               ))}
             </div>
@@ -99,12 +145,34 @@ function MutualFund() {
             Mutual Fund Investment Application Form
           </h2>
 
-          <form className="space-y-8">
+          <form className="space-y-8" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-              {formFields.map((field, i) => (
-                <InputField key={i} marathi={field.marathi} english={field.english} />
-              ))}
+              {formFields.map((field, i) => {
+
+                const fieldKeys = [
+                  "fullName",
+                  "mobile",
+                  "investmentAmount",
+                  "investmentType"
+                ];
+
+                return (
+                  <InputField
+                    key={i}
+                    marathi={field.marathi}
+                    english={field.english}
+                    value={formData[fieldKeys[i]]}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        [fieldKeys[i]]: e.target.value,
+                      })
+                    }
+                  />
+                );
+
+              })}
 
               {documentFields.map((doc, i) => (
                 <UploadBox
@@ -119,13 +187,16 @@ function MutualFund() {
             </div>
 
             <div className="pt-6 flex justify-end">
+
               <button
                 type="submit"
                 className="bg-[#f07e1b] text-white px-12 py-4 rounded-xl font-bold text-lg hover:bg-[#d4ac5b] transition-all"
               >
                 Submit Application
               </button>
+
             </div>
+
           </form>
 
         </div>
@@ -136,34 +207,51 @@ function MutualFund() {
 }
 
 /* Input Component */
-function InputField({ marathi, english }) {
+function InputField({ marathi, english, value, onChange }) {
   return (
     <div>
-      <label className="block font-bold mb-2">{marathi} / {english}</label>
+
+      <label className="block font-bold mb-2">
+        {marathi} / {english}
+      </label>
+
       <input
         type="text"
+        value={value}
+        onChange={onChange}
         placeholder={`Enter ${english}`}
         className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
       />
+
     </div>
   );
 }
 
 /* Upload Component */
 function UploadBox({ marathi, english, fileData, onChange }) {
+
   return (
     <div className="bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200">
+
       <div className="flex justify-between items-center">
-        <span className="font-semibold">{marathi} / {english}</span>
+
+        <span className="font-semibold">
+          {marathi} / {english}
+        </span>
+
         <label className="bg-[#f07e1b] text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all">
+
           Upload
+
           <input
             type="file"
             accept="image/*,.pdf"
             className="hidden"
             onChange={onChange}
           />
+
         </label>
+
       </div>
 
       {fileData && (
@@ -174,8 +262,10 @@ function UploadBox({ marathi, english, fileData, onChange }) {
           {fileData.file.name}
         </p>
       )}
+
     </div>
   );
+
 }
 
 export default MutualFund;
