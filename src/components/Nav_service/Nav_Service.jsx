@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import panImg from "../../assets/services/pan-img.jpg";
 import bannerImg from "../../assets/services/services-banner.png";
@@ -28,6 +28,29 @@ import IECImg from "../../assets/services/IEC.png";
 
 export default function Nav_Service() {
   const navigate = useNavigate();
+  const [showLoginAlert, setShowLoginAlert] = useState(false);
+const handleApplyClick = (slug) => {
+
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  // if user not logged in
+  if (isLoggedIn !== "true") {
+
+    alert("Please login first to apply for this service");
+
+    // store which service user wanted
+    localStorage.setItem("redirectService", slug);
+
+    navigate("/login");
+
+    return;
+  }
+
+  // if logged in
+  navigate(`/apply/${slug}`);
+};
+
+
   const services = [
     {
       title: "PAN Card(पॅन कार्ड)",
@@ -155,7 +178,7 @@ export default function Nav_Service() {
     },
     {
       title: "Demat Account (डीमॅट खाते)",
-      desc: "File your D-mart account application or update details.",
+      desc: "Open or manage your Demat account.",
       img: Demat,
       slug: "demat-account",
     },
@@ -173,7 +196,6 @@ export default function Nav_Service() {
     },
 
   ];
-
 
   return (
     <div>
@@ -235,7 +257,7 @@ export default function Nav_Service() {
 
 
               <button
-                onClick={() => navigate(`/apply/${service.slug}`)}
+                onClick={() => handleApplyClick(service.slug)}
                 className="mt-auto w-full bg-blue-900 hover:bg-blue-700 text-white py-3 px-4 rounded-lg text-xs sm:text-sm shadow-md hover:shadow-lg transition-all duration-300">
                 Apply Now →
               </button>
@@ -246,6 +268,31 @@ export default function Nav_Service() {
         ))}
         </div> 
       </div>
+
+      {/* Login Alert Modal */}
+      {showLoginAlert && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowLoginAlert(false)}>
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-xl font-bold text-gray-800 mb-3">Login Required</h3>
+            <p className="text-gray-600 mb-6">Please register or login to your account to apply for this service.</p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => {
+                  setShowLoginAlert(false);
+                  navigate('/login');
+                }}
+                className="flex-1 bg-blue-900 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-all duration-300">
+                Login
+              </button>
+              <button
+                onClick={() => setShowLoginAlert(false)}
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-4 rounded-lg transition-all duration-300">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
