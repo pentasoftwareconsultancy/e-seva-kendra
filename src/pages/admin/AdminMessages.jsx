@@ -52,8 +52,8 @@ const AdminMessages = () => {
       <div className="flex items-center gap-2 mb-4 md:mb-6">
         <MessageSquare className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
         <h2 className="text-xl md:text-3xl font-bold text-gray-800">
-          Contact
-          <span className="text-green-600"> Messages</span>
+          Contact Messages
+          {/* <span className="text-green-600"> Messages</span> */}
         </h2>
       </div>
 
@@ -94,7 +94,7 @@ const AdminMessages = () => {
                 >
                   <td className="px-4 md:px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white">
+                      <div className="w-8 h-8 rounded-full  bg-green-500 flex items-center justify-center text-white">
                         <User size={16} />
                       </div>
                       <span className="text-sm font-medium text-gray-900">
@@ -126,7 +126,7 @@ const AdminMessages = () => {
                   <td className="px-4 md:px-6 py-4 text-center">
                     <button
                       onClick={() => setSelectedMessage(msg)}
-                      className="inline-flex items-center gap-1 px-2 py-1.5 md:px-4 md:py-2 bg-green-500 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
+                      className="inline-flex items-center gap-1 px-2 py-1.5 md:px-4 md:py-2 bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
                     >
                       <Eye size={12} className="md:w-3.5 md:h-3.5" />
                       <span className="hidden md:inline">View</span>
