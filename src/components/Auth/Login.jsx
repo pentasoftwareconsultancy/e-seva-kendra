@@ -60,13 +60,13 @@ if (response.data === "Login Successful") {
 
 }
 
-  } catch (error) {
+    } catch (error) {
 
-    console.error(error);
-    alert("Login failed");
+      console.error(error);
+      alert("Login failed");
 
-  }
-};
+    }
+  };
 
   return (
     <>
