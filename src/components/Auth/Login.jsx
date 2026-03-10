@@ -15,6 +15,33 @@ export default function Login() {
 
     try {
 
+      const response = await axios.post(
+        "http://localhost:8080/api/users/login",
+        {
+          email: email,
+          password: password
+        }
+      );
+
+      const data = response.data;
+
+      if (data.message === "Login Successful") {
+
+        // Store login info
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("userEmail", data.email);
+        localStorage.setItem("userId", data.id);
+
+        alert("Login Successful");
+
+        navigate("/");
+
+      } else {
+
+        alert(data.message || "Invalid credentials");
+
+      }
+
     alert(response.data);
 if (response.data === "Login Successful") {
 

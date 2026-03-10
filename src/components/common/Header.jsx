@@ -37,7 +37,7 @@ export default function Header() {
     try {
       const res = await fetch(`http://localhost:8080/notifications/${userId}`);
       const data = await res.json();
-      setNotifications(data.slice(0, 5));
+      setNotifications(data.slice(0, 2));
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }
