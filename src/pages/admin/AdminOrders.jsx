@@ -7,6 +7,7 @@ const AdminOrders = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orders, setOrders] = useState([]);
   const [newStatus, setNewStatus] = useState('');
+  const [documents, setDocuments] = useState([]);
 
   const handleUpdateStatus = () => {
     if (!newStatus) {
@@ -147,7 +148,22 @@ const AdminOrders = () => {
                       <td className="px-4 md:px-6 py-4 text-sm text-gray-500 hidden md:table-cell">{order.date}</td>
                       <td className="px-4 md:px-6 py-4 text-center">
                         <button 
-                          onClick={() => setSelectedOrder(order)}
+                          onClick={() => {
+                            setSelectedOrder(order);
+                            fetch(`http://localhost:8080/api/orders/${order.id}/documents`)
+                              .then(res => {
+                                if (!res.ok) {
+                                  setDocuments([]);
+                                  return [];
+                                }
+                                return res.json();
+                              })
+                              .then(data => setDocuments(Array.isArray(data) ? data : []))
+                              .catch(err => {
+                                console.error(err);
+                                setDocuments([]);
+                              });
+                          }}
                           className="inline-flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
                         >
                           <Eye size={15} className="md:w-3.5 md:h-3.5 cursor-pointer" />
@@ -193,7 +209,7 @@ const AdminOrders = () => {
                   <div className="bg-gray-50 rounded-lg p-3 md:p-4 space-y-2 md:space-y-3">
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Order ID</span>
-                      <span className="text-xs md:text-sm font-semibold text-gray-900">#{selectedOrder.id}</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">{selectedOrder.id}</span>
                     </div>
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Customer Name</span>
@@ -227,6 +243,49 @@ const AdminOrders = () => {
                         <option value="Cancelled">Cancelled</option>
                       </select>
                     </div>
+                    <div className="mt-6 w-full">
+  <p className="text-sm font-semibold text-gray-700 mb-3">Uploaded Documents</p>
+
+  <div className="grid grid-cols-2 gap-4">
+    {documents.map((doc) => (
+      <div key={doc.id} className="border rounded-lg p-2 bg-white shadow">
+
+        <img
+          src={`http://localhost:8080/uploads/${doc.fileName}`}
+          alt={doc.fileName}
+          className="w-full h-24 object-cover rounded cursor-pointer"
+          onClick={() =>
+            window.open(`http://localhost:8080/uploads/${doc.fileName}`)
+          }
+        />
+
+        <p className="text-xs mt-1 truncate">{doc.fileName}</p>
+
+        <button
+          onClick={() => {
+            fetch(`http://localhost:8080/uploads/${doc.fileName}`)
+              .then(response => response.blob())
+              .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = doc.fileName;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+              })
+              .catch(err => console.error('Download failed:', err));
+          }}
+          className="block mt-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 rounded cursor-pointer w-full"
+        >
+          Download
+        </button>
+
+      </div>
+    ))}
+  </div>
+</div>
                   </div>
                 </div>
 
