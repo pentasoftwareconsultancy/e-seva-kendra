@@ -170,33 +170,39 @@ function VehicleInsurance() {
             <InputField
               label="Full Name (पूर्ण नाव)"
               value={formData.fullName}
-              onChange={(e) =>
-                setFormData({ ...formData, fullName: e.target.value })
-              }
+              onChange={(e) => {
+                const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
+                setFormData({ ...formData, fullName: value });
+              }}
             />
 
             <InputField
               label="Mobile Number (मोबाईल नंबर)"
               value={formData.mobile}
-              onChange={(e) =>
-                setFormData({ ...formData, mobile: e.target.value })
-              }
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, "").slice(0, 10);
+                setFormData({ ...formData, mobile: value });
+              }}
             />
 
             <InputField
               label="Vehicle Number (वाहन क्रमांक)"
               value={formData.vehicleNumber}
-              onChange={(e) =>
-                setFormData({ ...formData, vehicleNumber: e.target.value })
-              }
+              onChange={(e) => {
+                const value = e.target.value
+                  .toUpperCase()
+                  .replace(/[^A-Z0-9\s]/g, "");
+                setFormData({ ...formData, vehicleNumber: value });
+              }}
             />
 
             <InputField
               label="Vehicle Model (वाहन मॉडेल)"
               value={formData.vehicleModel}
-              onChange={(e) =>
-                setFormData({ ...formData, vehicleModel: e.target.value })
-              }
+              onChange={(e) => {
+                const value = e.target.value.replace(/[^a-zA-Z0-9\s]/g, "");
+                setFormData({ ...formData, vehicleModel: value });
+              }}
             />
 
             <UploadBox

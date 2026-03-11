@@ -7,11 +7,11 @@ function AyushmanCardForm() {
 
   const [formData, setFormData] = useState({
     fullName: "",
-    aadhaarNumber: "",
+    // aadhaarNumber: "",
     mobile: "",
-    familyMembers: "",
-    village: "",
-    district: "",
+    // familyMembers: "",
+    // village: "",
+    // district: "",
   });
 
   const [errors, setErrors] = useState({ fullName: "", mobile: "" });
@@ -40,11 +40,15 @@ function AyushmanCardForm() {
 
   const validateForm = () => {
     const newErrors = {};
+
     if (!formData.fullName.trim() || formData.fullName.trim().length < 3)
       newErrors.fullName = "Name must be at least 3 characters";
+
     if (!/^[0-9]{10}$/.test(formData.mobile))
       newErrors.mobile = "Mobile number must be exactly 10 digits";
+
     setErrors(newErrors);
+
     return Object.keys(newErrors).length === 0;
   };
 
@@ -76,6 +80,7 @@ function AyushmanCardForm() {
 
   return (
     <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
+
       {/* Hero Section */}
       <section className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] flex items-center">
         <div className="absolute inset-0">
@@ -93,17 +98,18 @@ function AyushmanCardForm() {
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold">
               Ayushman Card Registration
             </h1>
+
             <p className="text-base sm:text-lg md:text-xl text-gray-200">
-              Get health insurance benefits up to ₹5 lakh per family under PMJAY
-              scheme.
+              Get health insurance benefits up to ₹5 lakh per family under PMJAY scheme.
             </p>
+
             <a href="#ayushman-form">
               <button
                 className="bg-gradient-to-r from-yellow-500 to-orange-500 
-hover:from-yellow-600 hover:to-orange-600 
-text-black px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 
-rounded-xl font-bold text-sm sm:text-base md:text-lg 
-shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                hover:from-yellow-600 hover:to-orange-600 
+                text-black px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 
+                rounded-xl font-bold text-sm sm:text-base md:text-lg 
+                shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
                 Apply Now
               </button>
@@ -112,35 +118,6 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
         </div>
       </section>
 
-      {/* Documents Section */}
-      <section className="bg-white py-12 sm:py-16 px-4 md:px-8">
-        <div className="max-w-4xl mx-auto border-4 border-green-700 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl">
-          <h2 className="text-2xl sm:text-3xl font-bold text-green-600 text-center mb-4 sm:mb-6">
-            आयुष्मान कार्ड साठी लागणारी कागदपत्रे / Documents Required
-          </h2>
-
-          <div className="space-y-3 sm:space-y-4 text-base sm:text-lg">
-            {[
-              ["आधार कार्ड", "Aadhaar Card"],
-              ["रेशन कार्ड", "Ration Card"],
-              ["मोबाईल नंबर", "Mobile Number"],
-              [
-                "फॅमिली आयडी / PMJAY आयडी",
-                "Family ID / PMJAY ID (If Available)",
-              ],
-              ["पासपोर्ट साईज फोटो", "Passport Size Photo"],
-            ].map((item, index) => (
-              <div key={index} className="flex items-start gap-3">
-                <span className="text-green-600 font-bold text-xl">✱</span>
-                <div>
-                  <p className="font-semibold">{item[0]}</p>
-                  <p className="text-gray-600">{item[1]}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Form Section */}
       <section
@@ -148,23 +125,46 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
         className="py-8 sm:py-10 px-4 md:px-8 bg-[#f8faff]"
       >
         <div className="max-w-7xl mx-auto bg-white rounded-2xl sm:rounded-[40px] shadow-2xl p-6 sm:p-8 md:p-12 mb-12 sm:mb-20">
+
           <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">
             Ayushman Card Application Form
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+
+              {/* Full Name */}
               <InputField
                 label="Full Name (पूर्ण नाव)"
                 value={formData.fullName}
                 onChange={(e) => {
-                  setFormData({ ...formData, fullName: e.target.value });
+                  const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
+                  setFormData({ ...formData, fullName: value });
                   setErrors({ ...errors, fullName: "" });
                 }}
                 required
-                minLength={3}
                 error={errors.fullName}
               />
+
+              {/* Mobile Number */}
+              <InputField
+                label="Mobile Number (मोबाईल नंबर)"
+                type="tel"
+                value={formData.mobile}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, "").slice(0, 10);
+                  setFormData({ ...formData, mobile: value });
+                  setErrors({ ...errors, mobile: "" });
+                }}
+                required
+                maxLength={10}
+                error={errors.mobile}
+              />
+
+              {/* Commented Fields */}
+
+              {/*
               <InputField
                 label="Aadhaar Number (आधार क्रमांक)"
                 value={formData.aadhaarNumber}
@@ -173,20 +173,7 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 }
                 required
               />
-              <InputField
-                label="Mobile Number (मोबाईल नंबर)"
-                type="tel"
-                value={formData.mobile}
-                onChange={(e) => {
-                  const value = e.target.value.replace(/[^0-9]/g, "");
-                  setFormData({ ...formData, mobile: value });
-                  setErrors({ ...errors, mobile: "" });
-                }}
-                required
-                maxLength={10}
-                pattern="[0-9]{10}"
-                error={errors.mobile}
-              />
+
               <InputField
                 label="Family Members Count (कुटुंब सदस्य संख्या)"
                 value={formData.familyMembers}
@@ -195,6 +182,7 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 }
                 required
               />
+
               <InputField
                 label="Village / City (गाव / शहर)"
                 value={formData.village}
@@ -203,6 +191,7 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 }
                 required
               />
+
               <InputField
                 label="District (जिल्हा)"
                 value={formData.district}
@@ -211,6 +200,9 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 }
                 required
               />
+              */}
+
+              {/* Upload Fields (UNCHANGED) */}
 
               <UploadBox
                 label="Aadhaar Card (आधार कार्ड)"
@@ -239,12 +231,14 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 Submit Application
               </button>
             </div>
+
           </form>
         </div>
       </section>
     </div>
   );
 }
+
 
 /* Input Component */
 function InputField({
@@ -253,9 +247,7 @@ function InputField({
   value,
   onChange,
   required,
-  minLength,
   maxLength,
-  pattern,
   error,
 }) {
   return (
@@ -263,21 +255,24 @@ function InputField({
       <label className="block font-bold mb-2 text-sm sm:text-base">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
+
       <input
         type={type}
         value={value}
         onChange={onChange}
         required={required}
-        minLength={minLength}
         maxLength={maxLength}
-        pattern={pattern}
         placeholder={`Enter ${label}`}
-        className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 text-sm sm:text-base ${error ? "ring-red-500 focus:ring-red-500" : "ring-gray-200 focus:ring-[#1e40af]/20"} focus:ring-2`}
+        className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 text-sm sm:text-base ${
+          error ? "ring-red-500 focus:ring-red-500" : "ring-gray-200 focus:ring-[#1e40af]/20"
+        } focus:ring-2`}
       />
+
       {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
     </div>
   );
 }
+
 
 /* Upload Component */
 function UploadBox({ label, fileData, onChange }) {
@@ -286,13 +281,15 @@ function UploadBox({ label, fileData, onChange }) {
       <label className="block font-bold mb-2 text-sm sm:text-base">
         {label}
       </label>
+
       <div className="bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200">
+
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs sm:text-sm">
             Upload Document
           </span>
+
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm">
-            {" "}
             Upload
             <input
               type="file"
