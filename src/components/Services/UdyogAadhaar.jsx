@@ -109,8 +109,13 @@ function UdyogAadhaar() {
             <h6 className="text-sm sm:text-base"> Get your Udyog Aadhaar registration in a hassle-free manner.</h6>
 
             <a href="#udyog-form">
-              <button className="bg-[#f07e1b] text-black px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 rounded-xl font-bold text-base sm:text-lg shadow-lg hover:bg-[#d4ac5b] transition-all w-full sm:w-auto">
-                Apply Now
+              <button
+ className="bg-gradient-to-r from-yellow-500 to-orange-500 
+hover:from-yellow-600 hover:to-orange-600 
+text-black px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 
+rounded-xl font-bold text-sm sm:text-base md:text-lg 
+shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            >                Apply Now
               </button>
             </a>
 
@@ -194,22 +199,32 @@ function UdyogAadhaar() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
               <div>
-                <label className="block font-bold mb-2 text-sm sm:text-base">Full Name (पूर्ण नाव) <span className="text-red-500">*</span></label>
-                <input
-                  type="text"
-                  required
-                  minLength={3}
-                  value={formData.fullName}
-                  onChange={(e) => {
-                    setFormData({...formData, fullName: e.target.value});
-                    setErrors({...errors, fullName: ""});
-                  }}
-                  placeholder="Enter Full Name"
-                  className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ${errors.fullName ? 'ring-red-500' : 'ring-gray-200'} focus:ring-2 focus:ring-[#1e40af]/20 text-sm sm:text-base`}
-                />
-                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
-              </div>
+  <label className="block font-bold mb-2 text-sm sm:text-base">
+    Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
+  </label>
 
+  <input
+    type="text"
+    required
+    minLength={3}
+    value={formData.fullName}
+    onChange={(e) => {
+      const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+      setFormData({ ...formData, fullName: value });
+      setErrors({ ...errors, fullName: "" });
+    }}
+    placeholder="Enter Full Name"
+    className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ${
+      errors.fullName
+        ? "ring-red-500 focus:ring-red-500"
+        : "ring-gray-200 focus:ring-[#1e40af]/20"
+    } focus:ring-2 text-sm sm:text-base`}
+  />
+
+  {errors.fullName && (
+    <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+  )}
+</div>
               <div>
                 <label className="block font-bold mb-2 text-sm sm:text-base">Mobile Number (मोबाईल क्रमांक) <span className="text-red-500">*</span></label>
                 <input
@@ -229,18 +244,7 @@ function UdyogAadhaar() {
                 {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
               </div>
 
-              {/* Email */}
-              <div>
-                <label className="block font-bold mb-2 text-sm sm:text-base">Email ID (ई-मेल आय.डी.)</label>
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  placeholder="Enter Email ID"
-                  className="w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20 text-sm sm:text-base"
-                />
-              </div>
+              
 
               {/* PAN Card */}
               <UploadBox
@@ -282,8 +286,8 @@ function UdyogAadhaar() {
             <div className="pt-4 sm:pt-6 flex justify-end">
               <button
                 type="submit"
-                className="bg-[#f07e1b] text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:bg-[#d4ac5b] transition-all w-full sm:w-auto"
-              >
+className="bg-gradient-to-r from-yellow-400 to-orange-600 text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg shadow-lg hover:shadow-2xl hover:from-yellow-500 hover:to-orange-700 transition-all duration-300 hover:-translate-y-0.5">
+              
                 Submit Application
               </button>
             </div>
@@ -306,8 +310,7 @@ function UploadBox({ label, fileData, onChange }) {
       <div className="bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200">
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-sm sm:text-base">Upload Document</span>
-          <label className="bg-[#f07e1b] text-white px-4 sm:px-6 py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all text-sm sm:text-base">
-            Upload
+<label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm">            Upload
             <input
               type="file"
               accept="image/*,.pdf"
