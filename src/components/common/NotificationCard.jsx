@@ -70,8 +70,12 @@ export default function NotificationCard({ notification, onMarkRead }) {
 
         {!notification.read && (
           <button
-            onClick={() => onMarkRead(notification.id)}
-            className="text-xs text-blue-600 hover:underline"
+            onClick={(e) => {
+              e.stopPropagation();
+              console.log('Mark as read clicked for:', notification.id);
+              onMarkRead(notification.id);
+            }}
+            className="text-xs text-blue-600 hover:underline whitespace-nowrap ml-2"
           >
             Mark as read
           </button>

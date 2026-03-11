@@ -31,7 +31,7 @@ export default function Nav_Service() {
   const [showLoginAlert, setShowLoginAlert] = useState(false);
 const handleApplyClick = (slug) => {
 
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
 
   // if user not logged in
   if (isLoggedIn !== "true") {
@@ -39,7 +39,7 @@ const handleApplyClick = (slug) => {
     alert("Please login first to apply for this service");
 
     // store which service user wanted
-    localStorage.setItem("redirectService", slug);
+    sessionStorage.setItem("redirectService", slug);
 
     navigate("/login");
 

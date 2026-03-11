@@ -30,10 +30,18 @@ function Payment() {
       return;
     }
 
-    const userId = localStorage.getItem("userId");
+    const userId = sessionStorage.getItem("userId") || localStorage.getItem("userId");
+    
+    if (!userId) {
+      alert("Please login first to place order");
+      window.location.href = "/login";
+      return;
+    }
+
+    console.log('Placing order with userId:', userId);
 
     const formData = new FormData();
-    formData.append("userId", userId || "");
+    formData.append("userId", userId);
     formData.append("name", data.applicantName);
     formData.append("mobile", data.mobile);
     formData.append("serviceName", data.serviceName);

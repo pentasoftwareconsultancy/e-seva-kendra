@@ -22,14 +22,16 @@ export default function Header() {
   const [mobileSearch, setMobileSearch] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+  const userEmail = sessionStorage.getItem("userEmail");
+  const isAdmin = userEmail && userEmail.endsWith("@eseva.com");
   /* ---------------- NOTIFICATION STATES ---------------- */
 
   const [unreadCount, setUnreadCount] = useState(0);
   const [notifications, setNotifications] = useState([]);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
-  const userId = localStorage.getItem("userId");
+  const userId = sessionStorage.getItem("userId");
 
   /* ---------------- FETCH NOTIFICATIONS ---------------- */
 
@@ -326,7 +328,7 @@ export default function Header() {
           {/* RIGHT SIDE */}
           <div className="flex items-center gap-4">
             {/* Desktop Buttons */}
-            {!isLoggedIn ? (
+            {!isLoggedIn || isAdmin ? (
               <>
                <Link
   to="/login"
@@ -400,7 +402,7 @@ export default function Header() {
 
                 <Link
                   to="/account"
-                  className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition text-sm font-medium"
+                  className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition text-sm font-medium cursor-pointer"
                 >
                   <FontAwesomeIcon icon={faUser} className="text-gray-600" />
                   Profile
@@ -444,7 +446,7 @@ export default function Header() {
               Contact
             </Link>
 
-            {!isLoggedIn ? (
+            {!isLoggedIn || isAdmin ? (
               <>
                 <Link
                   to="/login"
@@ -475,7 +477,7 @@ export default function Header() {
                 <button
                   className="text-left"
                   onClick={() => {
-                    localStorage.removeItem("isLoggedIn");
+                    sessionStorage.removeItem("isLoggedIn");
                     setIsMobileMenuOpen(false);
                     window.location.href = "/";
                   }}
