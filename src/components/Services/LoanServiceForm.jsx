@@ -220,16 +220,22 @@ function LoanServiceForm() {
                     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
                         <InputField
-                            label="Full Name (पूर्ण नाव)"
-                            value={formData.fullName}
-                            onChange={(e)=>setFormData({...formData, fullName:e.target.value})}
-                        />
+  label=" Full Name ( पूर्ण नाव)"
+  value={formData.ownerName}
+  onChange={(e) => {
+    const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+    setFormData({ ...formData, ownerName: value });
+  }}
+/>
 
                         <InputField
-                            label="Mobile (मोबाईल नंबर)"
-                            value={formData.mobile}
-                            onChange={(e)=>setFormData({...formData, mobile:e.target.value})}
-                        />
+  label="Mobile Number (मोबाईल नंबर)"
+  value={formData.mobile}
+  onChange={(e) => {
+    const value = e.target.value.replace(/[^0-9]/g, '');
+    setFormData({ ...formData, mobile: value });
+  }}
+/>
 
                         {/* Personal Loan Upload Fields */}
                         {selectedLoan === "personal" && (

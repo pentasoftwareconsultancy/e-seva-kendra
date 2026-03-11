@@ -144,12 +144,38 @@ function AyushmanCardForm() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
-                            <InputField label="Full Name (पूर्ण नाव)" value={formData.fullName} onChange={(e) => { setFormData({...formData, fullName: e.target.value}); setErrors({...errors, fullName: ""}); }} required minLength={3} error={errors.fullName} />
-                            <InputField label="Aadhaar Number (आधार क्रमांक)" value={formData.aadhaarNumber} onChange={(e) => setFormData({...formData, aadhaarNumber: e.target.value})} required />
+                            <div>
+  <label className="block font-bold mb-2 text-sm sm:text-base">
+    Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
+  </label>
+
+  <input
+    type="text"
+    required
+    minLength={3}
+    value={formData.fullName}
+    onChange={(e) => {
+      const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+      setFormData({ ...formData, fullName: value });
+      setErrors({ ...errors, fullName: "" });
+    }}
+    placeholder="Enter Full Name"
+    className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ${
+      errors.fullName
+        ? "ring-red-500 focus:ring-red-500"
+        : "ring-gray-200 focus:ring-[#1e40af]/20"
+    } focus:ring-2 text-sm sm:text-base`}
+  />
+
+  {errors.fullName && (
+    <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+  )}
+</div>
+                            {/* <InputField label="Aadhaar Number (आधार क्रमांक)" value={formData.aadhaarNumber} onChange={(e) => setFormData({...formData, aadhaarNumber: e.target.value})} required /> */}
                             <InputField label="Mobile Number (मोबाईल नंबर)" type="tel" value={formData.mobile} onChange={(e) => { const value = e.target.value.replace(/[^0-9]/g, ''); setFormData({...formData, mobile: value}); setErrors({...errors, mobile: ""}); }} required maxLength={10} pattern="[0-9]{10}" error={errors.mobile} />
-                            <InputField label="Family Members Count (कुटुंब सदस्य संख्या)" value={formData.familyMembers} onChange={(e) => setFormData({...formData, familyMembers: e.target.value})} required />
+                            {/* <InputField label="Family Members Count (कुटुंब सदस्य संख्या)" value={formData.familyMembers} onChange={(e) => setFormData({...formData, familyMembers: e.target.value})} required />
                             <InputField label="Village / City (गाव / शहर)" value={formData.village} onChange={(e) => setFormData({...formData, village: e.target.value})} required />
-                            <InputField label="District (जिल्हा)" value={formData.district} onChange={(e) => setFormData({...formData, district: e.target.value})} required />
+                            <InputField label="District (जिल्हा)" value={formData.district} onChange={(e) => setFormData({...formData, district: e.target.value})} required /> */}
 
                             <UploadBox
                                 label="Aadhaar Card (आधार कार्ड)"

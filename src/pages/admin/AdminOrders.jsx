@@ -128,7 +128,7 @@ const AdminOrders = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {filteredOrders.map((order, index) => (
+                  {filteredOrders.map((order) => (
                     <tr key={order.id} className="hover:bg-blue-50/50 transition-colors duration-150">
                       <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600">{order.id}</td>
                       <td className="px-4 md:px-6 py-4">

@@ -72,8 +72,8 @@ const handleSubmit = (e) => {
   const formFields = [
     { marathi: "पूर्ण नाव", english: "Full Name" },
     { marathi: "मोबाईल क्रमांक", english: "Mobile Number" },
-    { marathi: "गुंतवणूक रक्कम", english: "Investment Amount" },
-    { marathi: "आवडती गुंतवणूक प्रकार (SIP / Lumpsum)", english: "Preferred Investment Type (SIP / Lumpsum)" },
+    // { marathi: "गुंतवणूक रक्कम", english: "Investment Amount" },
+    // { marathi: "आवडती गुंतवणूक प्रकार (SIP / Lumpsum)", english: "Preferred Investment Type (SIP / Lumpsum)" },
   ];
 
   const documentFields = [
@@ -160,8 +160,8 @@ const handleSubmit = (e) => {
                 const fieldKeys = [
                   "fullName",
                   "mobile",
-                  "investmentAmount",
-                  "investmentType"
+                  // "investmentAmount",
+                  // "investmentType"
                 ];
 
                 return (

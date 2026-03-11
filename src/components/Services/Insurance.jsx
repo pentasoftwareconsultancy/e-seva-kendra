@@ -212,26 +212,38 @@ function Insurance() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
               <div>
-                <label className="block font-bold mb-2 text-sm sm:text-base">Full Name (पूर्ण नाव)</label>
-                <input
-                  type="text"
-                  value={formData.fullName}
-                  onChange={(e)=>setFormData({...formData, fullName:e.target.value})}
-                  placeholder="Enter Full Name"
-                  className="w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20 text-sm sm:text-base"
-                />
-              </div>
+  <label className="block font-bold mb-2 text-sm sm:text-base">
+    Full Name (पूर्ण नाव)
+  </label>
+
+  <input
+    type="text"
+    value={formData.fullName}
+    onChange={(e) => {
+      const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+      setFormData({ ...formData, fullName: value });
+    }}
+    placeholder="Enter Full Name"
+    className="w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20 text-sm sm:text-base"
+  />
+</div>
 
               <div>
-                <label className="block font-bold mb-2 text-sm sm:text-base">Mobile Number (मोबाईल क्रमांक)</label>
-                <input
-                  type="text"
-                  value={formData.mobile}
-                  onChange={(e)=>setFormData({...formData, mobile:e.target.value})}
-                  placeholder="Enter Mobile Number"
-                  className="w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20 text-sm sm:text-base"
-                />
-              </div>
+  <label className="block font-bold mb-2 text-sm sm:text-base">
+    Mobile Number (मोबाईल क्रमांक)
+  </label>
+
+  <input
+    type="text"
+    value={formData.mobile}
+    onChange={(e) => {
+      const value = e.target.value.replace(/[^0-9]/g, '');
+      setFormData({ ...formData, mobile: value });
+    }}
+    placeholder="Enter Mobile Number"
+    className="w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20 text-sm sm:text-base"
+  />
+</div>
 
               {documents.map((doc, i) => (
                 <UploadBox

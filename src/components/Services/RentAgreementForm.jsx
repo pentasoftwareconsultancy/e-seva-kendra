@@ -8,10 +8,10 @@ function RentAgreementForm() {
 
     const [formData, setFormData] = useState({
         ownerName: "",
-        tenantName: "",
-        propertyAddress: "",
-        rentAmount: "",
-        agreementDuration: "",
+        // tenantName: "",
+        // propertyAddress: "",
+        // rentAmount: "",
+        // agreementDuration: "",
     });
 
     const [files, setFiles] = useState({
@@ -160,14 +160,15 @@ navigate("/payment", {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
                             <InputField
-                                label="Owner Full Name (मालक पूर्ण नाव)"
-                                value={formData.ownerName}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, ownerName: e.target.value })
-                                }
-                            />
+  label="Owner Full Name (मालक पूर्ण नाव)"
+  value={formData.ownerName}
+  onChange={(e) => {
+    const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+    setFormData({ ...formData, ownerName: value });
+  }}
+/>
 
-                            <InputField
+                            {/* <InputField
                                 label="Tenant Full Name (भाडेकरू पूर्ण नाव)"
                                 value={formData.tenantName}
                                 onChange={(e) =>
@@ -181,9 +182,9 @@ navigate("/payment", {
                                 onChange={(e) =>
                                     setFormData({ ...formData, propertyAddress: e.target.value })
                                 }
-                            />
+                            /> */}
 
-                            <InputField
+                            {/* <InputField
                                 label="Monthly Rent Amount (मासिक भाडे)"
                                 value={formData.rentAmount}
                                 onChange={(e) =>
@@ -200,7 +201,7 @@ navigate("/payment", {
                                         agreementDuration: e.target.value,
                                     })
                                 }
-                            />
+                            /> */}
 
                             <UploadBox label="Owner Aadhaar Card (मालक आधार कार्ड)" fileData={files.ownerAadhaar} onChange={(e) => handleFileChange(e, "ownerAadhaar")} />
                             <UploadBox label="Tenant Aadhaar Card (भाडेकरू आधार कार्ड)" fileData={files.tenantAadhaar} onChange={(e) => handleFileChange(e, "tenantAadhaar")} />
