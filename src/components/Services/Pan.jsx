@@ -9,7 +9,7 @@ function Pan() {
 
   const [activeTab, setActiveTab] = useState("new");
 
-  // ✅ NEW: form data state added
+ 
   const [formData, setFormData] = useState({
     fullName: "",
     mobile: "",
@@ -142,8 +142,11 @@ const handleSubmit = (e) => {
 
            <button
               onClick={() => document.getElementById("pan-form").scrollIntoView({ behavior: "smooth" })}
-  className="bg-[#f07e1b] text-black px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 rounded-xl font-bold text-sm sm:text-base md:text-lg shadow-lg hover:bg-[#d4ac5b] transition-all"
->
+className="bg-gradient-to-r from-yellow-500 to-orange-500 
+hover:from-yellow-600 hover:to-orange-600 
+text-black px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 
+rounded-xl font-bold text-sm sm:text-base md:text-lg 
+shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
   Apply Now
 </button>
           </div>
@@ -168,11 +171,11 @@ const handleSubmit = (e) => {
             <button
               type="button"
               onClick={() => setActiveTab("new")}
-              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-xl font-semibold transition-all text-xs sm:text-sm md:text-base ${
-                activeTab === "new"
-                  ? "bg-[#1e40af] text-white shadow-md"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-              }`}
+             className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 text-xs sm:text-sm md:text-base ${
+  activeTab === "new"
+    ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
+    : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:shadow-md"
+}`}
             >
               New PAN Card
             </button>
@@ -180,11 +183,11 @@ const handleSubmit = (e) => {
             <button
               type="button"
               onClick={() => setActiveTab("update")}
-              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-xl font-semibold transition-all text-xs sm:text-sm md:text-base ${
-                activeTab === "update"
-                  ? "bg-[#1e40af] text-white shadow-md"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-              }`}
+           className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 text-xs sm:text-sm md:text-base ${
+  activeTab === "update"
+    ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
+    : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:shadow-md"
+}`}
             >
               Update/Correction
             </button>
@@ -281,9 +284,8 @@ const handleSubmit = (e) => {
             <div className="pt-4 sm:pt-6 flex justify-end">
               <button
                 type="submit"
-                className="bg-[#f07e1b] text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg hover:bg-[#d4ac5b] transition-all"
-              >
-                Submit Application 
+className="bg-gradient-to-r from-yellow-400 to-orange-600 text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg shadow-lg hover:shadow-2xl hover:from-yellow-500 hover:to-orange-700 transition-all duration-300 hover:-translate-y-0.5"                  >
+                    Submit Application 
               </button>
             </div>
 
@@ -303,8 +305,7 @@ function UploadBox({ label, fileData, onChange }) {
       <div className="bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200">
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs sm:text-sm md:text-base">Upload Document</span>
-          <label className="bg-[#f07e1b] text-white px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all text-xs sm:text-sm">
-            Upload
+<label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm">            Upload
             <input
               type="file"
               accept="image/*,.pdf"

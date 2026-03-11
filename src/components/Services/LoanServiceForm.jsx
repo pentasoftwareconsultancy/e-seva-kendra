@@ -152,8 +152,13 @@ function LoanServiceForm() {
                         </p>
 
                         <a href="#loan-form">
-                            <button className="mt-6 sm:mt-8 bg-[#f07e1b] text-black px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 rounded-xl font-bold text-base sm:text-lg shadow-lg hover:bg-[#d4ac5b] transition-all w-full sm:w-auto">
-                                Apply Now
+                            <button 
+ className="bg-gradient-to-r from-yellow-500 to-orange-500 
+hover:from-yellow-600 hover:to-orange-600 
+text-black px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 
+rounded-xl font-bold text-sm sm:text-base md:text-lg 
+shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            >                                Apply Now
                             </button>
                         </a>
 
@@ -270,8 +275,8 @@ function LoanServiceForm() {
                         <div className="md:col-span-2 flex justify-end pt-4 sm:pt-6">
                             <button
                                 type="submit"
-                                className="bg-[#f07e1b] text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:bg-[#d4ac5b] transition-all w-full sm:w-auto"
-                            >
+className="bg-gradient-to-r from-yellow-400 to-orange-600 text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg shadow-lg hover:shadow-2xl hover:from-yellow-500 hover:to-orange-700 transition-all duration-300 hover:-translate-y-0.5">
+                            
                                 Submit Application
                             </button>
                         </div>
@@ -307,8 +312,7 @@ function UploadBox({ label, fileData, onChange }) {
             <div className="bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200">
                 <div className="flex justify-between items-center gap-2">
                     <span className="font-semibold text-sm sm:text-base">Upload Document</span>
-                    <label className="bg-[#f07e1b] text-white px-4 sm:px-6 py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all text-sm sm:text-base">
-                        Upload
+<label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm">                        Upload
                         <input
                             type="file"
                             accept="image/*,.pdf"
