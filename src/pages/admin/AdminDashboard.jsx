@@ -252,7 +252,7 @@ const AdminDashboard = () => {
                 <tbody className="divide-y divide-gray-100">
                   {filteredOrders.map((order) => (
                     <tr key={order.id} className="hover:bg-blue-50/50 transition-colors duration-150">
-                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600">{order.id}</td>
+                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600">ORD#{order.id}</td>
                       <td className="px-4 md:px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
@@ -316,7 +316,7 @@ const AdminDashboard = () => {
                   <div className="bg-gray-50 rounded-lg p-3 md:p-4 space-y-2 md:space-y-3">
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Order ID</span>
-                      <span className="text-xs md:text-sm font-semibold text-gray-900">{selectedOrder.id}</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">ORD#{selectedOrder.id}</span>
                     </div>
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Customer Name</span>
