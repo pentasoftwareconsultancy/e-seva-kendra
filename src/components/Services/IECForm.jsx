@@ -11,6 +11,11 @@ function IECForm() {
         mobile: "",
     });
 
+    const [errors, setErrors] = useState({
+        fullName: "",
+        mobile: "",
+    });
+
     const [files, setFiles] = useState({
         pan: null,
         aadhaar: null,
@@ -93,8 +98,13 @@ function IECForm() {
                             Get your Import Export Code (IEC) registration quickly and start your international trade business legally.
                         </p>
                         <a href="#iec-form">
-                            <button className="bg-[#f07e1b] text-black px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 rounded-xl font-bold text-base sm:text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
-                                Apply Now
+                            <button 
+ className="bg-gradient-to-r from-yellow-500 to-orange-500 
+hover:from-yellow-600 hover:to-orange-600 
+text-black px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 
+rounded-xl font-bold text-sm sm:text-base md:text-lg 
+shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            >                                Apply Now
                             </button>
                         </a>
                     </div>
@@ -150,30 +160,63 @@ function IECForm() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
+                            {/* Full Name */}
                             <div>
-                                <label className="block font-bold mb-2 text-sm sm:text-base">पूर्ण नाव(Applicant Name)</label>
+                                <label className="block font-bold mb-2 text-sm sm:text-base">
+                                    Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
+                                </label>
+
                                 <input
                                     type="text"
+                                    required
+                                    minLength={3}
                                     value={formData.fullName}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, fullName: e.target.value })
-                                    }
-                                    placeholder="Enter Name"
-                                    className="w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20 text-sm sm:text-base"
+                                    onChange={(e) => {
+                                        const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                                        setFormData({ ...formData, fullName: value });
+                                        setErrors({ ...errors, fullName: "" });
+                                    }}
+                                    placeholder="Enter Full Name"
+                                    className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ${
+                                        errors.fullName
+                                            ? "ring-red-500 focus:ring-red-500"
+                                            : "ring-gray-200 focus:ring-[#1e40af]/20"
+                                    } focus:ring-2 text-sm sm:text-base`}
                                 />
+
+                                {errors.fullName && (
+                                    <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+                                )}
                             </div>
 
+                            {/* Mobile */}
                             <div>
-                                <label className="block font-bold mb-2 text-sm sm:text-base">मोबाईल नंबर(Mobile Number)</label>
+                                <label className="block font-bold mb-2 text-sm sm:text-base">
+                                    Mobile Number (मोबाईल क्रमांक) <span className="text-red-500">*</span>
+                                </label>
+
                                 <input
-                                    type="text"
+                                    type="tel"
+                                    required
+                                    pattern="[0-9]{10}"
+                                    maxLength={10}
                                     value={formData.mobile}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, mobile: e.target.value })
-                                    }
-                                    placeholder="Enter Mobile Number"
-                                    className="w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20 text-sm sm:text-base"
+                                    onChange={(e) => {
+                                        const value = e.target.value.replace(/[^0-9]/g, '');
+                                        setFormData({ ...formData, mobile: value });
+                                        setErrors({ ...errors, mobile: "" });
+                                    }}
+                                    placeholder="Enter 10-digit Mobile Number"
+                                    className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ${
+                                        errors.mobile
+                                            ? 'ring-red-500 focus:ring-red-500'
+                                            : 'ring-gray-200 focus:ring-[#1e40af]/20'
+                                    } focus:ring-2 text-sm sm:text-base`}
                                 />
+
+                                {errors.mobile && (
+                                    <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>
+                                )}
                             </div>
 
                             <UploadBox label="पॅन कार्ड (PAN Card - Individual / Business)" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} />
@@ -187,8 +230,8 @@ function IECForm() {
                         <div className="pt-4 sm:pt-6 flex justify-end">
                             <button
                                 type="submit"
-                                className="bg-[#f07e1b] text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:bg-[#d4ac5b] transition-all w-full sm:w-auto"
-                            >
+className="bg-gradient-to-r from-yellow-400 to-orange-600 text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg shadow-lg hover:shadow-2xl hover:from-yellow-500 hover:to-orange-700 transition-all duration-300 hover:-translate-y-0.5">
+                            
                                 Submit Application
                             </button>
                         </div>
@@ -210,8 +253,8 @@ function UploadBox({ label, fileData, onChange }) {
             <div className="bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200">
                 <div className="flex justify-between items-center gap-2">
                     <span className="font-semibold text-xs sm:text-sm">Upload Document</span>
-                    <label className="bg-[#f07e1b] text-white px-4 sm:px-6 py-1.5 sm:py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all text-xs sm:text-sm">
-                        Upload
+<label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm">
+                            Upload
                         <input
                             type="file"
                             accept="image/*,.pdf"
