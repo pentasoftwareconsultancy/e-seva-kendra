@@ -54,13 +54,24 @@ function GazetteForm() {
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    if (name === 'fullName' || name === 'mobile') {
-      setErrors({ ...errors, [name]: "" });
-    }
-  };
+  const { name, value } = e.target;
 
+  let newValue = value;
+
+  if (name === "fullName") {
+    newValue = value.replace(/[^a-zA-Z\s]/g, "");
+  }
+
+  if (name === "mobile") {
+    newValue = value.replace(/[^0-9]/g, "");
+  }
+
+  setFormData({ ...formData, [name]: newValue });
+
+  if (name === "fullName" || name === "mobile") {
+    setErrors({ ...errors, [name]: "" });
+  }
+};
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
 
@@ -206,21 +217,29 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
               <div>
-                <label className="block font-bold mb-2 text-sm sm:text-base">
-                  Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  required
-                  minLength={3}
-                  placeholder="Enter Full Name"
-                  className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 text-sm sm:text-base ${errors.fullName ? 'ring-red-500' : 'ring-gray-200'} focus:ring-2 focus:ring-[#1e40af]/20`}
-                />
-                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
-              </div>
+  <label className="block font-bold mb-2 text-sm sm:text-base">
+    Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
+  </label>
+
+  <input
+    type="text"
+    name="fullName"
+    required
+    minLength={3}
+    value={formData.fullName}
+    onChange={handleChange}
+    placeholder="Enter Full Name"
+    className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ${
+      errors.fullName
+        ? "ring-red-500 focus:ring-red-500"
+        : "ring-gray-200 focus:ring-[#1e40af]/20"
+    } focus:ring-2 text-sm sm:text-base`}
+  />
+
+  {errors.fullName && (
+    <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+  )}
+</div>
 
               <div>
                 <label className="block font-bold mb-2 text-sm sm:text-base">

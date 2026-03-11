@@ -71,11 +71,8 @@ function MutualFund() {
   const formFields = [
     { marathi: "पूर्ण नाव", english: "Full Name" },
     { marathi: "मोबाईल क्रमांक", english: "Mobile Number" },
-    { marathi: "गुंतवणूक रक्कम", english: "Investment Amount" },
-    {
-      marathi: "आवडती गुंतवणूक प्रकार (SIP / Lumpsum)",
-      english: "Preferred Investment Type (SIP / Lumpsum)",
-    },
+    // { marathi: "गुंतवणूक रक्कम", english: "Investment Amount" },
+    // { marathi: "आवडती गुंतवणूक प्रकार (SIP / Lumpsum)", english: "Preferred Investment Type (SIP / Lumpsum)" },
   ];
 
   const documentFields = [
@@ -188,8 +185,8 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 const fieldKeys = [
                   "fullName",
                   "mobile",
-                  "investmentAmount",
-                  "investmentType",
+                  // "investmentAmount",
+                  // "investmentType"
                 ];
 
                 return (

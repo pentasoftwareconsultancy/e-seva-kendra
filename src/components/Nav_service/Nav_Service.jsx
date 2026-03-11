@@ -63,7 +63,7 @@ const handleApplyClick = (slug) => {
       title: "Systematic Investment Plan (SIP)(सिस्टेमॅटिक इन्व्हेस्टमेंट प्लान)",
       desc: "Register or correct SIP details.",
       img: SIPImg,
-      slug: "voter",
+      slug: "sip",
     },
 
     {

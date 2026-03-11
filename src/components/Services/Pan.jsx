@@ -199,23 +199,32 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
 
               {/* Full Name */}
               <div>
-                <label className="block font-bold mb-2 text-sm sm:text-base">
-                  Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  required
-                  minLength={3}
-                  value={formData.fullName}
-                  onChange={(e) => {
-                    setFormData({ ...formData, fullName: e.target.value });
-                    setErrors({ ...errors, fullName: "" });
-                  }}
-                  placeholder="Enter Full Name"
-                  className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ${errors.fullName ? 'ring-red-500 focus:ring-red-500' : 'ring-gray-200 focus:ring-[#1e40af]/20'} focus:ring-2 text-sm sm:text-base`}
-                />
-                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
-              </div>
+  <label className="block font-bold mb-2 text-sm sm:text-base">
+    Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
+  </label>
+
+  <input
+    type="text"
+    required
+    minLength={3}
+    value={formData.fullName}
+    onChange={(e) => {
+      const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+      setFormData({ ...formData, fullName: value });
+      setErrors({ ...errors, fullName: "" });
+    }}
+    placeholder="Enter Full Name"
+    className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ${
+      errors.fullName
+        ? "ring-red-500 focus:ring-red-500"
+        : "ring-gray-200 focus:ring-[#1e40af]/20"
+    } focus:ring-2 text-sm sm:text-base`}
+  />
+
+  {errors.fullName && (
+    <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+  )}
+</div>
 
               {/* Mobile */}
               <div>

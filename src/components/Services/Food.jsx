@@ -206,22 +206,33 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-start">
 
-              <div className="h-[88px]">
-                <label className="block font-bold mb-2 text-sm sm:text-base">Full Name (पूर्ण नाव) <span className="text-red-500">*</span></label>
-                <input
-                  type="text"
-                  required
-                  minLength={3}
-                  value={formData.fullName}
-                  onChange={(e) => {
-                    setFormData({...formData, fullName: e.target.value});
-                    setErrors({...errors, fullName: ""});
-                  }}
-                  placeholder="Enter Full Name"
-                  className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 text-sm sm:text-base ${errors.fullName ? 'ring-red-500' : 'ring-gray-200'} focus:ring-2 focus:ring-[#1e40af]/20`}
-                />
-                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
-              </div>
+              <div>
+  <label className="block font-bold mb-2 text-sm sm:text-base">
+    Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
+  </label>
+
+  <input
+    type="text"
+    required
+    minLength={3}
+    value={formData.fullName}
+    onChange={(e) => {
+      const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+      setFormData({ ...formData, fullName: value });
+      setErrors({ ...errors, fullName: "" });
+    }}
+    placeholder="Enter Full Name"
+    className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ${
+      errors.fullName
+        ? "ring-red-500 focus:ring-red-500"
+        : "ring-gray-200 focus:ring-[#1e40af]/20"
+    } focus:ring-2 text-sm sm:text-base`}
+  />
+
+  {errors.fullName && (
+    <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+  )}
+</div>
 
               <div className="h-[88px]">
                 <label className="block font-bold mb-2 text-sm sm:text-base">Mobile Number (मोबाईल क्रमांक) <span className="text-red-500">*</span></label>
@@ -242,18 +253,7 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
               </div>
 
-              {/* Email */}
-              <div className="h-[88px]">
-                <label className="block font-bold mb-2 text-sm sm:text-base">Email ID (ई-मेल आय.डी.)</label>
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  placeholder="Enter Email ID"
-                  className="w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20 text-sm sm:text-base"
-                />
-              </div>
+             
 
               {/* PAN Card */}
               <UploadBox
