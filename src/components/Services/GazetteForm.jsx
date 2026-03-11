@@ -5,28 +5,31 @@ import Panhero from "../../assets/Servicesimg/Panhero.png";
 // ✅ UploadBox (UI untouched)
 function UploadBox({ label, field, fileData, onFileChange }) {
   return (
-    <div className="bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200">
-      <div className="flex justify-between items-center">
-        <span className="font-semibold">{label}</span>
-        <label className="bg-[#f07e1b] text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all">
-          Upload
-          <input
-            type="file"
-            accept="image/*,.pdf"
-            className="hidden"
-            onChange={(e) => onFileChange(e, field)}
-          />
-        </label>
-      </div>
+    <div>
+      <label className="block font-bold mb-2 text-sm sm:text-base">{label}</label>
+      <div className="bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200">
+        <div className="flex justify-between items-center gap-2">
+          <span className="font-semibold text-xs sm:text-sm">Upload Document</span>
+          <label className="bg-[#f07e1b] text-white px-4 sm:px-6 py-1.5 sm:py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all text-xs sm:text-sm">
+            Upload
+            <input
+              type="file"
+              accept="image/*,.pdf"
+              className="hidden"
+              onChange={(e) => onFileChange(e, field)}
+            />
+          </label>
+        </div>
 
-      {fileData && (
-        <p
-          className="text-blue-600 text-sm mt-2 cursor-pointer hover:text-blue-800"
-          onClick={() => window.open(fileData.url, "_blank")}
-        >
-          {fileData.file.name}
-        </p>
-      )}
+        {fileData && (
+          <p
+            className="text-blue-600 text-xs sm:text-sm mt-2 cursor-pointer hover:text-blue-800 break-all"
+            onClick={() => window.open(fileData.url, "_blank")}
+          >
+            {fileData.file.name}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
@@ -106,6 +109,13 @@ function GazetteForm() {
          mobile: formData.mobile,
         Amount: 2000,
         formData,
+        documents: {
+          aadhaar: files.aadhaar?.file,
+          pan: files.pan?.file,
+          photo: files.photo?.file,
+          marriageCard: files.marriageCard?.file,
+          stampPaper: files.stampPaper?.file,
+        },
       },
     });
   };
@@ -114,7 +124,7 @@ function GazetteForm() {
     <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
 
       {/* Hero Section */}
-      <section className="relative w-full h-[550px] flex items-center">
+      <section className="relative w-full h-[300px] sm:h-[400px] md:h-[550px] flex items-center">
         <div className="absolute inset-0">
           <img
             src={Panhero}
@@ -124,14 +134,14 @@ function GazetteForm() {
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/80 to-transparent"></div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-          <div className="w-full md:w-1/2 space-y-6 text-white">
-            <h1 className="text-5xl font-bold">Gazette Document Services</h1>
-            <p className="text-xl text-gray-200">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full">
+          <div className="w-full md:w-1/2 space-y-4 sm:space-y-6 text-white">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold">Gazette Document Services</h1>
+            <p className="text-base sm:text-lg md:text-xl text-gray-200">
               Apply for official Gazette documentation easily.
             </p>
             <a href="#gajet-form">
-              <button className="bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
+              <button className="bg-[#f07e1b] text-black px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 rounded-xl font-bold text-base sm:text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
                 Apply Now
               </button>
             </a>
@@ -139,19 +149,19 @@ function GazetteForm() {
         </div>
       </section>
  {/* ================= DOCUMENT REQUIREMENTS ================= */}
-      <section className="bg-white py-16 px-4 md:px-8">
+      <section className="bg-white py-12 sm:py-16 px-4 md:px-8">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white border-4 border-green-700 rounded-3xl p-8 md:p-12 shadow-xl">
+          <div className="bg-white border-4 border-green-700 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-xl">
 
-            <h2 className="text-3xl font-bold text-green-600 text-center mb-2">
+            <h2 className="text-2xl sm:text-3xl font-bold text-green-600 text-center mb-2">
               गॅझेट साठी लागणारी कागदपत्रे
             </h2>
 
-            <h3 className="text-2xl font-bold text-green-600 text-center mb-8 border-b-4 border-green-700 pb-4">
+            <h3 className="text-xl sm:text-2xl font-bold text-green-600 text-center mb-6 sm:mb-8 border-b-4 border-green-700 pb-3 sm:pb-4">
               Documents Required for Gazette Certificate
             </h3>
 
-            <div className="space-y-4 text-lg">
+            <div className="space-y-3 sm:space-y-4 text-base sm:text-lg">
 
               {[
                 ["आधार कार्ड", "Aadhaar Card (Identity Proof)"],
@@ -179,19 +189,19 @@ function GazetteForm() {
       {/* FORM SECTION */}
       <section
         id="gajet-form"
-        className="py-10 px-4 md:px-8 bg-[#f8faff]"
+        className="py-8 sm:py-10 px-4 md:px-8 bg-[#f8faff]"
       >
-        <div className="max-w-7xl mx-auto bg-white rounded-[40px] shadow-2xl p-8 md:p-12 mb-20">
-          <h2 className="text-3xl font-bold mb-6">
+        <div className="max-w-7xl mx-auto bg-white rounded-2xl sm:rounded-[40px] shadow-2xl p-6 sm:p-8 md:p-12 mb-12 sm:mb-20">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">
             Gazette Application Form
           </h2>
 
-          <form className="space-y-8" onSubmit={handleSubmit}>
+          <form className="space-y-6 sm:space-y-8" onSubmit={handleSubmit}>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
               <div>
-                <label className="block font-bold mb-2">
+                <label className="block font-bold mb-2 text-sm sm:text-base">
                   Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -202,13 +212,13 @@ function GazetteForm() {
                   required
                   minLength={3}
                   placeholder="Enter Full Name"
-                  className={`w-full bg-[#f8faff] p-4 rounded-xl ring-1 ${errors.fullName ? 'ring-red-500' : 'ring-gray-200'} focus:ring-2 focus:ring-[#1e40af]/20`}
+                  className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 text-sm sm:text-base ${errors.fullName ? 'ring-red-500' : 'ring-gray-200'} focus:ring-2 focus:ring-[#1e40af]/20`}
                 />
                 {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
               </div>
 
               <div>
-                <label className="block font-bold mb-2">
+                <label className="block font-bold mb-2 text-sm sm:text-base">
                   Mobile Number (मोबाईल क्रमांक) <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -224,7 +234,7 @@ function GazetteForm() {
                   pattern="[0-9]{10}"
                   maxLength={10}
                   placeholder="Enter 10-digit Mobile Number"
-                  className={`w-full bg-[#f8faff] p-4 rounded-xl ring-1 ${errors.mobile ? 'ring-red-500' : 'ring-gray-200'} focus:ring-2 focus:ring-[#1e40af]/20`}
+                  className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 text-sm sm:text-base ${errors.mobile ? 'ring-red-500' : 'ring-gray-200'} focus:ring-2 focus:ring-[#1e40af]/20`}
                 />
                 {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
               </div>
@@ -238,10 +248,10 @@ function GazetteForm() {
 
             </div>
 
-            <div className="pt-6 flex justify-end">
+            <div className="pt-4 sm:pt-6 flex justify-end">
               <button
                 type="submit"
-                className="bg-[#f07e1b] text-white px-12 py-4 rounded-xl font-bold text-lg hover:bg-[#d4ac5b] transition-all"
+                className="bg-[#f07e1b] text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:bg-[#d4ac5b] transition-all w-full sm:w-auto"
               >
                 Submit Application 
               </button>

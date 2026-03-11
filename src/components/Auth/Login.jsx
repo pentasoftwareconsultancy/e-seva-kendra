@@ -1,0 +1,202 @@
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import illustrationImg from "../../assets/Auth/register-illustration.png";
+import avtarImg from "../../assets/Auth/register-avtar.png";
+ 
+export default function Login() {
+  const navigate = useNavigate();
+ 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+ 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+ 
+    try {
+ 
+      const response = await axios.post(
+        "http://localhost:8080/api/users/login",
+        {
+          email: email,
+          password: password
+        }
+      );
+ 
+      const data = response.data;
+ 
+      if (data.message === "Login Successful") {
+ 
+        // Store login info
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("userEmail", data.email);
+        localStorage.setItem("userId", data.id);
+ 
+        alert("Login Successful");
+ 
+        navigate("/");
+ 
+      } else {
+ 
+        alert(data.message || "Invalid credentials");
+ 
+      }
+ 
+    alert(response.data);
+if (response.data === "Login Successful") {
+ 
+  localStorage.setItem("isLoggedIn", "true");
+  localStorage.setItem("userEmail", email);
+ 
+  // check if user clicked service before login
+  const redirectService = localStorage.getItem("redirectService");
+ 
+  if (redirectService) {
+    localStorage.removeItem("redirectService");
+    navigate(`/apply/${redirectService}`);
+  } else {
+    navigate("/service");
+  }
+ 
+}
+ 
+    } catch (error) {
+ 
+      console.error(error);
+      alert("Login failed");
+ 
+    }
+  };
+ 
+  return (
+    <>
+      {/* ================= HERO SECTION ================= */}
+      <section className="relative h-[400px] sm:h-[450px] md:h-[500px] overflow-hidden">
+        <img
+          src={illustrationImg}
+          alt="Login illustration"
+          className="absolute inset-0 w-full h-full object-cover object-[45%_40%]"
+        />
+ 
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-900/60 to-transparent"></div>
+ 
+        <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 flex items-center">
+          <div className="text-white max-w-xl">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
+              Welcome Back
+            </h1>
+            <p className="mt-3 md:mt-4 text-sm sm:text-base text-blue-100">
+              Login to access your account and continue with your services for
+              PAN Card, Aadhaar, GST Registration and more.
+            </p>
+ 
+            <div className="mt-4 md:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <button
+                type="button"
+                onClick={() =>
+                  document
+                    .getElementById("login-form")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="bg-yellow-500 hover:bg-yellow-600 px-6 py-3 rounded-lg font-semibold text-white text-center"
+              >
+                Login Now
+              </button>
+ 
+              <a
+                href="https://wa.me/919876543310"
+                className="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg font-semibold text-white text-center"
+              >
+                WhatsApp Now
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+ 
+      {/* ================= LOGIN SECTION ================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-0 pt-12 sm:pt-16 md:pt-24 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-end">
+ 
+        {/* LEFT CONTENT */}
+        <div className="flex flex-col justify-between pb-0 order-2 md:order-1">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900">
+              Login to Your Account
+            </h2>
+ 
+            <p className="mt-3 md:mt-4 text-gray-600 max-w-md leading-relaxed text-sm sm:text-base">
+              Access your account to manage and track your government and legal
+              service applications.
+            </p>
+          </div>
+ 
+          <img
+            src={avtarImg}
+            alt="Login illustration"
+            className="hidden md:block w-full max-w-6xl mt-10"
+          />
+        </div>
+ 
+        {/* RIGHT FORM */}
+        <div
+          id="login-form"
+          className="flex items-center md:-ml-10 mb-6 md:mb-10 order-1 md:order-2"
+        >
+          <div className="w-full bg-white rounded-2xl p-6 sm:p-8 md:p-10 shadow-[0_30px_70px_rgba(0,0,0,0.15)]">
+ 
+            <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-slate-900">
+              Login to Continue
+            </h3>
+ 
+            <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5">
+ 
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+ 
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+ 
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-sm">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" className="w-4 h-4" />
+                  <span className="text-gray-600">Remember me</span>
+                </label>
+              </div>
+ 
+              <button
+                type="submit"
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-2.5 sm:py-3 rounded-lg font-semibold transition"
+              >
+                Login
+              </button>
+ 
+            </form>
+ 
+            <p className="text-sm text-center mt-4 sm:mt-5 text-gray-600">
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="text-blue-600 font-medium hover:underline"
+              >
+                Register here
+              </Link>
+            </p>
+ 
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+ 
+ 

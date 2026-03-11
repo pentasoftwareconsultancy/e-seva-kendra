@@ -90,14 +90,22 @@ const handleSubmit = (e) => {
   const amount = 350;
 
   navigate("/payment", {
-    state: {
-      serviceName: "PAN Card",
-      applicantName: formData.fullName,
-      mobile: formData.mobile,
-      Amount: amount,
-      type: activeTab,
-    },
-  });
+  state: {
+    serviceName: "PAN Card",
+    applicantName: formData.fullName,
+    mobile: formData.mobile,
+    Amount: amount,
+    type: activeTab,
+
+    // send documents
+    documents: {
+      aadhaar: files.aadhaar?.file,
+      photo: files.photos?.file,
+      marriageCert: files.marriageCert?.file,
+      oldPan: files.oldPan?.file
+    }
+  },
+});
 };
 
   return (
@@ -281,30 +289,31 @@ export default Pan;
 
 function UploadBox({ label, fileData, onChange }) {
   return (
-    <div className="bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200">
-      <div className="flex justify-between items-center gap-2">
-        <span className="font-semibold text-xs sm:text-sm md:text-base">
-          {label}
-        </span>
-        <label className="bg-[#f07e1b] text-white px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all text-xs sm:text-sm">
-          Upload
-          <input
-            type="file"
-            accept="image/*,.pdf"
-            className="hidden"
-            onChange={onChange}
-          />
-        </label>
-      </div>
+    <div>
+      <label className="block font-bold mb-2 text-sm sm:text-base">{label}</label>
+      <div className="bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200">
+        <div className="flex justify-between items-center gap-2">
+          <span className="font-semibold text-xs sm:text-sm md:text-base">Upload Document</span>
+          <label className="bg-[#f07e1b] text-white px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all text-xs sm:text-sm">
+            Upload
+            <input
+              type="file"
+              accept="image/*,.pdf"
+              className="hidden"
+              onChange={onChange}
+            />
+          </label>
+        </div>
 
-      {fileData && (
-        <p
-          className="text-blue-600 text-sm mt-2 cursor-pointer hover:text-blue-800"
-          onClick={() => window.open(fileData.url, "_blank")}
-        >
-          {fileData.file.name}
-        </p>
-      )}
+        {fileData && (
+          <p
+            className="text-blue-600 text-xs sm:text-sm mt-2 cursor-pointer hover:text-blue-800 break-all"
+            onClick={() => window.open(fileData.url, "_blank")}
+          >
+            {fileData.file.name}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
