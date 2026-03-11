@@ -13,6 +13,55 @@ const AdminDashboard = () => {
   });
   const [todayEarnings, setTodayEarnings] = useState(0);
   const [orders, setOrders] = useState([]);
+  const [newStatus, setNewStatus] = useState('');
+
+  const handleUpdateStatus = async () => {
+    if (!newStatus) {
+      alert('Please select a status');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/orders/${selectedOrder.id}/status`, {
+        method: 'PUT',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+
+      if (response.ok) {
+        const result = await response.text();
+        alert(result || 'Status updated successfully');
+        setSelectedOrder(null);
+        setNewStatus('');
+        
+        // Refresh orders and stats
+        const ordersResponse = await fetch("http://localhost:8080/api/orders");
+        const data = await ordersResponse.json();
+        const formatted = data.map(order => ({
+          id: order.id,
+          name: order.name,
+          service: order.serviceName,
+          status: order.status,
+          date: new Date(order.createdAt).toLocaleDateString()
+        }));
+        setOrders(formatted.reverse());
+
+        // Refresh stats
+        const statsResponse = await fetch("http://localhost:8080/api/dashboard/stats");
+        const statsData = await statsResponse.json();
+        setStats(statsData);
+      } else {
+        const errorText = await response.text();
+        alert(`Failed to update status: ${errorText}`);
+      }
+    } catch (err) {
+      console.error('Error updating status:', err);
+      alert('Failed to update status. Please check if the server is running.');
+    }
+  };
 
   useEffect(() => {
     fetch("http://localhost:8080/api/dashboard/stats")
@@ -267,7 +316,7 @@ const AdminDashboard = () => {
                   <div className="bg-gray-50 rounded-lg p-3 md:p-4 space-y-2 md:space-y-3">
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Order ID</span>
-                      <span className="text-xs md:text-sm font-semibold text-gray-900">#{selectedOrder.id}</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">{selectedOrder.id}</span>
                     </div>
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Customer Name</span>
@@ -287,6 +336,20 @@ const AdminDashboard = () => {
                         {selectedOrder.status}
                       </span>
                     </div>
+                    <div className="pt-3 border-t">
+                      <label className="text-xs md:text-sm text-gray-600 font-medium mb-2 block">Update Status</label>
+                      <select
+                        value={newStatus}
+                        onChange={(e) => setNewStatus(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg text-xs md:text-sm"
+                      >
+                        <option value="">Select Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -298,7 +361,10 @@ const AdminDashboard = () => {
                   >
                     Close
                   </button>
-                  <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition">
+                  <button 
+                    onClick={handleUpdateStatus}
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition"
+                  >
                     Update Status
                   </button>
                 </div>

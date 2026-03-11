@@ -8,12 +8,27 @@ function PublicFinancialServices() {
 
     const [formData, setFormData] = useState({
         fullName: "",
-        mobile: "",
-        aadhaar: "",
-        pan: "",
-        address: "",
-        income: ""
+        mobile: ""
     });
+
+    const [files, setFiles] = useState({
+        aadhaarCard: null,
+        panCard: null,
+        addressProof: null,
+        incomeProof: null,
+        bankPassbook: null,
+        photo: null
+    });
+
+    const handleFileChange = (e, fieldName) => {
+        const file = e.target.files[0];
+        if (file) {
+            setFiles(prev => ({
+                ...prev,
+                [fieldName]: { file, url: URL.createObjectURL(file) }
+            }));
+        }
+    };
 
     const documents = [
         ["आधार कार्ड", "Aadhaar Card"],
@@ -42,6 +57,15 @@ function PublicFinancialServices() {
                 mobile: formData.mobile,
                 Amount: amount,
                 type: "PFS",
+                formData,
+                documents: {
+                    aadhaarCard: files.aadhaarCard?.file,
+                    panCard: files.panCard?.file,
+                    addressProof: files.addressProof?.file,
+                    incomeProof: files.incomeProof?.file,
+                    bankPassbook: files.bankPassbook?.file,
+                    photo: files.photo?.file
+                }
             },
         });
     };
@@ -50,7 +74,7 @@ function PublicFinancialServices() {
         <div className="min-h-screen bg-[#f8faff] text-[#1e293b]">
 
             {/* ================= HERO SECTION ================= */}
-            <section className="relative w-full h-[550px] flex items-center">
+            <section className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] flex items-center">
                 <div className="absolute inset-0">
                     <img
                         src={PanHero}
@@ -61,19 +85,19 @@ function PublicFinancialServices() {
 
                 <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/85 to-transparent"></div>
 
-                <div className="relative z-10 w-full px-10 md:px-20 text-white">
+                <div className="relative z-10 w-full px-4 sm:px-6 md:px-10 lg:px-20 text-white">
                     <div className="max-w-2xl">
-                        <h1 className="text-5xl font-bold leading-tight">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
                             सार्वजनिक आर्थिक सेवा <br />
                             <span className="text-[#f07e1b]">Public Financial Services</span>
                         </h1>
 
-                        <p className="text-lg text-gray-200 mt-6">
+                        <p className="text-base sm:text-lg text-gray-200 mt-4 sm:mt-6">
                             We provide assistance for various government financial schemes and public welfare services.
                         </p>
 
                         <a href="#pfs-form">
-                            <button className="mt-8 bg-[#f07e1b] text-black px-10 py-3.5 rounded-xl font-bold text-lg shadow-lg hover:bg-[#d4ac5b] transition-all">
+                            <button className="mt-6 sm:mt-8 bg-[#f07e1b] text-black px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 rounded-xl font-bold text-base sm:text-lg shadow-lg hover:bg-[#d4ac5b] transition-all w-full sm:w-auto">
                                 Apply Now
                             </button>
                         </a>
@@ -82,19 +106,19 @@ function PublicFinancialServices() {
             </section>
 
             {/* ================= DOCUMENT SECTION ================= */}
-            <section className="bg-white py-16 px-4 md:px-8">
+            <section className="bg-white py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8">
                 <div className="max-w-4xl mx-auto">
-                    <div className="border-4 border-green-700 rounded-3xl p-8 md:p-12 shadow-xl">
+                    <div className="border-4 border-green-700 rounded-3xl p-6 sm:p-8 md:p-12 shadow-xl">
 
-                        <h2 className="text-3xl font-bold text-green-600 text-center mb-4">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-green-600 text-center mb-3 sm:mb-4">
                             आवश्यक कागदपत्रे
                         </h2>
 
-                        <h3 className="text-2xl font-bold text-green-600 text-center mb-8 border-b-4 border-green-700 pb-4">
+                        <h3 className="text-xl sm:text-2xl font-bold text-green-600 text-center mb-6 sm:mb-8 border-b-4 border-green-700 pb-3 sm:pb-4">
                             Required Documents for Public Financial Services
                         </h3>
 
-                        <div className="space-y-4 text-lg">
+                        <div className="space-y-3 sm:space-y-4 text-base sm:text-lg">
                             {documents.map((doc, index) => (
                                 <div key={index} className="flex items-start gap-3">
                                     <span className="text-green-600 font-bold text-xl">✱</span>
@@ -111,55 +135,42 @@ function PublicFinancialServices() {
             </section>
 
             {/* ================= FORM SECTION ================= */}
-            <section id="pfs-form" className="py-10 px-4 md:px-8 bg-[#f8faff]">
-                <div className="max-w-6xl mx-auto bg-white rounded-[40px] shadow-2xl p-8 md:p-12 mb-20">
+            <section id="pfs-form" className="py-8 sm:py-10 px-4 sm:px-6 md:px-8 bg-[#f8faff]">
+                <div className="max-w-6xl mx-auto bg-white rounded-[20px] sm:rounded-[30px] md:rounded-[40px] shadow-2xl p-6 sm:p-8 md:p-12 mb-12 sm:mb-16 md:mb-20">
 
-                    <h2 className="text-3xl font-bold mb-6">
+                    <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">
                         PFS Application Form (सार्वजनिक आर्थिक सेवा अर्ज)
                     </h2>
 
-                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
 
-                        <InputField
-                            label="Full Name (पूर्ण नाव)"
-                            value={formData.fullName}
-                            onChange={(e)=>setFormData({...formData, fullName:e.target.value})}
-                        />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
-                        <InputField
-                            label="Mobile Number (मोबाईल नंबर)"
-                            value={formData.mobile}
-                            onChange={(e)=>setFormData({...formData, mobile:e.target.value})}
-                        />
+                            <InputField
+                                label="Full Name (पूर्ण नाव)"
+                                value={formData.fullName}
+                                onChange={(e)=>setFormData({...formData, fullName:e.target.value})}
+                            />
 
-                        <InputField
-                            label="Aadhaar Number (आधार क्रमांक)"
-                            value={formData.aadhaar}
-                            onChange={(e)=>setFormData({...formData, aadhaar:e.target.value})}
-                        />
+                            <InputField
+                                label="Mobile Number (मोबाईल नंबर)"
+                                value={formData.mobile}
+                                onChange={(e)=>setFormData({...formData, mobile:e.target.value})}
+                            />
 
-                        <InputField
-                            label="PAN Number (पॅन क्रमांक)"
-                            value={formData.pan}
-                            onChange={(e)=>setFormData({...formData, pan:e.target.value})}
-                        />
+                            <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaarCard} onChange={(e) => handleFileChange(e, 'aadhaarCard')} />
+                            <UploadBox label="PAN Card (पॅन कार्ड)" fileData={files.panCard} onChange={(e) => handleFileChange(e, 'panCard')} />
+                            <UploadBox label="Address Proof (राहण्याचा पुरावा)" fileData={files.addressProof} onChange={(e) => handleFileChange(e, 'addressProof')} />
+                            <UploadBox label="Income Proof (उत्पन्नाचा पुरावा)" fileData={files.incomeProof} onChange={(e) => handleFileChange(e, 'incomeProof')} />
+                            <UploadBox label="Bank Passbook (बँक पासबुक)" fileData={files.bankPassbook} onChange={(e) => handleFileChange(e, 'bankPassbook')} />
+                            <UploadBox label="Passport Size Photo (पासपोर्ट साईज फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, 'photo')} />
 
-                        <InputField
-                            label="Address (पत्ता)"
-                            value={formData.address}
-                            onChange={(e)=>setFormData({...formData, address:e.target.value})}
-                        />
+                        </div>
 
-                        <InputField
-                            label="Income Details (उत्पन्न तपशील)"
-                            value={formData.income}
-                            onChange={(e)=>setFormData({...formData, income:e.target.value})}
-                        />
-
-                        <div className="md:col-span-2 flex justify-end pt-6">
+                        <div className="pt-4 sm:pt-6 flex justify-end">
                             <button
                                 type="submit"
-                                className="bg-[#f07e1b] text-white px-12 py-4 rounded-xl font-bold text-lg hover:bg-[#d4ac5b] transition-all"
+                                className="bg-[#f07e1b] text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:bg-[#d4ac5b] transition-all w-full sm:w-auto"
                             >
                                 Submit Application
                             </button>
@@ -178,14 +189,46 @@ function PublicFinancialServices() {
 function InputField({ label, value, onChange }) {
     return (
         <div>
-            <label className="block font-bold mb-2">{label}</label>
+            <label className="block font-bold mb-2 text-sm sm:text-base">{label}</label>
             <input
                 type="text"
                 value={value}
                 onChange={onChange}
                 placeholder={`Enter ${label}`}
-                className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
+                className="w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20 text-sm sm:text-base"
             />
+        </div>
+    );
+}
+
+/* Reusable File Upload */
+function UploadBox({ label, fileData, onChange }) {
+    return (
+        <div>
+            <label className="block font-bold mb-2 text-sm sm:text-base">{label}</label>
+            <div className="bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ring-gray-200">
+                <div className="flex justify-between items-center gap-2">
+                    <span className="font-semibold text-sm sm:text-base">Upload Document</span>
+                    <label className="bg-[#f07e1b] text-white px-4 sm:px-6 py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all text-sm sm:text-base">
+                        Upload
+                        <input
+                            type="file"
+                            accept="image/*,.pdf"
+                            className="hidden"
+                            onChange={onChange}
+                        />
+                    </label>
+                </div>
+
+                {fileData && (
+                    <p
+                        className="text-blue-600 text-xs sm:text-sm mt-2 cursor-pointer hover:text-blue-800 break-all"
+                        onClick={() => window.open(fileData.url, "_blank")}
+                    >
+                        {fileData.file.name}
+                    </p>
+                )}
+            </div>
         </div>
     );
 }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-
 function Payment() {
   const location = useLocation();
   const data = location.state;
@@ -10,7 +9,7 @@ function Payment() {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [qrImage, setQrImage] = useState("");
 
-    useEffect(() => {
+  useEffect(() => {
     fetch("http://localhost:8080/api/payment/qr")
       .then(res => res.text())
       .then(data => setQrImage(data))
@@ -38,9 +37,16 @@ function Payment() {
     formData.append("name", data.applicantName);
     formData.append("mobile", data.mobile);
     formData.append("serviceName", data.serviceName);
-    formData.append("extraData", "Form Submitted");
+    formData.append("extraData", JSON.stringify(data.formData || {}));
     formData.append("amount", data.Amount);
     formData.append("screenshot", screenshot);
+
+    // ✅ Dynamic Documents Upload
+    if (data.documents) {
+      Object.keys(data.documents).forEach((key) => {
+        formData.append("documents", data.documents[key]);
+      });
+    }
 
     try {
       const response = await fetch("http://localhost:8080/api/payment/confirm", {
@@ -51,12 +57,12 @@ function Payment() {
       const result = await response.text();
       alert(result);
       window.location.href = "/service";
+
     } catch (error) {
       console.error(error);
       alert("Payment Failed");
     }
   };
-  
 
   if (!data) {
     return <div className="p-10 text-center">No Payment Data Found</div>;
@@ -85,18 +91,18 @@ function Payment() {
         {/* AMOUNT SECTION */}
         <div className="bg-gray-100 p-4 rounded-xl text-center">
           <p className="text-lg font-bold">
-            Amount: ₹{data.Amount  }
+            Amount: ₹{data.Amount}
           </p>
         </div>
 
         {/* QR CODE */}
         <div className="text-center space-y-4">
           <div className="inline-block bg-white p-6 rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 transform hover:-translate-y-1">
-           <img
-  src={`http://localhost:8080${qrImage}`}
-  alt="QR Code"
-  className="w-48 mx-auto rounded-lg"
-/>
+            <img
+              src={`http://localhost:8080${qrImage}`}
+              alt="QR Code"
+              className="w-48 mx-auto rounded-lg"
+            />
           </div>
           <p className="font-semibold text-lg">Scan & Pay</p>
           <p className="text-gray-600">UPI ID: esuvidha@upi</p>
@@ -134,7 +140,7 @@ function Payment() {
           onClick={handleConfirmPayment}
           disabled={!screenshot}
           className={`w-full py-3 rounded-xl font-bold text-white ${
-            screenshot 
+            screenshot
               ? "bg-green-600 hover:bg-green-700"
               : "bg-gray-400 cursor-not-allowed"
           }`}
