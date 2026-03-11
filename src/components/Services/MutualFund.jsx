@@ -68,11 +68,10 @@ function MutualFund() {
       },
     });
   };
+
   const formFields = [
     { marathi: "पूर्ण नाव", english: "Full Name" },
     { marathi: "मोबाईल क्रमांक", english: "Mobile Number" },
-    // { marathi: "गुंतवणूक रक्कम", english: "Investment Amount" },
-    // { marathi: "आवडती गुंतवणूक प्रकार (SIP / Lumpsum)", english: "Preferred Investment Type (SIP / Lumpsum)" },
   ];
 
   const documentFields = [
@@ -133,7 +132,6 @@ text-black px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5
 rounded-xl font-bold text-sm sm:text-base md:text-lg 
 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
-                {" "}
                 Invest Now
               </button>
             </a>
@@ -182,12 +180,7 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
           <form className="space-y-6 sm:space-y-8" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               {formFields.map((field, i) => {
-                const fieldKeys = [
-                  "fullName",
-                  "mobile",
-                  // "investmentAmount",
-                  // "investmentType"
-                ];
+                const fieldKeys = ["fullName", "mobile"];
 
                 return (
                   <InputField
@@ -195,12 +188,22 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                     marathi={field.marathi}
                     english={field.english}
                     value={formData[fieldKeys[i]]}
-                    onChange={(e) =>
+                    onChange={(e) => {
+                      let value = e.target.value;
+
+                      if (fieldKeys[i] === "fullName") {
+                        value = value.replace(/[^a-zA-Z\s]/g, "");
+                      }
+
+                      if (fieldKeys[i] === "mobile") {
+                        value = value.replace(/\D/g, "").slice(0, 10);
+                      }
+
                       setFormData({
                         ...formData,
-                        [fieldKeys[i]]: e.target.value,
-                      })
-                    }
+                        [fieldKeys[i]]: value,
+                      });
+                    }}
                   />
                 );
               })}
