@@ -1,8 +1,62 @@
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import illustrationImg from "../../assets/Auth/register-illustration.png";
 import avtarImg from "../../assets/Auth/register-avtar.png";
 
 export default function Register() {
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+const [email, setEmail] = useState("");
+const [phone, setPhone] = useState("");
+const [password, setPassword] = useState("");
+const [confirmPassword, setConfirmPassword] = useState("");
+
+const handleRegister = async (e) => {
+  e.preventDefault();
+
+  console.log(name,email,phone,password);
+  if (password !== confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
+
+  const user = {
+    name: name,
+    email: email,
+    phone: phone,
+    password: password
+  };
+
+  try {
+    const response = await axios.post(
+      "http://localhost:8080/api/users/register",
+      user
+    );
+
+    alert(response.data);
+
+    // Redirect to login page after successful registration
+    if (response.data === "User Registered Successfully") {
+      setTimeout(() => {
+        navigate("/login");
+      }, 500);
+    }
+
+    setName("");
+    setEmail("");
+    setPhone("");
+    setPassword("");
+    setConfirmPassword("");
+
+  } 
+  
+  catch (error) {
+    console.error(error);
+    alert("Registration failed");
+  }
+};
+
   return (
     <>
 
@@ -81,43 +135,45 @@ export default function Register() {
               Register for Services
             </h3>
 
-            <form className="space-y-4 sm:space-y-5">
-              <input
-                type="text"
-                placeholder="Name"
-                className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm
-          focus:ring-2 focus:ring-blue-500 outline-none"
-              />
+           <form onSubmit={handleRegister} className="space-y-4 sm:space-y-5">
+             <input
+type="text"
+placeholder="Name"
+value={name}
+onChange={(e)=>setName(e.target.value)}
+className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+/>
 
-              <input
-                type="email"
-                placeholder="Email Address"
-                className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm
-                focus:ring-2 focus:ring-blue-500 outline-none"
-              />
+             <input
+type="email"
+placeholder="Email Address"
+value={email}
+onChange={(e)=>setEmail(e.target.value)}
+className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+/>
 
-              <input
-                type="tel"
-                placeholder="Phone number"
-                pattern="[0-9]{10}"
-                maxLength="10"
-                inputMode="numeric"
-                required
-                className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm
-                focus:ring-2 focus:ring-blue-500 outline-none"
-              />
-
-
-              <input
-                type="password"
-                placeholder="Create Password"
-                className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm
-          focus:ring-2 focus:ring-blue-500 outline-none"
-              />
+           <input
+type="tel"
+placeholder="Phone number"
+value={phone}
+onChange={(e)=>setPhone(e.target.value)}
+pattern="[0-9]{10}"
+maxLength="10"
+className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+/>
+            <input
+type="password"
+placeholder="Create Password"
+value={password}
+onChange={(e)=>setPassword(e.target.value)}
+className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+/>
 
               <input
                 type="password"
                 placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm
           focus:ring-2 focus:ring-blue-500 outline-none"
               />

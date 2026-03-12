@@ -1,20 +1,95 @@
 import AdminLayout from '../../components/common/AdminLayout';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User } from 'lucide-react';
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('All Orders');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedOrder, setSelectedOrder] = useState(null);
-  
-  const orders = [
-    { id: 2375, name: 'Rajesh Kumar', service: 'PAN Card', status: 'Pending', date: 'Mar 28, 2024' },
-    { id: 2374, name: 'Priya Sharma', service: 'Aadhaar Card', status: 'Completed', date: 'Mar 28, 2024' },
-    { id: 2373, name: 'Amit Patil', service: 'Voter ID Card', status: 'In Progress', date: 'Mar 28, 2024' },
-    { id: 2372, name: 'Sunita Verma', service: 'Aadhaar Card', status: 'Cancelled', date: 'Mar 28, 2024' },
-    { id: 2371, name: 'Deepak Singh', service: 'Driving License', status: 'Completed', date: 'Mar 27, 2024' },
-    { id: 2370, name: 'Anjali Deshmukh', service: 'PAN Card', status: 'Pending', date: 'Mar 27, 2024' },
-    { id: 2369, name: 'Mahesh Joshi', service: 'Voter ID Card', status: 'Completed', date: 'Mar 28, 2024' },
-  ];
+  const [stats, setStats] = useState({
+    totalOrders: 0,
+    pendingOrders: 0,
+    inProgressOrders: 0,
+    completedOrders: 0
+  });
+  const [todayEarnings, setTodayEarnings] = useState(0);
+  const [orders, setOrders] = useState([]);
+  const [newStatus, setNewStatus] = useState('');
+
+  const handleUpdateStatus = async () => {
+    if (!newStatus) {
+      alert('Please select a status');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/orders/${selectedOrder.id}/status`, {
+        method: 'PUT',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+
+      if (response.ok) {
+        const result = await response.text();
+        alert(result || 'Status updated successfully');
+        setSelectedOrder(null);
+        setNewStatus('');
+        
+        // Refresh orders and stats
+        const ordersResponse = await fetch("http://localhost:8080/api/orders");
+        const data = await ordersResponse.json();
+        const formatted = data.map(order => ({
+          id: order.id,
+          name: order.name,
+          service: order.serviceName,
+          status: order.status,
+          date: new Date(order.createdAt).toLocaleDateString()
+        }));
+        setOrders(formatted.reverse());
+
+        // Refresh stats
+        const statsResponse = await fetch("http://localhost:8080/api/dashboard/stats");
+        const statsData = await statsResponse.json();
+        setStats(statsData);
+      } else {
+        const errorText = await response.text();
+        alert(`Failed to update status: ${errorText}`);
+      }
+    } catch (err) {
+      console.error('Error updating status:', err);
+      alert('Failed to update status. Please check if the server is running.');
+    }
+  };
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/dashboard/stats")
+      .then(res => res.json())
+      .then(data => setStats(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/payment/today-earnings")
+      .then(res => res.json())
+      .then(data => setTodayEarnings(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/orders")
+      .then(res => res.json())
+      .then(data => {
+        const formatted = data.map(order => ({
+          id: order.id,
+          name: order.name,
+          service: order.serviceName,
+          status: order.status,
+          date: new Date(order.createdAt).toLocaleDateString()
+        }));
+        setOrders(formatted.reverse());
+      })
+      .catch(err => console.error(err));
+  }, []);
 
   const filteredOrders = orders
     .filter(order => activeTab === 'All Orders' || order.status === activeTab)
@@ -38,7 +113,7 @@ const AdminDashboard = () => {
     <AdminLayout>
       <div className="flex items-center gap-2 mb-4 md:mb-6">
         <i className="fas fa-chart-line text-2xl md:text-3xl text-blue-600"></i>
-        <h2 className="text-xl md:text-3xl font-bold"><span className="text-green-600">Welcome</span> <span className="text-gray-800">Admin Dashboard!</span></h2>
+        <h2 className="text-xl md:text-3xl font-bold"><span className="text-green-600">Welcome to the</span> <span className="text-gray-800">Admin Dashboard!</span></h2>
       </div>
           
           {/* Stats Cards */}
@@ -56,7 +131,7 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600 font-medium">Total Orders</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">152</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalOrders}</p>
                 </div>
               </div>
             </div>
@@ -73,7 +148,7 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600 font-medium">Pending Orders</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">32</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.pendingOrders}</p>
                 </div>
               </div>
             </div>
@@ -90,7 +165,7 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600 font-medium">In Progress Orders</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">15</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.inProgressOrders}</p>
                 </div>
               </div>
             </div>
@@ -107,14 +182,14 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600 font-medium">Completed Orders</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">98</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.completedOrders}</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Earnings Card */}
-          <div className="bg-gradient-to-r from-green-400 to-green-300 rounded-lg shadow p-6 mb-6 relative overflow-hidden hover:shadow-lg hover:scale-102 transition-all duration-300 cursor-pointer">
+          <div className="bg-gradient-to-r from-green-500 to-green-200 rounded-lg shadow p-4 mb-6 relative overflow-hidden hover:shadow-lg hover:scale-102 transition-all duration-300 cursor-pointer">
             <div className="absolute right-0 bottom-0 opacity-20">
               <svg width="200" height="100" viewBox="0 0 200 100">
                 <rect x="10" y="60" width="15" height="30" fill="#fb923c" opacity="0.5"/>
@@ -129,7 +204,7 @@ const AdminDashboard = () => {
               <div className="text-6xl animate-bounce">💰</div>
             </div>
             <h3 className="text-lg font-semibold text-gray-800 mb-2">Earnings Today</h3>
-            <p className="text-3xl font-bold text-gray-800">₹ 12,450</p>
+            <p className="text-3xl font-bold text-gray-800">₹ {todayEarnings}</p>
           
           </div>
 
@@ -177,7 +252,7 @@ const AdminDashboard = () => {
                 <tbody className="divide-y divide-gray-100">
                   {filteredOrders.map((order) => (
                     <tr key={order.id} className="hover:bg-blue-50/50 transition-colors duration-150">
-                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600">#{order.id}</td>
+                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600">ORD#{order.id}</td>
                       <td className="px-4 md:px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
@@ -241,7 +316,7 @@ const AdminDashboard = () => {
                   <div className="bg-gray-50 rounded-lg p-3 md:p-4 space-y-2 md:space-y-3">
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Order ID</span>
-                      <span className="text-xs md:text-sm font-semibold text-gray-900">#{selectedOrder.id}</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">ORD#{selectedOrder.id}</span>
                     </div>
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Customer Name</span>
@@ -261,6 +336,20 @@ const AdminDashboard = () => {
                         {selectedOrder.status}
                       </span>
                     </div>
+                    <div className="pt-3 border-t">
+                      <label className="text-xs md:text-sm text-gray-600 font-medium mb-2 block">Update Status</label>
+                      <select
+                        value={newStatus}
+                        onChange={(e) => setNewStatus(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg text-xs md:text-sm"
+                      >
+                        <option value="">Select Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -272,7 +361,10 @@ const AdminDashboard = () => {
                   >
                     Close
                   </button>
-                  <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition">
+                  <button 
+                    onClick={handleUpdateStatus}
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition"
+                  >
                     Update Status
                   </button>
                 </div>
