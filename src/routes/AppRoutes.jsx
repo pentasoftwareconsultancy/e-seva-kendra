@@ -11,7 +11,7 @@ import Notifications from "../pages/Notifications";
 import Privacy from "../components/common/Privacy";
 import Refund from "../components/common/Refund";
 
-import AdminLogin from "../pages/admin/AdminLogin";
+// import AdminLogin from "../pages/admin/AdminLogin";
 import ProtectedRoute from "../components/common/ProtectedRoute";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminOrders from "../pages/admin/AdminOrders";
@@ -52,14 +52,18 @@ const AppRoutes = () => {
       <Route
         path="/account"
         element={
-          localStorage.getItem("isLoggedIn") ? (
-            <AccountPage />
+          sessionStorage.getItem("isLoggedIn") ? (
+            sessionStorage.getItem("userEmail")?.endsWith("@eseva.com") ? (
+              <Navigate to="/admin/dashboard" replace />
+            ) : (
+              <AccountPage />
+            )
           ) : (
             <Navigate to="/login" replace />
           )
         }
       />
-      <Route path="/admin" element={<AdminLogin />} />
+      <Route path="/admin" element={<Navigate to="/login" replace />} />
       <Route path="/admin/dashboard" element={
         <ProtectedRoute>
           <AdminDashboard />

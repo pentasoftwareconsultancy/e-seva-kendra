@@ -1,12 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ProfileSettingsSection() {
   const [formData, setFormData] = useState({
-    name: "Snehal Kulkarni",
-    email: "snehal@example.com", // now editable
+    name: "",
+    email: "",
     currentPassword: "",
     newPassword: "",
   });
+
+  useEffect(() => {
+    const userEmail = sessionStorage.getItem("userEmail");
+    const userName = sessionStorage.getItem("userName");
+    
+    if (userEmail) {
+      setFormData({
+        name: userName || "",
+        email: userEmail || "",
+        currentPassword: "",
+        newPassword: "",
+      });
+    }
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -48,16 +62,16 @@ export default function ProfileSettingsSection() {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-6">
-      <h2 className="text-xl font-semibold text-gray-800 mb-6">
+    <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm p-3 sm:p-4 md:p-6">
+      <h2 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800 mb-4 sm:mb-6">
         Profile Settings
       </h2>
 
-      <form onSubmit={handleUpdate} className="space-y-6">
+      <form onSubmit={handleUpdate} className="space-y-4 sm:space-y-6">
 
         {/* Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-600 mb-2">
+          <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 sm:mb-2">
             Full Name
           </label>
           <input
@@ -65,13 +79,13 @@ export default function ProfileSettingsSection() {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full border rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full border rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 outline-none"
           />
         </div>
 
         {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-gray-600 mb-2">
+          <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 sm:mb-2">
             Email Address
           </label>
           <input
@@ -80,20 +94,20 @@ export default function ProfileSettingsSection() {
             value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email"
-            className="w-full border rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full border rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 outline-none"
           />
         </div>
 
         {/* Change Password Section */}
-        <div className="border-t pt-6">
-          <h3 className="text-sm font-semibold text-gray-700 mb-4">
+        <div className="border-t pt-4 sm:pt-6">
+          <h3 className="text-xs sm:text-sm font-semibold text-gray-700 mb-3 sm:mb-4">
             Change Password
           </h3>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 sm:mb-2">
                 Current Password
               </label>
               <input
@@ -101,12 +115,12 @@ export default function ProfileSettingsSection() {
                 name="currentPassword"
                 value={formData.currentPassword}
                 onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full border rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 sm:mb-2">
                 New Password
               </label>
               <input
@@ -114,7 +128,7 @@ export default function ProfileSettingsSection() {
                 name="newPassword"
                 value={formData.newPassword}
                 onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full border rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 outline-none"
               />
             </div>
 
@@ -122,10 +136,10 @@ export default function ProfileSettingsSection() {
         </div>
 
         {/* Update Button */}
-        <div className="pt-4">
+        <div className="pt-3 sm:pt-4">
           <button
             type="submit"
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition"
+            className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-2.5 bg-blue-600 text-white rounded-lg text-xs sm:text-sm font-medium hover:bg-blue-700 transition"
           >
             Update Profile
           </button>

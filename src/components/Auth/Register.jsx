@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
- 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import illustrationImg from "../../assets/Auth/register-illustration.png";
 import avtarImg from "../../assets/Auth/register-avtar.png";
  
 export default function Register() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
 const [email, setEmail] = useState("");
 const [phone, setPhone] = useState("");
@@ -35,7 +35,14 @@ const handleRegister = async (e) => {
     );
  
     alert(response.data);
- 
+
+    // Redirect to login page after successful registration
+    if (response.data === "User Registered Successfully") {
+      setTimeout(() => {
+        navigate("/login");
+      }, 500);
+    }
+
     setName("");
     setEmail("");
     setPhone("");

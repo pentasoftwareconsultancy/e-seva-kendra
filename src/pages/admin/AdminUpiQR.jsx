@@ -68,28 +68,28 @@ const AdminUpiQR = () => {
   return (
     <AdminLayout>
 
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex justify-center items-start p-10">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex justify-center items-start p-3 sm:p-6 md:p-10">
 
-        <div className="w-full max-w-xl bg-white shadow-2xl rounded-3xl p-8 space-y-6 border">
+        <div className="w-full max-w-xl bg-white shadow-2xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-5 md:space-y-6 border">
 
           {/* HEADER */}
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-800">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
               Update UPI QR
             </h2>
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-500 text-xs sm:text-sm mt-1">
               Upload the latest QR code for payments
             </p>
           </div>
 
           {/* DRAG DROP AREA */}
-          <label className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-2xl p-8 cursor-pointer hover:border-green-500 transition">
+          <label className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl sm:rounded-2xl p-6 sm:p-8 cursor-pointer hover:border-green-500 transition">
 
-            <p className="text-gray-500 mb-2 text-center">
+            <p className="text-gray-500 mb-2 text-center text-xs sm:text-sm md:text-base">
               Drag & drop QR image here
             </p>
 
-            <span className="text-sm text-gray-400">
+            <span className="text-xs sm:text-sm text-gray-400">
               or click to browse
             </span>
 
@@ -104,9 +104,9 @@ const AdminUpiQR = () => {
 
           {/* PREVIEW */}
           {preview && (
-            <div className="text-center space-y-3">
+            <div className="text-center space-y-2 sm:space-y-3">
 
-              <p className="font-semibold text-gray-700">
+              <p className="font-semibold text-gray-700 text-sm sm:text-base">
                 QR Preview
               </p>
 
@@ -115,7 +115,7 @@ const AdminUpiQR = () => {
                 <img
                   src={preview}
                   alt="QR Preview"
-                  className="w-56 rounded-xl shadow-lg border hover:scale-105 transition"
+                  className="w-40 sm:w-48 md:w-56 rounded-xl shadow-lg border hover:scale-105 transition"
                 />
 
               </div>
@@ -125,7 +125,7 @@ const AdminUpiQR = () => {
 
           {/* SUCCESS MESSAGE */}
           {success && (
-            <div className="bg-green-100 text-green-700 text-center p-3 rounded-lg">
+            <div className="bg-green-100 text-green-700 text-center p-2 sm:p-3 rounded-lg text-xs sm:text-sm">
               {success}
             </div>
           )}
@@ -134,7 +134,7 @@ const AdminUpiQR = () => {
           <button
             onClick={handleUpload}
             disabled={uploading}
-            className={`w-full py-3 rounded-xl font-semibold text-white transition ${
+            className={`w-full py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold text-white transition text-sm sm:text-base ${
               uploading
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-gradient-to-r from-blue-600 to-blue-600 hover:scale-105 shadow-lg"
@@ -146,7 +146,7 @@ const AdminUpiQR = () => {
           </button>
 
           {/* INFO */}
-          <div className="text-sm text-gray-400 text-center border-t pt-4">
+          <div className="text-xs sm:text-sm text-gray-400 text-center border-t pt-3 sm:pt-4">
             Supported formats: JPG, PNG | Max size: 2MB
           </div>
 

@@ -44,9 +44,24 @@ export default function Notifications() {
 
   const markAsRead = async (id) => {
     try {
-      await fetch(`http://localhost:8080/notifications/read/${id}`, {
-        method: "PATCH"
+      console.log('Marking notification as read:', id);
+      const response = await fetch(`http://localhost:8080/notifications/read/${id}`, {
+        method: "PATCH",
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
+      
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        throw new Error('Failed to mark as read');
+      }
+      
+      const updatedNotification = await response.json();
+      console.log('Updated notification:', updatedNotification);
 
       setNotifications(prev =>
         prev.map(n =>
@@ -54,9 +69,10 @@ export default function Notifications() {
         )
       );
 
-      setUnreadCount(prev => prev - 1);
+      setUnreadCount(prev => Math.max(0, prev - 1));
     } catch (error) {
       console.error("Error marking notification as read:", error);
+      alert('Failed to mark notification as read. Please try again.');
     }
   };
 

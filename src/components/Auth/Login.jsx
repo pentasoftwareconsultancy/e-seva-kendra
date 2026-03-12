@@ -27,38 +27,40 @@ export default function Login() {
  
       if (data.message === "Login Successful") {
  
-        // Store login info
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userEmail", data.email);
+        // Store login info in both sessionStorage and localStorage
+        sessionStorage.setItem("isLoggedIn", "true");
+        sessionStorage.setItem("userEmail", data.email);
+        sessionStorage.setItem("userId", data.id);
+        sessionStorage.setItem("userName", data.name);
+        
         localStorage.setItem("userId", data.id);
+        localStorage.setItem("userEmail", data.email);
+        localStorage.setItem("userName", data.name);
  
         alert("Login Successful");
  
-        navigate("/");
+        // Redirect based on email domain
+        if(data.email.endsWith("@eseva.com")){
+          sessionStorage.setItem("adminAuth", "true");
+          sessionStorage.setItem("adminEmail", data.email);
+          navigate("/admin/dashboard");
+        } else {
+          // check if user clicked service before login
+          const redirectService = sessionStorage.getItem("redirectService");
+          
+          if (redirectService) {
+            sessionStorage.removeItem("redirectService");
+            navigate(`/apply/${redirectService}`);
+          } else {
+            navigate("/");
+          }
+        }
  
       } else {
  
         alert(data.message || "Invalid credentials");
  
       }
- 
-    alert(response.data);
-if (response.data === "Login Successful") {
- 
-  localStorage.setItem("isLoggedIn", "true");
-  localStorage.setItem("userEmail", email);
- 
-  // check if user clicked service before login
-  const redirectService = localStorage.getItem("redirectService");
- 
-  if (redirectService) {
-    localStorage.removeItem("redirectService");
-    navigate(`/apply/${redirectService}`);
-  } else {
-    navigate("/service");
-  }
- 
-}
  
     } catch (error) {
  
