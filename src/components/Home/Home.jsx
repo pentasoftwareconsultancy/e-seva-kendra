@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import heroImg from "../../assets/Home/hero.png";
 import panImg from "../../assets/services/pan-img.jpg";
@@ -15,6 +15,18 @@ import Back from "../../assets/Home/visiting-card-back.jpeg";
 
 export default function Home() {
   const [isFlipped, setIsFlipped] = useState(false);
+  const navigate = useNavigate();
+
+  const handleServiceClick = (slug) => {
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+    
+    if (isLoggedIn) {
+      navigate(`/apply/${slug}`);
+    } else {
+      sessionStorage.setItem("redirectService", slug);
+      navigate("/login");
+    }
+  };
 
   return (
     <>
@@ -131,12 +143,12 @@ export default function Home() {
                   <h3 className="font-bold text-base sm:text-lg text-slate-800 mb-2">
                     {service.title.split("(").map((part, i) =>
                       i === 0 ? (
-                        part
+                        <span key={i}>{part}</span>
                       ) : (
-                        <>
+                        <span key={i}>
                           <br />
                           {part}
-                        </>
+                        </span>
                       ),
                     )}
                   </h3>
@@ -147,12 +159,12 @@ export default function Home() {
                   </p>
 
                   {/* APPLY NOW BUTTON */}
-                  <Link
-                    to={`/apply/${service.slug}`}
+                  <button
+                    onClick={() => handleServiceClick(service.slug)}
                     className={`w-full ${service.btnColor} text-white text-xs sm:text-sm font-semibold py-2 sm:py-2.5 rounded-lg transition-all block text-center hover:scale-105 active:scale-95 shadow-md hover:shadow-lg`}
                   >
                     Apply Now →
-                  </Link>
+                  </button>
                 </div>
               </div>
             ))}

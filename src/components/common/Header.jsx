@@ -33,13 +33,25 @@ export default function Header() {
 
   const userId = sessionStorage.getItem("userId");
 
+  /* ---------------- CLOSE NOTIFICATION ON OUTSIDE CLICK ---------------- */
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isNotificationOpen && !event.target.closest('.notification-dropdown')) {
+        setIsNotificationOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isNotificationOpen]);
+
   /* ---------------- FETCH NOTIFICATIONS ---------------- */
 
   const fetchNotifications = async () => {
     try {
       const res = await fetch(`http://localhost:8080/notifications/${userId}`);
       const data = await res.json();
-      setNotifications(data.slice(0, 5));
+      setNotifications(data.slice(0, 2)); // Only latest 2 notifications
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }
@@ -350,7 +362,7 @@ export default function Header() {
 
                 {/* 🔔 NOTIFICATION BELL */}
 
-                <div className="relative hidden md:flex">
+                <div className="relative hidden md:flex notification-dropdown">
                   <button
                     onClick={() => setIsNotificationOpen(!isNotificationOpen)}
                     className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 hover:scale-105 transition"
