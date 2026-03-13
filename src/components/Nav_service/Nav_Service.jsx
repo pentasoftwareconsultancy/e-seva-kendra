@@ -36,7 +36,7 @@ const handleApplyClick = (slug) => {
   // if user not logged in
   if (isLoggedIn !== "true") {
 
-    alert("Please login first to apply for this service");
+    
 
     // store which service user wanted
     sessionStorage.setItem("redirectService", slug);

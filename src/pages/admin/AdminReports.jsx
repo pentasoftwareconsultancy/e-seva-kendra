@@ -82,7 +82,7 @@ const pieData = [
 const COLORS = ["#5BA45E", "#3B82F6", "#F59E0B", "#EF4444", "#8B5CF6", "#EC4899", "#10B981"];
 
 const AdminReports = () => {
-  const [filter, setFilter] = useState("year");
+  const [filter, setFilter] = useState("week");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [chartData, setChartData] = useState([]);
   const [pieChartData, setPieChartData] = useState([]);

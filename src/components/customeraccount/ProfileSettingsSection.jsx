@@ -8,6 +8,9 @@ export default function ProfileSettingsSection() {
     newPassword: "",
   });
 
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   useEffect(() => {
     const userEmail = sessionStorage.getItem("userEmail");
     const userName = sessionStorage.getItem("userName");
@@ -40,14 +43,21 @@ export default function ProfileSettingsSection() {
         },
         body: JSON.stringify({
           name: formData.name,
-          email: formData.email, // include editable email
+          email: formData.email,
           currentPassword: formData.currentPassword,
           newPassword: formData.newPassword,
         }),
       });
 
       const data = await response.text();
-      alert(data);
+      
+      if (data === "Profile Updated Successfully" || data.includes("Success")) {
+        setSuccessMessage(data);
+        setTimeout(() => setSuccessMessage(""), 3000);
+      } else {
+        setErrorMessage(data);
+        setTimeout(() => setErrorMessage(""), 3000);
+      }
 
       setFormData({
         ...formData,
@@ -57,7 +67,8 @@ export default function ProfileSettingsSection() {
 
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Something went wrong!");
+      setErrorMessage("Something went wrong! Please try again.");
+      setTimeout(() => setErrorMessage(""), 3000);
     }
   };
 
@@ -137,6 +148,18 @@ export default function ProfileSettingsSection() {
 
         {/* Update Button */}
         <div className="pt-3 sm:pt-4">
+          {successMessage && (
+            <div className="mb-3 p-3 bg-green-50 border border-green-300 rounded-lg text-green-700 text-sm">
+              {successMessage}
+            </div>
+          )}
+
+          {errorMessage && (
+            <div className="mb-3 p-3 bg-red-50 border border-red-300 rounded-lg text-red-700 text-sm">
+              {errorMessage}
+            </div>
+          )}
+
           <button
             type="submit"
             className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-2.5 bg-blue-600 text-white rounded-lg text-xs sm:text-sm font-medium hover:bg-blue-700 transition"
