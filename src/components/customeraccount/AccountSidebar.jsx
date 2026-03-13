@@ -18,7 +18,7 @@ export default function AccountSidebar({ activeSection, setActiveSection }) {
     ];
 
     const handleLogout = () => {
-        localStorage.removeItem("isLoggedIn");
+        sessionStorage.clear();
         window.location.href = "/";
     };
 

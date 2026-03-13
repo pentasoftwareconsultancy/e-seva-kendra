@@ -11,18 +11,18 @@ import Notifications from "../pages/Notifications";
 import Privacy from "../components/common/Privacy";
 import Refund from "../components/common/Refund";
 
-import AdminLogin from "../pages/admin/AdminLogin";
+// import AdminLogin from "../pages/admin/AdminLogin";
 import ProtectedRoute from "../components/common/ProtectedRoute";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminOrders from "../pages/admin/AdminOrders";
 import AdminUsers from "../pages/admin/AdminUsers";
+import AdminUpiQR from "../pages/admin/AdminUpiQR";
 import AdminPayments from "../pages/admin/AdminPayments";
 import AdminReports from "../pages/admin/AdminReports";
 import AdminSettings from "../pages/admin/AdminSettings";
 import Service_navpage from "../pages/ServicePagenav";
 import Dynamic_form from "../pages/Dynamic_form";
 import AdminMessages from "../pages/admin/AdminMessages";
-
 import AccountPage from "../pages/AccountPage";
 import ContactPage from "../pages/ContactPage";
 
@@ -52,14 +52,18 @@ const AppRoutes = () => {
       <Route
         path="/account"
         element={
-          localStorage.getItem("isLoggedIn") ? (
-            <AccountPage />
+          sessionStorage.getItem("isLoggedIn") ? (
+            sessionStorage.getItem("userEmail")?.endsWith("@eseva.com") ? (
+              <Navigate to="/admin/dashboard" replace />
+            ) : (
+              <AccountPage />
+            )
           ) : (
             <Navigate to="/login" replace />
           )
         }
       />
-      <Route path="/admin" element={<AdminLogin />} />
+      <Route path="/admin" element={<Navigate to="/login" replace />} />
       <Route path="/admin/dashboard" element={
         <ProtectedRoute>
           <AdminDashboard />
@@ -88,6 +92,11 @@ const AppRoutes = () => {
       <Route path="/admin/messages" element={
         <ProtectedRoute>
           <AdminMessages />
+        </ProtectedRoute>
+      } />
+       <Route path="/admin/upi-qr" element={
+        <ProtectedRoute>
+          <AdminUpiQR />
         </ProtectedRoute>
       } />
       <Route path="/admin/settings" element={

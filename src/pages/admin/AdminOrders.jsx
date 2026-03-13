@@ -1,20 +1,72 @@
 import AdminLayout from '../../components/common/AdminLayout';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Eye, ShoppingBag } from 'lucide-react';
 const AdminOrders = () => {
   const [activeTab, setActiveTab] = useState('All Orders');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedOrder, setSelectedOrder] = useState(null);
-  
-  const orders = [
-    { id: 2375, name: 'Rajesh Kumar', service: 'PAN Card', status: 'Pending', date: 'Mar 28, 2024' },
-    { id: 2374, name: 'Priya Sharma', service: 'Aadhaar Card', status: 'Completed', date: 'Mar 28, 2024' },
-    { id: 2373, name: 'Amit Patil', service: 'Voter ID Card', status: 'In Progress', date: 'Mar 28, 2024' },
-    { id: 2372, name: 'Sunita Verma', service: 'Aadhaar Card', status: 'Cancelled', date: 'Mar 28, 2024' },
-    { id: 2371, name: 'Deepak Singh', service: 'Driving License', status: 'Completed', date: 'Mar 27, 2024' },
-    { id: 2370, name: 'Anjali Deshmukh', service: 'PAN Card', status: 'Pending', date: 'Mar 27, 2024' },
-    { id: 2369, name: 'Mahesh Joshi', service: 'Voter ID Card', status: 'Completed', date: 'Mar 28, 2024' },
-  ];
+  const [orders, setOrders] = useState([]);
+  const [newStatus, setNewStatus] = useState('');
+  const [documents, setDocuments] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const itemsPerPage = 7;
+
+  const handleUpdateStatus = () => {
+    if (!newStatus) {
+      setErrorMessage('Please select a status');
+      setTimeout(() => setErrorMessage(''), 3000);
+      return;
+    }
+
+    fetch(`http://localhost:8080/api/orders/${selectedOrder.id}/status`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: newStatus })
+    })
+      .then(res => res.text())
+      .then(result => {
+        setSuccessMessage(result);
+        setTimeout(() => setSuccessMessage(''), 3000);
+        setSelectedOrder(null);
+        setNewStatus('');
+        // Refresh orders
+        fetch("http://localhost:8080/api/orders")
+          .then(res => res.json())
+          .then(data => {
+            const formatted = data.map(order => ({
+              id: order.id,
+              name: order.name,
+              service: order.serviceName,
+              status: order.status,
+              date: new Date(order.createdAt).toLocaleDateString()
+            }));
+            setOrders(formatted.sort((a, b) => b.id - a.id));
+          });
+      })
+      .catch(err => {
+        console.error(err);
+        setErrorMessage('Failed to update status');
+        setTimeout(() => setErrorMessage(''), 3000);
+      });
+  };
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/orders")
+      .then(res => res.json())
+      .then(data => {
+        const formatted = data.map(order => ({
+          id: order.id,
+          name: order.name,
+          service: order.serviceName,
+          status: order.status,
+          date: new Date(order.createdAt).toLocaleDateString()
+        }));
+        setOrders(formatted.sort((a, b) => b.id - a.id));
+      })
+      .catch(err => console.error(err));
+  }, []);
 
   const filteredOrders = orders
     .filter(order => activeTab === 'All Orders' ? true : order.status === activeTab)
@@ -23,6 +75,11 @@ const AdminOrders = () => {
       order.id.toString().includes(searchQuery) || 
       order.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentOrders = filteredOrders.slice(startIndex, endIndex);
 
   const getStatusColor = (status) => {
     switch(status) {
@@ -38,8 +95,21 @@ const AdminOrders = () => {
     <AdminLayout>
       <div className="flex items-center gap-2 mb-4 md:mb-6">
         <ShoppingBag className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
-        <h2 className="text-xl md:text-3xl font-bold"><span className="text-gray-800">Orders</span> <span className="text-green-600">Management</span></h2>
+        <h2 className="text-xl md:text-3xl font-bold"><span className="text-gray-800">Orders Management</span> </h2>
       </div>
+
+      {/* SUCCESS/ERROR MESSAGES */}
+      {successMessage && (
+        <div className="mb-4 p-3 bg-green-50 border border-green-300 rounded-lg text-green-700 text-sm">
+          {successMessage}
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-300 rounded-lg text-red-700 text-sm">
+          {errorMessage}
+        </div>
+      )}
 
           {/* Tabs */}
           <div className="flex gap-2 md:gap-4 mb-4 md:mb-6 overflow-x-auto pb-2 cursor-pointer">
@@ -74,7 +144,7 @@ const AdminOrders = () => {
               <table className="w-full">
                 <thead>
                   <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Order ID</th>
+                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Order ID</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Customer Name</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Service Type</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden md:table-cell">Status</th>
@@ -83,9 +153,9 @@ const AdminOrders = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {filteredOrders.map((order, index) => (
+                  {currentOrders.map((order, index) => (
                     <tr key={order.id} className="hover:bg-blue-50/50 transition-colors duration-150">
-                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600">#{order.id}</td>
+                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600 hidden sm:table-cell">ORD#{order.id}</td>
                       <td className="px-4 md:px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
@@ -103,7 +173,22 @@ const AdminOrders = () => {
                       <td className="px-4 md:px-6 py-4 text-sm text-gray-500 hidden md:table-cell">{order.date}</td>
                       <td className="px-4 md:px-6 py-4 text-center">
                         <button 
-                          onClick={() => setSelectedOrder(order)}
+                          onClick={() => {
+                            setSelectedOrder(order);
+                            fetch(`http://localhost:8080/api/orders/${order.id}/documents`)
+                              .then(res => {
+                                if (!res.ok) {
+                                  setDocuments([]);
+                                  return [];
+                                }
+                                return res.json();
+                              })
+                              .then(data => setDocuments(Array.isArray(data) ? data : []))
+                              .catch(err => {
+                                console.error(err);
+                                setDocuments([]);
+                              });
+                          }}
                           className="inline-flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
                         >
                           <Eye size={15} className="md:w-3.5 md:h-3.5 cursor-pointer" />
@@ -115,13 +200,24 @@ const AdminOrders = () => {
                 </tbody>
               </table>
             </div>
-            <div className="px-4 md:px-6 py-4 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <p className="text-sm text-gray-600 font-medium">Showing 1 to 7 of 152 entries</p>
-              <div className="flex gap-2">
-                <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">1</button>
-                <button className="px-4 py-2 border border-blue-600 rounded-lg bg-blue-600 text-white text-sm font-medium shadow-sm">2</button>
-                <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">→</button>
-              </div>
+            <div className="px-4 md:px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-center gap-3">
+              <button 
+                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                ←
+              </button>
+              <span className="px-4 py-2 border border-blue-600 bg-blue-600 text-white rounded-lg text-sm font-medium">
+                {currentPage}
+              </span>
+              <button 
+                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                →
+              </button>
             </div>
           </div>
 
@@ -149,7 +245,7 @@ const AdminOrders = () => {
                   <div className="bg-gray-50 rounded-lg p-3 md:p-4 space-y-2 md:space-y-3">
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Order ID</span>
-                      <span className="text-xs md:text-sm font-semibold text-gray-900">#{selectedOrder.id}</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">ORD#{selectedOrder.id}</span>
                     </div>
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Customer Name</span>
@@ -169,6 +265,77 @@ const AdminOrders = () => {
                         {selectedOrder.status}
                       </span>
                     </div>
+                    <div className="pt-3 border-t">
+                      <label className="text-xs md:text-sm text-gray-600 font-medium mb-2 block">Update Status</label>
+                      <select
+                        value={newStatus}
+                        onChange={(e) => setNewStatus(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg text-xs md:text-sm"
+                      >
+                        <option value="">Select Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
+                    <div className="mt-6 w-full">
+  <p className="text-sm font-semibold text-gray-700 mb-3">Uploaded Documents</p>
+
+  <div className="grid grid-cols-2 gap-4">
+    {documents.map((doc) => {
+      const isPDF = doc.fileName.toLowerCase().endsWith('.pdf');
+      
+      return (
+        <div key={doc.id} className="border rounded-lg p-2 bg-white shadow">
+          {isPDF ? (
+            <div 
+              className="w-full h-24 bg-red-50 rounded flex items-center justify-center cursor-pointer hover:bg-red-100 transition"
+              onClick={() => window.open(`http://localhost:8080/uploads/${doc.fileName}`)}
+            >
+              <div className="text-center">
+                <svg className="w-12 h-12 mx-auto text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M4 18h12V6h-4V2H4v16zm-2 1V0h12l4 4v16H2v-1z"/>
+                  <text x="50%" y="60%" fontSize="6" fill="currentColor" textAnchor="middle" fontWeight="bold">PDF</text>
+                </svg>
+              </div>
+            </div>
+          ) : (
+            <img
+              src={`http://localhost:8080/uploads/${doc.fileName}`}
+              alt={doc.fileName}
+              className="w-full h-24 object-cover rounded cursor-pointer"
+              onClick={() => window.open(`http://localhost:8080/uploads/${doc.fileName}`)}
+            />
+          )}
+
+          <p className="text-xs mt-1 truncate">{doc.fileName}</p>
+
+          <button
+            onClick={() => {
+              fetch(`http://localhost:8080/uploads/${doc.fileName}`)
+                .then(response => response.blob())
+                .then(blob => {
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = doc.fileName;
+                  document.body.appendChild(a);
+                  a.click();
+                  window.URL.revokeObjectURL(url);
+                  document.body.removeChild(a);
+                })
+                .catch(err => console.error('Download failed:', err));
+            }}
+            className="block mt-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 rounded cursor-pointer w-full"
+          >
+            Download
+          </button>
+        </div>
+      );
+    })}
+  </div>
+</div>
                   </div>
                 </div>
 
@@ -180,7 +347,10 @@ const AdminOrders = () => {
                   >
                     Close
                   </button>
-                  <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition">
+                  <button 
+                    onClick={handleUpdateStatus}
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition"
+                  >
                     Update Status
                   </button>
                 </div>

@@ -1,118 +1,117 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import NotificationCard from "../components/common/NotificationCard";
-
 
 export default function Notifications() {
 
   const [notifications, setNotifications] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
 
-  // 🔥 Dummy Data (Backend Ready Structure)
+  const userId = localStorage.getItem("userId");
+
   useEffect(() => {
-    const dummyData = [
-    {
-      _id: "1",
-      userId: "101",
-      type: "APPLICATION_SUBMITTED",
-      title: "Application Submitted",
-      message: "Your PAN Card application has been successfully submitted.",
-      isRead: false,
-      createdAt: new Date(Date.now() - 1000 * 60 * 10),
-    },
-    {
-      _id: "2",
-      userId: "101",
-      type: "PAYMENT_SUCCESS",
-      title: "Payment Successful",
-      message: "Your GST registration payment was completed successfully.",
-      isRead: true,
-      createdAt: new Date(Date.now() - 1000 * 60 * 60),
-    },
-    {
-      _id: "3",
-      userId: "101",
-      type: "APPLICATION_APPROVED",
-      title: "Application Approved",
-      message: "Your Passport application has been approved.",
-      isRead: false,
-      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 5),
-    },
-    {
-      _id: "4",
-      userId: "101",
-      type: "APPLICATION_REJECTED",
-      title: "Application Rejected",
-      message: "Your Voter ID request was rejected due to incomplete documents.",
-      isRead: true,
-      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24),
-    },
-    {
-      _id: "5",
-      userId: "101",
-      type: "PAYMENT_SUCCESS",
-      title: "Payment Successful",
-      message: "Your Life Insurance premium payment was received.",
-      isRead: false,
-      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 30),
-    },
-    {
-      _id: "6",
-      userId: "101",
-      type: "APPLICATION_SUBMITTED",
-      title: "Application Submitted",
-      message: "Your Shop Act registration request is under review.",
-      isRead: true,
-      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 48),
-    },
-    {
-      _id: "7",
-      userId: "101",
-      type: "SYSTEM_ALERT",
-      title: "System Maintenance",
-      message: "Scheduled maintenance on Sunday from 2AM to 4AM.",
-      isRead: false,
-      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 72),
-    },
-  ];
+    if (!userId) return;
 
+    const fetchNotifications = async () => {
+      try {
+        const res = await fetch(`http://localhost:8080/notifications/${userId}`);
+        const data = await res.json();
+        setNotifications(data);
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+      }
+    };
 
-    setNotifications(dummyData);
-  }, []);
+    const fetchUnreadCount = async () => {
+      try {
+        const res = await fetch(`http://localhost:8080/notifications/unread-count/${userId}`);
+        const count = await res.json();
+        setUnreadCount(count);
+      } catch (error) {
+        console.error("Error fetching unread count:", error);
+      }
+    };
 
-  const unreadCount = notifications.filter(n => !n.isRead).length;
+    fetchNotifications();
+    fetchUnreadCount();
+
+    const interval = setInterval(() => {
+      fetchNotifications();
+      fetchUnreadCount();
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [userId]);
 
   const markAsRead = async (id) => {
-    
+    try {
+      console.log('Marking notification as read:', id);
+      const response = await fetch(`http://localhost:8080/notifications/read/${id}`, {
+        method: "PATCH",
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        throw new Error('Failed to mark as read');
+      }
+      
+      const updatedNotification = await response.json();
+      console.log('Updated notification:', updatedNotification);
 
-    // 🔵 Immediately update UI
-    setNotifications(prev =>
-      prev.map(n =>
-        n._id === id ? { ...n, isRead: true } : n
-      )
-    );
+      setNotifications(prev =>
+        prev.map(n =>
+          n.id === id ? { ...n, read: true } : n
+        )
+      );
 
-    // 🔌 Later enable when backend ready
-    // await notificationService.markAsRead(id);
+      setUnreadCount(prev => Math.max(0, prev - 1));
+    } catch (error) {
+      console.error("Error marking notification as read:", error);
+      alert('Failed to mark notification as read. Please try again.');
+    }
   };
 
   const markAllAsRead = async () => {
+    try {
+      // Mark all unread notifications one by one
+      const unreadNotifications = notifications.filter(n => !n.read);
+      
+      // Call backend for each unread notification
+      await Promise.all(
+        unreadNotifications.map(n => 
+          fetch(`http://localhost:8080/notifications/read/${n.id}`, {
+            method: "PATCH"
+          })
+        )
+      );
 
-    setNotifications(prev =>
-      prev.map(n => ({ ...n, isRead: true }))
-    );
-
-    // await notificationService.markAllAsRead();
+      // Update local state immediately
+      setNotifications(prev =>
+        prev.map(n => ({ ...n, read: true }))
+      );
+      setUnreadCount(0);
+    } catch (error) {
+      console.error("Error marking all as read:", error);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20 px-4 md:px-10">
+
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm p-6">
 
-        {/* Header */}
         <div className="flex justify-between items-center mb-6">
+
           <div>
             <h1 className="text-2xl font-bold text-slate-800">
               Notifications
             </h1>
+
             <p className="text-sm text-gray-500">
               {unreadCount} unread notifications
             </p>
@@ -126,26 +125,33 @@ export default function Notifications() {
               Mark all as read
             </button>
           )}
+
         </div>
 
-        {/* Body */}
         {notifications.length === 0 ? (
+
           <div className="text-center py-10 text-gray-400">
             No notifications yet.
           </div>
+
         ) : (
+
           <div className="space-y-4">
+
             {notifications.map(notification => (
               <NotificationCard
-                key={notification._id}
+                key={notification.id}
                 notification={notification}
                 onMarkRead={markAsRead}
               />
             ))}
+
           </div>
+
         )}
 
       </div>
+
     </div>
   );
 }

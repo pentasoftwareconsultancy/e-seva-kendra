@@ -1,20 +1,103 @@
 import AdminLayout from '../../components/common/AdminLayout';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User } from 'lucide-react';
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('All Orders');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedOrder, setSelectedOrder] = useState(null);
-  
-  const orders = [
-    { id: 2375, name: 'Rajesh Kumar', service: 'PAN Card', status: 'Pending', date: 'Mar 28, 2024' },
-    { id: 2374, name: 'Priya Sharma', service: 'Aadhaar Card', status: 'Completed', date: 'Mar 28, 2024' },
-    { id: 2373, name: 'Amit Patil', service: 'Voter ID Card', status: 'In Progress', date: 'Mar 28, 2024' },
-    { id: 2372, name: 'Sunita Verma', service: 'Aadhaar Card', status: 'Cancelled', date: 'Mar 28, 2024' },
-    { id: 2371, name: 'Deepak Singh', service: 'Driving License', status: 'Completed', date: 'Mar 27, 2024' },
-    { id: 2370, name: 'Anjali Deshmukh', service: 'PAN Card', status: 'Pending', date: 'Mar 27, 2024' },
-    { id: 2369, name: 'Mahesh Joshi', service: 'Voter ID Card', status: 'Completed', date: 'Mar 28, 2024' },
-  ];
+  const [stats, setStats] = useState({
+    totalOrders: 0,
+    pendingOrders: 0,
+    inProgressOrders: 0,
+    completedOrders: 0
+  });
+  const [todayEarnings, setTodayEarnings] = useState(0);
+  const [orders, setOrders] = useState([]);
+  const [newStatus, setNewStatus] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const itemsPerPage = 7;
+
+  const handleUpdateStatus = async () => {
+    if (!newStatus) {
+      setErrorMessage('Please select a status');
+      setTimeout(() => setErrorMessage(''), 3000);
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/orders/${selectedOrder.id}/status`, {
+        method: 'PUT',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+
+      if (response.ok) {
+        const result = await response.text();
+        setSuccessMessage(result || 'Status updated successfully');
+        setTimeout(() => setSuccessMessage(''), 3000);
+        setSelectedOrder(null);
+        setNewStatus('');
+        
+        // Refresh orders and stats
+        const ordersResponse = await fetch("http://localhost:8080/api/orders");
+        const data = await ordersResponse.json();
+        const formatted = data.map(order => ({
+          id: order.id,
+          name: order.name,
+          service: order.serviceName,
+          status: order.status,
+          date: new Date(order.createdAt).toLocaleDateString()
+        }));
+        setOrders(formatted.reverse());
+
+        // Refresh stats
+        const statsResponse = await fetch("http://localhost:8080/api/dashboard/stats");
+        const statsData = await statsResponse.json();
+        setStats(statsData);
+      } else {
+        const errorText = await response.text();
+        setErrorMessage(`Failed to update status: ${errorText}`);
+        setTimeout(() => setErrorMessage(''), 3000);
+      }
+    } catch (err) {
+      console.error('Error updating status:', err);
+      setErrorMessage('Failed to update status. Please check if the server is running.');
+      setTimeout(() => setErrorMessage(''), 3000);
+    }
+  };
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/dashboard/stats")
+      .then(res => res.json())
+      .then(data => setStats(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/payment/today-earnings")
+      .then(res => res.json())
+      .then(data => setTodayEarnings(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/orders")
+      .then(res => res.json())
+      .then(data => {
+        const formatted = data.map(order => ({
+          id: order.id,
+          name: order.name,
+          service: order.serviceName,
+          status: order.status,
+          date: new Date(order.createdAt).toLocaleDateString()
+        }));
+        setOrders(formatted.reverse());
+      })
+      .catch(err => console.error(err));
+  }, []);
 
   const filteredOrders = orders
     .filter(order => activeTab === 'All Orders' || order.status === activeTab)
@@ -23,6 +106,11 @@ const AdminDashboard = () => {
       order.id.toString().includes(searchQuery) || 
       order.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentOrders = filteredOrders.slice(startIndex, endIndex);
 
   const getStatusColor = (status) => {
     switch(status) {
@@ -38,8 +126,20 @@ const AdminDashboard = () => {
     <AdminLayout>
       <div className="flex items-center gap-2 mb-4 md:mb-6">
         <i className="fas fa-chart-line text-2xl md:text-3xl text-blue-600"></i>
-        <h2 className="text-xl md:text-3xl font-bold"><span className="text-green-600">Welcome</span> <span className="text-gray-800">Admin Dashboard!</span></h2>
+        <h2 className="text-xl md:text-3xl font-bold"><span className="text-green-600">Welcome to the</span> <span className="text-gray-800">Admin Dashboard!</span></h2>
       </div>
+
+      {successMessage && (
+        <div className="mb-4 p-3 bg-green-50 border border-green-300 rounded-lg text-green-700 text-sm">
+          {successMessage}
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-300 rounded-lg text-red-700 text-sm">
+          {errorMessage}
+        </div>
+      )}
           
           {/* Stats Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4 md:mb-6">
@@ -56,7 +156,7 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600 font-medium">Total Orders</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">152</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalOrders}</p>
                 </div>
               </div>
             </div>
@@ -73,7 +173,7 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600 font-medium">Pending Orders</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">32</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.pendingOrders}</p>
                 </div>
               </div>
             </div>
@@ -90,7 +190,7 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600 font-medium">In Progress Orders</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">15</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.inProgressOrders}</p>
                 </div>
               </div>
             </div>
@@ -107,14 +207,14 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600 font-medium">Completed Orders</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">98</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.completedOrders}</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Earnings Card */}
-          <div className="bg-gradient-to-r from-green-400 to-green-300 rounded-lg shadow p-6 mb-6 relative overflow-hidden hover:shadow-lg hover:scale-102 transition-all duration-300 cursor-pointer">
+          <div className="bg-gradient-to-r from-green-500 to-green-200 rounded-lg shadow p-4 mb-6 relative overflow-hidden hover:shadow-lg hover:scale-102 transition-all duration-300 cursor-pointer">
             <div className="absolute right-0 bottom-0 opacity-20">
               <svg width="200" height="100" viewBox="0 0 200 100">
                 <rect x="10" y="60" width="15" height="30" fill="#fb923c" opacity="0.5"/>
@@ -129,7 +229,7 @@ const AdminDashboard = () => {
               <div className="text-6xl animate-bounce">💰</div>
             </div>
             <h3 className="text-lg font-semibold text-gray-800 mb-2">Earnings Today</h3>
-            <p className="text-3xl font-bold text-gray-800">₹ 12,450</p>
+            <p className="text-3xl font-bold text-gray-800">₹ {todayEarnings}</p>
           
           </div>
 
@@ -166,7 +266,7 @@ const AdminDashboard = () => {
               <table className="w-full">
                 <thead>
                   <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Order ID</th>
+                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Order ID</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Customer Name</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Service Type</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden md:table-cell">Status</th>
@@ -175,9 +275,9 @@ const AdminDashboard = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {filteredOrders.map((order) => (
+                  {currentOrders.map((order) => (
                     <tr key={order.id} className="hover:bg-blue-50/50 transition-colors duration-150">
-                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600">#{order.id}</td>
+                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600 hidden sm:table-cell">ORD#{order.id}</td>
                       <td className="px-4 md:px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
@@ -207,13 +307,24 @@ const AdminDashboard = () => {
                 </tbody>
               </table>
             </div>
-            <div className="px-4 md:px-6 py-4 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <p className="text-sm text-gray-600 font-medium">Showing 1 to 7 of 152 entries</p>
-              <div className="flex gap-2">
-                <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">1</button>
-                <button className="px-4 py-2 border border-blue-600 rounded-lg bg-blue-600 text-white text-sm font-medium shadow-sm">2</button>
-                <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">→</button>
-              </div>
+            <div className="px-4 md:px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-center gap-3">
+              <button 
+                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                ←
+              </button>
+              <span className="px-4 py-2 border border-blue-600 bg-blue-600 text-white rounded-lg text-sm font-medium">
+                {currentPage}
+              </span>
+              <button 
+                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                →
+              </button>
             </div>
           </div>
 
@@ -241,7 +352,7 @@ const AdminDashboard = () => {
                   <div className="bg-gray-50 rounded-lg p-3 md:p-4 space-y-2 md:space-y-3">
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Order ID</span>
-                      <span className="text-xs md:text-sm font-semibold text-gray-900">#{selectedOrder.id}</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">ORD#{selectedOrder.id}</span>
                     </div>
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Customer Name</span>
@@ -261,6 +372,20 @@ const AdminDashboard = () => {
                         {selectedOrder.status}
                       </span>
                     </div>
+                    <div className="pt-3 border-t">
+                      <label className="text-xs md:text-sm text-gray-600 font-medium mb-2 block">Update Status</label>
+                      <select
+                        value={newStatus}
+                        onChange={(e) => setNewStatus(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg text-xs md:text-sm"
+                      >
+                        <option value="">Select Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -272,7 +397,10 @@ const AdminDashboard = () => {
                   >
                     Close
                   </button>
-                  <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition">
+                  <button 
+                    onClick={handleUpdateStatus}
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition"
+                  >
                     Update Status
                   </button>
                 </div>

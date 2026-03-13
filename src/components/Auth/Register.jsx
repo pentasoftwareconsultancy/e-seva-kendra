@@ -1,8 +1,97 @@
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 import illustrationImg from "../../assets/Auth/register-illustration.png";
 import avtarImg from "../../assets/Auth/register-avtar.png";
 
 export default function Register() {
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const validatePassword = (pwd) => {
+    const hasNumber = /[0-9]/.test(pwd);
+    const hasCapital = /[A-Z]/.test(pwd);
+    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(pwd);
+    const isLongEnough = pwd.length >= 8;
+
+    if (!isLongEnough) {
+      return "Password must be at least 8 characters";
+    }
+    if (!hasCapital) {
+      return "Password must contain at least one capital letter";
+    }
+    if (!hasNumber) {
+      return "Password must contain at least one number";
+    }
+    if (!hasSymbol) {
+      return "Password must contain at least one symbol";
+    }
+    return "";
+  };
+
+  const handlePasswordChange = (e) => {
+    const pwd = e.target.value;
+    setPassword(pwd);
+    setPasswordError(validatePassword(pwd));
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    const pwdError = validatePassword(password);
+    if (pwdError) {
+      setErrorMessage(pwdError);
+      setTimeout(() => setErrorMessage(""), 3000);
+      return;
+    }
+
+    console.log(name,email,phone,password);
+
+    const user = {
+      name: name,
+      email: email,
+      phone: phone,
+      password: password
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/users/register",
+        user
+      );
+
+      if (response.data === "User Registered Successfully") {
+        setSuccessMessage("Registration successful! Redirecting to login...");
+        setName("");
+        setEmail("");
+        setPhone("");
+        setPassword("");
+        
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      } else {
+        setErrorMessage(response.data || "Registration failed");
+        setTimeout(() => setErrorMessage(""), 3000);
+      }
+
+    } 
+    
+    catch (error) {
+      console.error(error);
+      setErrorMessage("Registration failed. Please try again.");
+      setTimeout(() => setErrorMessage(""), 3000);
+    }
+  };
+
   return (
     <>
 
@@ -81,46 +170,71 @@ export default function Register() {
               Register for Services
             </h3>
 
-            <form className="space-y-4 sm:space-y-5">
-              <input
-                type="text"
-                placeholder="Name"
-                className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm
-          focus:ring-2 focus:ring-blue-500 outline-none"
-              />
+            {successMessage && (
+              <div className="mb-4 p-3 bg-green-50 border border-green-300 rounded-lg text-green-700 text-sm">
+                {successMessage}
+              </div>
+            )}
 
-              <input
-                type="email"
-                placeholder="Email Address"
-                className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm
-                focus:ring-2 focus:ring-blue-500 outline-none"
-              />
+            {errorMessage && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-300 rounded-lg text-red-700 text-sm">
+                {errorMessage}
+              </div>
+            )}
 
-              <input
-                type="tel"
-                placeholder="Phone number"
-                pattern="[0-9]{10}"
-                maxLength="10"
-                inputMode="numeric"
-                required
-                className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm
-                focus:ring-2 focus:ring-blue-500 outline-none"
-              />
+           <form onSubmit={handleRegister} className="space-y-4 sm:space-y-5">
+             <input
+               type="text"
+               placeholder="Name"
+               value={name}
+               onChange={(e)=>setName(e.target.value)}
+               className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+             />
 
+             <input
+               type="email"
+               placeholder="Email Address"
+               value={email}
+               onChange={(e)=>setEmail(e.target.value)}
+               className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+             />
 
-              <input
-                type="password"
-                placeholder="Create Password"
-                className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm
-          focus:ring-2 focus:ring-blue-500 outline-none"
-              />
+             <input
+               type="tel"
+               placeholder="Phone number"
+               value={phone}
+               onChange={(e)=>setPhone(e.target.value)}
+               pattern="[0-9]{10}"
+               maxLength="10"
+               className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+             />
 
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm
-          focus:ring-2 focus:ring-blue-500 outline-none"
-              />
+             <div>
+               <div className="relative">
+                 <input
+                   type={showPassword ? "text" : "password"}
+                   placeholder="Create Password"
+                   value={password}
+                   onChange={handlePasswordChange}
+                   className={`w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none pr-10 ${
+                     passwordError ? 'border-red-500' : ''
+                   }`}
+                 />
+                 <button
+                   type="button"
+                   onClick={() => setShowPassword(!showPassword)}
+                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
+                 >
+                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                 </button>
+               </div>
+               {passwordError && (
+                 <p className="text-xs text-red-500 mt-1">{passwordError}</p>
+               )}
+               <p className="text-xs text-gray-500 mt-1">
+                 Must contain: 8+ characters, capital letter, number, symbol
+               </p>
+             </div>
 
               <button
                 type="submit"

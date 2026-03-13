@@ -1,12 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ProfileSettingsSection() {
   const [formData, setFormData] = useState({
-    name: "Snehal Kulkarni",
-    email: "snehal@example.com",
+    name: "",
+    email: "",
     currentPassword: "",
     newPassword: "",
   });
+
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const userEmail = sessionStorage.getItem("userEmail");
+    const userName = sessionStorage.getItem("userName");
+    
+    if (userEmail) {
+      setFormData({
+        name: userName || "",
+        email: userEmail || "",
+        currentPassword: "",
+        newPassword: "",
+      });
+    }
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -15,23 +32,57 @@ export default function ProfileSettingsSection() {
     });
   };
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    alert("Profile Updated Successfully!");
-    // Later: send to backend
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/users/update-by-email`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          currentPassword: formData.currentPassword,
+          newPassword: formData.newPassword,
+        }),
+      });
+
+      const data = await response.text();
+      
+      if (data === "Profile Updated Successfully" || data.includes("Success")) {
+        setSuccessMessage(data);
+        setTimeout(() => setSuccessMessage(""), 3000);
+      } else {
+        setErrorMessage(data);
+        setTimeout(() => setErrorMessage(""), 3000);
+      }
+
+      setFormData({
+        ...formData,
+        currentPassword: "",
+        newPassword: "",
+      });
+
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      setErrorMessage("Something went wrong! Please try again.");
+      setTimeout(() => setErrorMessage(""), 3000);
+    }
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-6">
-      <h2 className="text-xl font-semibold text-gray-800 mb-6">
+    <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm p-3 sm:p-4 md:p-6">
+      <h2 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800 mb-4 sm:mb-6">
         Profile Settings
       </h2>
 
-      <form onSubmit={handleUpdate} className="space-y-6">
+      <form onSubmit={handleUpdate} className="space-y-4 sm:space-y-6">
 
         {/* Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-600 mb-2">
+          <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 sm:mb-2">
             Full Name
           </label>
           <input
@@ -39,33 +90,35 @@ export default function ProfileSettingsSection() {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full border rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full border rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 outline-none"
           />
         </div>
 
         {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-gray-600 mb-2">
+          <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 sm:mb-2">
             Email Address
           </label>
           <input
             type="email"
+            name="email"
             value={formData.email}
-            disabled
-            className="w-full border bg-gray-100 rounded-lg px-4 py-2.5 text-sm text-gray-500 cursor-not-allowed"
+            onChange={handleChange}
+            placeholder="Enter your email"
+            className="w-full border rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 outline-none"
           />
         </div>
 
         {/* Change Password Section */}
-        <div className="border-t pt-6">
-          <h3 className="text-sm font-semibold text-gray-700 mb-4">
+        <div className="border-t pt-4 sm:pt-6">
+          <h3 className="text-xs sm:text-sm font-semibold text-gray-700 mb-3 sm:mb-4">
             Change Password
           </h3>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 sm:mb-2">
                 Current Password
               </label>
               <input
@@ -73,12 +126,12 @@ export default function ProfileSettingsSection() {
                 name="currentPassword"
                 value={formData.currentPassword}
                 onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full border rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 sm:mb-2">
                 New Password
               </label>
               <input
@@ -86,7 +139,7 @@ export default function ProfileSettingsSection() {
                 name="newPassword"
                 value={formData.newPassword}
                 onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full border rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 outline-none"
               />
             </div>
 
@@ -94,10 +147,22 @@ export default function ProfileSettingsSection() {
         </div>
 
         {/* Update Button */}
-        <div className="pt-4">
+        <div className="pt-3 sm:pt-4">
+          {successMessage && (
+            <div className="mb-3 p-3 bg-green-50 border border-green-300 rounded-lg text-green-700 text-sm">
+              {successMessage}
+            </div>
+          )}
+
+          {errorMessage && (
+            <div className="mb-3 p-3 bg-red-50 border border-red-300 rounded-lg text-red-700 text-sm">
+              {errorMessage}
+            </div>
+          )}
+
           <button
             type="submit"
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition"
+            className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-2.5 bg-blue-600 text-white rounded-lg text-xs sm:text-sm font-medium hover:bg-blue-700 transition"
           >
             Update Profile
           </button>
