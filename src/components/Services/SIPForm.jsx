@@ -184,97 +184,95 @@ shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
         id="sip-form"
         className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 bg-[#f8faff]"
       >
-        <div className="max-w-7xl mx-auto bg-white rounded-[20px] sm:rounded-[30px] md:rounded-[40px] shadow p-6 sm:p-8 md:p-12">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">
-            SIP Application Form
-          </h2>
+        <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+          
+          {/* Form Header */}
+          <div className="bg-gradient-to-r from-blue-900 to-blue-700 px-6 sm:px-10 py-6 sm:py-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white text-center">
+              SIP Application Form
+            </h2>
+            <p className="text-blue-200 text-center text-sm mt-1">Fill in your details to get started</p>
+          </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
+          <form onSubmit={handleSubmit} className="p-6 sm:p-10 space-y-8">
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 shadow-2xl">
+            {/* Personal Details */}
+            <div>
+              <h3 className="text-lg font-bold text-gray-700 mb-4 pb-2 border-b-2 border-blue-100 flex items-center gap-2">
+                <span className="w-7 h-7 bg-blue-900 text-white rounded-full flex items-center justify-center text-sm">1</span>
+                Personal Details
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                <div>
+                  <label className="block font-semibold mb-2 text-sm text-gray-600">
+                    Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    minLength={3}
+                    value={formData.fullName}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                      setFormData({ ...formData, fullName: value });
+                      setErrors({ ...errors, fullName: "" });
+                    }}
+                    placeholder="Enter Full Name"
+                    className={`w-full bg-gray-50 p-3 rounded-xl border ${
+                      errors.fullName ? "border-red-500" : "border-gray-200"
+                    } focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm`}
+                  />
+                  {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
+                </div>
 
-                           <div>
-  <label className="block font-bold mb-2 text-sm sm:text-base">
-    Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
-  </label>
-
-  <input
-    type="text"
-    required
-    minLength={3}
-    value={formData.fullName}
-    onChange={(e) => {
-      const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
-      setFormData({ ...formData, fullName: value });
-      setErrors({ ...errors, fullName: "" });
-    }}
-    placeholder="Enter Full Name"
-    className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ${
-      errors.fullName
-        ? "ring-red-500 focus:ring-red-500"
-        : "ring-gray-200 focus:ring-[#1e40af]/20"
-    } focus:ring-2 text-sm sm:text-base`}
-  />
-
-  {errors.fullName && (
-    <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
-  )}
-</div>
-                            <div>
-                                <label className="block font-bold mb-2 text-sm sm:text-base">Mobile Number (मोबाईल क्रमांक) <span className="text-red-500">*</span></label>
-                                <input type="tel" required pattern="[0-9]{10}" maxLength={10} value={formData.mobile} onChange={(e) => { const value = e.target.value.replace(/[^0-9]/g, ''); setFormData({...formData, mobile: value}); setErrors({...errors, mobile: ""}); }} placeholder="Enter 10-digit Mobile Number" className={`w-full bg-[#f8faff] p-3 sm:p-4 rounded-xl ring-1 ${errors.mobile ? 'ring-red-500' : 'ring-gray-200'} focus:ring-2 focus:ring-[#1e40af]/20 text-sm sm:text-base`} />
-                                {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
-                            </div>
-
-              <UploadBox
-                label="PAN Card (पॅन कार्ड)"
-                field="panCard"
-                fileData={files.panCard}
-                onFileChange={handleFileChange}
-              />
-
-              <UploadBox
-                label="Aadhaar Card (आधार कार्ड)"
-                field="aadhaarCard"
-                fileData={files.aadhaarCard}
-                onFileChange={handleFileChange}
-              />
-
-              <UploadBox
-                label="Bank Passbook / Statement"
-                field="bankProof"
-                fileData={files.bankProof}
-                onFileChange={handleFileChange}
-              />
-
-              <UploadBox
-                label="Cancelled Cheque (रद्द केलेला चेक)"
-                field="cancelledCheque"
-                fileData={files.cancelledCheque}
-                onFileChange={handleFileChange}
-              />
-
-              <UploadBox
-                label="Passport Photo (पासपोर्ट फोटो)"
-                field="passportPhoto"
-                fileData={files.passportPhoto}
-                onFileChange={handleFileChange}
-              />
-
-              <UploadBox
-                label="Address Proof (पत्त्याचा पुरावा)"
-                field="addressProof"
-                fileData={files.addressProof}
-                onFileChange={handleFileChange}
-              />
+                <div>
+                  <label className="block font-semibold mb-2 text-sm text-gray-600">
+                    Mobile Number (मोबाईल क्रमांक) <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    pattern="[0-9]{10}"
+                    maxLength={10}
+                    value={formData.mobile}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^0-9]/g, '');
+                      setFormData({ ...formData, mobile: value });
+                      setErrors({ ...errors, mobile: "" });
+                    }}
+                    placeholder="Enter 10-digit Mobile Number"
+                    className={`w-full bg-gray-50 p-3 rounded-xl border ${
+                      errors.mobile ? "border-red-500" : "border-gray-200"
+                    } focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm`}
+                  />
+                  {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
+                </div>
+              </div>
             </div>
 
-            <div className="pt-4 sm:pt-6 flex justify-end">
+            {/* Document Upload */}
+            <div>
+              <h3 className="text-lg font-bold text-gray-700 mb-4 pb-2 border-b-2 border-blue-100 flex items-center gap-2">
+                <span className="w-7 h-7 bg-blue-900 text-white rounded-full flex items-center justify-center text-sm">2</span>
+                Upload Documents
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <UploadBox label="PAN Card (पॅन कार्ड)" field="panCard" fileData={files.panCard} onFileChange={handleFileChange} />
+                <UploadBox label="Aadhaar Card (आधार कार्ड)" field="aadhaarCard" fileData={files.aadhaarCard} onFileChange={handleFileChange} />
+                <UploadBox label="Bank Passbook / Statement" field="bankProof" fileData={files.bankProof} onFileChange={handleFileChange} />
+                <UploadBox label="Cancelled Cheque (रद्द केलेला चेक)" field="cancelledCheque" fileData={files.cancelledCheque} onFileChange={handleFileChange} />
+                <UploadBox label="Passport Photo (पासपोर्ट फोटो)" field="passportPhoto" fileData={files.passportPhoto} onFileChange={handleFileChange} />
+                <UploadBox label="Address Proof (पत्त्याचा पुरावा)" field="addressProof" fileData={files.addressProof} onFileChange={handleFileChange} />
+              </div>
+            </div>
+
+            {/* Submit */}
+            <div className="flex justify-end pt-2">
               <button
                 type="submit"
-                className="bg-gradient-to-r from-yellow-400 to-orange-600 text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg shadow-lg hover:shadow-2xl hover:from-yellow-500 hover:to-orange-700 transition-all duration-300 hover:-translate-y-0.5"
+                className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white px-10 py-3 rounded-xl font-bold text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
               >
-                Submit Application
+                Submit Application →
               </button>
             </div>
           </form>
