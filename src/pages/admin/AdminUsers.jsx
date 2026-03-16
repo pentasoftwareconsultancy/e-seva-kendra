@@ -22,11 +22,13 @@ const AdminUsers = () => {
       });
   }, []);
 
-  const filteredUsers = users.filter(user =>
-    searchQuery === '' ? true :
-      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchQuery.toLowerCase())
-  ).reverse();
+  const filteredUsers = users
+    .filter(user => user.role !== 'admin' && user.email !== 'admin@eseva.com')
+    .filter(user =>
+      searchQuery === '' ? true :
+        user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchQuery.toLowerCase())
+    ).reverse();
 
   return (
     <AdminLayout>
