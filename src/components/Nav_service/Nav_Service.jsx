@@ -223,12 +223,6 @@ const handleApplyClick = (slug) => {
     //   slug: "public-financial-services",
     // },
 
-    {
-      title: " Driving License (ड्रायव्हिंग लायसन्स)",
-      desc: "Register or correct SIP details.",
-      img: SIPImg,
-      slug: "drivinglicense",
-    },
 
   ];
 
