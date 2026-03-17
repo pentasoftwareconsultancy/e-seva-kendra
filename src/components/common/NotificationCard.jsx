@@ -34,9 +34,11 @@ export default function NotificationCard({ notification, onMarkRead }) {
       return "bg-blue-50 border-blue-300 border-l-4 border-l-blue-600";
     }
 
+    // Read notifications with type-based colors
     switch (notification.type) {
 
       case "PAYMENT_SUCCESS":
+      case "payment":
         return "bg-green-50 border-green-300 border-l-4 border-l-green-600";
 
       case "ORDER_CREATED":
@@ -46,7 +48,7 @@ export default function NotificationCard({ notification, onMarkRead }) {
         return "bg-purple-50 border-purple-300 border-l-4 border-l-purple-600";
 
       default:
-        return "bg-white border-gray-200";
+        return "bg-gray-50 border-gray-200";
     }
   };
 
