@@ -9,11 +9,14 @@ const AdminOrders = () => {
   const [newStatus, setNewStatus] = useState('');
   const [documents, setDocuments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const itemsPerPage = 7;
 
   const handleUpdateStatus = () => {
     if (!newStatus) {
-      alert('Please select a status');
+      setErrorMessage('Please select a status');
+      setTimeout(() => setErrorMessage(''), 3000);
       return;
     }
 
@@ -24,7 +27,8 @@ const AdminOrders = () => {
     })
       .then(res => res.text())
       .then(result => {
-        alert(result);
+        setSuccessMessage(result);
+        setTimeout(() => setSuccessMessage(''), 3000);
         setSelectedOrder(null);
         setNewStatus('');
         // Refresh orders
@@ -43,7 +47,8 @@ const AdminOrders = () => {
       })
       .catch(err => {
         console.error(err);
-        alert('Failed to update status');
+        setErrorMessage('Failed to update status');
+        setTimeout(() => setErrorMessage(''), 3000);
       });
   };
 
@@ -93,6 +98,19 @@ const AdminOrders = () => {
         <h2 className="text-xl md:text-3xl font-bold"><span className="text-gray-800">Orders Management</span> </h2>
       </div>
 
+      {/* SUCCESS/ERROR MESSAGES */}
+      {successMessage && (
+        <div className="mb-4 p-3 bg-green-50 border border-green-300 rounded-lg text-green-700 text-sm">
+          {successMessage}
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-300 rounded-lg text-red-700 text-sm">
+          {errorMessage}
+        </div>
+      )}
+
           {/* Tabs */}
           <div className="flex gap-2 md:gap-4 mb-4 md:mb-6 overflow-x-auto pb-2 cursor-pointer">
             {['All Orders', 'Pending', 'In Progress', 'Completed', 'Cancelled'].map(tab => (
@@ -126,7 +144,7 @@ const AdminOrders = () => {
               <table className="w-full">
                 <thead>
                   <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Order ID</th>
+                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Order ID</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Customer Name</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Service Type</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden md:table-cell">Status</th>
@@ -137,7 +155,7 @@ const AdminOrders = () => {
                 <tbody className="divide-y divide-gray-100">
                   {currentOrders.map((order, index) => (
                     <tr key={order.id} className="hover:bg-blue-50/50 transition-colors duration-150">
-                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600">ORD#{order.id}</td>
+                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600 hidden sm:table-cell">ORD#{order.id}</td>
                       <td className="px-4 md:px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
@@ -265,43 +283,57 @@ const AdminOrders = () => {
   <p className="text-sm font-semibold text-gray-700 mb-3">Uploaded Documents</p>
 
   <div className="grid grid-cols-2 gap-4">
-    {documents.map((doc) => (
-      <div key={doc.id} className="border rounded-lg p-2 bg-white shadow">
+    {documents.map((doc) => {
+      const isPDF = doc.fileName.toLowerCase().endsWith('.pdf');
+      
+      return (
+        <div key={doc.id} className="border rounded-lg p-2 bg-white shadow">
+          {isPDF ? (
+            <div 
+              className="w-full h-24 bg-red-50 rounded flex items-center justify-center cursor-pointer hover:bg-red-100 transition"
+              onClick={() => window.open(`http://localhost:8080/uploads/${doc.fileName}`)}
+            >
+              <div className="text-center">
+                <svg className="w-12 h-12 mx-auto text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M4 18h12V6h-4V2H4v16zm-2 1V0h12l4 4v16H2v-1z"/>
+                  <text x="50%" y="60%" fontSize="6" fill="currentColor" textAnchor="middle" fontWeight="bold">PDF</text>
+                </svg>
+              </div>
+            </div>
+          ) : (
+            <img
+              src={`http://localhost:8080/uploads/${doc.fileName}`}
+              alt={doc.fileName}
+              className="w-full h-24 object-cover rounded cursor-pointer"
+              onClick={() => window.open(`http://localhost:8080/uploads/${doc.fileName}`)}
+            />
+          )}
 
-        <img
-          src={`http://localhost:8080/uploads/${doc.fileName}`}
-          alt={doc.fileName}
-          className="w-full h-24 object-cover rounded cursor-pointer"
-          onClick={() =>
-            window.open(`http://localhost:8080/uploads/${doc.fileName}`)
-          }
-        />
+          <p className="text-xs mt-1 truncate">{doc.fileName}</p>
 
-        <p className="text-xs mt-1 truncate">{doc.fileName}</p>
-
-        <button
-          onClick={() => {
-            fetch(`http://localhost:8080/uploads/${doc.fileName}`)
-              .then(response => response.blob())
-              .then(blob => {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = doc.fileName;
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-              })
-              .catch(err => console.error('Download failed:', err));
-          }}
-          className="block mt-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 rounded cursor-pointer w-full"
-        >
-          Download
-        </button>
-
-      </div>
-    ))}
+          <button
+            onClick={() => {
+              fetch(`http://localhost:8080/uploads/${doc.fileName}`)
+                .then(response => response.blob())
+                .then(blob => {
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = doc.fileName;
+                  document.body.appendChild(a);
+                  a.click();
+                  window.URL.revokeObjectURL(url);
+                  document.body.removeChild(a);
+                })
+                .catch(err => console.error('Download failed:', err));
+            }}
+            className="block mt-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 rounded cursor-pointer w-full"
+          >
+            Download
+          </button>
+        </div>
+      );
+    })}
   </div>
 </div>
                   </div>

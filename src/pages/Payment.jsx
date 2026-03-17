@@ -7,6 +7,8 @@ function Payment() {
   const [screenshot, setScreenshot] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [qrImage, setQrImage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:8080/api/payment/qr")
@@ -25,15 +27,18 @@ function Payment() {
  
   const handleConfirmPayment = async () => {
     if (!screenshot) {
-      alert("Please upload payment screenshot");
+      setErrorMessage("Please upload payment screenshot");
+      setTimeout(() => setErrorMessage(""), 3000);
       return;
     }
 
     const userId = sessionStorage.getItem("userId") || localStorage.getItem("userId");
     
     if (!userId) {
-      alert("Please login first to place order");
-      window.location.href = "/login";
+      setErrorMessage("Please login first to place order");
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 2000);
       return;
     }
 
@@ -62,12 +67,15 @@ function Payment() {
       });
  
       const result = await response.text();
-      alert(result);
-      window.location.href = "/service";
+      setSuccessMessage(result);
+      setTimeout(() => {
+        window.location.href = "/service";
+      }, 2000);
 
     } catch (error) {
       console.error(error);
-      alert("Payment Failed");
+      setErrorMessage("Payment Failed. Please try again.");
+      setTimeout(() => setErrorMessage(""), 3000);
     }
   };
   if (!data) {
@@ -140,6 +148,19 @@ function Payment() {
             </div>
           )}
         </div>
+
+        {/* SUCCESS/ERROR MESSAGES */}
+        {successMessage && (
+          <div className="p-3 bg-green-50 border border-green-300 rounded-lg text-green-700 text-sm text-center">
+            {successMessage}
+          </div>
+        )}
+
+        {errorMessage && (
+          <div className="p-3 bg-red-50 border border-red-300 rounded-lg text-red-700 text-sm text-center">
+            {errorMessage}
+          </div>
+        )}
  
         {/* CONFIRM BUTTON */}
         <button

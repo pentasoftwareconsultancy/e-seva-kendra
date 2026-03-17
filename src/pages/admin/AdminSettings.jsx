@@ -24,6 +24,9 @@ const AdminSettings = () => {
     new: "",
   });
 
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSettings({
@@ -44,7 +47,8 @@ const AdminSettings = () => {
   const handleSave = async () => {
 
     if (!password.current || !password.new) {
-      alert("Please fill all password fields");
+      setErrorMessage("Please fill all password fields");
+      setTimeout(() => setErrorMessage(""), 3000);
       return;
     }
 
@@ -63,15 +67,20 @@ const AdminSettings = () => {
       });
 
       const result = await response.text();
-      alert(result);
 
       if (result === "Profile Updated Successfully" || result.includes("Success")) {
+        setSuccessMessage(result);
+        setTimeout(() => setSuccessMessage(""), 3000);
         setPassword({ current: "", new: "" });
+      } else {
+        setErrorMessage(result);
+        setTimeout(() => setErrorMessage(""), 3000);
       }
 
     } catch (error) {
       console.error(error);
-      alert("Server error");
+      setErrorMessage("Server error. Please try again.");
+      setTimeout(() => setErrorMessage(""), 3000);
     }
   };
 
@@ -82,6 +91,18 @@ const AdminSettings = () => {
         <SettingsIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-blue-600" />
         <h1 className="text-lg sm:text-xl md:text-3xl font-bold text-[#1f2a44]">Settings</h1>
       </div>
+
+      {successMessage && (
+        <div className="mb-4 p-3 bg-green-50 border border-green-300 rounded-lg text-green-700 text-sm">
+          {successMessage}
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-300 rounded-lg text-red-700 text-sm">
+          {errorMessage}
+        </div>
+      )}
 
       <div className="grid grid-cols-1 gap-4 sm:gap-5 md:gap-6">
 

@@ -14,10 +14,15 @@ const AdminDashboard = () => {
   const [todayEarnings, setTodayEarnings] = useState(0);
   const [orders, setOrders] = useState([]);
   const [newStatus, setNewStatus] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const itemsPerPage = 7;
 
   const handleUpdateStatus = async () => {
     if (!newStatus) {
-      alert('Please select a status');
+      setErrorMessage('Please select a status');
+      setTimeout(() => setErrorMessage(''), 3000);
       return;
     }
 
@@ -33,7 +38,8 @@ const AdminDashboard = () => {
 
       if (response.ok) {
         const result = await response.text();
-        alert(result || 'Status updated successfully');
+        setSuccessMessage(result || 'Status updated successfully');
+        setTimeout(() => setSuccessMessage(''), 3000);
         setSelectedOrder(null);
         setNewStatus('');
         
@@ -55,11 +61,13 @@ const AdminDashboard = () => {
         setStats(statsData);
       } else {
         const errorText = await response.text();
-        alert(`Failed to update status: ${errorText}`);
+        setErrorMessage(`Failed to update status: ${errorText}`);
+        setTimeout(() => setErrorMessage(''), 3000);
       }
     } catch (err) {
       console.error('Error updating status:', err);
-      alert('Failed to update status. Please check if the server is running.');
+      setErrorMessage('Failed to update status. Please check if the server is running.');
+      setTimeout(() => setErrorMessage(''), 3000);
     }
   };
 
@@ -99,6 +107,11 @@ const AdminDashboard = () => {
       order.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentOrders = filteredOrders.slice(startIndex, endIndex);
+
   const getStatusColor = (status) => {
     switch(status) {
       case 'Pending': return 'bg-yellow-100 text-yellow-700';
@@ -115,6 +128,18 @@ const AdminDashboard = () => {
         <i className="fas fa-chart-line text-2xl md:text-3xl text-blue-600"></i>
         <h2 className="text-xl md:text-3xl font-bold"><span className="text-green-600">Welcome to the</span> <span className="text-gray-800">Admin Dashboard!</span></h2>
       </div>
+
+      {successMessage && (
+        <div className="mb-4 p-3 bg-green-50 border border-green-300 rounded-lg text-green-700 text-sm">
+          {successMessage}
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-300 rounded-lg text-red-700 text-sm">
+          {errorMessage}
+        </div>
+      )}
           
           {/* Stats Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4 md:mb-6">
@@ -241,7 +266,7 @@ const AdminDashboard = () => {
               <table className="w-full">
                 <thead>
                   <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Order ID</th>
+                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Order ID</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Customer Name</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Service Type</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden md:table-cell">Status</th>
@@ -250,9 +275,9 @@ const AdminDashboard = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {filteredOrders.map((order) => (
+                  {currentOrders.map((order) => (
                     <tr key={order.id} className="hover:bg-blue-50/50 transition-colors duration-150">
-                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600">ORD#{order.id}</td>
+                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600 hidden sm:table-cell">ORD#{order.id}</td>
                       <td className="px-4 md:px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
@@ -282,13 +307,24 @@ const AdminDashboard = () => {
                 </tbody>
               </table>
             </div>
-            <div className="px-4 md:px-6 py-4 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <p className="text-sm text-gray-600 font-medium">Showing 1 to 7 of 152 entries</p>
-              <div className="flex gap-2">
-                <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">1</button>
-                <button className="px-4 py-2 border border-blue-600 rounded-lg bg-blue-600 text-white text-sm font-medium shadow-sm">2</button>
-                <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">→</button>
-              </div>
+            <div className="px-4 md:px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-center gap-3">
+              <button 
+                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                ←
+              </button>
+              <span className="px-4 py-2 border border-blue-600 bg-blue-600 text-white rounded-lg text-sm font-medium">
+                {currentPage}
+              </span>
+              <button 
+                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                →
+              </button>
             </div>
           </div>
 
