@@ -318,240 +318,75 @@ function LoanServiceForm() {
     </div>
 
               {/* Personal Loan Upload Fields */}
-              {selectedLoan === "personal" && (
-                <>
-                  <UploadBox
-                    label="Aadhaar Card (आधार कार्ड)"
-                    fileData={files.aadhaar}
-                    onChange={(e) => handleFileChange(e, "aadhaar")}
-                  />
-                  <UploadBox
-                    label="PAN Card (पॅन कार्ड)"
-                    fileData={files.panCard}
-                    onChange={(e) => handleFileChange(e, "panCard")}
-                  />
-                  <UploadBox
-                    label="Bank Statement (बँक स्टेटमेंट)"
-                    fileData={files.bankStatement}
-                    onChange={(e) => handleFileChange(e, "bankStatement")}
-                  />
-                  <UploadBox
-                    label="Salary Slip (सॅलरी स्लिप)"
-                    fileData={files.salarySlip}
-                    onChange={(e) => handleFileChange(e, "salarySlip")}
-                  />
-                </>
-              )}
-
+                 {selectedLoan === "personal" && (
+        <>
+          <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
+          <UploadBox label="PAN Card" fileData={files.panCard} onChange={(e) => handleFileChange(e, "panCard")} />
+          <UploadBox label="Bank Statement" fileData={files.bankStatement} onChange={(e) => handleFileChange(e, "bankStatement")} />
+          <UploadBox label="Salary Slip" fileData={files.salarySlip} onChange={(e) => handleFileChange(e, "salarySlip")} />
+        </>
+      )}
               {/* Business Loan Upload Fields */}
               {selectedLoan === "business" && (
-                <>
-                  <UploadBox
-                    label="Aadhaar Card (आधार कार्ड)"
-                    fileData={files.aadhaar}
-                    onChange={(e) => handleFileChange(e, "aadhaar")}
-                  />
-                  <UploadBox
-                    label="PAN Card (पॅन कार्ड)"
-                    fileData={files.panCard}
-                    onChange={(e) => handleFileChange(e, "panCard")}
-                  />
-                  <UploadBox
-                    label="GST Certificate (GST प्रमाणपत्र)"
-                    fileData={files.gstCertificate}
-                    onChange={(e) => handleFileChange(e, "gstCertificate")}
-                  />
-                  <UploadBox
-                    label="Bank Statement (बँक स्टेटमेंट)"
-                    fileData={files.bankStatement}
-                    onChange={(e) => handleFileChange(e, "bankStatement")}
-                  />
-                </>
-              )}
+        <>
+          <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
+          <UploadBox label="PAN Card" fileData={files.panCard} onChange={(e) => handleFileChange(e, "panCard")} />
+          <UploadBox label="GST Certificate" fileData={files.gstCertificate} onChange={(e) => handleFileChange(e, "gstCertificate")} />
+          <UploadBox label="Bank Statement" fileData={files.bankStatement} onChange={(e) => handleFileChange(e, "bankStatement")} />
+        </>
+      )}
 
-              {/* Home Loan Upload Fields */}
-              {selectedLoan === "home" && (
-                <>
-                  <UploadBox
-                    label="Aadhaar Card (आधार कार्ड)"
-                    fileData={files.aadhaar}
-                    onChange={(e) => handleFileChange(e, "aadhaar")}
-                  />
-                  <UploadBox
-                    label="PAN Card (पॅन कार्ड)"
-                    fileData={files.panCard}
-                    onChange={(e) => handleFileChange(e, "panCard")}
-                  />
-                  <UploadBox
-                    label="Income Proof (उत्पन्न पुरावा)"
-                    fileData={files.incomeProof}
-                    onChange={(e) => handleFileChange(e, "incomeProof")}
-                  />
-                  <UploadBox
-                    label="Property Documents (प्रॉपर्टी कागदपत्रे)"
-                    fileData={files.propertyDocs}
-                    onChange={(e) => handleFileChange(e, "propertyDocs")}
-                  />
-                </>
-              )}
+      {selectedLoan === "home" && (
+        <>
+          <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
+          <UploadBox label="PAN Card" fileData={files.panCard} onChange={(e) => handleFileChange(e, "panCard")} />
+          <UploadBox label="Income Proof" fileData={files.incomeProof} onChange={(e) => handleFileChange(e, "incomeProof")} />
+          <UploadBox label="Property Documents" fileData={files.propertyDocs} onChange={(e) => handleFileChange(e, "propertyDocs")} />
+        </>
+      )}
 
-              {selectedLoan === "gold" && (
-                <>
-                  <UploadBox
-                    label="Aadhaar Card (आधार कार्ड)"
-                    fileData={files.aadhaar}
-                    onChange={(e) => handleFileChange(e, "aadhaar")}
-                  />
-                  <UploadBox
-                    label="PAN Card (पॅन कार्ड)"
-                    fileData={files.panCard}
-                    onChange={(e) => handleFileChange(e, "panCard")}
-                  />
-                  <UploadBox
-                    label="Address Proof (पत्ता पुरावा)"
-                    fileData={files.incomeProof}
-                    onChange={(e) => handleFileChange(e, "incomeProof")}
-                  />
-                </>
-              )}
+      {selectedLoan === "gold" && (
+        <>
+          <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
+          <UploadBox label="PAN Card" fileData={files.panCard} onChange={(e) => handleFileChange(e, "panCard")} />
+          <UploadBox label="Address Proof" fileData={files.incomeProof} onChange={(e) => handleFileChange(e, "incomeProof")} />
+        </>
+      )}
 
-              {/* commercial loan Upload Fields */}
-              {selectedLoan === "commercial" && (
-                <>
-                  <UploadBox
-                    label="Aadhaar Card (आधार कार्ड)"
-                    fileData={files.aadhaar}
-                    onChange={(e) => handleFileChange(e, "aadhaar")}
-                  />
-                  <UploadBox
-                    label="PAN Card (पॅन कार्ड)"
-                    fileData={files.panCard}
-                    onChange={(e) => handleFileChange(e, "panCard")}
-                  />
-                  <UploadBox
-                    label="Income Proof (उत्पन्न पुरावा)"
-                    fileData={files.incomeProof}
-                    onChange={(e) => handleFileChange(e, "incomeProof")}
-                  />
-                  <UploadBox
-                    label="GST Certificate (GST प्रमाणपत्र)"
-                    fileData={files.gstCertificate}
-                    onChange={(e) => handleFileChange(e, "gstCertificate")}
-                  />
-                  <UploadBox
-                    label="Bank Statement (बँक स्टेटमेंट)"
-                    fileData={files.bankStatement}
-                    onChange={(e) => handleFileChange(e, "bankStatement")}
-                  />
-                </>
-              )}
+      {selectedLoan === "commercial" && (
+        <>
+          <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
+          <UploadBox label="PAN Card" fileData={files.panCard} onChange={(e) => handleFileChange(e, "panCard")} />
+          <UploadBox label="Income Proof" fileData={files.incomeProof} onChange={(e) => handleFileChange(e, "incomeProof")} />
+          <UploadBox label="GST Certificate" fileData={files.gstCertificate} onChange={(e) => handleFileChange(e, "gstCertificate")} />
+          <UploadBox label="Bank Statement" fileData={files.bankStatement} onChange={(e) => handleFileChange(e, "bankStatement")} />
+        </>
+      )}
 
-              {/* Property Loan Upload Fields */}
-              {selectedLoan === "property" && (
-                <>
-                  <UploadBox
-                    label="Aadhaar Card (आधार कार्ड)"
-                    fileData={files.aadhaar}
-                    onChange={(e) => handleFileChange(e, "aadhaar")}
-                  />
-                  <UploadBox
-                    label="PAN Card (पॅन कार्ड)"
-                    fileData={files.panCard}
-                    onChange={(e) => handleFileChange(e, "panCard")}
-                  />
-                  <UploadBox
-                    label="Income Proof (उत्पन्न पुरावा)"
-                    fileData={files.incomeProof}
-                    onChange={(e) => handleFileChange(e, "incomeProof")}
-                  />
-                  <UploadBox
-                    label="Property Documents (प्रॉपर्टी कागदपत्रे)"
-                    fileData={files.propertyDocs}
-                    onChange={(e) => handleFileChange(e, "propertyDocs")}
-                  />
-                </>
-              )}
+      {selectedLoan === "property" && (
+        <>
+          <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
+          <UploadBox label="PAN Card" fileData={files.panCard} onChange={(e) => handleFileChange(e, "panCard")} />
+          <UploadBox label="Income Proof" fileData={files.incomeProof} onChange={(e) => handleFileChange(e, "incomeProof")} />
+          <UploadBox label="Property Documents" fileData={files.propertyDocs} onChange={(e) => handleFileChange(e, "propertyDocs")} />
+        </>
+      )}
 
-              {/* Credit Loan Upload Fields */}
-              {selectedLoan === "credit" && (
-                <>
-                  <UploadBox
-                    label="Aadhaar Card (आधार कार्ड)"
-                    fileData={files.aadhaar}
-                    onChange={(e) => handleFileChange(e, "aadhaar")}
-                  />
-                  <UploadBox
-                    label="PAN Card (पॅन कार्ड)"
-                    fileData={files.panCard}
-                    onChange={(e) => handleFileChange(e, "panCard")}
-                  />
-                  <UploadBox
-                    label="Income Proof (उत्पन्न पुरावा)"
-                    fileData={files.incomeProof}
-                    onChange={(e) => handleFileChange(e, "incomeProof")}
-                  />
-                  <UploadBox
-                    label="Property Documents (प्रॉपर्टी कागदपत्रे)"
-                    fileData={files.propertyDocs}
-                    onChange={(e) => handleFileChange(e, "propertyDocs")}
-                  />
-                </>
-              )}
-
-              {/* overdraft Loan Upload Fields */}
-              {selectedLoan === "home" && (
-                <>
-                  <UploadBox
-                    label="Aadhaar Card (आधार कार्ड)"
-                    fileData={files.aadhaar}
-                    onChange={(e) => handleFileChange(e, "aadhaar")}
-                  />
-                  <UploadBox
-                    label="PAN Card (पॅन कार्ड)"
-                    fileData={files.panCard}
-                    onChange={(e) => handleFileChange(e, "panCard")}
-                  />
-                  <UploadBox
-                    label="Income Proof (उत्पन्न पुरावा)"
-                    fileData={files.incomeProof}
-                    onChange={(e) => handleFileChange(e, "incomeProof")}
-                  />
-                  <UploadBox
-                    label="Property Documents (प्रॉपर्टी कागदपत्रे)"
-                    fileData={files.propertyDocs}
-                    onChange={(e) => handleFileChange(e, "propertyDocs")}
-                  />
-                </>
-              )}
-              {selectedLoan === "overdraft" && (
-                <>
-                  <UploadBox
-                    label="Aadhaar Card (आधार कार्ड)"
-                    fileData={files.aadhaar}
-                    onChange={(e) => handleFileChange(e, "aadhaar")}
-                  />
-
-                  <UploadBox
-                    label="PAN Card (पॅन कार्ड)"
-                    fileData={files.panCard}
-                    onChange={(e) => handleFileChange(e, "panCard")}
-                  />
-
-                  <UploadBox
-                    label="Bank Statement (बँक स्टेटमेंट)"
-                    fileData={files.bankStatement}
-                    onChange={(e) => handleFileChange(e, "bankStatement")}
-                  />
-                </>
-              )}
-
-              <div className="md:col-span-2 flex justify-end pt-4 sm:pt-6">
-                <button
-                  type="submit"
-                  className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  Submit Application
-                </button>
+      {selectedLoan === "overdraft" && (
+        <>
+          <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
+          <UploadBox label="PAN Card" fileData={files.panCard} onChange={(e) => handleFileChange(e, "panCard")} />
+          <UploadBox label="Bank Statement" fileData={files.bankStatement} onChange={(e) => handleFileChange(e, "bankStatement")} />
+        </>
+      )}
+ {/* SUBMIT */}
+  <div className="flex justify-end pt-2">
+    <button
+      type="submit"
+      className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white px-6 sm:px-10 py-2.5 sm:py-3 rounded-xl font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
+    >
+      Submit Application →
+    </button>
                 </div>
               </div>
             </form>
