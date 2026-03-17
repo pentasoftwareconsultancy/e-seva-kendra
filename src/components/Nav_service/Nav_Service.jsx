@@ -24,6 +24,10 @@ import Vinsurance from "../../assets/services/Vinsurance.png";
 // import Ayushman from "../../assets/services/Ayushman.png";
 import SIPImg from "../../assets/services/SIP.png";
 import IECImg from "../../assets/services/IEC.png";
+import AadhaarImg from "../../assets/services/adhar_img.jpg";
+import CompanyImg from "../../assets/services/company res.png";
+import GovtBondsImg from "../../assets/services/Government Bonds.jpg";
+import DrivingImg from "../../assets/services/driving-licence.png";
 
 
 export default function Nav_Service() {
@@ -187,6 +191,30 @@ const handleApplyClick = (slug) => {
       desc: "File your loan application or update details.",
       img: loan,
       slug: "loan",
+    },
+    {
+      title: "Company Registration (कंपनी नोंदणी)",
+      desc: "Register your company or business entity with government authorities.",
+      img: CompanyImg,
+      slug: "company-registration",
+    },
+    {
+      title: "Government Bonds (सरकारी रोखे)",
+      desc: "Apply for government bonds and secure your financial future.",
+      img: GovtBondsImg,
+      slug: "government-bonds",
+    },
+    {
+      title: "Driving License (वाहन चालक परवाना)",
+      desc: "Apply for a new driving license or renew your existing one.",
+      img: DrivingImg,
+      slug: "driving-license",
+    },
+    {
+      title: "Aadhaar Card (आधार कार्ड)",
+      desc: "Apply for new Aadhaar card or update your existing Aadhaar details.",
+      img: AadhaarImg,
+      slug: "aadhaar-card",
     },
     // {
     //   title: "Public Financial Services (सार्वजनिक आर्थिक सेवा)",
