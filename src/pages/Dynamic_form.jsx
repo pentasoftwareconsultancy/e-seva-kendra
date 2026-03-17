@@ -22,6 +22,7 @@ import VehicleInsurance from "../components/Services/VehicleInsurance";
 import DMartAccountForm from "../components/Services/DMartAccountForm";
 import LoanServiceForm from "../components/Services/LoanServiceForm";
 import PublicFinancialServices from "../components/Services/PublicFinanceService";
+import DrivingLicense from "../components/Services/DrivingLicense";
 
 function Dynamic_form() {
   const { serviceName } = useParams();
@@ -55,6 +56,7 @@ function Dynamic_form() {
   if (serviceName === "demat-account") return <DMartAccountForm />;
   if (serviceName === "loan") return <LoanServiceForm />;
   if (serviceName === "public-financial-services") return <PublicFinancialServices />;
+  if (serviceName === "drivinglicense") return <DrivingLicense />;
 
   const serviceComponents = {
     "itr": ITRForm,
