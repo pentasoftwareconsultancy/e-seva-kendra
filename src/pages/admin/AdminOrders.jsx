@@ -38,11 +38,29 @@ const AdminOrders = () => {
             const formatted = data.map(order => ({
               id: order.id,
               name: order.name,
+              userId: order.userId,
+              mobile: null,
+              email: null,
               service: order.serviceName,
               status: order.status,
+              extraData: order.extraData,
               date: new Date(order.createdAt).toLocaleDateString()
             }));
-            setOrders(formatted.sort((a, b) => b.id - a.id));
+            const sorted = formatted.sort((a, b) => b.id - a.id);
+            setOrders(sorted);
+
+            sorted.forEach(order => {
+              if (order.userId) {
+                fetch(`http://localhost:8080/api/users/${order.userId}`)
+                  .then(res => res.json())
+                  .then(user => {
+                    setOrders(prev => prev.map(o =>
+                      o.id === order.id ? { ...o, mobile: user.phone || null, email: user.email || null } : o
+                    ));
+                  })
+                  .catch(() => {});
+              }
+            });
           });
       })
       .catch(err => {
@@ -59,13 +77,30 @@ const AdminOrders = () => {
         const formatted = data.map(order => ({
           id: order.id,
           name: order.name,
+          userId: order.userId,
+          mobile: null,
+          email: null,
           service: order.serviceName,
           status: order.status,
+          extraData: order.extraData,
           date: new Date(order.createdAt).toLocaleDateString()
         }));
-        setOrders(formatted.sort((a, b) => b.id - a.id));
-      })
-      .catch(err => console.error(err));
+        const sorted = formatted.sort((a, b) => b.id - a.id);
+        setOrders(sorted);
+
+        sorted.forEach(order => {
+          if (order.userId) {
+            fetch(`http://localhost:8080/api/users/${order.userId}`)
+              .then(res => res.json())
+              .then(user => {
+                setOrders(prev => prev.map(o =>
+                  o.id === order.id ? { ...o, mobile: user.phone || null, email: user.email || null } : o
+                ));
+              })
+              .catch(() => {});
+          }
+        });
+      });
   }, []);
 
   const filteredOrders = orders
@@ -222,7 +257,9 @@ const AdminOrders = () => {
           </div>
 
           {/* Order Details Modal */}
-          {selectedOrder && (
+          {selectedOrder && (() => {
+            const displayOrder = orders.find(o => o.id === selectedOrder.id) || selectedOrder;
+            return (
             <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-2 md:p-4" onClick={() => setSelectedOrder(null)}>
               <div className="bg-white rounded-lg shadow-2xl w-full max-w-[95vw] md:max-w-2xl max-h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
                 
@@ -245,26 +282,84 @@ const AdminOrders = () => {
                   <div className="bg-gray-50 rounded-lg p-3 md:p-4 space-y-2 md:space-y-3">
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Order ID</span>
-                      <span className="text-xs md:text-sm font-semibold text-gray-900">ORD#{selectedOrder.id}</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">ORD#{displayOrder.id}</span>
                     </div>
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Customer Name</span>
-                      <span className="text-xs md:text-sm font-semibold text-gray-900">{selectedOrder.name}</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">{displayOrder.name}</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
+                      <span className="text-xs md:text-sm text-gray-600 font-medium">Mobile</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">{displayOrder.mobile || '-'}</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
+                      <span className="text-xs md:text-sm text-gray-600 font-medium">Email</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900 break-all">{displayOrder.email || '-'}</span>
                     </div>
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Service Type</span>
-                      <span className="text-xs md:text-sm font-semibold text-gray-900">{selectedOrder.service}</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">{displayOrder.service}</span>
                     </div>
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Date</span>
-                      <span className="text-xs md:text-sm font-semibold text-gray-900">{selectedOrder.date}</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">{displayOrder.date}</span>
                     </div>
                     <div className="flex justify-between items-center pt-1">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Status</span>
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(selectedOrder.status)}`}>
-                        {selectedOrder.status}
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(displayOrder.status)}`}>
+                        {displayOrder.status}
                       </span>
                     </div>
+                    {displayOrder.extraData && (() => {
+                      try {
+                        const extra = JSON.parse(displayOrder.extraData);
+                        // Separate director keys from regular keys
+                        const directorMap = {};
+                        const regularEntries = [];
+                        Object.entries(extra).forEach(([key, value]) => {
+                          if (!value) return;
+                          const m = key.match(/^director_(\d+)_(.+)$/);
+                          if (m) {
+                            const num = m[1];
+                            const field = m[2];
+                            if (!directorMap[num]) directorMap[num] = {};
+                            directorMap[num][field] = value;
+                          } else {
+                            regularEntries.push([key, value]);
+                          }
+                        });
+                        const hasDirectors = Object.keys(directorMap).length > 0;
+                        const hasRegular = regularEntries.length > 0;
+                        if (!hasDirectors && !hasRegular) return null;
+                        const formatKey = (k) => k.replace(/_/g, ' ').replace(/([A-Z])/g, ' $1').replace(/\b\w/g, c => c.toUpperCase()).trim();
+                        return (
+                          <div className="pt-3 border-t">
+                            <p className="text-xs md:text-sm text-gray-600 font-medium mb-2">Form Details</p>
+                            {hasRegular && (
+                              <div className="space-y-1 mb-3">
+                                {regularEntries.map(([key, value]) => (
+                                  <div key={key} className="flex justify-between items-start gap-2">
+                                    <span className="text-xs text-gray-500">{formatKey(key)}</span>
+                                    <span className="text-xs font-medium text-gray-800 text-right break-all max-w-[60%]">{String(value)}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                            {hasDirectors && Object.keys(directorMap).sort().map(num => (
+                              <div key={num} className="mb-2 bg-blue-50 rounded-lg p-2">
+                                <p className="text-xs font-bold text-blue-700 mb-1">Director / Partner {num}</p>
+                                {Object.entries(directorMap[num]).map(([field, val]) => (
+                                  <div key={field} className="flex justify-between items-start gap-2">
+                                    <span className="text-xs text-gray-500 capitalize">{formatKey(field)}</span>
+                                    <span className="text-xs font-medium text-gray-800 text-right break-all max-w-[60%]">{String(val)}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            ))}
+                          </div>
+                        );
+                      } catch { return null; }
+                    })()}
                     <div className="pt-3 border-t">
                       <label className="text-xs md:text-sm text-gray-600 font-medium mb-2 block">Update Status</label>
                       <select
@@ -279,62 +374,61 @@ const AdminOrders = () => {
                         <option value="Cancelled">Cancelled</option>
                       </select>
                     </div>
-                    <div className="mt-6 w-full">
+                    <div className="mt-4 w-full">
   <p className="text-sm font-semibold text-gray-700 mb-3">Uploaded Documents</p>
-
-  <div className="grid grid-cols-2 gap-4">
-    {documents.map((doc) => {
+  {(() => {
+    console.log('documents:', documents.map(d => d.documentType));
+    const directorDocs = {};
+    const commonDocs = [];
+    documents.forEach(doc => {
+      const match = doc.documentType && doc.documentType.match(/_([0-9]+)$/);
+      if (match) {
+        const num = match[1];
+        if (!directorDocs[num]) directorDocs[num] = [];
+        directorDocs[num].push(doc);
+      } else {
+        commonDocs.push(doc);
+      }
+    });
+    const hasGroups = Object.keys(directorDocs).length > 0;
+    const DocCard = ({ doc }) => {
       const isPDF = doc.fileName.toLowerCase().endsWith('.pdf');
-      
+      const label = doc.documentType ? doc.documentType.replace(/_[0-9]+$/, '').replace(/([A-Z])/g, ' $1').trim() : doc.fileName;
       return (
-        <div key={doc.id} className="border rounded-lg p-2 bg-white shadow">
+        <div className="border rounded-lg p-2 bg-white shadow">
           {isPDF ? (
-            <div 
-              className="w-full h-24 bg-red-50 rounded flex items-center justify-center cursor-pointer hover:bg-red-100 transition"
-              onClick={() => window.open(`http://localhost:8080/uploads/${doc.fileName}`)}
-            >
-              <div className="text-center">
-                <svg className="w-12 h-12 mx-auto text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M4 18h12V6h-4V2H4v16zm-2 1V0h12l4 4v16H2v-1z"/>
-                  <text x="50%" y="60%" fontSize="6" fill="currentColor" textAnchor="middle" fontWeight="bold">PDF</text>
-                </svg>
-              </div>
+            <div className="w-full h-20 bg-red-50 rounded flex items-center justify-center cursor-pointer hover:bg-red-100 transition" onClick={() => window.open(`http://localhost:8080/uploads/${doc.fileName}`)}>
+              <svg className="w-10 h-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12V6h-4V2H4v16zm-2 1V0h12l4 4v16H2v-1z"/></svg>
             </div>
           ) : (
-            <img
-              src={`http://localhost:8080/uploads/${doc.fileName}`}
-              alt={doc.fileName}
-              className="w-full h-24 object-cover rounded cursor-pointer"
-              onClick={() => window.open(`http://localhost:8080/uploads/${doc.fileName}`)}
-            />
+            <img src={`http://localhost:8080/uploads/${doc.fileName}`} alt={doc.fileName} className="w-full h-20 object-cover rounded cursor-pointer" onClick={() => window.open(`http://localhost:8080/uploads/${doc.fileName}`)} />
           )}
-
-          <p className="text-xs mt-1 truncate">{doc.fileName}</p>
-
-          <button
-            onClick={() => {
-              fetch(`http://localhost:8080/uploads/${doc.fileName}`)
-                .then(response => response.blob())
-                .then(blob => {
-                  const url = window.URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = doc.fileName;
-                  document.body.appendChild(a);
-                  a.click();
-                  window.URL.revokeObjectURL(url);
-                  document.body.removeChild(a);
-                })
-                .catch(err => console.error('Download failed:', err));
-            }}
-            className="block mt-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 rounded cursor-pointer w-full"
-          >
-            Download
-          </button>
+          <p className="text-xs mt-1 text-gray-500 capitalize truncate">{label}</p>
+          <button onClick={() => { fetch(`http://localhost:8080/uploads/${doc.fileName}`).then(r => r.blob()).then(blob => { const url = window.URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = doc.fileName; document.body.appendChild(a); a.click(); window.URL.revokeObjectURL(url); document.body.removeChild(a); }).catch(err => console.error('Download failed:', err)); }} className="block mt-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 rounded w-full">Download</button>
         </div>
       );
-    })}
-  </div>
+    };
+    return (
+      <>
+        {hasGroups ? Object.keys(directorDocs).sort().map(num => (
+          <div key={num} className="mb-4">
+            <p className="text-xs font-bold text-blue-700 mb-2 bg-blue-50 px-2 py-1 rounded">Director / Partner {num}</p>
+            <div className="grid grid-cols-2 gap-2">
+              {directorDocs[num].map(doc => <DocCard key={doc.id} doc={doc} />)}
+            </div>
+          </div>
+        )) : null}
+        {commonDocs.length > 0 && (
+          <div className="mb-2">
+            {hasGroups && <p className="text-xs font-bold text-gray-600 mb-2 bg-gray-100 px-2 py-1 rounded">Common Documents</p>}
+            <div className="grid grid-cols-2 gap-2">
+              {commonDocs.map(doc => <DocCard key={doc.id} doc={doc} />)}
+            </div>
+          </div>
+        )}
+      </>
+    );
+  })()}
 </div>
                   </div>
                 </div>
@@ -356,7 +450,7 @@ const AdminOrders = () => {
                 </div>
               </div>
             </div>
-          )}
+          ); })()}
     </AdminLayout>
   );
 };

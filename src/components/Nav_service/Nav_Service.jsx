@@ -57,19 +57,17 @@ const handleApplyClick = (slug) => {
 
   const services = [
     {
-      title: "Pan Card(पॅन कार्ड)",
+      title: "Pan Card (पॅन कार्ड)",
       desc: "Apply, update, or reprint your PAN card easily.",
       img: panImg,
       slug: "pan",
     },
-
     {
-      title: "Systematic Investment Plan(SIP)सिस्टेमॅटिक इन्व्हेस्टमेंट प्लान)",
+      title: "Systematic Investment Plan (SIP) (सिस्टेमॅटिक इन्व्हेस्टमेंट प्लान)",
       desc: "Register or correct SIP details.",
       img: SIPImg,
       slug: "sip",
     },
-
     {
       title: "Voter ID (मतदार ओळखपत्र)",
       desc: "Register or correct Voter ID details.",
@@ -88,7 +86,6 @@ const handleApplyClick = (slug) => {
       img: rationImg,
       slug: "ration-card",
     },
-
     {
       title: "Gazette Certificate (गॅझेट प्रमाणपत्र)",
       desc: "Apply for Gazette publication for name change, record updates.",
@@ -102,32 +99,25 @@ const handleApplyClick = (slug) => {
       slug: "shop-act",
     },
     {
-      title: "Udyam Aadhaar(उद्यम आधार)",
+      title: "Udyam Aadhaar (उद्यम आधार)",
       desc: "Register your Udyam Aadhaar MSME for benefits.",
       img: udyamImg,
       slug: "udyog-aadhaar",
     },
-
     {
       title: "FSSAI Food License (फूड लायसन्स)",
       desc: "Get your FSSAI license to run a food business legally.",
       img: foodImg,
       slug: "food",
     },
-    // {
-    //   title: "Senior Certificate(ज्येष्ठ नागरिक दाखला)",
-    //   desc: "Get your senior citizen certificate for government benefits.",
-    //   img: Scitizen,
-    //   slug: "senior",
-    // },
     {
-      title: "Income Tax Return(ITR)(उत्पन्न कर विवरण)",
+      title: "Income Tax Return (ITR) (उत्पन्न कर विवरण)",
       desc: "File your Income Tax Return easily.",
       img: Incomtax,
       slug: "ITR",
     },
     {
-      title: "Import Export card(IEC)(आयात निर्यात कोड)",
+      title: "Import Export Code (IEC) (आयात निर्यात कोड)",
       desc: "File your Import Export Code (IEC) application.",
       img: IECImg,
       slug: "iec",
@@ -138,12 +128,6 @@ const handleApplyClick = (slug) => {
       img: Gst,
       slug: "gst",
     },
-    // {
-    //   title: "Trademark (वैयक्तिक किंवा कंपनीचा नांव व चिन्हाची नोंदणी)",
-    //   desc: "File your trademark registration or update details.",
-    //   img: Trademark,
-    //   slug: "trademark",
-    // },
     {
       title: "Insurance (विमा)",
       desc: "File your insurance application or update details.",
@@ -162,20 +146,8 @@ const handleApplyClick = (slug) => {
       img: Agriment,
       slug: "rent-agreement",
     },
-    // {
-    //   title: "e-shram card(ई-श्रम कार्ड)",
-    //   desc: "File your e-shram card application or update details.",
-    //   img: Eshram,
-    //   slug: "e-shram-card",
-    // },
-    // {
-    //   title: "Ayushman card (आयुष्मान कार्ड)",
-    //   desc: "File your Ayushman card application or update details.",
-    //   img: Ayushman,
-    //   slug: "ayushman-card",
-    // },
     {
-      title: "vehicle insurance (वाहन विमा)",
+      title: "Vehicle Insurance (वाहन विमा)",
       desc: "File your vehicle insurance application or update details.",
       img: Vinsurance,
       slug: "vehicle-insurance",
@@ -216,12 +188,6 @@ const handleApplyClick = (slug) => {
       img: AadhaarImg,
       slug: "aadhaar-card",
     },
-    // {
-    //   title: "Public Financial Services (सार्वजनिक आर्थिक सेवा)",
-    //   desc: "Apply for public financial services.",
-    //   img: Finance,
-    //   slug: "public-financial-services",
-    // },
 
 
   ];
