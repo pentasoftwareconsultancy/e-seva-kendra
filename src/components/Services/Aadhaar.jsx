@@ -164,7 +164,6 @@ function Aadhaar() {
 
           <form onSubmit={handleSubmit} className="p-4 sm:p-6 md:p-10 space-y-6 sm:space-y-8">
 
-            {/* PERSONAL DETAILS */}
             <div>
               <h3 className="text-sm sm:text-lg font-bold text-gray-700 mb-3 sm:mb-4 pb-2 border-b-2 border-blue-100 flex items-center gap-2">
                 <span className="w-6 h-6 sm:w-7 sm:h-7 bg-blue-900 text-white rounded-full flex items-center justify-center text-xs sm:text-sm">
@@ -175,6 +174,7 @@ function Aadhaar() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
 
+                {/* FULL NAME */}
                 <div>
                   <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">
                     Full Name (पूर्ण नाव)
@@ -189,8 +189,12 @@ function Aadhaar() {
                     placeholder="Enter Full Name"
                     className="w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {errors.fullName && (
+                    <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+                  )}
                 </div>
 
+                {/* MOBILE */}
                 <div>
                   <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">
                     Mobile Number (मोबाईल नंबर)
@@ -205,6 +209,9 @@ function Aadhaar() {
                     placeholder="Enter Mobile Number"
                     className="w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {errors.mobile && (
+                    <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>
+                  )}
                 </div>
 
               </div>
