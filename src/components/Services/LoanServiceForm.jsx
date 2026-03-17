@@ -270,28 +270,52 @@ function LoanServiceForm() {
           </div>
 
           <div className="p-6 sm:p-10">
-            <form
-              onSubmit={handleSubmit}
-              className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
-            >
-              <InputField
-                label="Full Name (पूर्ण नाव)"
-                value={formData.fullName}
-                onChange={(e) => {
-                  const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
-                  setFormData({ ...formData, fullName: value });
-                }}
-              />
-              <InputField
-                label="Mobile (मोबाईल नंबर)"
-                value={formData.mobile}
-                onChange={(e) => {
-                  const value = e.target.value
-                    .replace(/[^0-9]/g, "")
-                    .slice(0, 10);
-                  setFormData({ ...formData, mobile: value });
-                }}
-              />
+          <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
+
+  {/* PERSONAL DETAILS */}
+  <div>
+    <h3 className="text-sm sm:text-lg font-bold text-gray-700 mb-3 sm:mb-4 pb-2 border-b-2 border-blue-100 flex items-center gap-2">
+      <span className="w-6 h-6 sm:w-7 sm:h-7 bg-blue-900 text-white rounded-full flex items-center justify-center text-xs sm:text-sm">
+        1
+      </span>
+      Personal Details
+    </h3>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
+
+      <InputField
+        label="Full Name (पूर्ण नाव)"
+        value={formData.fullName}
+        onChange={(e) => {
+          const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
+          setFormData({ ...formData, fullName: value });
+        }}
+      />
+
+      <InputField
+        label="Mobile (मोबाईल नंबर)"
+        value={formData.mobile}
+        onChange={(e) => {
+          const value = e.target.value.replace(/[^0-9]/g, "").slice(0, 10);
+          setFormData({ ...formData, mobile: value });
+        }}
+      />
+
+    </div>
+  </div>
+
+    {/* DOCUMENT UPLOAD */}
+  <div>
+    <h3 className="text-sm sm:text-lg font-bold text-gray-700 mb-3 sm:mb-4 pb-2 border-b-2 border-blue-100 flex items-center gap-2">
+      <span className="w-6 h-6 sm:w-7 sm:h-7 bg-blue-900 text-white rounded-full flex items-center justify-center text-xs sm:text-sm">
+        2
+      </span>
+      Upload Documents
+    </h3>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        
+    </div>
 
               {/* Personal Loan Upload Fields */}
               {selectedLoan === "personal" && (
@@ -528,6 +552,7 @@ function LoanServiceForm() {
                 >
                   Submit Application
                 </button>
+                </div>
               </div>
             </form>
           </div>
