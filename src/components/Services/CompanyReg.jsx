@@ -22,12 +22,39 @@ function CompanyReg() {
   };
 
   const validateForm = () => {
-    const newErrors = {};
-    if (!formData.fullName.trim() || formData.fullName.trim().length < 3) newErrors.fullName = "Name must be at least 3 characters";
-    if (!/^[0-9]{10}$/.test(formData.mobile)) newErrors.mobile = "Mobile number must be exactly 10 digits";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  const newErrors = {};
+
+  if (!formData.fullName.trim() || formData.fullName.trim().length < 3)
+    newErrors.fullName = "Name must be at least 3 characters";
+
+  if (!/^[0-9]{10}$/.test(formData.mobile))
+    newErrors.mobile = "Mobile number must be exactly 10 digits";
+
+  // ✅ File validation based on company type
+  if (selectedCompany === "private") {
+    if (!files.aadhaar) newErrors.aadhaar = "Aadhaar is required";
+    if (!files.panCard) newErrors.panCard = "PAN is required";
+    if (!files.bankStatement) newErrors.bankStatement = "Director ID Proof is required";
+    if (!files.salarySlip) newErrors.salarySlip = "Address Proof is required";
+  }
+
+  if (selectedCompany === "public") {
+    if (!files.aadhaar) newErrors.aadhaar = "Aadhaar is required";
+    if (!files.panCard) newErrors.panCard = "PAN is required";
+    if (!files.gstCertificate) newErrors.gstCertificate = "Company Docs required";
+    if (!files.bankStatement) newErrors.bankStatement = "Bank Statement required";
+  }
+
+  if (selectedCompany === "llp") {
+    if (!files.aadhaar) newErrors.aadhaar = "Aadhaar is required";
+    if (!files.panCard) newErrors.panCard = "PAN is required";
+    if (!files.incomeProof) newErrors.incomeProof = "Partnership Deed required";
+    if (!files.propertyDocs) newErrors.propertyDocs = "Address Proof required";
+  }
+
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -241,28 +268,28 @@ function CompanyReg() {
 
   {selectedCompany === "private" && (
     <>
-      <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-      <UploadBox label="PAN Card" fileData={files.panCard} onChange={(e) => handleFileChange(e, "panCard")} />
-      <UploadBox label="Director ID Proof" fileData={files.bankStatement} onChange={(e) => handleFileChange(e, "bankStatement")} />
-      <UploadBox label="Address Proof" fileData={files.salarySlip} onChange={(e) => handleFileChange(e, "salarySlip")} />
+      <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} error={errors.aadhaar} />
+      <UploadBox label="PAN Card" fileData={files.panCard} onChange={(e) => handleFileChange(e, "panCard")} error={errors.panCard} />
+      <UploadBox label="Director ID Proof" fileData={files.bankStatement} onChange={(e) => handleFileChange(e, "bankStatement")} error={errors.bankStatement} />
+      <UploadBox label="Address Proof" fileData={files.salarySlip} onChange={(e) => handleFileChange(e, "salarySlip")} error={errors.salarySlip} />
     </>
   )}
 
   {selectedCompany === "public" && (
     <>
-      <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-      <UploadBox label="PAN Card" fileData={files.panCard} onChange={(e) => handleFileChange(e, "panCard")} />
-      <UploadBox label="Company Documents" fileData={files.gstCertificate} onChange={(e) => handleFileChange(e, "gstCertificate")} />
-      <UploadBox label="Bank Statement" fileData={files.bankStatement} onChange={(e) => handleFileChange(e, "bankStatement")} />
+      <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} error={errors.aadhaar} />
+      <UploadBox label="PAN Card" fileData={files.panCard} onChange={(e) => handleFileChange(e, "panCard")} error={errors.panCard} />
+      <UploadBox label="Company Documents" fileData={files.gstCertificate} onChange={(e) => handleFileChange(e, "gstCertificate")} error={errors.gstCertificate} />
+      <UploadBox label="Bank Statement" fileData={files.bankStatement} onChange={(e) => handleFileChange(e, "bankStatement")} error={errors.bankStatement} />
     </>
   )}
 
   {selectedCompany === "llp" && (
     <>
-      <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-      <UploadBox label="PAN Card" fileData={files.panCard} onChange={(e) => handleFileChange(e, "panCard")} />
-      <UploadBox label="Partnership Deed" fileData={files.incomeProof} onChange={(e) => handleFileChange(e, "incomeProof")} />
-      <UploadBox label="Address Proof" fileData={files.propertyDocs} onChange={(e) => handleFileChange(e, "propertyDocs")} />
+      <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} error={errors.aadhaar} />
+      <UploadBox label="PAN Card" fileData={files.panCard} onChange={(e) => handleFileChange(e, "panCard")} error={errors.panCard} />
+      <UploadBox label="Partnership Deed" fileData={files.incomeProof} onChange={(e) => handleFileChange(e, "incomeProof")} error={errors.incomeProof} />
+      <UploadBox label="Address Proof" fileData={files.propertyDocs} onChange={(e) => handleFileChange(e, "propertyDocs")} error={errors.propertyDocs} />
     </>
   )}
 
@@ -280,11 +307,16 @@ function CompanyReg() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, error }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">
+        {label} <span className="text-red-500">*</span>
+      </label>
+
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border ${
+        error ? "border-red-500" : "border-gray-200"
+      }`}>
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs text-gray-600">
             Upload Document
@@ -304,6 +336,8 @@ function UploadBox({ label, fileData, onChange }) {
             {fileData.file.name}
           </p>
         )}
+
+        {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
       </div>
     </div>
   );
