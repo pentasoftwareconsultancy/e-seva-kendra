@@ -18,7 +18,9 @@ const AdminPayments = () => {
       .then(data => {
         const formatted = data.map(pay => ({
           id: pay.id,
+          userId: pay.userId,
           user: pay.name,
+          mobile: null,
           service: pay.serviceName,
           amount: "₹" + pay.amount,
           method: "UPI",
@@ -26,7 +28,21 @@ const AdminPayments = () => {
           status: pay.paymentStatus,
           screenshot: "http://localhost:8080/uploads/" + pay.screenshot
         }));
-        setPayments(formatted.reverse());
+        const reversed = formatted.reverse();
+        setPayments(reversed);
+
+        reversed.forEach(pay => {
+          if (pay.userId) {
+            fetch(`http://localhost:8080/api/users/${pay.userId}`)
+              .then(res => res.json())
+              .then(user => {
+                setPayments(prev => prev.map(p =>
+                  p.id === pay.id ? { ...p, user: user.name || p.user, mobile: user.phone || null } : p
+                ));
+              })
+              .catch(() => {});
+          }
+        });
       })
       .catch(err => console.error(err));
   }, []);
@@ -133,7 +149,9 @@ const AdminPayments = () => {
       )}
 
       {/* Payment Details Modal */}
-      {selectedPayment && (
+      {selectedPayment && (() => {
+        const displayPayment = payments.find(p => p.id === selectedPayment.id) || selectedPayment;
+        return (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-3 sm:p-4" onClick={() => setSelectedPayment(null)}>
           <div className="bg-white rounded-lg shadow-2xl w-full max-w-[98vw] md:max-w-4xl h-[95vh] md:h-[85vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
             
@@ -159,32 +177,36 @@ const AdminPayments = () => {
                 <div className="space-y-2 sm:space-y-3 md:space-y-4">
                   <div>
                     <p className="text-[10px] sm:text-xs text-gray-500 mb-1">Payment ID</p>
-                    <p className="text-xs sm:text-sm md:text-sm font-bold text-gray-900">PAY#{selectedPayment.id}</p>
+                    <p className="text-xs sm:text-sm md:text-sm font-bold text-gray-900">PAY#{displayPayment.id}</p>
                   </div>
                   <div>
                     <p className="text-[10px] sm:text-xs text-gray-500 mb-1">Customer Name</p>
-                    <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-900 break-all">{selectedPayment.user}</p>
+                    <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-900 break-all">{displayPayment.user}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] sm:text-xs text-gray-500 mb-1">Mobile</p>
+                    <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-900">{displayPayment.mobile || '-'}</p>
                   </div>
                   <div>
                     <p className="text-[10px] sm:text-xs text-gray-500 mb-1">Service</p>
-                    <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-900 break-all">{selectedPayment.service}</p>
+                    <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-900 break-all">{displayPayment.service}</p>
                   </div>
                   <div>
                     <p className="text-[10px] sm:text-xs text-gray-500 mb-1">Payment Method</p>
-                    <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-900">{selectedPayment.method}</p>
+                    <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-900">{displayPayment.method}</p>
                   </div>
                   <div>
                     <p className="text-[10px] sm:text-xs text-gray-500 mb-1">Date</p>
-                    <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-900">{selectedPayment.date}</p>
+                    <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-900">{displayPayment.date}</p>
                   </div>
                   <div className="pt-2 border-t">
                     <p className="text-[10px] sm:text-xs text-gray-500 mb-1">Amount</p>
-                    <p className="text-lg sm:text-xl md:text-2xl font-bold text-green-600">{selectedPayment.amount}</p>
+                    <p className="text-lg sm:text-xl md:text-2xl font-bold text-green-600">{displayPayment.amount}</p>
                   </div>
                   <div>
                     <p className="text-[10px] sm:text-xs text-gray-500 mb-2">Status</p>
-                    <span className={`inline-block px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold ${statusStyle[selectedPayment.status]}`}>
-                      {selectedPayment.status}
+                    <span className={`inline-block px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold ${statusStyle[displayPayment.status]}`}>
+                      {displayPayment.status}
                     </span>
                   </div>
                 </div>
@@ -194,9 +216,9 @@ const AdminPayments = () => {
               <div className="w-full md:w-3/5 p-3 sm:p-4 md:p-6 flex flex-col items-center overflow-y-auto">
                 <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-700 mb-2 md:mb-3 self-start">Payment Screenshot</p>
                 <div className="w-full max-w-[280px] sm:max-w-xs md:w-80 flex-1 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden">
-                  {selectedPayment.screenshot ? (
+                  {displayPayment.screenshot ? (
                     <img
-                      src={selectedPayment.screenshot}
+                      src={displayPayment.screenshot}
                       alt="Payment Screenshot"
                       className="max-w-full max-h-full object-contain"
                     />
@@ -221,7 +243,7 @@ const AdminPayments = () => {
             </div>
           </div>
         </div>
-      )}
+        ); })()}
     </AdminLayout>
   );
 };
