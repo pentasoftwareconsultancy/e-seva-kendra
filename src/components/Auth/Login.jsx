@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import illustrationImg from "../../assets/Auth/register-illustration.png";
 import avtarImg from "../../assets/Auth/register-avtar.png";
  
@@ -9,6 +10,21 @@ export default function Login() {
  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("rememberedEmail");
+    const savedPassword = localStorage.getItem("rememberedPassword");
+    
+    if (savedEmail && savedPassword) {
+      setEmail(savedEmail);
+      setPassword(savedPassword);
+      setRememberMe(true);
+    }
+  }, []);
  
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -36,36 +52,48 @@ export default function Login() {
         localStorage.setItem("userId", data.id);
         localStorage.setItem("userEmail", data.email);
         localStorage.setItem("userName", data.name);
+
+        if (rememberMe) {
+          localStorage.setItem("rememberedEmail", email);
+          localStorage.setItem("rememberedPassword", password);
+        } else {
+          localStorage.removeItem("rememberedEmail");
+          localStorage.removeItem("rememberedPassword");
+        }
  
-        alert("Login Successful");
+        setSuccessMessage("Login successful! Redirecting...");
  
         // Redirect based on email domain
-        if(data.email.endsWith("@eseva.com")){
-          sessionStorage.setItem("adminAuth", "true");
-          sessionStorage.setItem("adminEmail", data.email);
-          navigate("/admin/dashboard");
-        } else {
-          // check if user clicked service before login
-          const redirectService = sessionStorage.getItem("redirectService");
-          
-          if (redirectService) {
-            sessionStorage.removeItem("redirectService");
-            navigate(`/apply/${redirectService}`);
+        setTimeout(() => {
+          if(data.email.endsWith("@eseva.com")){
+            sessionStorage.setItem("adminAuth", "true");
+            sessionStorage.setItem("adminEmail", data.email);
+            navigate("/admin/dashboard");
           } else {
-            navigate("/");
+            // check if user clicked service before login
+            const redirectService = sessionStorage.getItem("redirectService");
+            
+            if (redirectService) {
+              sessionStorage.removeItem("redirectService");
+              navigate(`/apply/${redirectService}`);
+            } else {
+              navigate("/");
+            }
           }
-        }
+        }, 1500);
  
       } else {
  
-        alert(data.message || "Invalid credentials");
+        setErrorMessage(data.message || "Invalid credentials");
+        setTimeout(() => setErrorMessage(""), 3000);
  
       }
  
     } catch (error) {
  
       console.error(error);
-      alert("Login failed");
+      setErrorMessage("Login failed. Please check your credentials.");
+      setTimeout(() => setErrorMessage(""), 3000);
  
     }
   };
@@ -149,6 +177,18 @@ export default function Login() {
             <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-slate-900">
               Login to Continue
             </h3>
+
+            {successMessage && (
+              <div className="mb-4 p-3 bg-green-50 border border-green-300 rounded-lg text-green-700 text-sm">
+                {successMessage}
+              </div>
+            )}
+
+            {errorMessage && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-300 rounded-lg text-red-700 text-sm">
+                {errorMessage}
+              </div>
+            )}
  
             <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5">
  
@@ -160,20 +200,24 @@ export default function Login() {
                 className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
               />
  
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-              />
- 
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-sm">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" className="w-4 h-4" />
-                  <span className="text-gray-600">Remember me</span>
-                </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
+ 
+              
  
               <button
                 type="submit"
