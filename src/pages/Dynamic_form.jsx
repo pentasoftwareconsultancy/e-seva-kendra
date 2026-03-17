@@ -22,6 +22,10 @@ import VehicleInsurance from "../components/Services/VehicleInsurance";
 import DMartAccountForm from "../components/Services/DMartAccountForm";
 import LoanServiceForm from "../components/Services/LoanServiceForm";
 import PublicFinancialServices from "../components/Services/PublicFinanceService";
+import CompanyReg from "../components/Services/CompanyReg";
+import Goverment from "../components/Services/Goverment";
+import Driving from "../components/Services/Driving";
+import Aadhaar from "../components/Services/Aadhaar";
 
 function Dynamic_form() {
   const { serviceName } = useParams();
@@ -55,6 +59,10 @@ function Dynamic_form() {
   if (serviceName === "demat-account") return <DMartAccountForm />;
   if (serviceName === "loan") return <LoanServiceForm />;
   if (serviceName === "public-financial-services") return <PublicFinancialServices />;
+  if (serviceName === "company-registration") return <CompanyReg/>;
+  if (serviceName === "government-bonds") return <Goverment />;
+  if (serviceName === "driving-license") return <Driving />;
+if (serviceName === "aadhaar-card") return <Aadhaar />;
 
   const serviceComponents = {
     "itr": ITRForm,
@@ -80,6 +88,10 @@ function Dynamic_form() {
     "food": Food, 
     "senior": Senior,
     "voter": VoterID,
+      "company-registration": CompanyReg,
+        "government-bonds": Goverment,
+        "driving-license": Driving,
+        "aadhaar-card": Aadhaar,
   };
 
   const Component = serviceComponents[serviceName];
