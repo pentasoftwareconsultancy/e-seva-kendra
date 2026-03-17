@@ -33,6 +33,12 @@ function DrivingLicense() {
         applicantName: formData.fullName,
         mobile: formData.mobile,
         Amount: vehicleType === "2wheeler" ? 500 : 800,
+        formData,
+        documents: {
+          aadhaar: files.aadhaar?.file,
+          photo: files.photo?.file,
+          signature: files.signature?.file,
+        }
       }
     });
   };
