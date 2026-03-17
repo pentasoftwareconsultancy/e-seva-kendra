@@ -14,14 +14,14 @@ import loan from "../../assets/services/loan.png";
 import Demat from "../../assets/services/Demat.png";
 // import Finance from "../../assets/services/Finance.png";
 import Insurance from "../../assets/services/Insurance.png";
-import Eshram from "../../assets/services/Eshram.png";
+// import Eshram from "../../assets/services/Eshram.png";
 import Mutualfunds from "../../assets/services/Mutualfunds.jpg";
-import Scitizen from "../../assets/services/Scitizen.jpg";
+// import Scitizen from "../../assets/services/Scitizen.jpg";
 import Agriment from "../../assets/services/Agriment.png";
 // import Trademark from "../../assets/services/Trademark.jpg";
 import Gst from "../../assets/services/gst.png";
 import Vinsurance from "../../assets/services/Vinsurance.png";
-import Ayushman from "../../assets/services/Ayushman.png";
+// import Ayushman from "../../assets/services/Ayushman.png";
 import SIPImg from "../../assets/services/SIP.png";
 import IECImg from "../../assets/services/IEC.png";
 
