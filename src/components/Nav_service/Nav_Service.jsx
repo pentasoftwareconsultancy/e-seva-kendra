@@ -12,13 +12,13 @@ import foodImg from "../../assets/services/food.png";
 import Incomtax from "../../assets/services/Incomtax.jpg";
 import loan from "../../assets/services/loan.png";
 import Demat from "../../assets/services/Demat.png";
-import Finance from "../../assets/services/Finance.png";
+// import Finance from "../../assets/services/Finance.png";
 import Insurance from "../../assets/services/Insurance.png";
 import Eshram from "../../assets/services/Eshram.png";
 import Mutualfunds from "../../assets/services/Mutualfunds.jpg";
 import Scitizen from "../../assets/services/Scitizen.jpg";
 import Agriment from "../../assets/services/Agriment.png";
-import Trademark from "../../assets/services/Trademark.jpg";
+// import Trademark from "../../assets/services/Trademark.jpg";
 import Gst from "../../assets/services/gst.png";
 import Vinsurance from "../../assets/services/Vinsurance.png";
 import Ayushman from "../../assets/services/Ayushman.png";
@@ -110,12 +110,12 @@ const handleApplyClick = (slug) => {
       img: foodImg,
       slug: "food",
     },
-    {
-      title: "Senior Certificate(ज्येष्ठ नागरिक दाखला)",
-      desc: "Get your senior citizen certificate for government benefits.",
-      img: Scitizen,
-      slug: "senior",
-    },
+    // {
+    //   title: "Senior Certificate(ज्येष्ठ नागरिक दाखला)",
+    //   desc: "Get your senior citizen certificate for government benefits.",
+    //   img: Scitizen,
+    //   slug: "senior",
+    // },
     {
       title: "Income tax Return (ITR)(उत्पन्न कर विवरण)",
       desc: "File your Income Tax Return easily.",
@@ -134,12 +134,12 @@ const handleApplyClick = (slug) => {
       img: Gst,
       slug: "gst",
     },
-    {
-      title: "Trademark (वैयक्तिक किंवा कंपनीचा नांव व चिन्हाची नोंदणी)",
-      desc: "File your trademark registration or update details.",
-      img: Trademark,
-      slug: "trademark",
-    },
+    // {
+    //   title: "Trademark (वैयक्तिक किंवा कंपनीचा नांव व चिन्हाची नोंदणी)",
+    //   desc: "File your trademark registration or update details.",
+    //   img: Trademark,
+    //   slug: "trademark",
+    // },
     {
       title: "Insurance (विमा)",
       desc: "File your insurance application or update details.",
@@ -158,18 +158,18 @@ const handleApplyClick = (slug) => {
       img: Agriment,
       slug: "rent-agreement",
     },
-    {
-      title: "e-shram card(ई-श्रम कार्ड)",
-      desc: "File your e-shram card application or update details.",
-      img: Eshram,
-      slug: "e-shram-card",
-    },
-    {
-      title: "Ayushman card (आयुष्मान कार्ड)",
-      desc: "File your Ayushman card application or update details.",
-      img: Ayushman,
-      slug: "ayushman-card",
-    },
+    // {
+    //   title: "e-shram card(ई-श्रम कार्ड)",
+    //   desc: "File your e-shram card application or update details.",
+    //   img: Eshram,
+    //   slug: "e-shram-card",
+    // },
+    // {
+    //   title: "Ayushman card (आयुष्मान कार्ड)",
+    //   desc: "File your Ayushman card application or update details.",
+    //   img: Ayushman,
+    //   slug: "ayushman-card",
+    // },
     {
       title: "vehicle insurance (वाहन विमा)",
       desc: "File your vehicle insurance application or update details.",
@@ -188,12 +188,12 @@ const handleApplyClick = (slug) => {
       img: loan,
       slug: "loan",
     },
-    {
-      title: "Public Financial Services (सार्वजनिक आर्थिक सेवा)",
-      desc: "Apply for public financial services.",
-      img: Finance,
-      slug: "public-financial-services",
-    },
+    // {
+    //   title: "Public Financial Services (सार्वजनिक आर्थिक सेवा)",
+    //   desc: "Apply for public financial services.",
+    //   img: Finance,
+    //   slug: "public-financial-services",
+    // },
 
   ];
 
