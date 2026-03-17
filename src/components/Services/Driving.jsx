@@ -46,7 +46,7 @@ function DrivingLicense() {
   return (
     <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
 
-      {/* HERO */}
+      {/* HERO section  */}
       <section className="relative w-full h-[250px] sm:h-[350px] md:h-[400px] flex items-center bg-gradient-to-r from-[#0b2c6d] to-[#1e40af]">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full">
           <div className="w-full md:w-1/2 space-y-4 text-white">
