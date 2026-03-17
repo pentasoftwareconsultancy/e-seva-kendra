@@ -57,14 +57,14 @@ const handleApplyClick = (slug) => {
 
   const services = [
     {
-      title: "PAN Card(पॅन कार्ड)",
+      title: "Pan Card(पॅन कार्ड)",
       desc: "Apply, update, or reprint your PAN card easily.",
       img: panImg,
       slug: "pan",
     },
 
     {
-      title: "Systematic Investment Plan (SIP)(सिस्टेमॅटिक इन्व्हेस्टमेंट प्लान)",
+      title: "Systematic Investment Plan(SIP)सिस्टेमॅटिक इन्व्हेस्टमेंट प्लान)",
       desc: "Register or correct SIP details.",
       img: SIPImg,
       slug: "sip",
@@ -96,20 +96,20 @@ const handleApplyClick = (slug) => {
       slug: "gazette",
     },
     {
-      title: "Shop Act(दुकान नोंदणी)",
+      title: "Shop Act (दुकान नोंदणी)",
       desc: "Register your business under Shop Act.",
       img: shopImg,
       slug: "shop-act",
     },
     {
-      title: "Udyog Aadhaar(उद्योग आधार)",
-      desc: "Register your Udyog Aadhaar MSME for benefits.",
+      title: "Udyam Aadhaar(उद्यम आधार)",
+      desc: "Register your Udyam Aadhaar MSME for benefits.",
       img: udyamImg,
       slug: "udyog-aadhaar",
     },
 
     {
-      title: "Food License (फूड लायसन्स)",
+      title: "FSSAI Food License (फूड लायसन्स)",
       desc: "Get your FSSAI license to run a food business legally.",
       img: foodImg,
       slug: "food",
@@ -121,13 +121,13 @@ const handleApplyClick = (slug) => {
     //   slug: "senior",
     // },
     {
-      title: "Income tax Return (ITR)(उत्पन्न कर विवरण)",
+      title: "Income Tax Return(ITR)(उत्पन्न कर विवरण)",
       desc: "File your Income Tax Return easily.",
       img: Incomtax,
       slug: "ITR",
     },
     {
-      title: "Import export card (IEC) (आयात निर्यात कोड)",
+      title: "Import Export card(IEC)(आयात निर्यात कोड)",
       desc: "File your Import Export Code (IEC) application.",
       img: IECImg,
       slug: "iec",
@@ -151,13 +151,13 @@ const handleApplyClick = (slug) => {
       slug: "insurance",
     },
     {
-      title: "mutual fund(म्युच्युअल फंड)",
+      title: "Mutual Fund (म्युच्युअल फंड)",
       desc: "File your mutual fund application or update details.",
       img: Mutualfunds,
       slug: "mutual-fund",
     },
     {
-      title: "rent agreement (भाडे करार)",
+      title: "Rent Agreement (भाडे करार)",
       desc: "File your rent agreement application or update details.",
       img: Agriment,
       slug: "rent-agreement",
