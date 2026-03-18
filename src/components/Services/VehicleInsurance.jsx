@@ -29,7 +29,7 @@ function VehicleInsurance() {
     const missingFiles = { rc: !files.rc, license: !files.license, aadhaar: !files.aadhaar, photo: !files.photo };
     setFileErrors(missingFiles);
     if (Object.values(missingFiles).some(Boolean)) return;
-    navigate("/payment", { state: { serviceName: "Vehicle Insurance", applicantName: formData.fullName, mobile: formData.mobile, Amount: vehicleType === "two" ? 800 : 1200, type: vehicleType, formData, documents: { rc: files.rc?.file, license: files.license?.file, aadhaar: files.aadhaar?.file, photo: files.photo?.file, previousPolicy: files.previousPolicy?.file } } });
+    navigate("/payment", { state: { serviceName: "Vehicle Insurance", applicantName: formData.fullName, mobile: formData.mobile, Amount: vehicleType === "two" ? "5000" : "5000", type: vehicleType, formData, documents: { rc: files.rc?.file, license: files.license?.file, aadhaar: files.aadhaar?.file, photo: files.photo?.file, previousPolicy: files.previousPolicy?.file } } });
   };
 
   return (

@@ -28,7 +28,7 @@ function DMartAccountForm() {
     const missingFiles = { aadhaar: !files.aadhaar, addressProof: !files.addressProof, photo: !files.photo, bankDetails: !files.bankDetails };
     setFileErrors(missingFiles);
     if (Object.values(missingFiles).some(Boolean)) return;
-    navigate("/payment", { state: { serviceName: "DMat Account Registration", applicantName: formData.fullName, mobile: formData.mobile, Amount: 250, type: "dmart", formData, documents: { aadhaar: files.aadhaar?.file, addressProof: files.addressProof?.file, photo: files.photo?.file, bankDetails: files.bankDetails?.file } } });
+    navigate("/payment", { state: { serviceName: "DMat Account Registration", applicantName: formData.fullName, mobile: formData.mobile, Amount: "10000", type: "dmart", formData, documents: { aadhaar: files.aadhaar?.file, addressProof: files.addressProof?.file, photo: files.photo?.file, bankDetails: files.bankDetails?.file } } });
   };
 
   return (

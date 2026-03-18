@@ -106,7 +106,7 @@ navigate("/payment", {
     serviceName: companyTypes.find((l) => l.id === selectedCompany)?.title,
     applicantName: formData.fullName,
     mobile: formData.mobile,
-    Amount: 500,
+    Amount: 20000,
     type: selectedCompany,
     formData: { ...formData, ...directorInfo },
     documents: docs,

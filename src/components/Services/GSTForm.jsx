@@ -29,7 +29,7 @@ function GSTForm() {
     if (!files.businessProof) newErrors.businessProof = "Required";
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
-    navigate("/payment", { state: { serviceName: "GST Registration", applicantName: formData.fullName, mobile: formData.mobile, Amount: 2000, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, addressProof: files.addressProof?.file, bankProof: files.bankProof?.file, photo: files.photo?.file, businessProof: files.businessProof?.file } } });
+    navigate("/payment", { state: { serviceName: "GST Registration", applicantName: formData.fullName, mobile: formData.mobile, Amount: 3000, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, addressProof: files.addressProof?.file, bankProof: files.bankProof?.file, photo: files.photo?.file, businessProof: files.businessProof?.file } } });
   };
 
   return (

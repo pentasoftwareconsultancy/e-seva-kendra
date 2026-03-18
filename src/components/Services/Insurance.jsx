@@ -48,7 +48,7 @@ function Insurance() {
       state: {
         serviceName: activeTab === "health" ? "Health Insurance" : "Life Insurance",
         applicantName: formData.fullName, mobile: formData.mobile,
-        Amount: activeTab === "health" ? 300 : 400,
+        Amount: activeTab === "health" ? 0 : 0,
         type: "insurance", formData,
         documents: {
           aadhaar: files.aadhaar?.file, pan: files.pan?.file, addressProof: files.addressProof?.file,

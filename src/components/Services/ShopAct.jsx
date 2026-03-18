@@ -44,7 +44,7 @@ function ShopAct() {
         serviceName: "Shop Act License",
         applicantName: formData.fullName,
         mobile: formData.mobile,
-        Amount: 500,
+        Amount: 300,
         formData,
         documents: {
           pan: files.pan?.file,
