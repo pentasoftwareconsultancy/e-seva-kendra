@@ -6,18 +6,28 @@ function Pan() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("new");
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
-  const [errors, setErrors] = useState({ fullName: "", mobile: "" });
+  const [errors, setErrors] = useState({});
   const [files, setFiles] = useState({ aadhaar: null, photos: null, marriageCert: null, oldPan: null, signature: null });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
-    if (file) setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+    if (file) {
+      setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
   };
 
   const validateForm = () => {
     const newErrors = {};
     if (!formData.fullName.trim() || formData.fullName.trim().length < 3) newErrors.fullName = "Name must be at least 3 characters";
     if (!/^[0-9]{10}$/.test(formData.mobile)) newErrors.mobile = "Mobile number must be exactly 10 digits";
+    if (!files.aadhaar) newErrors.aadhaar = "Required";
+    if (!files.photos) newErrors.photos = "Required";
+    if (!files.signature) newErrors.signature = "Required";
+    if (activeTab === "update") {
+      if (!files.marriageCert) newErrors.marriageCert = "Required";
+      if (!files.oldPan) newErrors.oldPan = "Required";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -25,12 +35,10 @@ function Pan() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    if (!files.aadhaar || !files.photos || !files.signature) { alert("Please upload all required documents"); return; }
-    if (activeTab === "update" && (!files.marriageCert || !files.oldPan)) { alert("Please upload all required documents"); return; }
     navigate("/payment", {
       state: {
         serviceName: "PAN Card", applicantName: formData.fullName, mobile: formData.mobile, Amount: 350, type: activeTab,
-        documents: { aadhaar: files.aadhaar?.file, photo: files.photos?.file, marriageCert: files.marriageCert?.file, oldPan: files.oldPan?.file,  signature: files.signature?.file  }
+        documents: { aadhaar: files.aadhaar?.file, photo: files.photos?.file, marriageCert: files.marriageCert?.file, oldPan: files.oldPan?.file, signature: files.signature?.file }
       }
     });
   };
@@ -55,7 +63,7 @@ function Pan() {
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">पॅनकार्डसाठी लागणारी कागदपत्रे</h2>
             <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-600 pb-3">Documents Required for PAN Card</h3>
             <div className="space-y-3 text-sm sm:text-lg">
-              {[["आधारकार्ड", "Aadhaar Card"], ["३ पासपोर्ट साईज फोटो", "3 Passport Size Photographs"]].map((item, i) => (
+              {[["आधारकार्ड", "Aadhaar Card"], ["३ पासपोर्ट साईज फोटो", "3 Passport Size Photographs"], ["स्वाक्षरी", "Signature"]].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
                   <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
@@ -94,12 +102,12 @@ function Pan() {
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                   <div>
-                    <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Full Name (पूर्ण नाव) <span className="text-red-500">*</span></label>
+                    <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Full Name / पूर्ण नाव <span className="text-red-500">*</span></label>
                     <input type="text" required minLength={3} value={formData.fullName} onChange={(e) => { const value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); setFormData({ ...formData, fullName: value }); setErrors({ ...errors, fullName: "" }); }} placeholder="Enter Full Name" className={`w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border text-xs sm:text-sm ${errors.fullName ? "border-red-500" : "border-gray-200"} focus:outline-none focus:ring-2 focus:ring-blue-500`} />
                     {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
                   </div>
                   <div>
-                    <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Mobile Number (मोबाईल क्रमांक) <span className="text-red-500">*</span></label>
+                    <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Mobile Number / मोबाईल नंबर <span className="text-red-500">*</span></label>
                     <input type="tel" required pattern="[0-9]{10}" maxLength={10} value={formData.mobile} onChange={(e) => { const value = e.target.value.replace(/[^0-9]/g, ""); setFormData({ ...formData, mobile: value }); setErrors({ ...errors, mobile: "" }); }} placeholder="Enter 10-digit Mobile Number" className={`w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border text-xs sm:text-sm ${errors.mobile ? "border-red-500" : "border-gray-200"} focus:outline-none focus:ring-2 focus:ring-blue-500`} />
                     {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
                   </div>
@@ -111,13 +119,13 @@ function Pan() {
                   Upload Documents
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                  <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-                  <UploadBox label="Passport Photos (पासपोर्ट फोटो)" fileData={files.photos} onChange={(e) => handleFileChange(e, "photos")} />
-                    <UploadBox label="Signature (स्वाक्षरी)" fileData={files.signature} onChange={(e) => handleFileChange(e, "signature")} />
+                  <UploadBox label="Aadhaar Card / आधार कार्ड" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} error={errors.aadhaar} />
+                  <UploadBox label="Passport Photos / पासपोर्ट फोटो" fileData={files.photos} onChange={(e) => handleFileChange(e, "photos")} error={errors.photos} />
+                  <UploadBox label="Signature / स्वाक्षरी" fileData={files.signature} onChange={(e) => handleFileChange(e, "signature")} error={errors.signature} />
                   {activeTab === "update" && (
                     <>
-                      <UploadBox label="Marriage Certificate (विवाह प्रमाणपत्र)" fileData={files.marriageCert} onChange={(e) => handleFileChange(e, "marriageCert")} />
-                      <UploadBox label="Old PAN Card (जुने पॅन कार्ड)" fileData={files.oldPan} onChange={(e) => handleFileChange(e, "oldPan")} />
+                      <UploadBox label="Marriage Certificate / विवाह प्रमाणपत्र" fileData={files.marriageCert} onChange={(e) => handleFileChange(e, "marriageCert")} error={errors.marriageCert} />
+                      <UploadBox label="Old PAN Card / जुने पॅन कार्ड" fileData={files.oldPan} onChange={(e) => handleFileChange(e, "oldPan")} error={errors.oldPan} />
                     </>
                   )}
                 </div>
@@ -133,11 +141,11 @@ function Pan() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, error }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label} <span className="text-red-500">*</span></label>
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border ${error ? "border-red-500" : "border-gray-200"}`}>
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs text-gray-600">Upload Document</span>
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
@@ -146,6 +154,7 @@ function UploadBox({ label, fileData, onChange }) {
           </label>
         </div>
         {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+        {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
       </div>
     </div>
   );

@@ -99,8 +99,8 @@ function RentAgreementForm() {
                 <UploadBox label="Tenant Photo (भाडेकरू फोटो)" fileData={files.tenantPhoto} onChange={(e) => handleFileChange(e, "tenantPhoto")} />
                 <UploadBox label="Light Bill (लाईट बिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
                 <UploadBox label="Property Proof (मालमत्ता पुरावा)" fileData={files.propertyProof} onChange={(e) => handleFileChange(e, "propertyProof")} />
-                <UploadBox label="Deposit Amount (सुरक्षा ठेव रक्कम)" fileData={files.depositAmount} onChange={(e) => handleFileChange(e, "depositAmount")} />
-                <UploadBox label="Rent Amount (भाड्याची रक्कम)" fileData={files.rentAmount} onChange={(e) => handleFileChange(e, "rentAmount")} />
+                <UploadBox label="Deposit Amount Proof (सुरक्षा ठेव रक्कम)" fileData={files.depositAmount} onChange={(e) => handleFileChange(e, "depositAmount")} />
+                <UploadBox label="Rent Amount Proof (भाड्याची रक्कम)" fileData={files.rentAmount} onChange={(e) => handleFileChange(e, "rentAmount")} />
               </div>
             </div>
             <div className="flex justify-end pt-2">
