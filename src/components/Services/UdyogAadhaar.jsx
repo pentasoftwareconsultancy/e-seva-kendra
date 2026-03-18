@@ -48,7 +48,7 @@ function UdyogAadhaar() {
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">उद्योगआधार काढण्यासाठी लागणारी कागदपत्रे</h2>
             <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-600 pb-3">Documents Required for Udyog Aadhaar Registration</h3>
             <div className="space-y-3 text-sm sm:text-lg">
-              {[["पॅनकार्ड", "PAN Card"], ["आधारकार्ड", "Aadhaar Card"], ["बँक पासबुक", "Bank Passbook"], ["ई-मेल आय.डी. / मोबाईल नंबर", "Email ID / Mobile Number"], ["लाईटबिल", "Light Bill"], ["१ पासपोर्ट साईज फोटो", "1 Passport Size Photograph"]].map((item, index) => (
+              {[["पॅनकार्ड", "PAN Card"], ["आधारकार्ड", "Aadhaar Card"], ["बँक पासबुक", "Bank Passbook"], ["ई-मेल आय.डी. / मोबाईल नंबर", "Email ID / Mobile Number"], ["लाईटबिल", "Light Bill"]].map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
                   <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
@@ -94,7 +94,6 @@ function UdyogAadhaar() {
                 <UploadBox label="Aadhaar Card (आधारकार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
                 <UploadBox label="Bank Passbook (बँक पासबुक)" fileData={files.bankPassbook} onChange={(e) => handleFileChange(e, "bankPassbook")} />
                 <UploadBox label="Light Bill (लाईटबिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
-                <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
               </div>
             </div>
             <div className="flex justify-end pt-2">

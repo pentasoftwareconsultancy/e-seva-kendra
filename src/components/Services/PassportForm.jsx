@@ -48,7 +48,7 @@ function PassportForm() {
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">पासपोर्ट साठी लागणारी कागदपत्रे</h2>
             <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for Passport</h3>
             <div className="space-y-3 text-sm sm:text-lg">
-              {[["आधार कार्ड", "Aadhaar Card (Identity Proof)"], ["पॅन कार्ड", "PAN Card (Mandatory for Application)"], ["लाईट बिल", "Address Proof (Electricity Bill)"], ["पासपोर्ट साईज फोटो", "Recent Passport Size Photographs"]].map((item, index) => (
+              {[["आधार कार्ड", "Aadhaar Card (Identity Proof)"], ["पॅन कार्ड", "PAN Card (Mandatory for Application)"], ["लाईट बिल", "Address Proof (Electricity Bill)"], ["पासपोर्ट साईज फोटो", "Recent Passport Size Photographs"],["भाडे करार","Rent Agreement"]].map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
                   <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
@@ -94,6 +94,7 @@ function PassportForm() {
                 <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
                 <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
                 <UploadBox label="Light Bill (लाइट बिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
+                <UploadBox label="Rent Agreement (भाडे करार)" fileData={files.rentAgreement} onChange={(e) => handleFileChange(e, "rentAgreement")} />
               </div>
             </div>
             <div className="flex justify-end pt-2">
