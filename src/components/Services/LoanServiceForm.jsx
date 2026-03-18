@@ -206,7 +206,7 @@ function LoanServiceForm() {
         serviceName: loanTypes.find((l) => l.id === selectedLoan)?.subtitle,
         applicantName: formData.fullName,
         mobile: formData.mobile,
-        Amount: 500,
+        Amount: 0,
         type: selectedLoan,
         formData,
         documents: docs,

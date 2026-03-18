@@ -56,7 +56,7 @@ function Aadhaar() {
         serviceName: "Aadhaar Card",
         applicantName: formData.fullName,
         mobile: formData.mobile,
-        Amount: 200,
+        Amount: 1000,
         formData,
         documents: {
           aadhaar: files.aadhaar?.file,
