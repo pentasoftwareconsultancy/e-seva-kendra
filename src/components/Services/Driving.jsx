@@ -33,7 +33,7 @@ function Driving() {
         serviceName: `Driving License (${vehicleType === "2wheeler" ? "2 Wheeler" : "4 Wheeler"})`,
         applicantName: formData.fullName,
         mobile: formData.mobile,
-        Amount: vehicleType === "2wheeler" ? 500 : 800,
+        Amount: vehicleType === "2wheeler" ? 2500: 4500,
         formData,
         documents: {
           aadhaar: files.aadhaar?.file,
