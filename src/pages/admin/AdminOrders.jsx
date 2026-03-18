@@ -20,7 +20,7 @@ const AdminOrders = () => {
       return;
     }
 
-    fetch(`http://localhost:8080/api/orders/${selectedOrder.id}/status`, {
+    fetch(`https://e-seva-kendra-b.onrender.com/api/orders/${selectedOrder.id}/status`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status: newStatus })
@@ -32,7 +32,7 @@ const AdminOrders = () => {
         setSelectedOrder(null);
         setNewStatus('');
         // Refresh orders
-        fetch("http://localhost:8080/api/orders")
+        fetch("hhttps://e-seva-kendra-b.onrender.com/api/orders")
           .then(res => res.json())
           .then(data => {
             const formatted = data.map(order => ({
@@ -51,7 +51,7 @@ const AdminOrders = () => {
 
             sorted.forEach(order => {
               if (order.userId) {
-                fetch(`http://localhost:8080/api/users/${order.userId}`)
+                fetch(`https://e-seva-kendra-b.onrender.com/api/users/${order.userId}`)
                   .then(res => res.json())
                   .then(user => {
                     setOrders(prev => prev.map(o =>
@@ -71,7 +71,7 @@ const AdminOrders = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/orders")
+    fetch("https://e-seva-kendra-b.onrender.com/api/orders")
       .then(res => res.json())
       .then(data => {
         const formatted = data.map(order => ({
@@ -90,7 +90,7 @@ const AdminOrders = () => {
 
         sorted.forEach(order => {
           if (order.userId) {
-            fetch(`http://localhost:8080/api/users/${order.userId}`)
+            fetch(`https://e-seva-kendra-b.onrender.com/api/users/${order.userId}`)
               .then(res => res.json())
               .then(user => {
                 setOrders(prev => prev.map(o =>

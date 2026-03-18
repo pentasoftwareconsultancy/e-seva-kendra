@@ -23,7 +23,7 @@ const AdminMessages = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/contact")
+    fetch("https://e-seva-kendra-b.onrender.com/api/contact")
       .then((res) => res.json())
       .then((data) => {
         // newest first
@@ -36,7 +36,7 @@ const AdminMessages = () => {
   }, []);
 
   const markAsRead = (id) => {
-    fetch(`http://localhost:8080/api/contact/${id}/read`, { method: "PUT" })
+    fetch(`https://e-seva-kendra-b.onrender.com/api/contact/${id}/read`, { method: "PUT" })
       .then((res) => res.json())
       .then((updatedMessage) => {
         setMessages((prev) =>
