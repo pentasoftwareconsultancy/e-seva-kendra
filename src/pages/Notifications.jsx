@@ -101,18 +101,18 @@ export default function Notifications() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 px-4 md:px-10">
+    <div className="min-h-screen bg-gray-50 pt-16 sm:pt-20 px-2 sm:px-4 md:px-10">
 
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm p-6">
+      <div className="max-w-4xl mx-auto bg-white rounded-xl sm:rounded-2xl shadow-sm p-3 sm:p-4 md:p-6">
 
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-4 sm:mb-6">
 
           <div>
-            <h1 className="text-2xl font-bold text-slate-800">
+            <h1 className="text-lg sm:text-2xl font-bold text-slate-800">
               Notifications
             </h1>
 
-            <p className="text-sm text-gray-500">
+            <p className="text-xs sm:text-sm text-gray-500">
               {unreadCount} unread notifications
             </p>
           </div>
@@ -120,7 +120,7 @@ export default function Notifications() {
           {unreadCount > 0 && (
             <button
               onClick={markAllAsRead}
-              className="text-sm text-blue-600 hover:underline"
+              className="text-xs sm:text-sm text-blue-600 hover:underline whitespace-nowrap ml-2"
             >
               Mark all as read
             </button>

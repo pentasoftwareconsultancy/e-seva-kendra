@@ -120,7 +120,7 @@ export default function Header() {
             <img
               src={logo}
               alt="Shree Om Sai Multi Services"
-              className="h-12 w-auto object-contain hover:scale-105 transition"
+              className="h-8 sm:h-12 w-auto object-contain hover:scale-105 transition"
             />
           </Link>
 
@@ -357,7 +357,7 @@ export default function Header() {
 
                 {/* 🔔 NOTIFICATION BELL */}
 
-                <div className="relative hidden md:flex notification-dropdown">
+                <div className="relative flex notification-dropdown">
                   <button
                     onClick={() => setIsNotificationOpen(!isNotificationOpen)}
                     className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 hover:scale-105 transition"
@@ -414,6 +414,16 @@ export default function Header() {
                   <FontAwesomeIcon icon={faUser} className="text-gray-600" />
                   Profile
                 </Link>
+
+                <button
+                  onClick={() => {
+                    sessionStorage.clear();
+                    window.location.href = "/";
+                  }}
+                  className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 text-white transition text-sm font-medium cursor-pointer shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
+                >
+                  Logout
+                </button>
               </>
             )}
 

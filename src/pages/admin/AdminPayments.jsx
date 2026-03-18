@@ -11,6 +11,8 @@ const AdminPayments = () => {
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [viewScreenshot, setViewScreenshot] = useState(null);
   const [payments, setPayments] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const PAGE_SIZE = 6;
 
   useEffect(() => {
     fetch("http://localhost:8080/api/payment")
@@ -53,6 +55,9 @@ const AdminPayments = () => {
     pay.user.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const totalPages = Math.ceil(filteredPayments.length / PAGE_SIZE);
+  const paginatedPayments = filteredPayments.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
   return (
     <AdminLayout>
       <div className="flex items-center gap-2 mb-3 sm:mb-4 md:mb-6">
@@ -67,7 +72,7 @@ const AdminPayments = () => {
             type="text"
             placeholder="Search by payment ID or user name..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
             className="w-full px-3 sm:px-3 md:px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-indigo-400 text-xs sm:text-sm"
           />
         </div>
@@ -88,7 +93,7 @@ const AdminPayments = () => {
               </thead>
 
               <tbody className="divide-y divide-gray-100">
-                {filteredPayments.map((pay) => (
+                {paginatedPayments.map((pay) => (
                   <tr key={pay.id} className="hover:bg-blue-50/50 transition-colors duration-150">
                     <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 font-semibold text-blue-600 hidden md:table-cell text-[10px] sm:text-xs md:text-sm">PAY#{pay.id}</td>
                     <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4">
@@ -96,20 +101,27 @@ const AdminPayments = () => {
                         <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
                           <User size={14} className="sm:w-4 sm:h-4" />
                         </div>
-                        <span className="font-medium text-gray-900 text-[10px] sm:text-xs md:text-sm break-all">{pay.user}</span>
+                        <span className="font-medium text-gray-900 text-[10px] sm:text-xs md:text-sm truncate max-w-[80px] sm:max-w-[120px]">{pay.user}</span>
                       </div>
                     </td>
-                    <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-gray-600 hidden sm:table-cell text-[10px] sm:text-xs md:text-sm break-all">{pay.service}</td>
+                    <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-gray-600 hidden sm:table-cell text-[10px] sm:text-xs md:text-sm max-w-[160px] truncate">{pay.service}</td>
                     <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 font-semibold text-gray-900 hidden sm:table-cell text-[10px] sm:text-xs md:text-sm">{pay.amount}</td>
                     <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 hidden md:table-cell">
-                      {pay.screenshot && (
-                        <img
-                          src={pay.screenshot}
-                          alt="Screenshot"
-                          className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded border cursor-pointer"
-                          onClick={() => setSelectedPayment(pay)}
-                        />
-                      )}
+                      <div
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded border overflow-hidden cursor-pointer bg-gray-100 flex items-center justify-center"
+                        onClick={() => setSelectedPayment(pay)}
+                      >
+                        {pay.screenshot ? (
+                          <img
+                            src={pay.screenshot}
+                            alt=""
+                            className="w-full h-full object-cover"
+                            onError={(e) => { e.target.style.display = 'none'; }}
+                          />
+                        ) : (
+                          <span className="text-[8px] text-gray-400">N/A</span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-gray-500 hidden lg:table-cell text-[10px] sm:text-xs md:text-sm">{pay.date}</td>
                     <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-center">
@@ -127,6 +139,25 @@ const AdminPayments = () => {
             </table>
           </div>
         </div>
+
+        {/* Pagination */}
+        {totalPages >= 1 && (
+          <div className="flex items-center justify-center gap-2 mt-4">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="w-10 h-10 rounded-xl border border-gray-200 bg-white text-gray-600 text-sm font-semibold hover:bg-gray-50 disabled:opacity-40 transition shadow-sm"
+            >&#8592;</button>
+            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white text-sm font-bold flex items-center justify-center shadow-sm">
+              {currentPage}
+            </div>
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="w-10 h-10 rounded-xl border border-gray-200 bg-white text-gray-600 text-sm font-semibold hover:bg-gray-50 disabled:opacity-40 transition shadow-sm"
+            >&#8594;</button>
+          </div>
+        )}
       </div>
 
       {/* Screenshot Full View Modal */}
@@ -237,9 +268,7 @@ const AdminPayments = () => {
               >
                 Close
               </button>
-              <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-[10px] sm:text-xs md:text-sm transition">
-                Mark as Verified
-              </button>
+              
             </div>
           </div>
         </div>
