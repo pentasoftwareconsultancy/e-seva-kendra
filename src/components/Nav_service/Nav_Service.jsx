@@ -12,18 +12,22 @@ import foodImg from "../../assets/services/food.png";
 import Incomtax from "../../assets/services/Incomtax.jpg";
 import loan from "../../assets/services/loan.png";
 import Demat from "../../assets/services/Demat.png";
-import Finance from "../../assets/services/Finance.png";
+// import Finance from "../../assets/services/Finance.png";
 import Insurance from "../../assets/services/Insurance.png";
-import Eshram from "../../assets/services/Eshram.png";
+// import Eshram from "../../assets/services/Eshram.png";
 import Mutualfunds from "../../assets/services/Mutualfunds.jpg";
-import Scitizen from "../../assets/services/Scitizen.jpg";
+// import Scitizen from "../../assets/services/Scitizen.jpg";
 import Agriment from "../../assets/services/Agriment.png";
-import Trademark from "../../assets/services/Trademark.jpg";
+// import Trademark from "../../assets/services/Trademark.jpg";
 import Gst from "../../assets/services/gst.png";
 import Vinsurance from "../../assets/services/Vinsurance.png";
-import Ayushman from "../../assets/services/Ayushman.png";
+// import Ayushman from "../../assets/services/Ayushman.png";
 import SIPImg from "../../assets/services/SIP.png";
 import IECImg from "../../assets/services/IEC.png";
+import AadhaarImg from "../../assets/services/adhar_img.jpg";
+import CompanyImg from "../../assets/services/company res.png";
+import GovtBondsImg from "../../assets/services/Government Bonds.jpg";
+import DrivingImg from "../../assets/services/driving-licence.png";
 
 
 export default function Nav_Service() {
@@ -53,19 +57,17 @@ const handleApplyClick = (slug) => {
 
   const services = [
     {
-      title: "PAN Card(पॅन कार्ड)",
+      title: "Pan Card (पॅन कार्ड)",
       desc: "Apply, update, or reprint your PAN card easily.",
       img: panImg,
       slug: "pan",
     },
-
     {
-      title: "Systematic Investment Plan (SIP)(सिस्टेमॅटिक इन्व्हेस्टमेंट प्लान)",
+      title: "Systematic Investment Plan (SIP) (सिस्टेमॅटिक इन्व्हेस्टमेंट प्लान)",
       desc: "Register or correct SIP details.",
       img: SIPImg,
       slug: "sip",
     },
-
     {
       title: "Voter ID (मतदार ओळखपत्र)",
       desc: "Register or correct Voter ID details.",
@@ -84,7 +86,6 @@ const handleApplyClick = (slug) => {
       img: rationImg,
       slug: "ration-card",
     },
-
     {
       title: "Gazette Certificate (गॅझेट प्रमाणपत्र)",
       desc: "Apply for Gazette publication for name change, record updates.",
@@ -92,38 +93,31 @@ const handleApplyClick = (slug) => {
       slug: "gazette",
     },
     {
-      title: "Shop Act(दुकान नोंदणी)",
+      title: "Shop Act (दुकान नोंदणी)",
       desc: "Register your business under Shop Act.",
       img: shopImg,
       slug: "shop-act",
     },
     {
-      title: "Udyog Aadhaar(उद्योग आधार)",
-      desc: "Register your Udyog Aadhaar MSME for benefits.",
+      title: "Udyam Aadhaar (उद्यम आधार)",
+      desc: "Register your Udyam Aadhaar MSME for benefits.",
       img: udyamImg,
       slug: "udyog-aadhaar",
     },
-
     {
-      title: "Food License (फूड लायसन्स)",
+      title: "FSSAI Food License (फूड लायसन्स)",
       desc: "Get your FSSAI license to run a food business legally.",
       img: foodImg,
       slug: "food",
     },
     {
-      title: "Senior Certificate(ज्येष्ठ नागरिक दाखला)",
-      desc: "Get your senior citizen certificate for government benefits.",
-      img: Scitizen,
-      slug: "senior",
-    },
-    {
-      title: "Income tax Return (ITR)(उत्पन्न कर विवरण)",
+      title: "Income Tax Return (ITR) (उत्पन्न कर विवरण)",
       desc: "File your Income Tax Return easily.",
       img: Incomtax,
       slug: "ITR",
     },
     {
-      title: "Import export card (IEC) (आयात निर्यात कोड)",
+      title: "Import Export Code (IEC) (आयात निर्यात कोड)",
       desc: "File your Import Export Code (IEC) application.",
       img: IECImg,
       slug: "iec",
@@ -135,43 +129,25 @@ const handleApplyClick = (slug) => {
       slug: "gst",
     },
     {
-      title: "Trademark (वैयक्तिक किंवा कंपनीचा नांव व चिन्हाची नोंदणी)",
-      desc: "File your trademark registration or update details.",
-      img: Trademark,
-      slug: "trademark",
-    },
-    {
       title: "Insurance (विमा)",
       desc: "File your insurance application or update details.",
       img: Insurance,
       slug: "insurance",
     },
     {
-      title: "mutual fund(म्युच्युअल फंड)",
+      title: "Mutual Fund (म्युच्युअल फंड)",
       desc: "File your mutual fund application or update details.",
       img: Mutualfunds,
       slug: "mutual-fund",
     },
     {
-      title: "rent agreement (भाडे करार)",
+      title: "Rent Agreement (भाडे करार)",
       desc: "File your rent agreement application or update details.",
       img: Agriment,
       slug: "rent-agreement",
     },
     {
-      title: "e-shram card(ई-श्रम कार्ड)",
-      desc: "File your e-shram card application or update details.",
-      img: Eshram,
-      slug: "e-shram-card",
-    },
-    {
-      title: "Ayushman card (आयुष्मान कार्ड)",
-      desc: "File your Ayushman card application or update details.",
-      img: Ayushman,
-      slug: "ayushman-card",
-    },
-    {
-      title: "vehicle insurance (वाहन विमा)",
+      title: "Vehicle Insurance (वाहन विमा)",
       desc: "File your vehicle insurance application or update details.",
       img: Vinsurance,
       slug: "vehicle-insurance",
@@ -189,11 +165,30 @@ const handleApplyClick = (slug) => {
       slug: "loan",
     },
     {
-      title: "Public Financial Services (सार्वजनिक आर्थिक सेवा)",
-      desc: "Apply for public financial services.",
-      img: Finance,
-      slug: "public-financial-services",
+      title: "Company Registration (कंपनी नोंदणी)",
+      desc: "Register your company or business entity with government authorities.",
+      img: CompanyImg,
+      slug: "company-registration",
     },
+    {
+      title: "Government Bonds (सरकारी रोखे)",
+      desc: "Apply for government bonds and secure your financial future.",
+      img: GovtBondsImg,
+      slug: "government-bonds",
+    },
+    {
+      title: "Driving License (वाहन चालक परवाना)",
+      desc: "Apply for a new driving license or renew your existing one.",
+      img: DrivingImg,
+      slug: "driving-license",
+    },
+    {
+      title: "Aadhaar Address update(आधार कार्ड पत्ता अपडेट)",
+      desc: "Apply for new Aadhaar card or update your existing Aadhaar details.",
+      img: AadhaarImg,
+      slug: "aadhaar-card",
+    },
+
 
   ];
 

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 export default function PaymentsSection() {
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const userId = sessionStorage.getItem("userId") || localStorage.getItem("userId");
@@ -23,7 +24,7 @@ export default function PaymentsSection() {
           setLoading(false);
           return;
         }
-        const formatted = data.map(payment => ({
+        const formatted = [...data].reverse().map(payment => ({
           id: `PAY#${payment.id}`,
           service: payment.serviceName || "N/A",
           amount: `₹${payment.amount}`,
@@ -74,6 +75,14 @@ export default function PaymentsSection() {
         Payment History
       </h2>
 
+      <input
+        type="text"
+        placeholder="Search by payment ID or service..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="w-full mb-4 px-3 py-2 border rounded-lg text-xs sm:text-sm outline-none focus:ring-2 focus:ring-blue-400"
+      />
+
       <div className="overflow-x-auto -mx-3 sm:mx-0">
         <table className="w-full text-xs sm:text-sm text-left border-collapse min-w-[650px] sm:min-w-0">
           <thead>
@@ -88,7 +97,11 @@ export default function PaymentsSection() {
           </thead>
 
           <tbody>
-            {payments.map((payment) => (
+            {payments.filter(p =>
+              search === "" ? true :
+              p.id.toLowerCase().includes(search.toLowerCase()) ||
+              p.service.toLowerCase().includes(search.toLowerCase())
+            ).map((payment) => (
               <tr
                 key={payment.id}
                 className="border-b hover:bg-gray-50 transition"

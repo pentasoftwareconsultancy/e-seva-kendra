@@ -53,11 +53,21 @@ function Payment() {
     formData.append("amount", data.Amount);
     formData.append("screenshot", screenshot);
 
-    // ✅ Dynamic Documents Upload
+    // ✅ Dynamic Documents Upload — skip null/undefined, send key as documentType
     if (data.documents) {
       Object.keys(data.documents).forEach((key) => {
-        formData.append("documents", data.documents[key]);
+        if (data.documents[key]) {
+          formData.append("documents", data.documents[key]);
+          formData.append("documentTypes", key);
+        }
       });
+    }
+
+    // ensure at least one dummy entry so backend doesn't fail on empty array
+    const hasDocuments = data.documents && Object.values(data.documents).some(v => v);
+    if (!hasDocuments) {
+      formData.append("documents", new Blob([]), "placeholder.txt");
+      formData.append("documentTypes", "other");
     }
 
     try {

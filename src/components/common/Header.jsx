@@ -39,11 +39,13 @@ export default function Header() {
       if (isNotificationOpen && !event.target.closest('.notification-dropdown')) {
         setIsNotificationOpen(false);
       }
+      if (isDropdownOpen && !event.target.closest('.services-dropdown')) {
+        setIsDropdownOpen(false);
+      }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isNotificationOpen]);
+  }, [isNotificationOpen, isDropdownOpen]);
 
   /* ---------------- FETCH NOTIFICATIONS ---------------- */
 
@@ -84,35 +86,28 @@ export default function Header() {
   }, [userId]);
 
   const services = [
-    { name: "Income Tax Return (आयकर रिटर्न)", slug: "itr" },
-    { name: "Import Export Code (आयात निर्यात कोड)", slug: "iec" },
-    { name: "Goods and Services Tax (वस्तू आणि सेवा कर)", slug: "gst" },
-    { name: "Trademark (ट्रेडमार्क)", slug: "trademark" },
-    { name: "Insurance (विमा)", slug: "insurance" },
-    {
-      name: "Systematic Investment Plan (सिस्टेमॅटिक इन्व्हेस्टमेंट प्लॅन)",
-      slug: "sip",
-    },
-    { name: "Mutual Fund (म्युच्युअल फंड)", slug: "mutual-fund" },
-    { name: "Rent Agreement (भाडे करार)", slug: "rent-agreement" },
-    { name: "E-Shram Card (ई-श्रम कार्ड)", slug: "e-shram-card" },
-    { name: "Ayushman Card (आयुष्मान कार्ड)", slug: "ayushman-card" },
-    { name: "2-4 Wheeler Insurance (वाहन विमा)", slug: "vehicle-insurance" },
-    { name: "Demat Account (डीमॅट खाते)", slug: "dmat-account" },
-    { name: "Loan (कर्ज)", slug: "loan" },
-    { name: "Personal Financial Services (वैयक्तिक आर्थिक सेवा)", slug: "pfs" },
     { name: "PAN Card (पॅन कार्ड)", slug: "pan" },
+    { name: "Systematic Investment Plan (SIP) (सिस्टेमॅटिक इन्व्हेस्टमेंट प्लान)", slug: "sip" },
+    { name: "Voter ID (मतदार ओळखपत्र)", slug: "voter" },
     { name: "Passport (पासपोर्ट)", slug: "passport" },
     { name: "Ration Card (रेशन कार्ड)", slug: "ration-card" },
     { name: "Gazette Certificate (गॅझेट प्रमाणपत्र)", slug: "gazette" },
-    { name: "Shop Act (दुकान अधिनियम)", slug: "shop-act" },
-    { name: "Udyog Aadhar (उद्योग आधार)", slug: "udyog-aadhaar" },
-    { name: "Food License (अन्न परवाना)", slug: "food" },
-    {
-      name: "Senior Citizen Certificate (ज्येष्ठ नागरिक प्रमाणपत्र)",
-      slug: "senior",
-    },
-    { name: "Voter ID (मतदार ओळखपत्र)", slug: "voter" },
+    { name: "Shop Act (दुकान नोंदणी)", slug: "shop-act" },
+    { name: "Udyam Aadhaar (उद्यम आधार)", slug: "udyog-aadhaar" },
+    { name: "FSSAI Food License (फूड लायसन्स)", slug: "food" },
+    { name: "Income Tax Return (ITR) (उत्पन्न कर विवरण)", slug: "ITR" },
+    { name: "Import Export Code (IEC) (आयात निर्यात कोड)", slug: "iec" },
+    { name: "Goods and Services Tax (GST) (वस्तू व सेवा कर)", slug: "gst" },
+    { name: "Insurance (विमा)", slug: "insurance" },
+    { name: "Mutual Fund (म्युच्युअल फंड)", slug: "mutual-fund" },
+    { name: "Rent Agreement (भाडे करार)", slug: "rent-agreement" },
+    { name: "Vehicle Insurance (वाहन विमा)", slug: "vehicle-insurance" },
+    { name: "Demat Account (डीमॅट खाते)", slug: "demat-account" },
+    { name: "Loan Services (कर्ज सेवा)", slug: "loan" },
+    { name: "Company Registration (कंपनी नोंदणी)", slug: "company-registration" },
+    { name: "Government Bonds (सरकारी रोखे)", slug: "government-bonds" },
+    { name: "Driving License (वाहन चालक परवाना)", slug: "driving-license" },
+    { name: "Aadhaar Card (आधार कार्ड)", slug: "aadhaar-card" },
   ];
 
   return (
@@ -125,7 +120,7 @@ export default function Header() {
             <img
               src={logo}
               alt="Shree Om Sai Multi Services"
-              className="h-12 w-auto object-contain hover:scale-105 transition"
+              className="h-8 sm:h-12 w-auto object-contain hover:scale-105 transition"
             />
           </Link>
 
@@ -196,7 +191,7 @@ export default function Header() {
             <div className="h-5 w-px bg-slate-300" />
 
             {/* SERVICES DROPDOWN */}
-            <div className="relative px-4">
+            <div className="relative px-4 services-dropdown">
               <div className="flex items-center gap-1">
                 <NavLink
                   to="/service"
@@ -362,7 +357,7 @@ export default function Header() {
 
                 {/* 🔔 NOTIFICATION BELL */}
 
-                <div className="relative hidden md:flex notification-dropdown">
+                <div className="relative flex notification-dropdown">
                   <button
                     onClick={() => setIsNotificationOpen(!isNotificationOpen)}
                     className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 hover:scale-105 transition"
@@ -419,6 +414,16 @@ export default function Header() {
                   <FontAwesomeIcon icon={faUser} className="text-gray-600" />
                   Profile
                 </Link>
+
+                <button
+                  onClick={() => {
+                    sessionStorage.clear();
+                    window.location.href = "/";
+                  }}
+                  className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 text-white transition text-sm font-medium cursor-pointer shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
+                >
+                  Logout
+                </button>
               </>
             )}
 

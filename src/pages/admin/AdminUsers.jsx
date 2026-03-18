@@ -6,9 +6,9 @@ const AdminUsers = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);
-
-  // ✅ added state for backend users
   const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const PAGE_SIZE = 6;
 
   // ✅ fetch users from backend
   useEffect(() => {
@@ -22,11 +22,16 @@ const AdminUsers = () => {
       });
   }, []);
 
-  const filteredUsers = users.filter(user =>
-    searchQuery === '' ? true :
-      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchQuery.toLowerCase())
-  ).reverse();
+  const filteredUsers = users
+    .filter(user => user.role !== 'admin' && user.email !== 'admin@eseva.com')
+    .filter(user =>
+      searchQuery === '' ? true :
+        user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchQuery.toLowerCase())
+    ).reverse();
+
+  const totalPages = Math.ceil(filteredUsers.length / PAGE_SIZE);
+  const paginatedUsers = filteredUsers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   return (
     <AdminLayout>
@@ -46,7 +51,7 @@ const AdminUsers = () => {
             type="text"
             placeholder="Search by name or email..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
             className="flex-1 min-w-[200px] px-3 sm:px-3 md:px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-indigo-400 text-xs sm:text-sm"
           />
         </div>
@@ -67,7 +72,7 @@ const AdminUsers = () => {
               </thead>
 
               <tbody className="divide-y divide-gray-100">
-                {filteredUsers.map((user) => (
+                {paginatedUsers.map((user) => (
                   <tr key={user.id} className="hover:bg-blue-50/50 transition-colors duration-150">
 
                     <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-[10px] sm:text-sm font-semibold text-blue-600 hidden sm:table-cell">
@@ -110,6 +115,25 @@ const AdminUsers = () => {
             </table>
           </div>
         </div>
+
+        {/* Pagination */}
+        {totalPages >= 1 && (
+          <div className="flex items-center justify-center gap-2 mt-4">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="w-10 h-10 rounded-xl border border-gray-200 bg-white text-gray-600 text-sm font-semibold hover:bg-gray-50 disabled:opacity-40 transition shadow-sm"
+            >&#8592;</button>
+            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white text-sm font-bold flex items-center justify-center shadow-sm">
+              {currentPage}
+            </div>
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="w-10 h-10 rounded-xl border border-gray-200 bg-white text-gray-600 text-sm font-semibold hover:bg-gray-50 disabled:opacity-40 transition shadow-sm"
+            >&#8594;</button>
+          </div>
+        )}
       </div>
 
       {/* Modal */}
