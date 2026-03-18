@@ -269,4 +269,3 @@ ment      </div>
 }
 
 export default Aadhaar;
-
