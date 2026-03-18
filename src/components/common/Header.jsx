@@ -120,7 +120,7 @@ export default function Header() {
             <img
               src={logo}
               alt="Shree Om Sai Multi Services"
-              className="h-12 w-auto object-contain hover:scale-105 transition"
+              className="h-8 sm:h-12 w-auto object-contain hover:scale-105 transition"
             />
           </Link>
 
@@ -357,7 +357,7 @@ export default function Header() {
 
                 {/* 🔔 NOTIFICATION BELL */}
 
-                <div className="relative hidden md:flex notification-dropdown">
+                <div className="relative flex notification-dropdown">
                   <button
                     onClick={() => setIsNotificationOpen(!isNotificationOpen)}
                     className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 hover:scale-105 transition"

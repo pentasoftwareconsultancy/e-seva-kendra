@@ -41,7 +41,7 @@ export default function AccountOverview() {
           { title: "Cancelled", value: cancelled, color: "border-red-500" },
         ]);
 
-        const recent = data.slice(0, 3).map(order => ({
+        const recent = [...data].reverse().slice(0, 3).map(order => ({
           id: `ORD#${order.id}`,
           service: order.serviceName,
           status: order.status,
