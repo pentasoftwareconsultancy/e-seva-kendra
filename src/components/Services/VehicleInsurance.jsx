@@ -8,6 +8,7 @@ function VehicleInsurance() {
   const [formData, setFormData] = useState({ fullName: "", mobile: "", vehicleNumber: "", vehicleModel: "" });
   const [errors, setErrors] = useState({ fullName: "", mobile: "" });
   const [files, setFiles] = useState({ rc: null, license: null, aadhaar: null, photo: null, previousPolicy: null });
+  const [fileErrors, setFileErrors] = useState({ rc: false, license: false, aadhaar: false, photo: false });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
@@ -25,7 +26,9 @@ function VehicleInsurance() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    if (!files.rc || !files.license || !files.aadhaar || !files.photo) { alert("Please upload all required documents"); return; }
+    const missingFiles = { rc: !files.rc, license: !files.license, aadhaar: !files.aadhaar, photo: !files.photo };
+    setFileErrors(missingFiles);
+    if (Object.values(missingFiles).some(Boolean)) return;
     navigate("/payment", { state: { serviceName: "Vehicle Insurance", applicantName: formData.fullName, mobile: formData.mobile, Amount: vehicleType === "two" ? 800 : 1200, type: vehicleType, formData, documents: { rc: files.rc?.file, license: files.license?.file, aadhaar: files.aadhaar?.file, photo: files.photo?.file, previousPolicy: files.previousPolicy?.file } } });
   };
 
@@ -88,11 +91,11 @@ function VehicleInsurance() {
                   {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Vehicle Number (वाहन क्रमांक)</label>
+                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Vehicle Number (वाहन क्रमांक) <span className="text-red-500">*</span></label>
                   <input type="text" value={formData.vehicleNumber} onChange={(e) => setFormData({ ...formData, vehicleNumber: e.target.value.toUpperCase().replace(/[^A-Z0-9\s]/g, "") })} placeholder="e.g. MH12AB1234" className="w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Vehicle Model (वाहन मॉडेल)</label>
+                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Vehicle Model (वाहन मॉडेल) <span className="text-red-500">*</span></label>
                   <input type="text" value={formData.vehicleModel} onChange={(e) => setFormData({ ...formData, vehicleModel: e.target.value.replace(/[^a-zA-Z0-9\s]/g, "") })} placeholder="e.g. Honda Activa" className="w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
               </div>
@@ -103,11 +106,11 @@ function VehicleInsurance() {
                 Upload Documents
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                <UploadBox label="RC Book (RC बुक)" fileData={files.rc} onChange={(e) => handleFileChange(e, "rc")} />
-                <UploadBox label="Driving License (ड्रायव्हिंग लायसन्स)" fileData={files.license} onChange={(e) => handleFileChange(e, "license")} />
-                <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-                <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
-                <UploadBox label="Previous Policy (जुनी पॉलिसी)" fileData={files.previousPolicy} onChange={(e) => handleFileChange(e, "previousPolicy")} />
+                <UploadBox label="RC Book (RC बुक)" required fileData={files.rc} hasError={fileErrors.rc} onChange={(e) => { handleFileChange(e, "rc"); setFileErrors((p) => ({ ...p, rc: false })); }} />
+                <UploadBox label="Driving License (ड्रायव्हिंग लायसन्स)" required fileData={files.license} hasError={fileErrors.license} onChange={(e) => { handleFileChange(e, "license"); setFileErrors((p) => ({ ...p, license: false })); }} />
+                <UploadBox label="Aadhaar Card (आधार कार्ड)" required fileData={files.aadhaar} hasError={fileErrors.aadhaar} onChange={(e) => { handleFileChange(e, "aadhaar"); setFileErrors((p) => ({ ...p, aadhaar: false })); }} />
+                <UploadBox label="Passport Photo (पासपोर्ट फोटो)" required fileData={files.photo} hasError={fileErrors.photo} onChange={(e) => { handleFileChange(e, "photo"); setFileErrors((p) => ({ ...p, photo: false })); }} />
+                <UploadBox label="Previous Policy (जुनी पॉलिसी) (Optional)" fileData={files.previousPolicy} onChange={(e) => handleFileChange(e, "previousPolicy")} />
               </div>
             </div>
             <div className="flex justify-end pt-2">
@@ -120,11 +123,11 @@ function VehicleInsurance() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, hasError, required }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label} {required && <span className="text-red-500">*</span>}</label>
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border ${hasError ? "border-red-500" : "border-gray-200"}`}>
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs text-gray-600">Upload Document</span>
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
@@ -133,6 +136,7 @@ function UploadBox({ label, fileData, onChange }) {
           </label>
         </div>
         {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+        {hasError && <p className="text-red-500 text-xs mt-1">This field is required</p>}
       </div>
     </div>
   );

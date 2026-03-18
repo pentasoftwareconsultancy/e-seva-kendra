@@ -6,7 +6,8 @@ function DMartAccountForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
   const [errors, setErrors] = useState({ fullName: "", mobile: "" });
-  const [files, setFiles] = useState({ aadhaar: null, addressProof: null, photo: null });
+  const [files, setFiles] = useState({ aadhaar: null, addressProof: null, photo: null, bankDetails: null });
+  const [fileErrors, setFileErrors] = useState({ aadhaar: false, addressProof: false, photo: false, bankDetails: false });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
@@ -24,7 +25,9 @@ function DMartAccountForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    if (!files.aadhaar || !files.addressProof || !files.photo || !files.bankDetails ) { alert("Please upload all required documents"); return; }
+    const missingFiles = { aadhaar: !files.aadhaar, addressProof: !files.addressProof, photo: !files.photo, bankDetails: !files.bankDetails };
+    setFileErrors(missingFiles);
+    if (Object.values(missingFiles).some(Boolean)) return;
     navigate("/payment", { state: { serviceName: "DMat Account Registration", applicantName: formData.fullName, mobile: formData.mobile, Amount: 250, type: "dmart", formData, documents: { aadhaar: files.aadhaar?.file, addressProof: files.addressProof?.file, photo: files.photo?.file, bankDetails: files.bankDetails?.file } } });
   };
 
@@ -90,10 +93,10 @@ function DMartAccountForm() {
                 Upload Documents
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-                <UploadBox label="Address Proof (पत्ता पुरावा)" fileData={files.addressProof} onChange={(e) => handleFileChange(e, "addressProof")} />
-                <UploadBox label="Passport Size Photo (फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
-                <UploadBox label="Bank Details (Passbook बँकेचे पासबुक)" fileData={files.bankDetails} onChange={(e) => handleFileChange(e, "bankDetails")} />
+                <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaar} hasError={fileErrors.aadhaar} onChange={(e) => { handleFileChange(e, "aadhaar"); setFileErrors((p) => ({ ...p, aadhaar: false })); }} />
+                <UploadBox label="Address Proof (पत्ता पुरावा)" fileData={files.addressProof} hasError={fileErrors.addressProof} onChange={(e) => { handleFileChange(e, "addressProof"); setFileErrors((p) => ({ ...p, addressProof: false })); }} />
+                <UploadBox label="Passport Size Photo (फोटो)" fileData={files.photo} hasError={fileErrors.photo} onChange={(e) => { handleFileChange(e, "photo"); setFileErrors((p) => ({ ...p, photo: false })); }} />
+                <UploadBox label="Bank Details (Passbook बँकेचे पासबुक)" fileData={files.bankDetails} hasError={fileErrors.bankDetails} onChange={(e) => { handleFileChange(e, "bankDetails"); setFileErrors((p) => ({ ...p, bankDetails: false })); }} />
               </div>
             </div>
             <div className="flex justify-end pt-2">
@@ -106,11 +109,11 @@ function DMartAccountForm() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, hasError }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label} <span className="text-red-500">*</span></label>
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border ${hasError ? "border-red-500" : "border-gray-200"}`}>
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs text-gray-600">Upload Document</span>
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
@@ -119,6 +122,7 @@ function UploadBox({ label, fileData, onChange }) {
           </label>
         </div>
         {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+        {hasError && <p className="text-red-500 text-xs mt-1">This field is required</p>}
       </div>
     </div>
   );
