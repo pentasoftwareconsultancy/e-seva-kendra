@@ -24,7 +24,7 @@ function ITRForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    navigate("/payment", { state: { serviceName: "ITR Filing", applicantName: formData.fullName, mobile: formData.mobile, Amount: 1500, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, form16: files.form16?.file, bankStatement: files.bankStatement?.file, salarySlips: files.salarySlips?.file, investmentProof: files.investmentProof?.file } } });
+    navigate("/payment", { state: { serviceName: "ITR Filing", applicantName: formData.fullName, mobile: formData.mobile, Amount: 1500, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, form16: files.form16?.file, bankStatement: files.bankStatement?.file, salarySlips: files.salarySlips?.file, investmentProof: files.investmentProof?.file, insurance: files.insurance?.file, shopDeposit: files.shopDeposit?.file } } });
   };
 
   return (
@@ -47,7 +47,7 @@ function ITRForm() {
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">आयकर रिटर्न साठी लागणारी कागदपत्रे</h2>
             <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for Income Tax Return (ITR)</h3>
             <div className="space-y-3 text-sm sm:text-lg">
-              {[["पॅन कार्ड", "PAN Card (Mandatory Document)"], ["आधार कार्ड", "Aadhaar Card (Identity Proof)"], ["फॉर्म 16", "Form 16 (For Salaried Employees)"], ["बँक स्टेटमेंट", "Bank Statement (Last 6 Months)"], ["सॅलरी स्लिप", "Salary Slips (Last 3 Months)"], ["गुंतवणूक पुरावा", "Investment Proof (LIC / PPF / ELSS etc.)"]].map((item, index) => (
+              {[["पॅन कार्ड", "PAN Card (Mandatory Document)"], ["आधार कार्ड", "Aadhaar Card (Identity Proof)"], ["फॉर्म 16", "Form 16 (For Salaried Employees)"], ["बँक स्टेटमेंट", "Bank Statement (Last 6 Months)"], ["सॅलरी स्लिप", "Salary Slips (Last 3 Months)"], ["गुंतवणूक पुरावा", "Investment Proof (LIC / PPF / ELSS etc.)"],["विमा","Insurance"],["दुकान ठेव","Shop Deposit"]].map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
                   <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
@@ -95,6 +95,8 @@ function ITRForm() {
                 <UploadBox label="बँक स्टेटमेंट (Bank Statement - 6 Months)" fileData={files.bankStatement} onChange={(e) => handleFileChange(e, "bankStatement")} />
                 <UploadBox label="सॅलरी स्लिप (Salary Slips - 3 Months)" fileData={files.salarySlips} onChange={(e) => handleFileChange(e, "salarySlips")} />
                 <UploadBox label="गुंतवणूक पुरावा (Investment Proof)" fileData={files.investmentProof} onChange={(e) => handleFileChange(e, "investmentProof")} />
+                <UploadBox label="विमा (Insurance)" fileData={files.insurance} onChange={(e) => handleFileChange(e, "insurance")} />
+                <UploadBox label="दुकान ठेव (Shop Deposit)" fileData={files.shopDeposit} onChange={(e) => handleFileChange(e, "shopDeposit")} />
               </div>
             </div>
             <div className="flex justify-end pt-2">

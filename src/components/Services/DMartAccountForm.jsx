@@ -24,8 +24,8 @@ function DMartAccountForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    if (!files.aadhaar || !files.addressProof || !files.photo) { alert("Please upload all required documents"); return; }
-    navigate("/payment", { state: { serviceName: "DMart Account Registration", applicantName: formData.fullName, mobile: formData.mobile, Amount: 250, type: "dmart", formData, documents: { aadhaar: files.aadhaar?.file, addressProof: files.addressProof?.file, photo: files.photo?.file } } });
+    if (!files.aadhaar || !files.addressProof || !files.photo || !files.bankDetails ) { alert("Please upload all required documents"); return; }
+    navigate("/payment", { state: { serviceName: "DMat Account Registration", applicantName: formData.fullName, mobile: formData.mobile, Amount: 250, type: "dmart", formData, documents: { aadhaar: files.aadhaar?.file, addressProof: files.addressProof?.file, photo: files.photo?.file, bankDetails: files.bankDetails?.file } } });
   };
 
   return (
@@ -35,8 +35,8 @@ function DMartAccountForm() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/80 to-transparent"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full">
           <div className="w-full md:w-1/2 space-y-3 sm:space-y-6 text-white">
-            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold">DMart Account Registration</h1>
-            <p className="text-sm sm:text-lg md:text-xl text-gray-200">Register your DMart account easily and enjoy smooth shopping and exclusive offers.</p>
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold">DMat Account Registration</h1>
+            <p className="text-sm sm:text-lg md:text-xl text-gray-200">Register your DMat account easily and enjoy smooth shopping and exclusive offers.</p>
             <a href="#dmart-form"><button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black px-5 sm:px-8 py-2 sm:py-3 rounded-xl font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">Apply Now</button></a>
           </div>
         </div>
@@ -46,9 +46,9 @@ function DMartAccountForm() {
         <div className="max-w-4xl mx-auto">
           <div className="bg-white border-4 border-green-700 rounded-3xl p-4 sm:p-8 md:p-12 shadow-xl">
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">आवश्यक कागदपत्रे</h2>
-            <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for DMart Account</h3>
+            <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for DMat Account</h3>
             <div className="space-y-3 text-sm sm:text-lg">
-              {[["आधार कार्ड", "Aadhaar Card"], ["मोबाईल नंबर", "Mobile Number"], ["ईमेल आयडी", "Email ID"], ["पत्ता पुरावा (लाईट बिल / भाडे करार)", "Address Proof (Light Bill / Rent Agreement)"], ["पासपोर्ट साइज फोटो", "Passport Size Photo"]].map((item, i) => (
+              {[["आधार कार्ड", "Aadhaar Card"], ["मोबाईल नंबर", "Mobile Number"], ["ईमेल आयडी", "Email ID"], ["पत्ता पुरावा (लाईट बिल / भाडे करार)", "Address Proof (Light Bill / Rent Agreement)"], ["पासपोर्ट साइज फोटो", "Passport Size Photo"],["बँकेचे पासबुक","Bank details(Passbook)"]].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
                   <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
@@ -93,6 +93,7 @@ function DMartAccountForm() {
                 <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
                 <UploadBox label="Address Proof (पत्ता पुरावा)" fileData={files.addressProof} onChange={(e) => handleFileChange(e, "addressProof")} />
                 <UploadBox label="Passport Size Photo (फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
+                <UploadBox label="Bank Details (Passbook बँकेचे पासबुक)" fileData={files.bankDetails} onChange={(e) => handleFileChange(e, "bankDetails")} />
               </div>
             </div>
             <div className="flex justify-end pt-2">
