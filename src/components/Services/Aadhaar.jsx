@@ -189,7 +189,7 @@ function Aadhaar() {
                   )}
                 </div>
 
-                {/* MOBILE */}
+                {/* MOBILE     */}
                 <div>
                   <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">
                     Mobile Number (मोबाईल नंबर) <span className="text-red-500">*</span>
