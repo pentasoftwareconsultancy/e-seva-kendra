@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 function DrivingLicense() {
   const navigate = useNavigate();
   const [vehicleType, setVehicleType] = useState("2wheeler");
-  const [formData, setFormData] = useState({ fullName: "", mobile: "", dob: "", address: "" });
+  const [formData, setFormData] = useState({ fullName: "", mobile: "" });
   const [errors, setErrors] = useState({});
-  const [files, setFiles] = useState({ aadhaar: null, photo: null, signature: null });
+  const [files, setFiles] = useState({ aadhaar: null, photo: null, signature: null, rentAgreement: null, lightBill: null, birthCertificate: null });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
@@ -17,8 +17,6 @@ function DrivingLicense() {
     const newErrors = {};
     if (!formData.fullName.trim() || formData.fullName.trim().length < 3) newErrors.fullName = "Name must be at least 3 characters";
     if (!/^[0-9]{10}$/.test(formData.mobile)) newErrors.mobile = "Mobile number must be exactly 10 digits";
-    if (!formData.dob) newErrors.dob = "Date of birth is required";
-    if (!formData.address.trim()) newErrors.address = "Address is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -26,7 +24,7 @@ function DrivingLicense() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    if (!files.aadhaar || !files.photo || !files.signature) { alert("Please upload all required documents"); return; }
+    if (!files.aadhaar || !files.photo || !files.signature || !files.rentAgreement || !files.lightBill || !files.birthCertificate) { alert("Please upload all required documents"); return; }
     navigate("/payment", {
       state: {
         serviceName: `Driving License (${vehicleType === "2wheeler" ? "2 Wheeler" : "4 Wheeler"})`,
@@ -38,6 +36,9 @@ function DrivingLicense() {
           aadhaar: files.aadhaar?.file,
           photo: files.photo?.file,
           signature: files.signature?.file,
+          rentAgreement: files.rentAgreement?.file,
+          lightBill: files.lightBill?.file,
+          birthCertificate: files.birthCertificate?.file,
         }
       }
     });
@@ -67,13 +68,15 @@ function DrivingLicense() {
         <div className="max-w-4xl mx-auto">
          <div className="bg-white border-4 border-green-700 rounded-3xl p-4 sm:p-8 md:p-12 shadow-xl">
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">आवश्यक कागदपत्रे</h2>
-            <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for E-Shram Card</h3>
+            <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for Driving License</h3>
             <div className="space-y-3 text-sm sm:text-lg">
               {[
                 ["आधारकार्ड", "Aadhaar Card"],
                 ["पासपोर्ट साईज फोटो", "Passport Size Photograph"],
                 ["सही (स्वाक्षरी)", "Signature"],
                 ["जन्म दाखला / शाळा सोडल्याचा दाखला", "Birth Certificate / School Leaving Certificate"],
+                ["भाडे करार", "Rent Agreement"],
+                ["वीज बिल (२ महिन्यांपेक्षा जुने नाही)", "Light Bill (not older than 2 months)"],
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
@@ -150,29 +153,6 @@ function DrivingLicense() {
                     />
                     {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
                   </div>
-
-                  <div>
-                    <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Date of Birth (जन्म तारीख) <span className="text-red-500">*</span></label>
-                    <input
-                      type="date" required
-                      value={formData.dob}
-                      onChange={(e) => { setFormData({ ...formData, dob: e.target.value }); setErrors({ ...errors, dob: "" }); }}
-                      className={`w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border text-xs sm:text-sm ${errors.dob ? "border-red-500" : "border-gray-200"} focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                    />
-                    {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
-                  </div>
-
-                  <div>
-                    <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Address (पत्ता) <span className="text-red-500">*</span></label>
-                    <input
-                      type="text" required
-                      value={formData.address}
-                      onChange={(e) => { setFormData({ ...formData, address: e.target.value }); setErrors({ ...errors, address: "" }); }}
-                      placeholder="Enter Full Address"
-                      className={`w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border text-xs sm:text-sm ${errors.address ? "border-red-500" : "border-gray-200"} focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                    />
-                    {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address}</p>}
-                  </div>
                 </div>
               </div>
 
@@ -186,6 +166,9 @@ function DrivingLicense() {
                   <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
                   <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
                   <UploadBox label="Signature (स्वाक्षरी)" fileData={files.signature} onChange={(e) => handleFileChange(e, "signature")} />
+                  <UploadBox label="Rent Agreement (भाडे करार)" fileData={files.rentAgreement} onChange={(e) => handleFileChange(e, "rentAgreement")} />
+                  <UploadBox label="Light Bill (वीज बिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
+                  <UploadBox label="Birth Certificate/School Leaving(जन्म/शाळा दाखला)" fileData={files.birthCertificate} onChange={(e) => handleFileChange(e, "birthCertificate")} />
                 </div>
               </div>
 

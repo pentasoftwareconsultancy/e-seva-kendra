@@ -48,7 +48,7 @@ function RationCardForm() {
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">रेशनकार्डसाठी लागणारी कागदपत्रे</h2>
             <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for Ration Card</h3>
             <div className="space-y-3 text-sm sm:text-lg">
-              {[["पहिल्या रेशनकार्ड नाव कमी केल्याचा दाखला", "Previous Ration Card Name Deletion Certificate"], ["सर्व कुटुंब सदस्यांचे आधारकार्ड", "Aadhaar Card of All Family Members"], ["कुटुंबातील कोणत्याही एका सदस्याचे पॅनकार्ड", "PAN Card of Any One Family Member"], ["कोणत्याही एका सदस्याचे बँक पासबुक", "Bank Passbook of Any One Family Member"], ["ज्येष्ठ सदस्यांचे ३ पासपोर्ट साईज फोटो", "3 Passport Size Photos of Elder Family Member"], ["चालू लाईटबील", "Latest Electricity Bill"]].map((item, index) => (
+              {[["पहिल्या रेशनकार्ड नाव कमी केल्याचा दाखला", "Previous Ration Card Name Deletion Certificate"], ["सर्व कुटुंब सदस्यांचे आधारकार्ड", "Aadhaar Card of All Family Members"], ["कुटुंबातील कोणत्याही एका सदस्याचे पॅनकार्ड", "PAN Card of Any One Family Member"], ["कोणत्याही एका सदस्याचे बँक पासबुक", "Bank Passbook of Any One Family Member"], ["ज्येष्ठ सदस्यांचे ३ पासपोर्ट साईज फोटो", "3 Passport Size Photos of Elder Family Member"], ["चालू लाईटबील", "Latest Electricity Bill"],["भाडे करार","Rent Agreement"]].map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
                   <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
@@ -96,6 +96,7 @@ function RationCardForm() {
                 <UploadBox label="Bank Passbook (बँक पासबुक)" fileData={files.bank} onChange={(e) => handleFileChange(e, "bank")} />
                 <UploadBox label="Passport Photos (पासपोर्ट फोटो)" fileData={files.photos} onChange={(e) => handleFileChange(e, "photos")} />
                 <UploadBox label="Light Bill (लाईट बिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
+                <UploadBox label="Rent Agreement (भाडे करार)" fileData={files.rentAgreement} onChange={(e) => handleFileChange(e, "rentAgreement")} />
               </div>
             </div>
             <div className="flex justify-end pt-2">

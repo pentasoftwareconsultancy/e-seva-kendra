@@ -7,7 +7,7 @@ function Pan() {
   const [activeTab, setActiveTab] = useState("new");
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
   const [errors, setErrors] = useState({ fullName: "", mobile: "" });
-  const [files, setFiles] = useState({ aadhaar: null, photos: null, marriageCert: null, oldPan: null });
+  const [files, setFiles] = useState({ aadhaar: null, photos: null, marriageCert: null, oldPan: null, signature: null });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
@@ -25,12 +25,12 @@ function Pan() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    if (!files.aadhaar || !files.photos) { alert("Please upload all required documents"); return; }
+    if (!files.aadhaar || !files.photos || !files.signature) { alert("Please upload all required documents"); return; }
     if (activeTab === "update" && (!files.marriageCert || !files.oldPan)) { alert("Please upload all required documents"); return; }
     navigate("/payment", {
       state: {
         serviceName: "PAN Card", applicantName: formData.fullName, mobile: formData.mobile, Amount: 350, type: activeTab,
-        documents: { aadhaar: files.aadhaar?.file, photo: files.photos?.file, marriageCert: files.marriageCert?.file, oldPan: files.oldPan?.file }
+        documents: { aadhaar: files.aadhaar?.file, photo: files.photos?.file, marriageCert: files.marriageCert?.file, oldPan: files.oldPan?.file,  signature: files.signature?.file  }
       }
     });
   };
@@ -113,6 +113,7 @@ function Pan() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                   <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
                   <UploadBox label="Passport Photos (पासपोर्ट फोटो)" fileData={files.photos} onChange={(e) => handleFileChange(e, "photos")} />
+                    <UploadBox label="Signature (स्वाक्षरी)" fileData={files.signature} onChange={(e) => handleFileChange(e, "signature")} />
                   {activeTab === "update" && (
                     <>
                       <UploadBox label="Marriage Certificate (विवाह प्रमाणपत्र)" fileData={files.marriageCert} onChange={(e) => handleFileChange(e, "marriageCert")} />

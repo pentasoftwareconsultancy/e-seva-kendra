@@ -25,18 +25,18 @@ function UdyogAadhaar() {
     e.preventDefault();
     if (!validateForm()) return;
     if (!files.pan || !files.aadhaar || !files.bankPassbook || !files.lightBill || !files.photo) { alert("Please upload all required documents"); return; }
-    navigate("/payment", { state: { serviceName: "Udyam Registration", applicantName: formData.fullName, mobile: formData.mobile, Amount: 500, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, bankPassbook: files.bankPassbook?.file, lightBill: files.lightBill?.file, photo: files.photo?.file } } });
+    navigate("/payment", { state: { serviceName: "Udyam Aadhaar Registration", applicantName: formData.fullName, mobile: formData.mobile, Amount: 500, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, bankPassbook: files.bankPassbook?.file, lightBill: files.lightBill?.file, photo: files.photo?.file } } });
   };
 
   return (
     <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
       <section className="relative w-full h-[250px] sm:h-[350px] md:h-[500px] flex items-center">
-        <div className="absolute inset-0"><img src={Panhero} alt="Udyog Aadhaar" className="w-full h-full object-cover object-[20%_center]" /></div>
+        <div className="absolute inset-0"><img src={Panhero} alt="Udyam Aadhaar" className="w-full h-full object-cover object-[20%_center]" /></div>
         <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/80 to-transparent"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full">
           <div className="w-full md:w-1/2 space-y-3 sm:space-y-6 text-white">
-            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold">Udyog Aadhaar Registration Services</h1>
-            <p className="text-sm sm:text-lg md:text-xl text-gray-200">We provide fast and reliable assistance for Udyog Aadhaar registration for MSME businesses.</p>
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold">Udyam Aadhaar Registration Services</h1>
+            <p className="text-sm sm:text-lg md:text-xl text-gray-200">We provide fast and reliable assistance for Udyam Aadhaar registration for MSME businesses.</p>
             <a href="#udyog-form"><button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black px-5 sm:px-8 py-2 sm:py-3 rounded-xl font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">Apply Now</button></a>
           </div>
         </div>
@@ -45,10 +45,10 @@ function UdyogAadhaar() {
       <section className="bg-white py-8 sm:py-12 px-3 sm:px-6 md:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white border-4 border-green-700 rounded-3xl p-4 sm:p-8 md:p-12 shadow-xl">
-            <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">उद्योगआधार काढण्यासाठी लागणारी कागदपत्रे</h2>
-            <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-600 pb-3">Documents Required for Udyog Aadhaar Registration</h3>
+            <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">उद्यम आधार काढण्यासाठी लागणारी कागदपत्रे</h2>
+            <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-600 pb-3">Documents Required for Udyam Aadhaar Registration</h3>
             <div className="space-y-3 text-sm sm:text-lg">
-              {[["पॅनकार्ड", "PAN Card"], ["आधारकार्ड", "Aadhaar Card"], ["बँक पासबुक", "Bank Passbook"], ["ई-मेल आय.डी. / मोबाईल नंबर", "Email ID / Mobile Number"], ["लाईटबिल", "Light Bill"], ["१ पासपोर्ट साईज फोटो", "1 Passport Size Photograph"]].map((item, index) => (
+              {[["पॅनकार्ड", "PAN Card"], ["आधारकार्ड", "Aadhaar Card"], ["बँक पासबुक", "Bank Passbook"], ["ई-मेल आय.डी. / मोबाईल नंबर", "Email ID / Mobile Number"], ["लाईटबिल", "Light Bill"]].map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
                   <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
@@ -62,7 +62,7 @@ function UdyogAadhaar() {
       <section id="udyog-form" className="py-8 sm:py-12 px-3 sm:px-6 md:px-8 bg-[#f8faff]">
         <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden mb-10 sm:mb-20">
           <div className="bg-gradient-to-r from-blue-900 to-blue-700 px-4 sm:px-10 py-5 sm:py-8">
-            <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-white text-center">Udyog Aadhaar Registration Form</h2>
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-white text-center">Udyam Aadhaar Registration Form</h2>
             <p className="text-blue-200 text-center text-xs sm:text-sm mt-1">Fill in your details to get started</p>
           </div>
           <form onSubmit={handleSubmit} className="p-4 sm:p-6 md:p-10 space-y-6 sm:space-y-8">
@@ -94,7 +94,6 @@ function UdyogAadhaar() {
                 <UploadBox label="Aadhaar Card (आधारकार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
                 <UploadBox label="Bank Passbook (बँक पासबुक)" fileData={files.bankPassbook} onChange={(e) => handleFileChange(e, "bankPassbook")} />
                 <UploadBox label="Light Bill (लाईटबिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
-                <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
               </div>
             </div>
             <div className="flex justify-end pt-2">
