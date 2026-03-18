@@ -32,7 +32,7 @@ function PassportForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    navigate("/payment", { state: { serviceName: "Passport Service", applicantName: formData.fullName, mobile: formData.mobile, Amount: 2500, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, photo: files.photo?.file, lightBill: files.lightBill?.file, rentAgreement: files.rentAgreement?.file } } });
+    navigate("/payment", { state: { serviceName: "Passport Service", applicantName: formData.fullName, mobile: formData.mobile, Amount: 2000, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, photo: files.photo?.file, lightBill: files.lightBill?.file, rentAgreement: files.rentAgreement?.file } } });
   };
 
   return (

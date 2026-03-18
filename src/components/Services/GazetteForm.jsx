@@ -47,7 +47,7 @@ function GazetteForm() {
         serviceName: "Gazette Service",
         applicantName: formData.fullName,
         mobile: formData.mobile,
-        Amount: 2000,
+        Amount: 1500,
         formData,
         documents: {
           aadhaar: files.aadhaar?.file,

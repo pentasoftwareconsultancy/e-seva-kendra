@@ -123,13 +123,14 @@ function Payment() {
         <div className="text-center space-y-4">
           <div className="inline-block bg-white p-6 rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 transform hover:-translate-y-1">
             <img
-              src={`https://e-seva-kendra-b.onrender.com/${qrImage}`}
+              src={`https://e-seva-kendra-b.onrender.com${qrImage}`}
               alt="QR Code"
               className="w-48 mx-auto rounded-lg"
             />
           </div>
           <p className="font-semibold text-lg">Scan & Pay</p>
-          <p className="text-gray-600">UPI ID: esuvidha@upi</p>
+          
+          
         </div>
  
         {/* UPLOAD SECTION */}
@@ -137,6 +138,12 @@ function Payment() {
           <div>
             <label className="block font-semibold mb-2">
               Upload Payment Screenshot *
+              {Number(data.Amount) === 0 && (
+                <span className="block mt-1 text-xs font-normal text-orange-600">
+                  Amount is ₹0 — Upload a dummy screenshot &amp; call us. | रक्कम ₹0 आहे — नमुना स्क्रीनशॉट अपलोड करा आणि{" "}
+                  <a href="tel:+918668266879" className="underline text-green-600 font-semibold">📞 8668266879</a> वर कॉल करा.
+                </span>
+              )}
             </label>
             <input
               type="file"
@@ -187,7 +194,7 @@ function Payment() {
  
         {/* SUPPORT */}
         <div className="text-center text-sm text-gray-500 border-t pt-4">
-          Need Help? Contact Support: +91 9876543210
+          Need Help? Contact Support: +91 8668266879
         </div>
  
       </div>

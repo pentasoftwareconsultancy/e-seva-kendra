@@ -95,54 +95,14 @@ export default function Register() {
   return (
     <>
  
-      {/* ================= HERO SECTION ================= */}
-      <section className="relative h-[400px] sm:h-[450px] md:h-[500px] overflow-hidden">
-        {/* Background Image */}
-        <img
-          src={illustrationImg}
-          alt="Register illustration"
-          className="absolute inset-0 w-full h-full object-cover object-[45%_40%]"
-        />
- 
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-900/60 to-transparent"></div>
- 
-        {/* Content */}
-        <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 flex items-center">
-          {/* LEFT TEXT */}
-          <div className="text-white max-w-xl">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
-              Register for Our Services
-            </h1>
-            <p className="mt-3 md:mt-4 text-sm sm:text-base text-blue-100">
-              Sign up to get your trusted help for PAN Card, Aadhaar,
-              GST Registration and more.
-            </p>
- 
-            <div className="mt-4 md:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <button
-                onClick={() => document.getElementById('register-form')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-yellow-500 hover:bg-yellow-600 px-6 py-3 rounded-lg font-semibold text-white text-center"
-              >
-                Get Started
-              </button>
-              <a
-                href="https://wa.me/919876543310"
-                className="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg font-semibold text-white text-center"
-              >
-                WhatsApp Now
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      
  
       {/* ================= REGISTER SECTION ================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-0 pt-12 sm:pt-16 md:pt-24 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-end">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-0 pt-12 sm:pt-16 md:pt-5 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-end">
  
         {/* LEFT CONTENT */}
         <div className="flex flex-col justify-between pb-0 order-2 md:order-1">
-          <div>
+          <div className="hidden md:block">
             <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900">
               Register for Our Services
             </h2>

@@ -374,7 +374,7 @@ export default function Header() {
                   {/* 🔔 DROPDOWN */}
 
                   {isNotificationOpen && (
-                    <div className="absolute right-0 mt-12 w-80 bg-white shadow-xl rounded-xl border z-50">
+                    <div className="fixed left-1/2 -translate-x-1/2 sm:absolute sm:left-auto sm:translate-x-0 sm:right-0 top-16 sm:top-auto sm:mt-12 w-[90vw] sm:w-80 bg-white shadow-xl rounded-xl border z-50">
                       <div className="p-3 border-b font-semibold">
                         Notifications
                       </div>
@@ -399,6 +399,7 @@ export default function Header() {
 
                       <Link
                         to="/notifications"
+                        onClick={() => setIsNotificationOpen(false)}
                         className="block text-center text-sm text-blue-600 p-3 hover:bg-gray-50"
                       >
                         View all notifications
