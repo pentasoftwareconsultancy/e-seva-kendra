@@ -5,18 +5,29 @@ import PanHero from "../../assets/Servicesimg/Panhero.png";
 function ITRForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
-  const [errors, setErrors] = useState({ fullName: "", mobile: "" });
-  const [files, setFiles] = useState({ pan: null, aadhaar: null, form16: null, bankStatement: null, salarySlips: null, investmentProof: null });
+  const [errors, setErrors] = useState({});
+  const [files, setFiles] = useState({ pan: null, aadhaar: null, form16: null, bankStatement: null, salarySlips: null, investmentProof: null, insurance: null, shopDeposit: null });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
-    if (file) setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+    if (file) {
+      setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
   };
 
   const validateForm = () => {
     const newErrors = {};
     if (!formData.fullName.trim() || formData.fullName.trim().length < 3) newErrors.fullName = "Name must be at least 3 characters";
     if (!/^[0-9]{10}$/.test(formData.mobile)) newErrors.mobile = "Mobile number must be exactly 10 digits";
+    if (!files.pan) newErrors.pan = "Required";
+    if (!files.aadhaar) newErrors.aadhaar = "Required";
+    if (!files.form16) newErrors.form16 = "Required";
+    if (!files.bankStatement) newErrors.bankStatement = "Required";
+    if (!files.salarySlips) newErrors.salarySlips = "Required";
+    if (!files.investmentProof) newErrors.investmentProof = "Required";
+    if (!files.insurance) newErrors.insurance = "Required";
+    if (!files.shopDeposit) newErrors.shopDeposit = "Required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -24,7 +35,7 @@ function ITRForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    navigate("/payment", { state: { serviceName: "ITR Filing", applicantName: formData.fullName, mobile: formData.mobile, Amount: 1500, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, form16: files.form16?.file, bankStatement: files.bankStatement?.file, salarySlips: files.salarySlips?.file, investmentProof: files.investmentProof?.file } } });
+    navigate("/payment", { state: { serviceName: "ITR Filing", applicantName: formData.fullName, mobile: formData.mobile, Amount: 1500, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, form16: files.form16?.file, bankStatement: files.bankStatement?.file, salarySlips: files.salarySlips?.file, investmentProof: files.investmentProof?.file, insurance: files.insurance?.file, shopDeposit: files.shopDeposit?.file } } });
   };
 
   return (
@@ -47,7 +58,7 @@ function ITRForm() {
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">आयकर रिटर्न साठी लागणारी कागदपत्रे</h2>
             <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for Income Tax Return (ITR)</h3>
             <div className="space-y-3 text-sm sm:text-lg">
-              {[["पॅन कार्ड", "PAN Card (Mandatory Document)"], ["आधार कार्ड", "Aadhaar Card (Identity Proof)"], ["फॉर्म 16", "Form 16 (For Salaried Employees)"], ["बँक स्टेटमेंट", "Bank Statement (Last 6 Months)"], ["सॅलरी स्लिप", "Salary Slips (Last 3 Months)"], ["गुंतवणूक पुरावा", "Investment Proof (LIC / PPF / ELSS etc.)"]].map((item, index) => (
+              {[["पॅन कार्ड", "PAN Card (Mandatory Document)"], ["आधार कार्ड", "Aadhaar Card (Identity Proof)"], ["फॉर्म 16", "Form 16 (For Salaried Employees)"], ["बँक स्टेटमेंट", "Bank Statement (Last 6 Months)"], ["सॅलरी स्लिप", "Salary Slips (Last 3 Months)"], ["गुंतवणूक पुरावा", "Investment Proof (LIC / PPF / ELSS etc.)"], ["विमा", "Insurance"], ["दुकान ठेव", "Shop Deposit"]].map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
                   <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
@@ -72,12 +83,12 @@ function ITRForm() {
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                 <div>
-                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Full Name (पूर्ण नाव) <span className="text-red-500">*</span></label>
+                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Full Name / पूर्ण नाव <span className="text-red-500">*</span></label>
                   <input type="text" required minLength={3} value={formData.fullName} onChange={(e) => { const value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); setFormData({ ...formData, fullName: value }); setErrors({ ...errors, fullName: "" }); }} placeholder="Enter Full Name" className={`w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border text-xs sm:text-sm ${errors.fullName ? "border-red-500" : "border-gray-200"} focus:outline-none focus:ring-2 focus:ring-blue-500`} />
                   {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Mobile Number <span className="text-red-500">*</span></label>
+                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Mobile Number / मोबाईल नंबर <span className="text-red-500">*</span></label>
                   <input type="tel" required pattern="[0-9]{10}" maxLength={10} value={formData.mobile} onChange={(e) => { const value = e.target.value.replace(/[^0-9]/g, ""); setFormData({ ...formData, mobile: value }); setErrors({ ...errors, mobile: "" }); }} placeholder="Enter 10-digit Mobile Number" className={`w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border text-xs sm:text-sm ${errors.mobile ? "border-red-500" : "border-gray-200"} focus:outline-none focus:ring-2 focus:ring-blue-500`} />
                   {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
                 </div>
@@ -89,12 +100,14 @@ function ITRForm() {
                 Upload Documents
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                <UploadBox label="पॅन कार्ड (PAN Card)" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} />
-                <UploadBox label="आधार कार्ड (Aadhaar Card)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-                <UploadBox label="फॉर्म 16 (Form 16)" fileData={files.form16} onChange={(e) => handleFileChange(e, "form16")} />
-                <UploadBox label="बँक स्टेटमेंट (Bank Statement - 6 Months)" fileData={files.bankStatement} onChange={(e) => handleFileChange(e, "bankStatement")} />
-                <UploadBox label="सॅलरी स्लिप (Salary Slips - 3 Months)" fileData={files.salarySlips} onChange={(e) => handleFileChange(e, "salarySlips")} />
-                <UploadBox label="गुंतवणूक पुरावा (Investment Proof)" fileData={files.investmentProof} onChange={(e) => handleFileChange(e, "investmentProof")} />
+                <UploadBox label="PAN Card / पॅन कार्ड" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} error={errors.pan} />
+                <UploadBox label="Aadhaar Card / आधार कार्ड" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} error={errors.aadhaar} />
+                <UploadBox label="Form 16 / फॉर्म 16" fileData={files.form16} onChange={(e) => handleFileChange(e, "form16")} error={errors.form16} />
+                <UploadBox label="Bank Statement / बँक स्टेटमेंट" fileData={files.bankStatement} onChange={(e) => handleFileChange(e, "bankStatement")} error={errors.bankStatement} />
+                <UploadBox label="Salary Slips / सॅलरी स्लिप" fileData={files.salarySlips} onChange={(e) => handleFileChange(e, "salarySlips")} error={errors.salarySlips} />
+                <UploadBox label="Investment Proof / गुंतवणूक पुरावा" fileData={files.investmentProof} onChange={(e) => handleFileChange(e, "investmentProof")} error={errors.investmentProof} />
+                <UploadBox label="Insurance / विमा" fileData={files.insurance} onChange={(e) => handleFileChange(e, "insurance")} error={errors.insurance} />
+                <UploadBox label="Shop Deposit / दुकान ठेव" fileData={files.shopDeposit} onChange={(e) => handleFileChange(e, "shopDeposit")} error={errors.shopDeposit} />
               </div>
             </div>
             <div className="flex justify-end pt-2">
@@ -107,11 +120,11 @@ function ITRForm() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, error }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label} <span className="text-red-500">*</span></label>
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border ${error ? "border-red-500" : "border-gray-200"}`}>
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs text-gray-600">Upload Document</span>
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
@@ -120,6 +133,7 @@ function UploadBox({ label, fileData, onChange }) {
           </label>
         </div>
         {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+        {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
       </div>
     </div>
   );

@@ -5,18 +5,29 @@ import Panhero from "../../assets/Servicesimg/Panhero.png";
 function Food() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
-  const [errors, setErrors] = useState({ fullName: "", mobile: "" });
-  const [files, setFiles] = useState({ pan: null, aadhaar: null, bankPassbook: null, lightBill: null, photo: null, shopAct: null });
+  const [errors, setErrors] = useState({});
+  const [files, setFiles] = useState({ pan: null, aadhaar: null, bankPassbook: null, lightBill: null, photo: null, shopAct: null, electricityBill: null, rentAgreement: null });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
-    if (file) setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+    if (file) {
+      setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
   };
 
   const validateForm = () => {
     const newErrors = {};
     if (!formData.fullName.trim() || formData.fullName.trim().length < 3) newErrors.fullName = "Name must be at least 3 characters";
     if (!/^[0-9]{10}$/.test(formData.mobile)) newErrors.mobile = "Mobile number must be exactly 10 digits";
+    if (!files.pan) newErrors.pan = "Required";
+    if (!files.aadhaar) newErrors.aadhaar = "Required";
+    if (!files.bankPassbook) newErrors.bankPassbook = "Required";
+    if (!files.lightBill) newErrors.lightBill = "Required";
+    if (!files.photo) newErrors.photo = "Required";
+    if (!files.shopAct) newErrors.shopAct = "Required";
+    if (!files.electricityBill) newErrors.electricityBill = "Required";
+    if (!files.rentAgreement) newErrors.rentAgreement = "Required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -24,8 +35,7 @@ function Food() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    if (!files.pan || !files.aadhaar || !files.bankPassbook || !files.lightBill || !files.photo || !files.shopAct) { alert("Please upload all required documents"); return; }
-    navigate("/payment", { state: { serviceName: "Food License", applicantName: formData.fullName, mobile: formData.mobile, Amount: 1200, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, bankPassbook: files.bankPassbook?.file, lightBill: files.lightBill?.file, photo: files.photo?.file, shopAct: files.shopAct?.file } } });
+    navigate("/payment", { state: { serviceName: "Food License", applicantName: formData.fullName, mobile: formData.mobile, Amount: 1200, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, bankPassbook: files.bankPassbook?.file, lightBill: files.lightBill?.file, photo: files.photo?.file, shopAct: files.shopAct?.file, electricityBill: files.electricityBill?.file, rentAgreement: files.rentAgreement?.file } } });
   };
 
   return (
@@ -48,7 +58,7 @@ function Food() {
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">फुड लायसन्स काढण्यासाठी लागणारी कागदपत्रे</h2>
             <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-600 pb-3">Documents Required for Food License</h3>
             <div className="space-y-3 text-sm sm:text-lg">
-              {[["पॅनकार्ड", "PAN Card"], ["आधारकार्ड", "Aadhaar Card"], ["बँक पासबुक", "Bank Passbook"], ["ई-मेल आय.डी. / मोबाईल नंबर", "Email ID / Mobile Number"], ["लाईटबिल", "Light Bill"], ["१ पासपोर्ट साईज फोटो", "1 Passport Size Photograph"], ["दुकान नोंदणी लायसन्स", "Shop Act License"]].map((item, index) => (
+              {[["पॅनकार्ड", "PAN Card"], ["आधारकार्ड", "Aadhaar Card"], ["बँक पासबुक", "Bank Passbook"], ["ई-मेल आय.डी. / मोबाईल नंबर", "Email ID / Mobile Number"], ["लाईटबिल", "Light Bill"], ["१ पासपोर्ट साईज फोटो", "1 Passport Size Photograph"], ["दुकान नोंदणी लायसन्स", "Shop Act License"], ["वीज बिल", "Electricity Bill"], ["भाडे करार", "Rent Agreement"]].map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
                   <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
@@ -73,12 +83,12 @@ function Food() {
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                 <div>
-                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Full Name (पूर्ण नाव) <span className="text-red-500">*</span></label>
+                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Full Name / पूर्ण नाव <span className="text-red-500">*</span></label>
                   <input type="text" required minLength={3} value={formData.fullName} onChange={(e) => { const value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); setFormData({ ...formData, fullName: value }); setErrors({ ...errors, fullName: "" }); }} placeholder="Enter Full Name" className={`w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border text-xs sm:text-sm ${errors.fullName ? "border-red-500" : "border-gray-200"} focus:outline-none focus:ring-2 focus:ring-blue-500`} />
                   {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Mobile Number (मोबाईल क्रमांक) <span className="text-red-500">*</span></label>
+                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Mobile Number / मोबाईल नंबर <span className="text-red-500">*</span></label>
                   <input type="tel" required pattern="[0-9]{10}" maxLength={10} value={formData.mobile} onChange={(e) => { const value = e.target.value.replace(/[^0-9]/g, ""); setFormData({ ...formData, mobile: value }); setErrors({ ...errors, mobile: "" }); }} placeholder="Enter 10-digit Mobile Number" className={`w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border text-xs sm:text-sm ${errors.mobile ? "border-red-500" : "border-gray-200"} focus:outline-none focus:ring-2 focus:ring-blue-500`} />
                   {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
                 </div>
@@ -90,12 +100,14 @@ function Food() {
                 Upload Documents
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                <UploadBox label="PAN Card (पॅनकार्ड)" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} />
-                <UploadBox label="Aadhaar Card (आधारकार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-                <UploadBox label="Bank Passbook (बँक पासबुक)" fileData={files.bankPassbook} onChange={(e) => handleFileChange(e, "bankPassbook")} />
-                <UploadBox label="Light Bill (लाईटबिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
-                <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
-                <UploadBox label="Shop Act License (दुकान नोंदणी)" fileData={files.shopAct} onChange={(e) => handleFileChange(e, "shopAct")} />
+                <UploadBox label="PAN Card / पॅनकार्ड" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} error={errors.pan} />
+                <UploadBox label="Aadhaar Card / आधारकार्ड" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} error={errors.aadhaar} />
+                <UploadBox label="Bank Passbook / बँक पासबुक" fileData={files.bankPassbook} onChange={(e) => handleFileChange(e, "bankPassbook")} error={errors.bankPassbook} />
+                <UploadBox label="Light Bill / लाईटबिल" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} error={errors.lightBill} />
+                <UploadBox label="Passport Photo / पासपोर्ट फोटो" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} error={errors.photo} />
+                <UploadBox label="Shop Act License / दुकान नोंदणी" fileData={files.shopAct} onChange={(e) => handleFileChange(e, "shopAct")} error={errors.shopAct} />
+                <UploadBox label="Electricity Bill / वीज बिल" fileData={files.electricityBill} onChange={(e) => handleFileChange(e, "electricityBill")} error={errors.electricityBill} />
+                <UploadBox label="Rent Agreement / भाडे करार" fileData={files.rentAgreement} onChange={(e) => handleFileChange(e, "rentAgreement")} error={errors.rentAgreement} />
               </div>
             </div>
             <div className="flex justify-end pt-2">
@@ -108,11 +120,11 @@ function Food() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, error }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label} <span className="text-red-500">*</span></label>
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border ${error ? "border-red-500" : "border-gray-200"}`}>
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs text-gray-600">Upload Document</span>
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
@@ -121,6 +133,7 @@ function UploadBox({ label, fileData, onChange }) {
           </label>
         </div>
         {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+        {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
       </div>
     </div>
   );

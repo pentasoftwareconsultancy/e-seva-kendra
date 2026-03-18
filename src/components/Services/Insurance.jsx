@@ -15,9 +15,14 @@ function Insurance() {
     vehicleInsurance: null, dMartAccount: null, loanDoc: null, form16_ITR: null,
   });
 
+  const [fileErrors, setFileErrors] = useState({});
+
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
-    if (file) setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+    if (file) {
+      setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+      setFileErrors((prev) => ({ ...prev, [field]: false }));
+    }
   };
 
   useEffect(() => {
@@ -35,6 +40,10 @@ function Insurance() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
+    const missing = {};
+    documents.forEach((doc) => { if (!files[doc.field]) missing[doc.field] = true; });
+    setFileErrors(missing);
+    if (Object.keys(missing).length > 0) return;
     navigate("/payment", {
       state: {
         serviceName: activeTab === "health" ? "Health Insurance" : "Life Insurance",
@@ -60,11 +69,9 @@ function Insurance() {
     { label: "Address Proof (पत्ता पुरावा)", field: "addressProof" },
     { label: "Passport Photo (पासपोर्ट फोटो)", field: "photo" },
     { label: "Medical Report (मेडिकल रिपोर्ट)", field: "medicalReport" },
-    { label: "Ration Card (रेशन कार्ड)", field: "rationCard" },
     { label: "Light Bill (लाईट बिल)", field: "lightBill" },
-    { label: "Tahasildar Income Certificate (तहसीलदार उत्पन्न दाखला)", field: "tahasildarCertificate" },
-    { label: "E-Shram Card (ई-श्रम कार्ड)", field: "eshramCard" },
-    { label: "Ayushman Card (आयुष्मान कार्ड)", field: "ayushmanCard" },
+  
+    
   ];
 
   const lifeDocuments = [
@@ -74,14 +81,10 @@ function Insurance() {
     { label: "Passport Photo (पासपोर्ट फोटो)", field: "photo" },
     { label: "Income Proof (Salary Slip / ITR / Form 16)", field: "incomeProof" },
     { label: "School Leaving Certificate (शाळा सोडण्याचा प्रमाणपत्र)", field: "schoolLeavingCert" },
-    { label: "Caste Certificate (जाति प्रमाणपत्र)", field: "casteCertificate" },
-    { label: "Ration Card (रेशन कार्ड)", field: "rationCard" },
     { label: "Light Bill (लाईट बिल)", field: "lightBill" },
     { label: "Vehicle Insurance Document (वाहन विमा प्रमाणपत्र)", field: "vehicleInsurance" },
-    { label: "D-Mart Account Document (डी-मार्ट अकाउंट)", field: "dMartAccount" },
     { label: "Loan Documents (कर्ज दस्तऐवज)", field: "loanDoc" },
-    { label: "E-Shram Card (ई-श्रम कार्ड)", field: "eshramCard" },
-    { label: "Ayushman Card (आयुष्मान कार्ड)", field: "ayushmanCard" },
+   
   ];
 
   const documents = activeTab === "health" ? healthDocuments : lifeDocuments;
@@ -154,7 +157,7 @@ function Insurance() {
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {documents.map((doc, i) => (
-                  <UploadBox key={i} label={doc.label} field={doc.field} fileData={files[doc.field]} onFileChange={handleFileChange} />
+                  <UploadBox key={i} label={doc.label} field={doc.field} fileData={files[doc.field]} hasError={!!fileErrors[doc.field]} onFileChange={handleFileChange} />
                 ))}
               </div>
             </div>
@@ -168,11 +171,11 @@ function Insurance() {
   );
 }
 
-function UploadBox({ label, field, fileData, onFileChange }) {
+function UploadBox({ label, field, fileData, onFileChange, hasError }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label} <span className="text-red-500">*</span></label>
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border ${hasError ? "border-red-500" : "border-gray-200"}`}>
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs text-gray-600">Upload Document</span>
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
@@ -181,6 +184,7 @@ function UploadBox({ label, field, fileData, onFileChange }) {
           </label>
         </div>
         {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+        {hasError && <p className="text-red-500 text-xs mt-1">This field is required</p>}
       </div>
     </div>
   );

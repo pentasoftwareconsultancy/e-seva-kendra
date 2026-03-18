@@ -6,6 +6,7 @@ function RationCardForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
   const [errors, setErrors] = useState({ fullName: "", mobile: "" });
+  const [fileErrors, setFileErrors] = useState({});
   const [files, setFiles] = useState({ nameRemoval: null, familyAadhaar: null, pan: null, bank: null, photos: null, lightBill: null });
 
   const handleFileChange = (e, field) => {
@@ -21,12 +22,46 @@ function RationCardForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-    if (!files.nameRemoval || !files.familyAadhaar || !files.pan || !files.bank || !files.photos || !files.lightBill) { alert("Please upload all required documents"); return; }
-    navigate("/payment", { state: { serviceName: "Ration Card Service", applicantName: formData.fullName, mobile: formData.mobile, Amount: 4000, formData, documents: { nameRemoval: files.nameRemoval?.file, familyAadhaar: files.familyAadhaar?.file, pan: files.pan?.file, bank: files.bank?.file, photos: files.photos?.file, lightBill: files.lightBill?.file } } });
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  if (!validateForm()) return;
+
+  const newFileErrors = {
+    nameRemoval: !files.nameRemoval,
+    familyAadhaar: !files.familyAadhaar,
+    pan: !files.pan,
+    bank: !files.bank,
+    photos: !files.photos,
+    lightBill: !files.lightBill,
+    rentAgreement: !files.rentAgreement,
   };
+
+  setFileErrors(newFileErrors);
+
+  const hasError = Object.values(newFileErrors).some((err) => err);
+
+  if (hasError) return;
+
+  navigate("/payment", {
+    state: {
+      serviceName: "Ration Card Service",
+      applicantName: formData.fullName,
+      mobile: formData.mobile,
+      Amount: 4000,
+      formData,
+      documents: {
+        nameRemoval: files.nameRemoval?.file,
+        familyAadhaar: files.familyAadhaar?.file,
+        pan: files.pan?.file,
+        bank: files.bank?.file,
+        photos: files.photos?.file,
+        lightBill: files.lightBill?.file,
+        rentAgreement: files.rentAgreement?.file,
+      },
+    },
+  });
+};
 
   return (
     <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
@@ -48,7 +83,7 @@ function RationCardForm() {
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">रेशनकार्डसाठी लागणारी कागदपत्रे</h2>
             <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for Ration Card</h3>
             <div className="space-y-3 text-sm sm:text-lg">
-              {[["पहिल्या रेशनकार्ड नाव कमी केल्याचा दाखला", "Previous Ration Card Name Deletion Certificate"], ["सर्व कुटुंब सदस्यांचे आधारकार्ड", "Aadhaar Card of All Family Members"], ["कुटुंबातील कोणत्याही एका सदस्याचे पॅनकार्ड", "PAN Card of Any One Family Member"], ["कोणत्याही एका सदस्याचे बँक पासबुक", "Bank Passbook of Any One Family Member"], ["ज्येष्ठ सदस्यांचे ३ पासपोर्ट साईज फोटो", "3 Passport Size Photos of Elder Family Member"], ["चालू लाईटबील", "Latest Electricity Bill"]].map((item, index) => (
+              {[["पहिल्या रेशनकार्ड नाव कमी केल्याचा दाखला", "Previous Ration Card Name Deletion Certificate"], ["सर्व कुटुंब सदस्यांचे आधारकार्ड", "Aadhaar Card of All Family Members"], ["कुटुंबातील कोणत्याही एका सदस्याचे पॅनकार्ड", "PAN Card of Any One Family Member"], ["कोणत्याही एका सदस्याचे बँक पासबुक", "Bank Passbook of Any One Family Member"], ["ज्येष्ठ सदस्यांचे ३ पासपोर्ट साईज फोटो", "3 Passport Size Photos of Elder Family Member"], ["चालू लाईटबील", "Latest Electricity Bill"],["भाडे करार","Rent Agreement"]].map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
                   <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
@@ -90,12 +125,62 @@ function RationCardForm() {
                 Upload Documents
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                <UploadBox label="Name Removal Certificate (नाव कमी दाखला)" fileData={files.nameRemoval} onChange={(e) => handleFileChange(e, "nameRemoval")} />
-                <UploadBox label="Family Aadhaar Cards (कुटुंब आधार कार्ड)" fileData={files.familyAadhaar} onChange={(e) => handleFileChange(e, "familyAadhaar")} />
-                <UploadBox label="PAN Card (पॅन कार्ड)" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} />
-                <UploadBox label="Bank Passbook (बँक पासबुक)" fileData={files.bank} onChange={(e) => handleFileChange(e, "bank")} />
-                <UploadBox label="Passport Photos (पासपोर्ट फोटो)" fileData={files.photos} onChange={(e) => handleFileChange(e, "photos")} />
-                <UploadBox label="Light Bill (लाईट बिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
+               
+               <UploadBox 
+  label="Name Removal Certificate (नाव कमी दाखला)" 
+  fileData={files.nameRemoval} 
+  error={fileErrors.nameRemoval}
+  onChange={(e) => handleFileChange(e, "nameRemoval")} 
+  required 
+/>
+
+<UploadBox 
+  label="Family Aadhaar Cards (कुटुंब आधार कार्ड)" 
+  fileData={files.familyAadhaar} 
+  error={fileErrors.familyAadhaar}
+  onChange={(e) => handleFileChange(e, "familyAadhaar")} 
+  required 
+/>
+
+<UploadBox 
+  label="PAN Card (पॅन कार्ड)" 
+  fileData={files.pan} 
+  error={fileErrors.pan}
+  onChange={(e) => handleFileChange(e, "pan")} 
+  required 
+/>
+
+<UploadBox 
+  label="Bank Passbook (बँक पासबुक)" 
+  fileData={files.bank} 
+  error={fileErrors.bank}
+  onChange={(e) => handleFileChange(e, "bank")} 
+  required 
+/>
+
+<UploadBox 
+  label="Passport Photos (पासपोर्ट फोटो)" 
+  fileData={files.photos} 
+  error={fileErrors.photos}
+  onChange={(e) => handleFileChange(e, "photos")} 
+  required 
+/>
+
+<UploadBox 
+  label="Light Bill (लाईट बिल)" 
+  fileData={files.lightBill} 
+  error={fileErrors.lightBill}
+  onChange={(e) => handleFileChange(e, "lightBill")} 
+  required 
+/>
+
+<UploadBox 
+  label="Rent Agreement (भाडे करार)" 
+  fileData={files.rentAgreement} 
+  error={fileErrors.rentAgreement}
+  onChange={(e) => handleFileChange(e, "rentAgreement")} 
+  required 
+/>
               </div>
             </div>
             <div className="flex justify-end pt-2">
@@ -108,19 +193,50 @@ function RationCardForm() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, required, error }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">
+        {label} {required && <span className="text-red-500">*</span>}
+      </label>
+
+      <div
+        className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border transition-all duration-200 ${
+          error ? "border-red-500" : "border-gray-200"
+        }`}
+      >
         <div className="flex justify-between items-center gap-2">
-          <span className="font-semibold text-xs text-gray-600">Upload Document</span>
+          <span className="font-semibold text-xs text-gray-600">
+            Upload Document
+          </span>
+
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
             Upload
-            <input type="file" accept="image/*,.pdf" className="hidden" onChange={onChange} />
+            <input
+              type="file"
+              accept="image/*,.pdf"
+              className="hidden"
+              onChange={onChange}
+            />
           </label>
         </div>
-        {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+
+        {/* File Name */}
+        {fileData && (
+          <p
+            className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all"
+            onClick={() => window.open(fileData.url, "_blank")}
+          >
+            {fileData.file.name}
+          </p>
+        )}
+
+        {/* Error Message */}
+        {error && (
+          <p className="text-red-500 text-xs mt-1">
+            This document is required
+          </p>
+        )}
       </div>
     </div>
   );

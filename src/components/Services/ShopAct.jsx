@@ -6,11 +6,15 @@ function ShopAct() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
   const [errors, setErrors] = useState({ fullName: "", mobile: "" });
-  const [files, setFiles] = useState({ pan: null, aadhaar: null, bankPassbook: null, lightBill: null, photo: null });
+  const [fileErrors, setFileErrors] = useState({});
+  const [files, setFiles] = useState({ pan: null, aadhaar: null, lightBill: null, photo: null, shopPhoto: null });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
-    if (file) setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+    if (file) {
+      setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+      setFileErrors((prev) => ({ ...prev, [field]: false }));
+    }
   };
 
   const validateForm = () => {
@@ -24,8 +28,33 @@ function ShopAct() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    if (!files.pan || !files.aadhaar || !files.bankPassbook || !files.lightBill || !files.photo) { alert("Please upload all required documents"); return; }
-    navigate("/payment", { state: { serviceName: "Shop Act License", applicantName: formData.fullName, mobile: formData.mobile, Amount: 500, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, bankPassbook: files.bankPassbook?.file, lightBill: files.lightBill?.file, photo: files.photo?.file } } });
+
+    const newFileErrors = {
+      pan: !files.pan,
+      aadhaar: !files.aadhaar,
+      lightBill: !files.lightBill,
+      photo: !files.photo,
+      shopPhoto: !files.shopPhoto,
+    };
+    setFileErrors(newFileErrors);
+    if (Object.values(newFileErrors).some((err) => err)) return;
+
+    navigate("/payment", {
+      state: {
+        serviceName: "Shop Act License",
+        applicantName: formData.fullName,
+        mobile: formData.mobile,
+        Amount: 500,
+        formData,
+        documents: {
+          pan: files.pan?.file,
+          aadhaar: files.aadhaar?.file,
+          lightBill: files.lightBill?.file,
+          photo: files.photo?.file,
+          shopPhoto: files.shopPhoto?.file,
+        },
+      },
+    });
   };
 
   return (
@@ -48,7 +77,7 @@ function ShopAct() {
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">दुकान नोंदणी लायसन्स काढण्यासाठी लागणारी कागदपत्रे</h2>
             <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-600 pb-3">Documents Required for Shop Act License</h3>
             <div className="space-y-3 text-sm sm:text-lg">
-              {[["पॅनकार्ड", "PAN Card"], ["आधारकार्ड", "Aadhaar Card"], ["बँक पासबुक", "Bank Passbook"], ["ई-मेल आय.डी. / मोबाईल नंबर", "Email ID / Mobile Number"], ["लाईटबिल", "Light Bill"], ["१ पासपोर्ट साईज फोटो", "1 Passport Size Photograph"]].map((item, index) => (
+              {[["पॅनकार्ड", "PAN Card"], ["आधारकार्ड", "Aadhaar Card"],  ["ई-मेल आय.डी. / मोबाईल नंबर", "Email ID / Mobile Number"], ["लाईटबिल", "Light Bill"], ["१ पासपोर्ट साईज फोटो", "1 Passport Size Photograph"],["दुकानाचा फोटो","Shop Photo"]].map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
                   <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
@@ -90,11 +119,11 @@ function ShopAct() {
                 Upload Documents
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                <UploadBox label="PAN Card (पॅनकार्ड)" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} />
-                <UploadBox label="Aadhaar Card (आधारकार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-                <UploadBox label="Bank Passbook (बँक पासबुक)" fileData={files.bankPassbook} onChange={(e) => handleFileChange(e, "bankPassbook")} />
-                <UploadBox label="Light Bill (लाईटबिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
-                <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
+                <UploadBox label="PAN Card (पॅनकार्ड)" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} error={fileErrors.pan} />
+                <UploadBox label="Aadhaar Card (आधारकार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} error={fileErrors.aadhaar} />
+                <UploadBox label="Light Bill (लाईटबिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} error={fileErrors.lightBill} />
+                <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} error={fileErrors.photo} />
+                <UploadBox label="Shop Photo (दुकानाचा फोटो)" fileData={files.shopPhoto} onChange={(e) => handleFileChange(e, "shopPhoto")} error={fileErrors.shopPhoto} />
               </div>
             </div>
             <div className="flex justify-end pt-2">
@@ -107,11 +136,13 @@ function ShopAct() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, error }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">
+        {label} <span className="text-red-500">*</span>
+      </label>
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border transition-all duration-200 ${error ? "border-red-500" : fileData ? "border-green-400" : "border-gray-200"}`}>
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs text-gray-600">Upload Document</span>
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
@@ -121,6 +152,7 @@ function UploadBox({ label, fileData, onChange }) {
         </div>
         {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
       </div>
+      {error && <p className="text-red-500 text-xs mt-1">This document is required</p>}
     </div>
   );
 }

@@ -6,7 +6,8 @@ function RentAgreementForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ ownerName: "", mobile: "" });
   const [errors, setErrors] = useState({ ownerName: "", mobile: "" });
-  const [files, setFiles] = useState({ ownerAadhaar: null, tenantAadhaar: null, ownerPan: null, tenantPan: null, ownerPhoto: null, tenantPhoto: null, lightBill: null, propertyProof: null });
+  const [files, setFiles] = useState({ ownerAadhaar: null, tenantAadhaar: null, ownerPan: null, tenantPan: null, ownerPhoto: null, tenantPhoto: null, lightBill: null, propertyProof: null, depositAmount: null, rentAmount: null });
+  const [fileErrors, setFileErrors] = useState({ ownerAadhaar: false, tenantAadhaar: false, ownerPan: false, tenantPan: false, ownerPhoto: false, tenantPhoto: false, lightBill: false, propertyProof: false, depositAmount: false, rentAmount: false });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
@@ -24,9 +25,10 @@ function RentAgreementForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    const missingDocs = Object.values(files).some((f) => !f);
-    if (missingDocs) { alert("Please upload all required documents"); return; }
-    navigate("/payment", { state: { serviceName: "Rent Agreement", applicantName: formData.ownerName, mobile: formData.mobile, Amount: 700, type: "Rent Agreement", formData, documents: { ownerAadhaar: files.ownerAadhaar?.file, tenantAadhaar: files.tenantAadhaar?.file, ownerPan: files.ownerPan?.file, tenantPan: files.tenantPan?.file, ownerPhoto: files.ownerPhoto?.file, tenantPhoto: files.tenantPhoto?.file, lightBill: files.lightBill?.file, propertyProof: files.propertyProof?.file } } });
+    const missingFiles = { ownerAadhaar: !files.ownerAadhaar, tenantAadhaar: !files.tenantAadhaar, ownerPan: !files.ownerPan, tenantPan: !files.tenantPan, ownerPhoto: !files.ownerPhoto, tenantPhoto: !files.tenantPhoto, lightBill: !files.lightBill, propertyProof: !files.propertyProof, depositAmount: !files.depositAmount, rentAmount: !files.rentAmount };
+    setFileErrors(missingFiles);
+    if (Object.values(missingFiles).some(Boolean)) return;
+    navigate("/payment", { state: { serviceName: "Rent Agreement", applicantName: formData.ownerName, mobile: formData.mobile, Amount: 700, type: "Rent Agreement", formData, documents: { ownerAadhaar: files.ownerAadhaar?.file, tenantAadhaar: files.tenantAadhaar?.file, ownerPan: files.ownerPan?.file, tenantPan: files.tenantPan?.file, ownerPhoto: files.ownerPhoto?.file, tenantPhoto: files.tenantPhoto?.file, lightBill: files.lightBill?.file, propertyProof: files.propertyProof?.file, depositAmount: files.depositAmount?.file, rentAmount: files.rentAmount?.file } } });
   };
 
   return (
@@ -49,7 +51,7 @@ function RentAgreementForm() {
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">भाडे करारासाठी लागणारी कागदपत्रे</h2>
             <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for Rent Agreement</h3>
             <div className="space-y-3 text-sm sm:text-lg">
-              {[["मालक आधार कार्ड", "Owner Aadhaar Card"], ["भाडेकरू आधार कार्ड", "Tenant Aadhaar Card"], ["मालक पॅन कार्ड", "Owner PAN Card"], ["भाडेकरू पॅन कार्ड", "Tenant PAN Card"], ["मालक फोटो", "Owner Passport Size Photo"], ["भाडेकरू फोटो", "Tenant Passport Size Photo"], ["लाईट बिल", "Property Light Bill"], ["मालमत्ता पुरावा (7/12 / टॅक्स पावती)", "Property Ownership Proof"]].map((item, i) => (
+              {[["मालक आधार कार्ड", "Owner Aadhaar Card"], ["भाडेकरू आधार कार्ड", "Tenant Aadhaar Card"], ["मालक पॅन कार्ड", "Owner PAN Card"], ["भाडेकरू पॅन कार्ड", "Tenant PAN Card"], ["मालक फोटो", "Owner Passport Size Photo"], ["भाडेकरू फोटो", "Tenant Passport Size Photo"], ["लाईट बिल", "Property Light Bill"], ["मालमत्ता पुरावा (7/12 / टॅक्स पावती)", "Property Ownership Proof"],[" सुरक्षा ठेव रक्कम", "Deposit Amount"],["भाड्याची रक्कम","Rent Amount"]].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
                   <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
@@ -91,6 +93,18 @@ function RentAgreementForm() {
                 Upload Documents
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+<<<<<<< HEAD
+                <UploadBox label="Owner Aadhaar Card (मालक आधार)" fileData={files.ownerAadhaar} hasError={fileErrors.ownerAadhaar} onChange={(e) => { handleFileChange(e, "ownerAadhaar"); setFileErrors((p) => ({ ...p, ownerAadhaar: false })); }} />
+                <UploadBox label="Tenant Aadhaar Card (भाडेकरू आधार)" fileData={files.tenantAadhaar} hasError={fileErrors.tenantAadhaar} onChange={(e) => { handleFileChange(e, "tenantAadhaar"); setFileErrors((p) => ({ ...p, tenantAadhaar: false })); }} />
+                <UploadBox label="Owner PAN Card (मालक पॅन कार्ड)" fileData={files.ownerPan} hasError={fileErrors.ownerPan} onChange={(e) => { handleFileChange(e, "ownerPan"); setFileErrors((p) => ({ ...p, ownerPan: false })); }} />
+                <UploadBox label="Tenant PAN Card (भाडेकरू पॅन कार्ड)" fileData={files.tenantPan} hasError={fileErrors.tenantPan} onChange={(e) => { handleFileChange(e, "tenantPan"); setFileErrors((p) => ({ ...p, tenantPan: false })); }} />
+                <UploadBox label="Owner Photo (मालक फोटो)" fileData={files.ownerPhoto} hasError={fileErrors.ownerPhoto} onChange={(e) => { handleFileChange(e, "ownerPhoto"); setFileErrors((p) => ({ ...p, ownerPhoto: false })); }} />
+                <UploadBox label="Tenant Photo (भाडेकरू फोटो)" fileData={files.tenantPhoto} hasError={fileErrors.tenantPhoto} onChange={(e) => { handleFileChange(e, "tenantPhoto"); setFileErrors((p) => ({ ...p, tenantPhoto: false })); }} />
+                <UploadBox label="Light Bill (लाईट बिल)" fileData={files.lightBill} hasError={fileErrors.lightBill} onChange={(e) => { handleFileChange(e, "lightBill"); setFileErrors((p) => ({ ...p, lightBill: false })); }} />
+                <UploadBox label="Property Proof (मालमत्ता पुरावा)" fileData={files.propertyProof} hasError={fileErrors.propertyProof} onChange={(e) => { handleFileChange(e, "propertyProof"); setFileErrors((p) => ({ ...p, propertyProof: false })); }} />
+                <UploadBox label="Deposit Amount (सुरक्षा ठेव रक्कम)" fileData={files.depositAmount} hasError={fileErrors.depositAmount} onChange={(e) => { handleFileChange(e, "depositAmount"); setFileErrors((p) => ({ ...p, depositAmount: false })); }} />
+                <UploadBox label="Rent Amount (भाड्याची रक्कम)" fileData={files.rentAmount} hasError={fileErrors.rentAmount} onChange={(e) => { handleFileChange(e, "rentAmount"); setFileErrors((p) => ({ ...p, rentAmount: false })); }} />
+=======
                 <UploadBox label="Owner Aadhaar Card (मालक आधार)" fileData={files.ownerAadhaar} onChange={(e) => handleFileChange(e, "ownerAadhaar")} />
                 <UploadBox label="Tenant Aadhaar Card (भाडेकरू आधार)" fileData={files.tenantAadhaar} onChange={(e) => handleFileChange(e, "tenantAadhaar")} />
                 <UploadBox label="Owner PAN Card (मालक पॅन कार्ड)" fileData={files.ownerPan} onChange={(e) => handleFileChange(e, "ownerPan")} />
@@ -99,6 +113,9 @@ function RentAgreementForm() {
                 <UploadBox label="Tenant Photo (भाडेकरू फोटो)" fileData={files.tenantPhoto} onChange={(e) => handleFileChange(e, "tenantPhoto")} />
                 <UploadBox label="Light Bill (लाईट बिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
                 <UploadBox label="Property Proof (मालमत्ता पुरावा)" fileData={files.propertyProof} onChange={(e) => handleFileChange(e, "propertyProof")} />
+                <UploadBox label="Deposit Amount Proof (सुरक्षा ठेव रक्कम)" fileData={files.depositAmount} onChange={(e) => handleFileChange(e, "depositAmount")} />
+                <UploadBox label="Rent Amount Proof (भाड्याची रक्कम)" fileData={files.rentAmount} onChange={(e) => handleFileChange(e, "rentAmount")} />
+>>>>>>> 586fec77f76fed0645fb604a94de266f420cf381
               </div>
             </div>
             <div className="flex justify-end pt-2">
@@ -111,11 +128,11 @@ function RentAgreementForm() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, hasError }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label} <span className="text-red-500">*</span></label>
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border ${hasError ? "border-red-500" : "border-gray-200"}`}>
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs text-gray-600">Upload Document</span>
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
@@ -124,6 +141,7 @@ function UploadBox({ label, fileData, onChange }) {
           </label>
         </div>
         {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+        {hasError && <p className="text-red-500 text-xs mt-1">This field is required</p>}
       </div>
     </div>
   );

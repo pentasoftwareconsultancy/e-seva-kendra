@@ -7,6 +7,7 @@ function GovernmentBonds() {
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
   const [errors, setErrors] = useState({ fullName: "", mobile: "" });
   const [files, setFiles] = useState({ pan: null, aadhaar: null, bankPassbook: null, photo: null });
+  const [fileErrors, setFileErrors] = useState({ pan: false, aadhaar: false, bankPassbook: false, photo: false });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
@@ -24,7 +25,9 @@ function GovernmentBonds() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    if (!files.pan || !files.aadhaar || !files.bankPassbook || !files.photo) { alert("Please upload all required documents"); return; }
+    const missingFiles = { pan: !files.pan, aadhaar: !files.aadhaar, bankPassbook: !files.bankPassbook, photo: !files.photo };
+    setFileErrors(missingFiles);
+    if (Object.values(missingFiles).some(Boolean)) return;
     navigate("/payment", {
       state: {
         serviceName: "Government Bonds",
@@ -133,10 +136,10 @@ function GovernmentBonds() {
                 Upload Documents
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                <UploadBox label="PAN Card (पॅनकार्ड)" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} />
-                <UploadBox label="Aadhaar Card (आधारकार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-                <UploadBox label="Bank Passbook (बँक पासबुक)" fileData={files.bankPassbook} onChange={(e) => handleFileChange(e, "bankPassbook")} />
-                <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
+                <UploadBox label="PAN Card (पॅनकार्ड)" fileData={files.pan} hasError={fileErrors.pan} onChange={(e) => { handleFileChange(e, "pan"); setFileErrors((p) => ({ ...p, pan: false })); }} />
+                <UploadBox label="Aadhaar Card (आधारकार्ड)" fileData={files.aadhaar} hasError={fileErrors.aadhaar} onChange={(e) => { handleFileChange(e, "aadhaar"); setFileErrors((p) => ({ ...p, aadhaar: false })); }} />
+                <UploadBox label="Bank Passbook (बँक पासबुक)" fileData={files.bankPassbook} hasError={fileErrors.bankPassbook} onChange={(e) => { handleFileChange(e, "bankPassbook"); setFileErrors((p) => ({ ...p, bankPassbook: false })); }} />
+                <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} hasError={fileErrors.photo} onChange={(e) => { handleFileChange(e, "photo"); setFileErrors((p) => ({ ...p, photo: false })); }} />
               </div>
             </div>
 
@@ -152,11 +155,11 @@ function GovernmentBonds() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, hasError }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label} <span className="text-red-500">*</span></label>
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border ${hasError ? "border-red-500" : "border-gray-200"}`}>
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs text-gray-600">Upload Document</span>
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
@@ -165,6 +168,7 @@ function UploadBox({ label, fileData, onChange }) {
           </label>
         </div>
         {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+        {hasError && <p className="text-red-500 text-xs mt-1">This field is required</p>}
       </div>
     </div>
   );

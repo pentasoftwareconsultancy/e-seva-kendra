@@ -6,11 +6,15 @@ function GazetteForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
   const [errors, setErrors] = useState({ fullName: "", mobile: "" });
-  const [files, setFiles] = useState({ aadhaar: null, pan: null, photo: null, marriageCard: null, stampPaper: null });
+  const [fileErrors, setFileErrors] = useState({});
+  const [files, setFiles] = useState({ aadhaar: null, pan: null, photo: null, marriageCard: null, stampPaper: null, electricityBill: null, nameProof: null });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
-    if (file) setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+    if (file) {
+      setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+      setFileErrors((prev) => ({ ...prev, [field]: false }));
+    }
   };
 
   const validateForm = () => {
@@ -24,8 +28,38 @@ function GazetteForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    for (let key in files) { if (!files[key]) { alert("Please upload all required documents"); return; } }
-    navigate("/payment", { state: { serviceName: "Gazette Service", applicantName: formData.fullName, mobile: formData.mobile, Amount: 2000, formData, documents: { aadhaar: files.aadhaar?.file, pan: files.pan?.file, photo: files.photo?.file, marriageCard: files.marriageCard?.file, stampPaper: files.stampPaper?.file } } });
+
+    const newFileErrors = {
+      aadhaar: !files.aadhaar,
+      pan: !files.pan,
+      photo: !files.photo,
+      marriageCard: !files.marriageCard,
+      stampPaper: !files.stampPaper,
+      electricityBill: !files.electricityBill,
+      nameProof: !files.nameProof,
+    };
+
+    setFileErrors(newFileErrors);
+    if (Object.values(newFileErrors).some((err) => err)) return;
+
+    navigate("/payment", {
+      state: {
+        serviceName: "Gazette Service",
+        applicantName: formData.fullName,
+        mobile: formData.mobile,
+        Amount: 2000,
+        formData,
+        documents: {
+          aadhaar: files.aadhaar?.file,
+          pan: files.pan?.file,
+          photo: files.photo?.file,
+          marriageCard: files.marriageCard?.file,
+          stampPaper: files.stampPaper?.file,
+          electricityBill: files.electricityBill?.file,
+          nameProof: files.nameProof?.file,
+        },
+      },
+    });
   };
 
   return (
@@ -48,7 +82,7 @@ function GazetteForm() {
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">गॅझेट साठी लागणारी कागदपत्रे</h2>
             <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for Gazette Certificate</h3>
             <div className="space-y-3 text-sm sm:text-lg">
-              {[["आधार कार्ड", "Aadhaar Card (Identity Proof)"], ["पॅन कार्ड", "PAN Card"], ["1 पासपोर्ट साईज फोटो", "Recent 1 Passport Size Photographs"], ["विवाह पत्रिका / विवाह प्रमाणपत्र (लागू असल्यास)", "Marriage Card / Marriage Certificate (If Applicable)"], ["१०० रुपयांचा स्टॅम्प पेपर प्रतिज्ञापत्र", "Affidavit on ₹100 Stamp Paper"], ["लाईट बिल", "Electricity Bill"]].map((item, index) => (
+              {[["आधार कार्ड", "Aadhaar Card (Identity Proof)"], ["पॅन कार्ड", "PAN Card"], ["1 पासपोर्ट साईज फोटो", "Recent 1 Passport Size Photographs"], ["विवाह पत्रिका / विवाह प्रमाणपत्र (लागू असल्यास)", "Marriage Card / Marriage Certificate (If Applicable)"], ["१०० रुपयांचा स्टॅम्प पेपर प्रतिज्ञापत्र", "Affidavit on ₹100 Stamp Paper"], ["लाईट बिल", "Electricity Bill"],["जुने आणि नवीन दस्तऐवज पुरावा","Old and New Name Document Proof"]].map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
                   <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
@@ -90,11 +124,61 @@ function GazetteForm() {
                 Upload Documents
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-                <UploadBox label="PAN Card (पॅन कार्ड)" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} />
-                <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
-                <UploadBox label="Marriage Certificate (विवाह पत्रिका)" fileData={files.marriageCard} onChange={(e) => handleFileChange(e, "marriageCard")} />
-                <UploadBox label="Stamp Paper (स्टॅम्प पेपर)" fileData={files.stampPaper} onChange={(e) => handleFileChange(e, "stampPaper")} />
+                <UploadBox 
+  label="Aadhaar Card (आधार कार्ड)" 
+  fileData={files.aadhaar} 
+  error={fileErrors.aadhaar}
+  onChange={(e) => handleFileChange(e, "aadhaar")} 
+  required
+/>
+
+<UploadBox 
+  label="PAN Card (पॅन कार्ड)" 
+  fileData={files.pan} 
+  error={fileErrors.pan}
+  onChange={(e) => handleFileChange(e, "pan")} 
+  required
+/>
+
+<UploadBox 
+  label="Passport Photo (पासपोर्ट फोटो)" 
+  fileData={files.photo} 
+  error={fileErrors.photo}
+  onChange={(e) => handleFileChange(e, "photo")} 
+  required
+/>
+
+<UploadBox 
+  label="Marriage Certificate (विवाह पत्रिका)" 
+  fileData={files.marriageCard} 
+  error={fileErrors.marriageCard}
+  onChange={(e) => handleFileChange(e, "marriageCard")} 
+  required
+/>
+
+<UploadBox 
+  label="Stamp Paper (स्टॅम्प पेपर)" 
+  fileData={files.stampPaper} 
+  error={fileErrors.stampPaper}
+  onChange={(e) => handleFileChange(e, "stampPaper")} 
+  required
+/>
+
+<UploadBox
+  label="Electricity Bill (लाईट बिल)"
+  fileData={files.electricityBill}
+  error={fileErrors.electricityBill}
+  onChange={(e) => handleFileChange(e, "electricityBill")}
+  required
+  />
+
+<UploadBox 
+  label="Old and New Name Document Proof (जुने आणि नवीन दस्तऐवज पुरावा)" 
+  fileData={files.nameProof} 
+  error={fileErrors.nameProof}
+  onChange={(e) => handleFileChange(e, "nameProof")} 
+  required
+/>
               </div>
             </div>
             <div className="flex justify-end pt-2">
@@ -107,22 +191,50 @@ function GazetteForm() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, required, error }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">
+        {label} {required && <span className="text-red-500">*</span>}
+      </label>
+
+      <div
+        className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border transition-all duration-200 ${
+          error ? "border-red-500" : "border-gray-200"
+        }`}
+      >
         <div className="flex justify-between items-center gap-2">
-          <span className="font-semibold text-xs text-gray-600">Upload Document</span>
+          <span className="font-semibold text-xs text-gray-600">
+            Upload Document
+          </span>
+
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
             Upload
-            <input type="file" accept="image/*,.pdf" className="hidden" onChange={onChange} />
+            <input
+              type="file"
+              accept="image/*,.pdf"
+              className="hidden"
+              onChange={onChange}
+            />
           </label>
         </div>
-        {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+
+        {fileData && (
+          <p
+            className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all"
+            onClick={() => window.open(fileData.url, "_blank")}
+          >
+            {fileData.file.name}
+          </p>
+        )}
+
+        {error && (
+          <p className="text-red-500 text-xs mt-1">
+            This document is required
+          </p>
+        )}
       </div>
     </div>
   );
 }
-
 export default GazetteForm;
