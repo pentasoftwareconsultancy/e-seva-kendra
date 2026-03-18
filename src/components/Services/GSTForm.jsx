@@ -5,25 +5,30 @@ import PanHero from "../../assets/Servicesimg/Panhero.png";
 function GSTForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
-  const [errors, setErrors] = useState({ fullName: "", mobile: "" });
+  const [errors, setErrors] = useState({});
   const [files, setFiles] = useState({ pan: null, aadhaar: null, addressProof: null, bankProof: null, photo: null, businessProof: null });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
-    if (file) setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.fullName.trim() || formData.fullName.trim().length < 3) newErrors.fullName = "Name must be at least 3 characters";
-    if (!/^[0-9]{10}$/.test(formData.mobile)) newErrors.mobile = "Mobile number must be exactly 10 digits";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    if (file) {
+      setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    const newErrors = {};
+    if (!formData.fullName.trim() || formData.fullName.trim().length < 3) newErrors.fullName = "Name must be at least 3 characters";
+    if (!/^[0-9]{10}$/.test(formData.mobile)) newErrors.mobile = "Mobile number must be exactly 10 digits";
+    if (!files.pan) newErrors.pan = "Required";
+    if (!files.aadhaar) newErrors.aadhaar = "Required";
+    if (!files.addressProof) newErrors.addressProof = "Required";
+    if (!files.bankProof) newErrors.bankProof = "Required";
+    if (!files.photo) newErrors.photo = "Required";
+    if (!files.businessProof) newErrors.businessProof = "Required";
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
     navigate("/payment", { state: { serviceName: "GST Registration", applicantName: formData.fullName, mobile: formData.mobile, Amount: 2000, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, addressProof: files.addressProof?.file, bankProof: files.bankProof?.file, photo: files.photo?.file, businessProof: files.businessProof?.file } } });
   };
 
@@ -72,12 +77,12 @@ function GSTForm() {
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                 <div>
-                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Full Name (पूर्ण नाव) <span className="text-red-500">*</span></label>
+                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Full Name / पूर्ण नाव <span className="text-red-500">*</span></label>
                   <input type="text" required minLength={3} value={formData.fullName} onChange={(e) => { const value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); setFormData({ ...formData, fullName: value }); setErrors({ ...errors, fullName: "" }); }} placeholder="Enter Full Name" className={`w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border text-xs sm:text-sm ${errors.fullName ? "border-red-500" : "border-gray-200"} focus:outline-none focus:ring-2 focus:ring-blue-500`} />
                   {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Mobile Number (मोबाईल नंबर) <span className="text-red-500">*</span></label>
+                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Mobile Number / मोबाईल नंबर <span className="text-red-500">*</span></label>
                   <input type="tel" required pattern="[0-9]{10}" maxLength={10} value={formData.mobile} onChange={(e) => { const value = e.target.value.replace(/[^0-9]/g, ""); setFormData({ ...formData, mobile: value }); setErrors({ ...errors, mobile: "" }); }} placeholder="Enter Mobile Number" className={`w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border text-xs sm:text-sm ${errors.mobile ? "border-red-500" : "border-gray-200"} focus:outline-none focus:ring-2 focus:ring-blue-500`} />
                   {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
                 </div>
@@ -89,12 +94,12 @@ function GSTForm() {
                 Upload Documents
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                <UploadBox label="पॅन कार्ड (PAN Card)" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} />
-                <UploadBox label="आधार कार्ड (Aadhaar Card)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-                <UploadBox label="Business Address Proof (पत्ता पुरावा)" fileData={files.addressProof} onChange={(e) => handleFileChange(e, "addressProof")} />
-                <UploadBox label="Bank Proof (बँक पुरावा)" fileData={files.bankProof} onChange={(e) => handleFileChange(e, "bankProof")} />
-                <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
-                <UploadBox label="Business Registration Proof (व्यवसाय नोंदणी)" fileData={files.businessProof} onChange={(e) => handleFileChange(e, "businessProof")} />
+                <UploadBox label="PAN Card / पॅन कार्ड" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} error={errors.pan} />
+                <UploadBox label="Aadhaar Card / आधार कार्ड" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} error={errors.aadhaar} />
+                <UploadBox label="Address Proof / पत्ता पुरावा" fileData={files.addressProof} onChange={(e) => handleFileChange(e, "addressProof")} error={errors.addressProof} />
+                <UploadBox label="Bank Proof / बँक पुरावा" fileData={files.bankProof} onChange={(e) => handleFileChange(e, "bankProof")} error={errors.bankProof} />
+                <UploadBox label="Passport Photo / पासपोर्ट फोटो" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} error={errors.photo} />
+                <UploadBox label="Business Registration Proof / व्यवसाय नोंदणी" fileData={files.businessProof} onChange={(e) => handleFileChange(e, "businessProof")} error={errors.businessProof} />
               </div>
             </div>
             <div className="flex justify-end pt-2">
@@ -107,11 +112,11 @@ function GSTForm() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, error }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label} <span className="text-red-500">*</span></label>
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border ${error ? "border-red-500" : "border-gray-200"}`}>
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs text-gray-600">Upload Document</span>
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
@@ -120,6 +125,7 @@ function UploadBox({ label, fileData, onChange }) {
           </label>
         </div>
         {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+        {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
       </div>
     </div>
   );

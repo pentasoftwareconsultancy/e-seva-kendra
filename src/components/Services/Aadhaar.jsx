@@ -263,7 +263,7 @@ function UploadBox({ label, fileData, onChange, hasError }) {
         </div>
         {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
         {hasError && <p className="text-red-500 text-xs mt-1">This field is required</p>}
-      </div>
+ment      </div>
     </div>
   );
 }

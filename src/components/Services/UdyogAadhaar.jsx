@@ -6,11 +6,15 @@ function UdyogAadhaar() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
   const [errors, setErrors] = useState({ fullName: "", mobile: "" });
-  const [files, setFiles] = useState({ pan: null, aadhaar: null, bankPassbook: null, lightBill: null, photo: null });
+  const [fileErrors, setFileErrors] = useState({});
+  const [files, setFiles] = useState({ pan: null, aadhaar: null, bankPassbook: null, lightBill: null });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
-    if (file) setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+    if (file) {
+      setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+      setFileErrors((prev) => ({ ...prev, [field]: false }));
+    }
   };
 
   const validateForm = () => {
@@ -24,8 +28,31 @@ function UdyogAadhaar() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    if (!files.pan || !files.aadhaar || !files.bankPassbook || !files.lightBill || !files.photo) { alert("Please upload all required documents"); return; }
-    navigate("/payment", { state: { serviceName: "Udyam Aadhaar Registration", applicantName: formData.fullName, mobile: formData.mobile, Amount: 500, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, bankPassbook: files.bankPassbook?.file, lightBill: files.lightBill?.file, photo: files.photo?.file } } });
+
+    const newFileErrors = {
+      pan: !files.pan,
+      aadhaar: !files.aadhaar,
+      bankPassbook: !files.bankPassbook,
+      lightBill: !files.lightBill,
+    };
+    setFileErrors(newFileErrors);
+    if (Object.values(newFileErrors).some((err) => err)) return;
+
+    navigate("/payment", {
+      state: {
+        serviceName: "Udyam Aadhaar Registration",
+        applicantName: formData.fullName,
+        mobile: formData.mobile,
+        Amount: 500,
+        formData,
+        documents: {
+          pan: files.pan?.file,
+          aadhaar: files.aadhaar?.file,
+          bankPassbook: files.bankPassbook?.file,
+          lightBill: files.lightBill?.file,
+        },
+      },
+    });
   };
 
   return (
@@ -90,10 +117,10 @@ function UdyogAadhaar() {
                 Upload Documents
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                <UploadBox label="PAN Card (पॅनकार्ड)" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} />
-                <UploadBox label="Aadhaar Card (आधारकार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-                <UploadBox label="Bank Passbook (बँक पासबुक)" fileData={files.bankPassbook} onChange={(e) => handleFileChange(e, "bankPassbook")} />
-                <UploadBox label="Light Bill (लाईटबिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
+                <UploadBox label="PAN Card (पॅनकार्ड)" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} error={fileErrors.pan} />
+                <UploadBox label="Aadhaar Card (आधारकार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} error={fileErrors.aadhaar} />
+                <UploadBox label="Bank Passbook (बँक पासबुक)" fileData={files.bankPassbook} onChange={(e) => handleFileChange(e, "bankPassbook")} error={fileErrors.bankPassbook} />
+                <UploadBox label="Light Bill (लाईटबिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} error={fileErrors.lightBill} />
               </div>
             </div>
             <div className="flex justify-end pt-2">
@@ -106,11 +133,13 @@ function UdyogAadhaar() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, error }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">
+        {label} <span className="text-red-500">*</span>
+      </label>
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border transition-all duration-200 ${error ? "border-red-500" : fileData ? "border-green-400" : "border-gray-200"}`}>
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs text-gray-600">Upload Document</span>
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
@@ -120,6 +149,7 @@ function UploadBox({ label, fileData, onChange }) {
         </div>
         {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
       </div>
+      {error && <p className="text-red-500 text-xs mt-1">This document is required</p>}
     </div>
   );
 }
