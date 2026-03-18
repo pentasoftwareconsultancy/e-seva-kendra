@@ -414,6 +414,16 @@ export default function Header() {
                   <FontAwesomeIcon icon={faUser} className="text-gray-600" />
                   Profile
                 </Link>
+
+                <button
+                  onClick={() => {
+                    sessionStorage.clear();
+                    window.location.href = "/";
+                  }}
+                  className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 text-white transition text-sm font-medium cursor-pointer shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
+                >
+                  Logout
+                </button>
               </>
             )}
 
