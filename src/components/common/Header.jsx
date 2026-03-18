@@ -51,7 +51,7 @@ export default function Header() {
 
   const fetchNotifications = async () => {
     try {
-      const res = await fetch(`http://localhost:8080/notifications/${userId}`);
+      const res = await fetch(`https://e-seva-kendra-b.onrender.com/notifications/${userId}`);
       const data = await res.json();
       setNotifications(data.slice(0, 2)); // Only latest 2 notifications
     } catch (error) {
@@ -65,7 +65,7 @@ export default function Header() {
     const fetchUnreadCount = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/notifications/unread-count/${userId}`,
+          `https://e-seva-kendra-b.onrender.com/notifications/unread-count/${userId}`,
         );
         const count = await res.json();
         setUnreadCount(count);
