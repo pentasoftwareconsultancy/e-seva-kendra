@@ -68,7 +68,7 @@ function SIPForm() {
         serviceName: "SIP Investment",
         applicantName: formData.fullName,
         mobile: formData.mobile,
-        Amount: 1000,
+        Amount: 2000,
         formData,
         documents: {
           panCard: files.panCard?.file,
