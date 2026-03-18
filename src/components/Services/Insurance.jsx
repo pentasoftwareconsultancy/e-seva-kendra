@@ -60,11 +60,9 @@ function Insurance() {
     { label: "Address Proof (पत्ता पुरावा)", field: "addressProof" },
     { label: "Passport Photo (पासपोर्ट फोटो)", field: "photo" },
     { label: "Medical Report (मेडिकल रिपोर्ट)", field: "medicalReport" },
-    { label: "Ration Card (रेशन कार्ड)", field: "rationCard" },
     { label: "Light Bill (लाईट बिल)", field: "lightBill" },
-    { label: "Tahasildar Income Certificate (तहसीलदार उत्पन्न दाखला)", field: "tahasildarCertificate" },
-    { label: "E-Shram Card (ई-श्रम कार्ड)", field: "eshramCard" },
-    { label: "Ayushman Card (आयुष्मान कार्ड)", field: "ayushmanCard" },
+  
+    
   ];
 
   const lifeDocuments = [
@@ -74,14 +72,10 @@ function Insurance() {
     { label: "Passport Photo (पासपोर्ट फोटो)", field: "photo" },
     { label: "Income Proof (Salary Slip / ITR / Form 16)", field: "incomeProof" },
     { label: "School Leaving Certificate (शाळा सोडण्याचा प्रमाणपत्र)", field: "schoolLeavingCert" },
-    { label: "Caste Certificate (जाति प्रमाणपत्र)", field: "casteCertificate" },
-    { label: "Ration Card (रेशन कार्ड)", field: "rationCard" },
     { label: "Light Bill (लाईट बिल)", field: "lightBill" },
     { label: "Vehicle Insurance Document (वाहन विमा प्रमाणपत्र)", field: "vehicleInsurance" },
-    { label: "D-Mart Account Document (डी-मार्ट अकाउंट)", field: "dMartAccount" },
     { label: "Loan Documents (कर्ज दस्तऐवज)", field: "loanDoc" },
-    { label: "E-Shram Card (ई-श्रम कार्ड)", field: "eshramCard" },
-    { label: "Ayushman Card (आयुष्मान कार्ड)", field: "ayushmanCard" },
+   
   ];
 
   const documents = activeTab === "health" ? healthDocuments : lifeDocuments;
