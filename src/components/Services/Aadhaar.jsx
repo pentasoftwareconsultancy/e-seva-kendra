@@ -269,4 +269,3 @@ function UploadBox({ label, fileData, onChange, hasError }) {
 }
 
 export default Aadhaar;
-

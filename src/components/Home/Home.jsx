@@ -535,7 +535,7 @@ export default function Home() {
       {/* ================= FLOATING WHATSAPP ================= */}
       <a
         href="https://wa.me/918668266879"
-        className="fixed bottom-6 right-6 h-16 w-16 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-2xl hover:shadow-green-500/40 transition-all duration-300 hover:scale-110 animate-bounce"
+        className="z-index z-50 fixed bottom-6 right-6 h-16 w-16 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-2xl hover:shadow-green-500/40 transition-all duration-300 hover:scale-110 animate-bounce"
         title="Chat on WhatsApp"
       >
         <i className="fa-brands fa-whatsapp text-3xl group-hover:scale-110 transition-transform"></i>

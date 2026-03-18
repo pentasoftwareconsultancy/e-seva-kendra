@@ -2,10 +2,12 @@ import AdminLayout from "../../components/common/AdminLayout";
 import React, { useState, useEffect } from "react";
 import { MessageSquare, User, Eye } from "lucide-react";
 
+const PAGE_SIZE = 6;
+
 const AdminMessages = () => {
   const [selectedMessage, setSelectedMessage] = useState(null);
-
   const [messages, setMessages] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -24,36 +26,39 @@ const AdminMessages = () => {
     fetch("http://localhost:8080/api/contact")
       .then((res) => res.json())
       .then((data) => {
-        setMessages(data);
+        // newest first
+        const sorted = [...data].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setMessages(sorted);
       })
-      .catch((error) => {
-        console.error("Error fetching messages:", error);
-      });
+      .catch((error) => console.error("Error fetching messages:", error));
   }, []);
 
   const markAsRead = (id) => {
-    fetch(`http://localhost:8080/api/contact/${id}/read`, {
-      method: "PUT",
-    })
+    fetch(`http://localhost:8080/api/contact/${id}/read`, { method: "PUT" })
       .then((res) => res.json())
       .then((updatedMessage) => {
-        // messages update karna
-        const updatedMessages = messages.map((msg) =>
-          msg.id === id ? updatedMessage : msg,
+        setMessages((prev) =>
+          prev.map((msg) => (msg.id === id ? updatedMessage : msg))
         );
-
-        setMessages(updatedMessages);
         setSelectedMessage(updatedMessage);
       })
       .catch((error) => console.error("Error:", error));
   };
+
+  const totalPages = Math.ceil(messages.length / PAGE_SIZE);
+  const paginatedMessages = messages.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
+
   return (
     <AdminLayout>
       <div className="flex items-center gap-2 mb-3 sm:mb-4 md:mb-6">
         <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-blue-600" />
         <h2 className="text-lg sm:text-xl md:text-3xl font-bold text-gray-800">
           Contact Messages
-          {/* <span className="text-green-600"> Messages</span> */}
         </h2>
       </div>
 
@@ -66,9 +71,6 @@ const AdminMessages = () => {
                 <th className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   Name
                 </th>
-                {/* <th className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">
-                  Email
-                </th> */}
                 <th className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-semibold text-gray-700 uppercase tracking-wider hidden lg:table-cell">
                   Mobile
                 </th>
@@ -78,33 +80,32 @@ const AdminMessages = () => {
                 <th className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   Status
                 </th>
-                {/* <th className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-semibold text-gray-700 uppercase tracking-wider hidden md:table-cell">
-                  Date
-                </th> */}
                 <th className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-center text-[10px] sm:text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {messages.map((msg) => (
+              {paginatedMessages.map((msg) => (
                 <tr
                   key={msg.id}
                   className="hover:bg-blue-50/50 transition-colors duration-150"
                 >
                   <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4">
                     <div className="flex items-center gap-2 sm:gap-3">
-                      <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full  bg-green-500 flex items-center justify-center text-white">
-                        <User size={14} className="sm:w-4 sm:h-4" />
+                      <div className="relative">
+                        <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
+                          <User size={14} className="sm:w-4 sm:h-4" />
+                        </div>
+                        {msg.status === "Unread" && (
+                          <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border border-white" />
+                        )}
                       </div>
                       <span className="text-[10px] sm:text-sm font-medium text-gray-900 break-all">
                         {msg.name}
                       </span>
                     </div>
                   </td>
-                  {/* <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-[10px] sm:text-sm text-gray-600 hidden sm:table-cell break-all">
-                    {msg.email}
-                  </td> */}
                   <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-[10px] sm:text-sm text-gray-600 hidden lg:table-cell">
                     {msg.mobile}
                   </td>
@@ -118,11 +119,6 @@ const AdminMessages = () => {
                       {msg.status}
                     </span>
                   </td>
-                  {/* <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-[10px] sm:text-sm text-gray-500 hidden md:table-cell">
-                    {msg.createdAt
-                      ? new Date(msg.createdAt).toLocaleString()
-                      : ""}
-                  </td> */}
                   <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-center">
                     <button
                       onClick={() => setSelectedMessage(msg)}
@@ -138,6 +134,29 @@ const AdminMessages = () => {
           </table>
         </div>
       </div>
+
+      {/* Pagination */}
+      {totalPages >= 1 && (
+        <div className="flex items-center justify-center gap-2 mt-4">
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+            disabled={currentPage === 1}
+            className="w-10 h-10 rounded-xl border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 disabled:opacity-40"
+          >
+            ←
+          </button>
+          <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-semibold text-sm">
+            {currentPage}
+          </div>
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="w-10 h-10 rounded-xl border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 disabled:opacity-40"
+          >
+            →
+          </button>
+        </div>
+      )}
 
       {/* Message Details Modal */}
       {selectedMessage && (
