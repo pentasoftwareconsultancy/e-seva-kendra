@@ -12,7 +12,7 @@ const AdminUsers = () => {
 
   // ✅ fetch users from backend
   useEffect(() => {
-    fetch("http://localhost:8080/api/users/all")
+    fetch("https://e-seva-kendra-b.onrender.com/api/users/all")
       .then((res) => res.json())
       .then((data) => {
         setUsers(data);
