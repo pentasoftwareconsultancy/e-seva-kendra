@@ -67,7 +67,7 @@ function DrivingLicense() {
         <div className="max-w-4xl mx-auto">
          <div className="bg-white border-4 border-green-700 rounded-3xl p-4 sm:p-8 md:p-12 shadow-xl">
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">आवश्यक कागदपत्रे</h2>
-            <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for E-Shram Card</h3>
+            <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for Driving License</h3>
             <div className="space-y-3 text-sm sm:text-lg">
               {[
                 ["आधारकार्ड", "Aadhaar Card"],

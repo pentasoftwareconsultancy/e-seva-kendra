@@ -141,7 +141,7 @@ export default function Home() {
                 <div className="p-4 sm:p-5 flex flex-col">
                   {/* TITLE */}
                   <h3 className="font-bold text-base sm:text-lg text-slate-800 mb-2">
-                    {service.title.split("(").map((part, i) =>
+                    {service.title.split("()").map((part, i) =>
                       i === 0 ? (
                         <span key={i}>{part}</span>
                       ) : (
