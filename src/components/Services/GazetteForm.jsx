@@ -48,7 +48,7 @@ function GazetteForm() {
             <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">गॅझेट साठी लागणारी कागदपत्रे</h2>
             <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for Gazette Certificate</h3>
             <div className="space-y-3 text-sm sm:text-lg">
-              {[["आधार कार्ड", "Aadhaar Card (Identity Proof)"], ["पॅन कार्ड", "PAN Card"], ["1 पासपोर्ट साईज फोटो", "Recent 1 Passport Size Photographs"], ["विवाह पत्रिका / विवाह प्रमाणपत्र (लागू असल्यास)", "Marriage Card / Marriage Certificate (If Applicable)"], ["१०० रुपयांचा स्टॅम्प पेपर प्रतिज्ञापत्र", "Affidavit on ₹100 Stamp Paper"], ["लाईट बिल", "Electricity Bill"]].map((item, index) => (
+              {[["आधार कार्ड", "Aadhaar Card (Identity Proof)"], ["पॅन कार्ड", "PAN Card"], ["1 पासपोर्ट साईज फोटो", "Recent 1 Passport Size Photographs"], ["विवाह पत्रिका / विवाह प्रमाणपत्र (लागू असल्यास)", "Marriage Card / Marriage Certificate (If Applicable)"], ["१०० रुपयांचा स्टॅम्प पेपर प्रतिज्ञापत्र", "Affidavit on ₹100 Stamp Paper"], ["लाईट बिल", "Electricity Bill"],["जुने आणि नवीन दस्तऐवज पुरावा","Old and New Name Document Proof"]].map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
                   <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
@@ -95,6 +95,7 @@ function GazetteForm() {
                 <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
                 <UploadBox label="Marriage Certificate (विवाह पत्रिका)" fileData={files.marriageCard} onChange={(e) => handleFileChange(e, "marriageCard")} />
                 <UploadBox label="Stamp Paper (स्टॅम्प पेपर)" fileData={files.stampPaper} onChange={(e) => handleFileChange(e, "stampPaper")} />
+                <UploadBox label="Old and New Name Document Proof (जुने आणि नवीन दस्तऐवज पुरावा)" fileData={files.nameProof} onChange={(e) => handleFileChange(e, "nameProof")} />
               </div>
             </div>
             <div className="flex justify-end pt-2">

@@ -93,7 +93,7 @@ function Aadhaar() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full">
           <div className="w-full md:w-1/2 space-y-3 sm:space-y-6 text-white">
             <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold">
-              Aadhaar Card Service
+              Aadhaar Address Update
             </h1>
 
             <p className="text-sm sm:text-lg md:text-xl text-gray-200">
@@ -282,3 +282,4 @@ function UploadBox({ label, fileData, onChange }) {
 }
 
 export default Aadhaar;
+
