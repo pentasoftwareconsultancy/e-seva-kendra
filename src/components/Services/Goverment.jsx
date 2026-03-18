@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Panhero from "../../assets/Servicesimg/Panhero.png";
 
-function GovernmentBonds() {
+function Goverment() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
   const [errors, setErrors] = useState({ fullName: "", mobile: "" });
@@ -174,4 +174,4 @@ function UploadBox({ label, fileData, onChange, hasError }) {
   );
 }
 
-export default GovernmentBonds;
+export default Goverment;

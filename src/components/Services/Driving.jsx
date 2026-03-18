@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function DrivingLicense() {
+function Driving() {
   const navigate = useNavigate();
   const [vehicleType, setVehicleType] = useState("2wheeler");
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
@@ -207,4 +207,4 @@ function UploadBox({ label, fileData, onChange, hasError }) {
   );
 }
 
-export default DrivingLicense;
+export default Driving;
