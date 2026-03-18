@@ -93,16 +93,16 @@ function RentAgreementForm() {
                 Upload Documents
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                <UploadBox label="Owner Aadhaar Card (मालक आधार)" fileData={files.ownerAadhaar} onChange={(e) => handleFileChange(e, "ownerAadhaar")} />
-                <UploadBox label="Tenant Aadhaar Card (भाडेकरू आधार)" fileData={files.tenantAadhaar} onChange={(e) => handleFileChange(e, "tenantAadhaar")} />
-                <UploadBox label="Owner PAN Card (मालक पॅन कार्ड)" fileData={files.ownerPan} onChange={(e) => handleFileChange(e, "ownerPan")} />
-                <UploadBox label="Tenant PAN Card (भाडेकरू पॅन कार्ड)" fileData={files.tenantPan} onChange={(e) => handleFileChange(e, "tenantPan")} />
-                <UploadBox label="Owner Photo (मालक फोटो)" fileData={files.ownerPhoto} onChange={(e) => handleFileChange(e, "ownerPhoto")} />
-                <UploadBox label="Tenant Photo (भाडेकरू फोटो)" fileData={files.tenantPhoto} onChange={(e) => handleFileChange(e, "tenantPhoto")} />
-                <UploadBox label="Light Bill (लाईट बिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
-                <UploadBox label="Property Proof (मालमत्ता पुरावा)" fileData={files.propertyProof} onChange={(e) => handleFileChange(e, "propertyProof")} />
-                <UploadBox label="Deposit Amount Proof (सुरक्षा ठेव रक्कम)" fileData={files.depositAmount} onChange={(e) => handleFileChange(e, "depositAmount")} />
-                <UploadBox label="Rent Amount Proof (भाड्याची रक्कम)" fileData={files.rentAmount} onChange={(e) => handleFileChange(e, "rentAmount")} />
+                <UploadBox label="Owner Aadhaar Card (मालक आधार)" fileData={files.ownerAadhaar} hasError={fileErrors.ownerAadhaar} onChange={(e) => { handleFileChange(e, "ownerAadhaar"); setFileErrors((p) => ({ ...p, ownerAadhaar: false })); }} />
+                <UploadBox label="Tenant Aadhaar Card (भाडेकरू आधार)" fileData={files.tenantAadhaar} hasError={fileErrors.tenantAadhaar} onChange={(e) => { handleFileChange(e, "tenantAadhaar"); setFileErrors((p) => ({ ...p, tenantAadhaar: false })); }} />
+                <UploadBox label="Owner PAN Card (मालक पॅन कार्ड)" fileData={files.ownerPan} hasError={fileErrors.ownerPan} onChange={(e) => { handleFileChange(e, "ownerPan"); setFileErrors((p) => ({ ...p, ownerPan: false })); }} />
+                <UploadBox label="Tenant PAN Card (भाडेकरू पॅन कार्ड)" fileData={files.tenantPan} hasError={fileErrors.tenantPan} onChange={(e) => { handleFileChange(e, "tenantPan"); setFileErrors((p) => ({ ...p, tenantPan: false })); }} />
+                <UploadBox label="Owner Photo (मालक फोटो)" fileData={files.ownerPhoto} hasError={fileErrors.ownerPhoto} onChange={(e) => { handleFileChange(e, "ownerPhoto"); setFileErrors((p) => ({ ...p, ownerPhoto: false })); }} />
+                <UploadBox label="Tenant Photo (भाडेकरू फोटो)" fileData={files.tenantPhoto} hasError={fileErrors.tenantPhoto} onChange={(e) => { handleFileChange(e, "tenantPhoto"); setFileErrors((p) => ({ ...p, tenantPhoto: false })); }} />
+                <UploadBox label="Light Bill (लाईट बिल)" fileData={files.lightBill} hasError={fileErrors.lightBill} onChange={(e) => { handleFileChange(e, "lightBill"); setFileErrors((p) => ({ ...p, lightBill: false })); }} />
+                <UploadBox label="Property Proof (मालमत्ता पुरावा)" fileData={files.propertyProof} hasError={fileErrors.propertyProof} onChange={(e) => { handleFileChange(e, "propertyProof"); setFileErrors((p) => ({ ...p, propertyProof: false })); }} />
+                <UploadBox label="Deposit Amount (सुरक्षा ठेव रक्कम)" fileData={files.depositAmount} hasError={fileErrors.depositAmount} onChange={(e) => { handleFileChange(e, "depositAmount"); setFileErrors((p) => ({ ...p, depositAmount: false })); }} />
+                <UploadBox label="Rent Amount (भाड्याची रक्कम)" fileData={files.rentAmount} hasError={fileErrors.rentAmount} onChange={(e) => { handleFileChange(e, "rentAmount"); setFileErrors((p) => ({ ...p, rentAmount: false })); }} />
               </div>
             </div>
             <div className="flex justify-end pt-2">
