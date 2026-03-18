@@ -64,7 +64,7 @@ export default function Register() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/users/register",
+        "https://e-seva-kendra-b.onrender.com/api/users/register",
         user
       );
 

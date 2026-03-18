@@ -61,7 +61,7 @@ export default function Contact() {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/api/contact", {
+      const response = await fetch("https://e-seva-kendra-b.onrender.com/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

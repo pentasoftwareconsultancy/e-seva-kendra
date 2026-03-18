@@ -18,7 +18,7 @@ export default function AccountOverview() {
     }
 
     console.log('Fetching orders for userId:', userId);
-    fetch(`http://localhost:8080/api/orders/user/${userId}`)
+    fetch(`https://e-seva-kendra-b.onrender.com/api/orders/user/${userId}`)
       .then(res => {
         if (!res.ok) throw new Error('API not found');
         return res.json();
