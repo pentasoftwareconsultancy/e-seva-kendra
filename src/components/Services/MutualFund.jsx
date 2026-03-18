@@ -28,7 +28,7 @@ function MutualFund() {
     const missingFiles = { pan: !files.pan, aadhaar: !files.aadhaar, bankProof: !files.bankProof, photo: !files.photo, addressProof: !files.addressProof };
     setFileErrors(missingFiles);
     if (Object.values(missingFiles).some(Boolean)) return;
-    navigate("/payment", { state: { serviceName: "Mutual Fund", applicantName: formData.fullName, mobile: formData.mobile, Amount: 600, type: "Mutual Fund", formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, bankProof: files.bankProof?.file, photo: files.photo?.file, addressProof: files.addressProof?.file, incomeProof: files.incomeProof?.file } } });
+    navigate("/payment", { state: { serviceName: "Mutual Fund", applicantName: formData.fullName, mobile: formData.mobile, Amount: "1 Lakh", type: "Mutual Fund", formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, bankProof: files.bankProof?.file, photo: files.photo?.file, addressProof: files.addressProof?.file, incomeProof: files.incomeProof?.file } } });
   };
 
   return (

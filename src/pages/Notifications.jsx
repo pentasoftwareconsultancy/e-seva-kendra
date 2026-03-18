@@ -23,7 +23,7 @@ export default function Notifications() {
 
     const fetchUnreadCount = async () => {
       try {
-        const res = await fetch(`https://e-seva-kendra-b.onrender.com/unread-count/${userId}`);
+        const res = await fetch(`https://e-seva-kendra-b.onrender.com/notifications/unread-count/${userId}`);
         const count = await res.json();
         setUnreadCount(count);
       } catch (error) {
