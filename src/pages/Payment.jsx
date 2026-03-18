@@ -11,7 +11,7 @@ function Payment() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/payment/qr")
+    fetch("https://e-seva-kendra-b.onrender.com/api/payment/qr")
       .then(res => res.text())
       .then(data => setQrImage(data))
       .catch(err => console.error(err));
@@ -71,7 +71,7 @@ function Payment() {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/api/payment/confirm", {
+      const response = await fetch("https://e-seva-kendra-b.onrender.com/api/payment/confirm", {
         method: "POST",
         body: formData
       });
@@ -123,7 +123,7 @@ function Payment() {
         <div className="text-center space-y-4">
           <div className="inline-block bg-white p-6 rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 transform hover:-translate-y-1">
             <img
-              src={`http://localhost:8080${qrImage}`}
+              src={`https://e-seva-kendra-b.onrender.com/${qrImage}`}
               alt="QR Code"
               className="w-48 mx-auto rounded-lg"
             />
