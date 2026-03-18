@@ -6,11 +6,15 @@ function GazetteForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
   const [errors, setErrors] = useState({ fullName: "", mobile: "" });
-  const [files, setFiles] = useState({ aadhaar: null, pan: null, photo: null, marriageCard: null, stampPaper: null });
+  const [fileErrors, setFileErrors] = useState({});
+  const [files, setFiles] = useState({ aadhaar: null, pan: null, photo: null, marriageCard: null, stampPaper: null, electricityBill: null, nameProof: null });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
-    if (file) setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+    if (file) {
+      setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+      setFileErrors((prev) => ({ ...prev, [field]: false }));
+    }
   };
 
   const validateForm = () => {
@@ -24,8 +28,38 @@ function GazetteForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    for (let key in files) { if (!files[key]) { alert("Please upload all required documents"); return; } }
-    navigate("/payment", { state: { serviceName: "Gazette Service", applicantName: formData.fullName, mobile: formData.mobile, Amount: 2000, formData, documents: { aadhaar: files.aadhaar?.file, pan: files.pan?.file, photo: files.photo?.file, marriageCard: files.marriageCard?.file, stampPaper: files.stampPaper?.file } } });
+
+    const newFileErrors = {
+      aadhaar: !files.aadhaar,
+      pan: !files.pan,
+      photo: !files.photo,
+      marriageCard: !files.marriageCard,
+      stampPaper: !files.stampPaper,
+      electricityBill: !files.electricityBill,
+      nameProof: !files.nameProof,
+    };
+
+    setFileErrors(newFileErrors);
+    if (Object.values(newFileErrors).some((err) => err)) return;
+
+    navigate("/payment", {
+      state: {
+        serviceName: "Gazette Service",
+        applicantName: formData.fullName,
+        mobile: formData.mobile,
+        Amount: 2000,
+        formData,
+        documents: {
+          aadhaar: files.aadhaar?.file,
+          pan: files.pan?.file,
+          photo: files.photo?.file,
+          marriageCard: files.marriageCard?.file,
+          stampPaper: files.stampPaper?.file,
+          electricityBill: files.electricityBill?.file,
+          nameProof: files.nameProof?.file,
+        },
+      },
+    });
   };
 
   return (
@@ -90,12 +124,61 @@ function GazetteForm() {
                 Upload Documents
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-                <UploadBox label="PAN Card (पॅन कार्ड)" fileData={files.pan} onChange={(e) => handleFileChange(e, "pan")} />
-                <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
-                <UploadBox label="Marriage Certificate (विवाह पत्रिका)" fileData={files.marriageCard} onChange={(e) => handleFileChange(e, "marriageCard")} />
-                <UploadBox label="Stamp Paper (स्टॅम्प पेपर)" fileData={files.stampPaper} onChange={(e) => handleFileChange(e, "stampPaper")} />
-                <UploadBox label="Old and New Name Document Proof (जुने आणि नवीन दस्तऐवज पुरावा)" fileData={files.nameProof} onChange={(e) => handleFileChange(e, "nameProof")} />
+                <UploadBox 
+  label="Aadhaar Card (आधार कार्ड)" 
+  fileData={files.aadhaar} 
+  error={fileErrors.aadhaar}
+  onChange={(e) => handleFileChange(e, "aadhaar")} 
+  required
+/>
+
+<UploadBox 
+  label="PAN Card (पॅन कार्ड)" 
+  fileData={files.pan} 
+  error={fileErrors.pan}
+  onChange={(e) => handleFileChange(e, "pan")} 
+  required
+/>
+
+<UploadBox 
+  label="Passport Photo (पासपोर्ट फोटो)" 
+  fileData={files.photo} 
+  error={fileErrors.photo}
+  onChange={(e) => handleFileChange(e, "photo")} 
+  required
+/>
+
+<UploadBox 
+  label="Marriage Certificate (विवाह पत्रिका)" 
+  fileData={files.marriageCard} 
+  error={fileErrors.marriageCard}
+  onChange={(e) => handleFileChange(e, "marriageCard")} 
+  required
+/>
+
+<UploadBox 
+  label="Stamp Paper (स्टॅम्प पेपर)" 
+  fileData={files.stampPaper} 
+  error={fileErrors.stampPaper}
+  onChange={(e) => handleFileChange(e, "stampPaper")} 
+  required
+/>
+
+<UploadBox
+  label="Electricity Bill (लाईट बिल)"
+  fileData={files.electricityBill}
+  error={fileErrors.electricityBill}
+  onChange={(e) => handleFileChange(e, "electricityBill")}
+  required
+  />
+
+<UploadBox 
+  label="Old and New Name Document Proof (जुने आणि नवीन दस्तऐवज पुरावा)" 
+  fileData={files.nameProof} 
+  error={fileErrors.nameProof}
+  onChange={(e) => handleFileChange(e, "nameProof")} 
+  required
+/>
               </div>
             </div>
             <div className="flex justify-end pt-2">
@@ -108,22 +191,50 @@ function GazetteForm() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, required, error }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">
+        {label} {required && <span className="text-red-500">*</span>}
+      </label>
+
+      <div
+        className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border transition-all duration-200 ${
+          error ? "border-red-500" : "border-gray-200"
+        }`}
+      >
         <div className="flex justify-between items-center gap-2">
-          <span className="font-semibold text-xs text-gray-600">Upload Document</span>
+          <span className="font-semibold text-xs text-gray-600">
+            Upload Document
+          </span>
+
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
             Upload
-            <input type="file" accept="image/*,.pdf" className="hidden" onChange={onChange} />
+            <input
+              type="file"
+              accept="image/*,.pdf"
+              className="hidden"
+              onChange={onChange}
+            />
           </label>
         </div>
-        {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+
+        {fileData && (
+          <p
+            className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all"
+            onClick={() => window.open(fileData.url, "_blank")}
+          >
+            {fileData.file.name}
+          </p>
+        )}
+
+        {error && (
+          <p className="text-red-500 text-xs mt-1">
+            This document is required
+          </p>
+        )}
       </div>
     </div>
   );
 }
-
 export default GazetteForm;
