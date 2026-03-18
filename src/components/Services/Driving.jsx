@@ -7,6 +7,7 @@ function DrivingLicense() {
   const [formData, setFormData] = useState({ fullName: "", mobile: "" });
   const [errors, setErrors] = useState({});
   const [files, setFiles] = useState({ aadhaar: null, photo: null, signature: null, rentAgreement: null, lightBill: null, birthCertificate: null });
+  const [fileErrors, setFileErrors] = useState({ aadhaar: false, photo: false, signature: false, rentAgreement: false, lightBill: false, birthCertificate: false });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
@@ -24,7 +25,9 @@ function DrivingLicense() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    if (!files.aadhaar || !files.photo || !files.signature || !files.rentAgreement || !files.lightBill || !files.birthCertificate) { alert("Please upload all required documents"); return; }
+    const missingFiles = { aadhaar: !files.aadhaar, photo: !files.photo, signature: !files.signature, rentAgreement: !files.rentAgreement, lightBill: !files.lightBill, birthCertificate: !files.birthCertificate };
+    setFileErrors(missingFiles);
+    if (Object.values(missingFiles).some(Boolean)) return;
     navigate("/payment", {
       state: {
         serviceName: `Driving License (${vehicleType === "2wheeler" ? "2 Wheeler" : "4 Wheeler"})`,
@@ -163,12 +166,12 @@ function DrivingLicense() {
                   Upload Documents
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                  <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-                  <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
-                  <UploadBox label="Signature (स्वाक्षरी)" fileData={files.signature} onChange={(e) => handleFileChange(e, "signature")} />
-                  <UploadBox label="Rent Agreement (भाडे करार)" fileData={files.rentAgreement} onChange={(e) => handleFileChange(e, "rentAgreement")} />
-                  <UploadBox label="Light Bill (वीज बिल)" fileData={files.lightBill} onChange={(e) => handleFileChange(e, "lightBill")} />
-                  <UploadBox label="Birth Certificate/School Leaving(जन्म/शाळा दाखला)" fileData={files.birthCertificate} onChange={(e) => handleFileChange(e, "birthCertificate")} />
+                  <UploadBox label="Aadhaar Card (आधार कार्ड)" fileData={files.aadhaar} hasError={fileErrors.aadhaar} onChange={(e) => { handleFileChange(e, "aadhaar"); setFileErrors((p) => ({ ...p, aadhaar: false })); }} />
+                  <UploadBox label="Passport Photo (पासपोर्ट फोटो)" fileData={files.photo} hasError={fileErrors.photo} onChange={(e) => { handleFileChange(e, "photo"); setFileErrors((p) => ({ ...p, photo: false })); }} />
+                  <UploadBox label="Signature (स्वाक्षरी)" fileData={files.signature} hasError={fileErrors.signature} onChange={(e) => { handleFileChange(e, "signature"); setFileErrors((p) => ({ ...p, signature: false })); }} />
+                  <UploadBox label="Rent Agreement (भाडे करार)" fileData={files.rentAgreement} hasError={fileErrors.rentAgreement} onChange={(e) => { handleFileChange(e, "rentAgreement"); setFileErrors((p) => ({ ...p, rentAgreement: false })); }} />
+                  <UploadBox label="Light Bill (वीज बिल)" fileData={files.lightBill} hasError={fileErrors.lightBill} onChange={(e) => { handleFileChange(e, "lightBill"); setFileErrors((p) => ({ ...p, lightBill: false })); }} />
+                  <UploadBox label="Birth Certificate/School Leaving(जन्म/शाळा दाखला)" fileData={files.birthCertificate} hasError={fileErrors.birthCertificate} onChange={(e) => { handleFileChange(e, "birthCertificate"); setFileErrors((p) => ({ ...p, birthCertificate: false })); }} />
                 </div>
               </div>
 
@@ -185,11 +188,11 @@ function DrivingLicense() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, hasError }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label} <span className="text-red-500">*</span></label>
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border ${hasError ? "border-red-500" : "border-gray-200"}`}>
         <div className="flex justify-between items-center gap-2">
           <span className="font-semibold text-xs text-gray-600">Upload Document</span>
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
@@ -198,6 +201,7 @@ function UploadBox({ label, fileData, onChange }) {
           </label>
         </div>
         {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+        {hasError && <p className="text-red-500 text-xs mt-1">This field is required</p>}
       </div>
     </div>
   );

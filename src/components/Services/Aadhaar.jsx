@@ -15,6 +15,7 @@ function Aadhaar() {
     dobProof: null,
     photo: null,
   });
+  const [fileErrors, setFileErrors] = useState({ aadhaar: false, identityProof: false, addressProof: false, dobProof: false, photo: false });
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
@@ -46,16 +47,9 @@ function Aadhaar() {
 
     if (!validateForm()) return;
 
-    if (
-      !files.aadhaar ||
-      !files.identityProof ||
-      !files.addressProof ||
-      !files.dobProof ||
-      !files.photo
-    ) {
-      alert("Please upload all required documents");
-      return;
-    }
+    const missingFiles = { aadhaar: !files.aadhaar, identityProof: !files.identityProof, addressProof: !files.addressProof, dobProof: !files.dobProof, photo: !files.photo };
+    setFileErrors(missingFiles);
+    if (Object.values(missingFiles).some(Boolean)) return;
 
     navigate("/payment", {
       state: {
@@ -177,7 +171,7 @@ function Aadhaar() {
                 {/* FULL NAME */}
                 <div>
                   <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">
-                    Full Name (पूर्ण नाव)
+                    Full Name (पूर्ण नाव) <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -185,9 +179,10 @@ function Aadhaar() {
                     onChange={(e) => {
                       const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
                       setFormData({ ...formData, fullName: value });
+                      setErrors({ ...errors, fullName: "" });
                     }}
                     placeholder="Enter Full Name"
-                    className="w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className={`w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border text-xs sm:text-sm ${errors.fullName ? "border-red-500" : "border-gray-200"} focus:outline-none focus:ring-2 focus:ring-blue-500`}
                   />
                   {errors.fullName && (
                     <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
@@ -197,7 +192,7 @@ function Aadhaar() {
                 {/* MOBILE */}
                 <div>
                   <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">
-                    Mobile Number (मोबाईल नंबर)
+                    Mobile Number (मोबाईल नंबर) <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="tel"
@@ -205,9 +200,10 @@ function Aadhaar() {
                     onChange={(e) => {
                       const value = e.target.value.replace(/\D/g, "").slice(0, 10);
                       setFormData({ ...formData, mobile: value });
+                      setErrors({ ...errors, mobile: "" });
                     }}
                     placeholder="Enter Mobile Number"
-                    className="w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className={`w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border text-xs sm:text-sm ${errors.mobile ? "border-red-500" : "border-gray-200"} focus:outline-none focus:ring-2 focus:ring-blue-500`}
                   />
                   {errors.mobile && (
                     <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>
@@ -228,11 +224,11 @@ function Aadhaar() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
 
-                <UploadBox label="Aadhaar Card / Enrollment ID" fileData={files.aadhaar} onChange={(e) => handleFileChange(e, "aadhaar")} />
-                <UploadBox label="Identity Proof" fileData={files.identityProof} onChange={(e) => handleFileChange(e, "identityProof")} />
-                <UploadBox label="Address Proof" fileData={files.addressProof} onChange={(e) => handleFileChange(e, "addressProof")} />
-                <UploadBox label="Date of Birth Proof" fileData={files.dobProof} onChange={(e) => handleFileChange(e, "dobProof")} />
-                <UploadBox label="Photo" fileData={files.photo} onChange={(e) => handleFileChange(e, "photo")} />
+                <UploadBox label="Aadhaar Card / Enrollment ID (आधार कार्ड / एनरोलमेंट आयडी)" fileData={files.aadhaar} hasError={fileErrors.aadhaar} onChange={(e) => { handleFileChange(e, "aadhaar"); setFileErrors((p) => ({ ...p, aadhaar: false })); }} />
+                <UploadBox label="Identity Proof (ओळख पुरावा)" fileData={files.identityProof} hasError={fileErrors.identityProof} onChange={(e) => { handleFileChange(e, "identityProof"); setFileErrors((p) => ({ ...p, identityProof: false })); }} />
+                <UploadBox label="Address Proof (पत्ता पुरावा)" fileData={files.addressProof} hasError={fileErrors.addressProof} onChange={(e) => { handleFileChange(e, "addressProof"); setFileErrors((p) => ({ ...p, addressProof: false })); }} />
+                <UploadBox label="Date of Birth Proof (जन्म तारीख पुरावा)" fileData={files.dobProof} hasError={fileErrors.dobProof} onChange={(e) => { handleFileChange(e, "dobProof"); setFileErrors((p) => ({ ...p, dobProof: false })); }} />
+                <UploadBox label="Photo (पासपोर्ट साइज फोटो)" fileData={files.photo} hasError={fileErrors.photo} onChange={(e) => { handleFileChange(e, "photo"); setFileErrors((p) => ({ ...p, photo: false })); }} />
 
               </div>
             </div>
@@ -253,29 +249,20 @@ function Aadhaar() {
   );
 }
 
-function UploadBox({ label, fileData, onChange }) {
+function UploadBox({ label, fileData, onChange, hasError }) {
   return (
     <div>
-      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label}</label>
-      <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200">
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label} <span className="text-red-500">*</span></label>
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border ${hasError ? "border-red-500" : "border-gray-200"}`}>
         <div className="flex justify-between items-center gap-2">
-          <span className="font-semibold text-xs text-gray-600">
-            Upload Document
-          </span>
+          <span className="font-semibold text-xs text-gray-600">Upload Document</span>
           <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
             Upload
             <input type="file" accept="image/*,.pdf" className="hidden" onChange={onChange} />
           </label>
         </div>
-
-        {fileData && (
-          <p
-            className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all"
-            onClick={() => window.open(fileData.url, "_blank")}
-          >
-            {fileData.file.name}
-          </p>
-        )}
+        {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+        {hasError && <p className="text-red-500 text-xs mt-1">This field is required</p>}
       </div>
     </div>
   );

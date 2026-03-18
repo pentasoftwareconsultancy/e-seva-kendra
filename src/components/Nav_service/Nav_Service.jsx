@@ -183,7 +183,7 @@ const handleApplyClick = (slug) => {
       slug: "driving-license",
     },
     {
-      title: "Aadhaar Card (आधार कार्ड)",
+      title: "Aadhaar Address update(आधार कार्ड पत्ता अपडेट)",
       desc: "Apply for new Aadhaar card or update your existing Aadhaar details.",
       img: AadhaarImg,
       slug: "aadhaar-card",
