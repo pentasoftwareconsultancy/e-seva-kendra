@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import VoterHero from "../../assets/Servicesimg/Panhero.png";
+import VoterHero from "../../assets/Servicesimg/Panhero.webp";
 
 function Senior() {
   const navigate = useNavigate();

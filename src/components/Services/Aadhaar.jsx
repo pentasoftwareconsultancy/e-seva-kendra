@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PanHero from "../../assets/Servicesimg/Panhero.png";
+import PanHero from "../../assets/Servicesimg/Panhero.webp";
 
 function Aadhaar() {
   const navigate = useNavigate();

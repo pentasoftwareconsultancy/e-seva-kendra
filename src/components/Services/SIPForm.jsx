@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SIPHero from "../../assets/Servicesimg/Panhero.png";
+import SIPHero from "../../assets/Servicesimg/Panhero.webp";
 
 function UploadBox({ label, field, fileData, onFileChange, error }) {
   return (

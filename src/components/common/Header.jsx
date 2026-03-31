@@ -11,7 +11,7 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import logo from "../../assets/Home/new logo.png";
+import logo from "../../assets/Home/new logo.webp";
 import { useEffect } from "react";
 
 export default function Header() {

@@ -2,8 +2,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import illustrationImg from "../../assets/Auth/register-illustration.png";
-import avtarImg from "../../assets/Auth/register-avtar.png";
+import avtarImg from "../../assets/Auth/register-avtar.webp";
  
 export default function Login() {
   const navigate = useNavigate();

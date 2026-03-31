@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Panhero from "../../assets/Servicesimg/Panhero.png";
+import Panhero from "../../assets/Servicesimg/Panhero.webp";
 
 function ShopAct() {
   const navigate = useNavigate();
