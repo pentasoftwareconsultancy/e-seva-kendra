@@ -1,17 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import heroImg from "../../assets/Home/hero.png";
-import panImg from "../../assets/services/pan-img.jpg";
-import gazetteImg from "../../assets/services/gazette.png";
-import passImg from "../../assets/services/pass.png";
-import rationImg from "../../assets/services/ration.png";
-import serviceImg from "../../assets/Home/service.png";
-import uploadImg from "../../assets/Home/upload.png";
+import heroImg from "../../assets/Home/hero.webp";
+import panImg from "../../assets/services/pan-img.webp";
+import gazetteImg from "../../assets/services/gazette.webp";
+import passImg from "../../assets/services/pass.webp";
+import rationImg from "../../assets/services/ration.webp";
+import serviceImg from "../../assets/Home/service.webp";
+import uploadImg from "../../assets/Home/upload.webp";
 import regimage from "../../assets/Home/reg.avif";
-import logImg from "../../assets/Home/login.jpg";
-import deliveryImg from "../../assets/Home/delivery.png";
-import Front from "../../assets/Home/visiting-card-front.jpeg";
-import Back from "../../assets/Home/visiting-card-back.jpeg";
+import logImg from "../../assets/Home/login.webp";
+import deliveryImg from "../../assets/Home/delivery.webp";
+import Front from "../../assets/Home/visiting-card-front.webp";
+import Back from "../../assets/Home/visiting-card-back.webp";
 
 export default function Home() {
   const [isFlipped, setIsFlipped] = useState(false);

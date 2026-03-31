@@ -1,11 +1,11 @@
 import React from "react";
-import img1 from "../assets/About/about-img1.png";
-import img2 from "../assets/About/about-img2.png";
-import img3 from "../assets/About/about-img3.png";
-import img4 from "../assets/About/about-img4.png";
-import top from "../assets/About/top-img.png";
-import Front from "../assets/Home/visiting-card-front.jpeg";
-import Back from "../assets/Home/visiting-card-back.jpeg";
+import img1 from "../assets/About/about-img1.webp";
+import img2 from "../assets/About/about-img2.webp";
+import img3 from "../assets/About/about-img3.webp";
+import img4 from "../assets/About/about-img4.webp";
+import top from "../assets/About/top-img.webp";
+import Front from "../assets/Home/visiting-card-front.webp";
+import Back from "../assets/Home/visiting-card-back.webp";
 export default function Aboutus() {
   return (
     <div>
@@ -60,6 +60,7 @@ export default function Aboutus() {
               <img
                 src={Front}
                 alt="office front"
+                loading="lazy"
                 className="w-full rounded-xl shadow-md cursor-pointer border-2 border-black"
                 style={{ backfaceVisibility: 'hidden' }}
               />
@@ -67,6 +68,7 @@ export default function Aboutus() {
               <img
                 src={Back}
                 alt="office back"
+                loading="lazy"
                 className="w-full rounded-xl shadow-md absolute top-0 left-0 cursor-pointer border-2 border-black"
                 style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
               />

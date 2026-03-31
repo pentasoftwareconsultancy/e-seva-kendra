@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PanHero from "../../assets/Servicesimg/Panhero.png";
+import PanHero from "../../assets/Servicesimg/Panhero.webp";
 import { useNavigate } from "react-router-dom";
 
 const loanTypes = [

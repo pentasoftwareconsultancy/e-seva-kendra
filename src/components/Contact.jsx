@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import top from "../assets/Contact/top-img.png";
+import top from "../assets/Contact/top-img.webp";
 import bg from "../assets/Contact/body-bg.avif";
 
 export default function Contact() {

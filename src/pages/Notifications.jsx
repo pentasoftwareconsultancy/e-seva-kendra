@@ -6,8 +6,7 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
 
-  const userId = localStorage.getItem("userId");
-
+  const userId =localStorage.getItem("userId") || sessionStorage.getItem("userId");
   useEffect(() => {
     if (!userId) return;
 

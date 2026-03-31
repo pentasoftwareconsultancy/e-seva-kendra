@@ -2,8 +2,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import illustrationImg from "../../assets/Auth/register-illustration.png";
-import avtarImg from "../../assets/Auth/register-avtar.png";
+import avtarImg from "../../assets/Auth/register-avtar.webp";
  
 export default function Login() {
   const navigate = useNavigate();
@@ -221,7 +220,7 @@ export default function Login() {
  
               <button
                 type="submit"
-                className="w-full bg-green-600 hover:bg-green-700 text-white py-2.5 sm:py-3 rounded-lg font-semibold transition"
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-2.5 sm:py-3 rounded-lg font-semibold transition cursor-pointer"
               >
                 Login
               </button>

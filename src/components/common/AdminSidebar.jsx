@@ -1,6 +1,6 @@
 import React from "react";
 import { QrCode } from "lucide-react";
-import logo from "../../assets/Home/new logo.png";
+import logo from "../../assets/Home/new logo.webp";
 import { Link, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
