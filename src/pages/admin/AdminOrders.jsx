@@ -210,7 +210,7 @@ const AdminOrders = () => {
                         <button 
                           onClick={() => {
                             setSelectedOrder(order);
-                            fetch(`http://localhost:8080/api/orders/${order.id}/documents`)
+                            fetch(`https://e-seva-kendra-b.onrender.com/api/orders/${order.id}/documents`)
                               .then(res => {
                                 if (!res.ok) {
                                   setDocuments([]);
@@ -397,14 +397,14 @@ const AdminOrders = () => {
       return (
         <div className="border rounded-lg p-2 bg-white shadow">
           {isPDF ? (
-            <div className="w-full h-20 bg-red-50 rounded flex items-center justify-center cursor-pointer hover:bg-red-100 transition" onClick={() => window.open(`http://localhost:8080/uploads/${doc.fileName}`)}>
+            <div className="w-full h-20 bg-red-50 rounded flex items-center justify-center cursor-pointer hover:bg-red-100 transition" onClick={() => window.open(`https://e-seva-kendra-b.onrender.com/uploads/${doc.fileName}`)}>
               <svg className="w-10 h-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12V6h-4V2H4v16zm-2 1V0h12l4 4v16H2v-1z"/></svg>
             </div>
           ) : (
-            <img src={`http://localhost:8080/uploads/${doc.fileName}`} alt={doc.fileName} className="w-full h-20 object-cover rounded cursor-pointer" onClick={() => window.open(`http://localhost:8080/uploads/${doc.fileName}`)} />
+            <img src={`https://e-seva-kendra-b.onrender.com/uploads/${doc.fileName}`} alt={doc.fileName} className="w-full h-20 object-cover rounded cursor-pointer" onClick={() => window.open(`https://e-seva-kendra-b.onrender.com/uploads/${doc.fileName}`)} />
           )}
           <p className="text-xs mt-1 text-gray-500 capitalize truncate">{label}</p>
-          <button onClick={() => { fetch(`http://localhost:8080/uploads/${doc.fileName}`).then(r => r.blob()).then(blob => { const url = window.URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = doc.fileName; document.body.appendChild(a); a.click(); window.URL.revokeObjectURL(url); document.body.removeChild(a); }).catch(err => console.error('Download failed:', err)); }} className="block mt-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 rounded w-full">Download</button>
+          <button onClick={() => { fetch(`https://e-seva-kendra-b.onrender.com/uploads/${doc.fileName}`).then(r => r.blob()).then(blob => { const url = window.URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = doc.fileName; document.body.appendChild(a); a.click(); window.URL.revokeObjectURL(url); document.body.removeChild(a); }).catch(err => console.error('Download failed:', err)); }} className="block mt-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 rounded w-full">Download</button>
         </div>
       );
     };
