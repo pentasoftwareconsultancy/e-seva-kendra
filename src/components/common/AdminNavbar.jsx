@@ -5,7 +5,7 @@ const AdminNavbar = ({ onMenuClick, isDark, setIsDark }) => {
   const [newOrdersCount, setNewOrdersCount] = useState(0);
 
   const fetchNewOrdersCount = () => {
-    fetch("http://localhost:8080/api/orders")
+    fetch("https://e-seva-kendra-b.onrender.com/api/orders")
       .then(res => res.json())
       .then(data => {
         const pendingOrders = data.filter(order => order.status === "Pending");

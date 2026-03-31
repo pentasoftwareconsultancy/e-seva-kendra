@@ -15,7 +15,7 @@ const AdminPayments = () => {
   const PAGE_SIZE = 6;
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/payment")
+    fetch("https://e-seva-kendra-b.onrender.com/api/payment")
       .then(res => res.json())
       .then(data => {
         const formatted = data.map(pay => ({
@@ -28,14 +28,14 @@ const AdminPayments = () => {
           method: "UPI",
           date: new Date(pay.createdAt).toLocaleDateString(),
           status: pay.paymentStatus,
-          screenshot: "http://localhost:8080/uploads/" + pay.screenshot
+          screenshot: "https://e-seva-kendra-b.onrender.com/uploads/" + pay.screenshot
         }));
         const reversed = formatted.reverse();
         setPayments(reversed);
 
         reversed.forEach(pay => {
           if (pay.userId) {
-            fetch(`http://localhost:8080/api/users/${pay.userId}`)
+            fetch(`https://e-seva-kendra-b.onrender.com/api/users/${pay.userId}`)
               .then(res => res.json())
               .then(user => {
                 setPayments(prev => prev.map(p =>

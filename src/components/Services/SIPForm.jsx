@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SIPHero from "../../assets/Servicesimg/Panhero.png";
+import SIPHero from "../../assets/Servicesimg/Panhero.webp";
 
 function UploadBox({ label, field, fileData, onFileChange, error }) {
   return (
@@ -68,7 +68,7 @@ function SIPForm() {
         serviceName: "SIP Investment",
         applicantName: formData.fullName,
         mobile: formData.mobile,
-        Amount: 1000,
+        Amount: 2000,
         formData,
         documents: {
           panCard: files.panCard?.file,

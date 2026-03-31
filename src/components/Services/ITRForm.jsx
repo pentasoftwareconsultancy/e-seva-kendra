@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PanHero from "../../assets/Servicesimg/Panhero.png";
+import PanHero from "../../assets/Servicesimg/Panhero.webp";
 
 function ITRForm() {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ function ITRForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    navigate("/payment", { state: { serviceName: "ITR Filing", applicantName: formData.fullName, mobile: formData.mobile, Amount: 1500, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, form16: files.form16?.file, bankStatement: files.bankStatement?.file, salarySlips: files.salarySlips?.file, investmentProof: files.investmentProof?.file, insurance: files.insurance?.file, shopDeposit: files.shopDeposit?.file } } });
+    navigate("/payment", { state: { serviceName: "ITR Filing", applicantName: formData.fullName, mobile: formData.mobile, Amount: 3000, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, form16: files.form16?.file, bankStatement: files.bankStatement?.file, salarySlips: files.salarySlips?.file, investmentProof: files.investmentProof?.file, insurance: files.insurance?.file, shopDeposit: files.shopDeposit?.file } } });
   };
 
   return (

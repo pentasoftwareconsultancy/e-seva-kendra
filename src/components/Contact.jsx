@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import top from "../assets/Contact/top-img.png";
+import top from "../assets/Contact/top-img.webp";
 import bg from "../assets/Contact/body-bg.avif";
 
 export default function Contact() {
@@ -61,7 +61,7 @@ export default function Contact() {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/api/contact", {
+      const response = await fetch("https://e-seva-kendra-b.onrender.com/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

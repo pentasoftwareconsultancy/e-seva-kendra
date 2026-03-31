@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import PanHero from "../../assets/Servicesimg/Panhero.png";
+import PanHero from "../../assets/Servicesimg/Panhero.webp";
 
 function Insurance() {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ function Insurance() {
       state: {
         serviceName: activeTab === "health" ? "Health Insurance" : "Life Insurance",
         applicantName: formData.fullName, mobile: formData.mobile,
-        Amount: activeTab === "health" ? 300 : 400,
+        Amount: activeTab === "health" ? 0 : 0,
         type: "insurance", formData,
         documents: {
           aadhaar: files.aadhaar?.file, pan: files.pan?.file, addressProof: files.addressProof?.file,

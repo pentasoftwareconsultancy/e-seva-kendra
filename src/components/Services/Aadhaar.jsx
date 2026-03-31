@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PanHero from "../../assets/Servicesimg/Panhero.png";
+import PanHero from "../../assets/Servicesimg/Panhero.webp";
 
 function Aadhaar() {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ function Aadhaar() {
         serviceName: "Aadhaar Card",
         applicantName: formData.fullName,
         mobile: formData.mobile,
-        Amount: 200,
+        Amount: 1000,
         formData,
         documents: {
           aadhaar: files.aadhaar?.file,
@@ -263,7 +263,7 @@ function UploadBox({ label, fileData, onChange, hasError }) {
         </div>
         {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
         {hasError && <p className="text-red-500 text-xs mt-1">This field is required</p>}
-     </div>
+ment      </div>
     </div>
   );
 }

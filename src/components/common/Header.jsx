@@ -11,7 +11,7 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import logo from "../../assets/Home/new logo.png";
+import logo from "../../assets/Home/new logo.webp";
 import { useEffect } from "react";
 
 export default function Header() {
@@ -51,7 +51,7 @@ export default function Header() {
 
   const fetchNotifications = async () => {
     try {
-      const res = await fetch(`http://localhost:8080/notifications/${userId}`);
+      const res = await fetch(`https://e-seva-kendra-b.onrender.com/notifications/${userId}`);
       const data = await res.json();
       setNotifications(data.slice(0, 2)); // Only latest 2 notifications
     } catch (error) {
@@ -65,7 +65,7 @@ export default function Header() {
     const fetchUnreadCount = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/notifications/unread-count/${userId}`,
+          `https://e-seva-kendra-b.onrender.com/notifications/unread-count/${userId}`,
         );
         const count = await res.json();
         setUnreadCount(count);
@@ -374,7 +374,7 @@ export default function Header() {
                   {/* 🔔 DROPDOWN */}
 
                   {isNotificationOpen && (
-                    <div className="absolute right-0 mt-12 w-80 bg-white shadow-xl rounded-xl border z-50">
+                    <div className="fixed left-1/2 -translate-x-1/2 sm:absolute sm:left-auto sm:translate-x-0 sm:right-0 top-16 sm:top-auto sm:mt-12 w-[90vw] sm:w-80 bg-white shadow-xl rounded-xl border z-50">
                       <div className="p-3 border-b font-semibold">
                         Notifications
                       </div>
@@ -399,6 +399,7 @@ export default function Header() {
 
                       <Link
                         to="/notifications"
+                        onClick={() => setIsNotificationOpen(false)}
                         className="block text-center text-sm text-blue-600 p-3 hover:bg-gray-50"
                       >
                         View all notifications

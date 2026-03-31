@@ -44,7 +44,7 @@ const AdminUpiQR = () => {
       setUploading(true);
 
       const res = await fetch(
-        "http://localhost:8080/api/payment/upload-qr",
+        "https://e-seva-kendra-b.onrender.com/api/payment/upload-qr",
         {
           method: "POST",
           body: formData

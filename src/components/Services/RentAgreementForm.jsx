@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PanHero from "../../assets/Servicesimg/Panhero.png";
+import PanHero from "../../assets/Servicesimg/Panhero.webp";
 
 function RentAgreementForm() {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ function RentAgreementForm() {
     const missingFiles = { ownerAadhaar: !files.ownerAadhaar, tenantAadhaar: !files.tenantAadhaar, ownerPan: !files.ownerPan, tenantPan: !files.tenantPan, ownerPhoto: !files.ownerPhoto, tenantPhoto: !files.tenantPhoto, lightBill: !files.lightBill, propertyProof: !files.propertyProof, depositAmount: !files.depositAmount, rentAmount: !files.rentAmount };
     setFileErrors(missingFiles);
     if (Object.values(missingFiles).some(Boolean)) return;
-    navigate("/payment", { state: { serviceName: "Rent Agreement", applicantName: formData.ownerName, mobile: formData.mobile, Amount: 700, type: "Rent Agreement", formData, documents: { ownerAadhaar: files.ownerAadhaar?.file, tenantAadhaar: files.tenantAadhaar?.file, ownerPan: files.ownerPan?.file, tenantPan: files.tenantPan?.file, ownerPhoto: files.ownerPhoto?.file, tenantPhoto: files.tenantPhoto?.file, lightBill: files.lightBill?.file, propertyProof: files.propertyProof?.file, depositAmount: files.depositAmount?.file, rentAmount: files.rentAmount?.file } } });
+    navigate("/payment", { state: { serviceName: "Rent Agreement", applicantName: formData.ownerName, mobile: formData.mobile, Amount: "3000", type: "Rent Agreement", formData, documents: { ownerAadhaar: files.ownerAadhaar?.file, tenantAadhaar: files.tenantAadhaar?.file, ownerPan: files.ownerPan?.file, tenantPan: files.tenantPan?.file, ownerPhoto: files.ownerPhoto?.file, tenantPhoto: files.tenantPhoto?.file, lightBill: files.lightBill?.file, propertyProof: files.propertyProof?.file, depositAmount: files.depositAmount?.file, rentAmount: files.rentAmount?.file } } });
   };
 
   return (

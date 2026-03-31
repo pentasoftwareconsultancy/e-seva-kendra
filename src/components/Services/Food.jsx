@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Panhero from "../../assets/Servicesimg/Panhero.png";
+import Panhero from "../../assets/Servicesimg/Panhero.webp";
 
 function Food() {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ function Food() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    navigate("/payment", { state: { serviceName: "Food License", applicantName: formData.fullName, mobile: formData.mobile, Amount: 1200, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, bankPassbook: files.bankPassbook?.file, lightBill: files.lightBill?.file, photo: files.photo?.file, shopAct: files.shopAct?.file, electricityBill: files.electricityBill?.file, rentAgreement: files.rentAgreement?.file } } });
+    navigate("/payment", { state: { serviceName: "Food License", applicantName: formData.fullName, mobile: formData.mobile, Amount: 1000 , formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, bankPassbook: files.bankPassbook?.file, lightBill: files.lightBill?.file, photo: files.photo?.file, shopAct: files.shopAct?.file, electricityBill: files.electricityBill?.file, rentAgreement: files.rentAgreement?.file } } });
   };
 
   return (

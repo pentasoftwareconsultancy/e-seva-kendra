@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PanHero from "../../assets/Servicesimg/Panhero.png";
+import PanHero from "../../assets/Servicesimg/Panhero.webp";
 import { useNavigate } from "react-router-dom";
 
 const loanTypes = [
@@ -206,7 +206,7 @@ function LoanServiceForm() {
         serviceName: loanTypes.find((l) => l.id === selectedLoan)?.subtitle,
         applicantName: formData.fullName,
         mobile: formData.mobile,
-        Amount: 500,
+        Amount: 0,
         type: selectedLoan,
         formData,
         documents: docs,

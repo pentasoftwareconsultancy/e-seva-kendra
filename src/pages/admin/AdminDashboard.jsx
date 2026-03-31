@@ -27,7 +27,7 @@ const AdminDashboard = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/api/orders/${selectedOrder.id}/status`, {
+      const response = await fetch(`https://e-seva-kendra-b.onrender.com/api/orders/${selectedOrder.id}/status`, {
         method: 'PUT',
         headers: { 
           'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ const AdminDashboard = () => {
         setNewStatus('');
         
         // Refresh orders and stats
-        const ordersResponse = await fetch("http://localhost:8080/api/orders");
+        const ordersResponse = await fetch("https://e-seva-kendra-b.onrender.com/api/orders");
         const data = await ordersResponse.json();
         const formatted = data.map(order => ({
           id: order.id,
@@ -56,7 +56,7 @@ const AdminDashboard = () => {
         setOrders(formatted.reverse());
 
         // Refresh stats
-        const statsResponse = await fetch("http://localhost:8080/api/dashboard/stats");
+        const statsResponse = await fetch("https://e-seva-kendra-b.onrender.com/dashboard/stats");
         const statsData = await statsResponse.json();
         setStats(statsData);
       } else {
@@ -72,19 +72,19 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/dashboard/stats")
+    fetch("https://e-seva-kendra-b.onrender.com/api/dashboard/stats")
       .then(res => res.json())
       .then(data => setStats(data));
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/payment/today-earnings")
+    fetch("https://e-seva-kendra-b.onrender.com/api/payment/today-earnings")
       .then(res => res.json())
       .then(data => setTodayEarnings(data));
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/orders")
+    fetch("https://e-seva-kendra-b.onrender.com/api/orders")
       .then(res => res.json())
       .then(data => {
         const formatted = data.map(order => ({

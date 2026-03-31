@@ -6,14 +6,13 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
 
-  const userId = localStorage.getItem("userId");
-
+  const userId =localStorage.getItem("userId") || sessionStorage.getItem("userId");
   useEffect(() => {
     if (!userId) return;
 
     const fetchNotifications = async () => {
       try {
-        const res = await fetch(`http://localhost:8080/notifications/${userId}`);
+        const res = await fetch(`https://e-seva-kendra-b.onrender.com/notifications/${userId}`);
         const data = await res.json();
         setNotifications(data);
       } catch (error) {
@@ -23,7 +22,7 @@ export default function Notifications() {
 
     const fetchUnreadCount = async () => {
       try {
-        const res = await fetch(`http://localhost:8080/notifications/unread-count/${userId}`);
+        const res = await fetch(`https://e-seva-kendra-b.onrender.com/notifications/unread-count/${userId}`);
         const count = await res.json();
         setUnreadCount(count);
       } catch (error) {
@@ -45,7 +44,7 @@ export default function Notifications() {
   const markAsRead = async (id) => {
     try {
       console.log('Marking notification as read:', id);
-      const response = await fetch(`http://localhost:8080/notifications/read/${id}`, {
+      const response = await fetch(`https://e-seva-kendra-b.onrender.com/notifications/read/${id}`, {
         method: "PATCH",
         headers: {
           'Content-Type': 'application/json'
@@ -84,7 +83,7 @@ export default function Notifications() {
       // Call backend for each unread notification
       await Promise.all(
         unreadNotifications.map(n => 
-          fetch(`http://localhost:8080/notifications/read/${n.id}`, {
+          fetch(`https://e-seva-kendra-b.onrender.com/notifications/read/${n.id}`, {
             method: "PATCH"
           })
         )

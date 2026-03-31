@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PanHero from "../../assets/Servicesimg/Panhero.png";
+import PanHero from "../../assets/Servicesimg/Panhero.webp";
 
 function CompanyReg() {
 const navigate = useNavigate();
@@ -106,7 +106,7 @@ navigate("/payment", {
     serviceName: companyTypes.find((l) => l.id === selectedCompany)?.title,
     applicantName: formData.fullName,
     mobile: formData.mobile,
-    Amount: 500,
+    Amount: 20000,
     type: selectedCompany,
     formData: { ...formData, ...directorInfo },
     documents: docs,

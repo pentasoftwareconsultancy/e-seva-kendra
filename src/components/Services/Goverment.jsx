@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Panhero from "../../assets/Servicesimg/Panhero.png";
+import Panhero from "../../assets/Servicesimg/Panhero.webp";
 
 function Goverment() {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ function Goverment() {
         serviceName: "Government Bonds",
         applicantName: formData.fullName,
         mobile: formData.mobile,
-        Amount: 500,
+        Amount: 100000,
         formData,
         documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, bankPassbook: files.bankPassbook?.file, photo: files.photo?.file }
       }

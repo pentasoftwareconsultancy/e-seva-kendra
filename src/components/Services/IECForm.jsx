@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PanHero from "../../assets/Servicesimg/Panhero.png";
+import PanHero from "../../assets/Servicesimg/Panhero.webp";
 
 function IECForm() {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ function IECForm() {
     if (!files.photo) newErrors.photo = "Required";
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
-    navigate("/payment", { state: { serviceName: "Import Export Code (IEC)", applicantName: formData.fullName, mobile: formData.mobile, Amount: 500, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, addressProof: files.addressProof?.file, bankProof: files.bankProof?.file, photo: files.photo?.file } } });
+    navigate("/payment", { state: { serviceName: "Import Export Code (IEC)", applicantName: formData.fullName, mobile: formData.mobile, Amount: 1500, formData, documents: { pan: files.pan?.file, aadhaar: files.aadhaar?.file, addressProof: files.addressProof?.file, bankProof: files.bankProof?.file, photo: files.photo?.file } } });
   };
 
   return (

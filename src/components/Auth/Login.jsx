@@ -2,8 +2,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import illustrationImg from "../../assets/Auth/register-illustration.png";
-import avtarImg from "../../assets/Auth/register-avtar.png";
+import avtarImg from "../../assets/Auth/register-avtar.webp";
  
 export default function Login() {
   const navigate = useNavigate();
@@ -32,7 +31,7 @@ export default function Login() {
     try {
  
       const response = await axios.post(
-        "http://localhost:8080/api/users/login",
+        "https://e-seva-kendra-b.onrender.com/api/users/login",
         {
           email: email,
           password: password
@@ -101,7 +100,7 @@ export default function Login() {
   return (
     <>
       {/* ================= HERO SECTION ================= */}
-      <section className="relative h-[400px] sm:h-[450px] md:h-[500px] overflow-hidden">
+      {/* <section className="relative h-[400px] sm:h-[450px] md:h-[500px] overflow-hidden">
         <img
           src={illustrationImg}
           alt="Login illustration"
@@ -142,14 +141,14 @@ export default function Login() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
  
       {/* ================= LOGIN SECTION ================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-0 pt-12 sm:pt-16 md:pt-24 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-end">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-0 pt-15 sm:pt-30 md:pt-3 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-end">
  
         {/* LEFT CONTENT */}
         <div className="flex flex-col justify-between pb-0 order-2 md:order-1">
-          <div>
+          {/* <div>
             <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900">
               Login to Your Account
             </h2>
@@ -158,7 +157,7 @@ export default function Login() {
               Access your account to manage and track your government and legal
               service applications.
             </p>
-          </div>
+          </div> */}
  
           <img
             src={avtarImg}
@@ -221,7 +220,7 @@ export default function Login() {
  
               <button
                 type="submit"
-                className="w-full bg-green-600 hover:bg-green-700 text-white py-2.5 sm:py-3 rounded-lg font-semibold transition"
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-2.5 sm:py-3 rounded-lg font-semibold transition cursor-pointer"
               >
                 Login
               </button>

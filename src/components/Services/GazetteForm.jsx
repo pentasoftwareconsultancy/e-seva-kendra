@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Panhero from "../../assets/Servicesimg/Panhero.png";
+import Panhero from "../../assets/Servicesimg/Panhero.webp";
 
 function GazetteForm() {
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ function GazetteForm() {
         serviceName: "Gazette Service",
         applicantName: formData.fullName,
         mobile: formData.mobile,
-        Amount: 2000,
+        Amount: 1500,
         formData,
         documents: {
           aadhaar: files.aadhaar?.file,

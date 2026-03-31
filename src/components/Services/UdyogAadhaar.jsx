@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Panhero from "../../assets/Servicesimg/Panhero.png";
+import Panhero from "../../assets/Servicesimg/Panhero.webp";
 
 function UdyogAadhaar() {
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ function UdyogAadhaar() {
         serviceName: "Udyam Aadhaar Registration",
         applicantName: formData.fullName,
         mobile: formData.mobile,
-        Amount: 500,
+        Amount: 300,
         formData,
         documents: {
           pan: files.pan?.file,
