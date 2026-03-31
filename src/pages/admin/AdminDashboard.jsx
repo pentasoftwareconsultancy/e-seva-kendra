@@ -1,6 +1,6 @@
 import AdminLayout from '../../components/common/AdminLayout';
 import React, { useState, useEffect } from 'react';
-import { User } from 'lucide-react';
+import { User, ShoppingBag } from 'lucide-react';
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('All Orders');
   const [searchQuery, setSearchQuery] = useState('');
@@ -15,6 +15,7 @@ const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
   const [newStatus, setNewStatus] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [documents, setDocuments] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const itemsPerPage = 7;
@@ -295,7 +296,13 @@ const AdminDashboard = () => {
                       <td className="px-4 md:px-6 py-4 text-sm text-gray-500 hidden md:table-cell">{order.date}</td>
                       <td className="px-4 md:px-6 py-4 text-center">
                         <button 
-                          onClick={() => setSelectedOrder(order)}
+                          onClick={() => {
+                            setSelectedOrder(order);
+                            fetch(`https://e-seva-kendra-b.onrender.com/api/orders/${order.id}/documents`)
+                              .then(res => res.ok ? res.json() : [])
+                              .then(data => setDocuments(Array.isArray(data) ? data : []))
+                              .catch(() => setDocuments([]));
+                          }}
                           className="inline-flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
                         >
                           <i className="fas fa-eye text-xs"></i>
@@ -372,6 +379,30 @@ const AdminDashboard = () => {
                         {selectedOrder.status}
                       </span>
                     </div>
+                    {documents.length > 0 && (
+                      <div className="pt-3 border-t">
+                        <p className="text-xs md:text-sm text-gray-600 font-semibold mb-3">Uploaded Documents</p>
+                        <div className="grid grid-cols-2 gap-2">
+                          {documents.map(doc => {
+                            const isPDF = doc.fileName.toLowerCase().endsWith('.pdf');
+                            const label = doc.documentType ? doc.documentType.replace(/_[0-9]+$/, '').replace(/([A-Z])/g, ' $1').trim() : doc.fileName;
+                            return (
+                              <div key={doc.id} className="border rounded-lg p-2 bg-white shadow">
+                                {isPDF ? (
+                                  <div className="w-full h-20 bg-red-50 rounded flex items-center justify-center cursor-pointer hover:bg-red-100" onClick={() => window.open(`https://e-seva-kendra-b.onrender.com/uploads/${doc.fileName}`)}>
+                                    <svg className="w-10 h-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12V6h-4V2H4v16zm-2 1V0h12l4 4v16H2v-1z"/></svg>
+                                  </div>
+                                ) : (
+                                  <img src={`https://e-seva-kendra-b.onrender.com/uploads/${doc.fileName}`} alt={doc.fileName} className="w-full h-20 object-cover rounded cursor-pointer" onClick={() => window.open(`https://e-seva-kendra-b.onrender.com/uploads/${doc.fileName}`)} />
+                                )}
+                                <p className="text-xs mt-1 text-gray-500 capitalize truncate">{label}</p>
+                                <button onClick={() => { fetch(`https://e-seva-kendra-b.onrender.com/uploads/${doc.fileName}`).then(r => r.blob()).then(blob => { const url = window.URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = doc.fileName; document.body.appendChild(a); a.click(); window.URL.revokeObjectURL(url); document.body.removeChild(a); }); }} className="block mt-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 rounded w-full">Download</button>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
                     <div className="pt-3 border-t">
                       <label className="text-xs md:text-sm text-gray-600 font-medium mb-2 block">Update Status</label>
                       <select
