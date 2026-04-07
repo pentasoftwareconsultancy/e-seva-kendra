@@ -28,7 +28,9 @@ const AdminPayments = () => {
           method: "UPI",
           date: new Date(pay.createdAt).toLocaleDateString(),
           status: pay.paymentStatus,
-          screenshot: "https://e-seva-kendra-b.onrender.com/uploads/" + pay.screenshot
+          screenshot: pay.screenshot
+            ? (pay.screenshot.startsWith('http') ? pay.screenshot : "https://e-seva-kendra-b.onrender.com/uploads/" + pay.screenshot)
+            : null
         }));
         const reversed = formatted.reverse();
         setPayments(reversed);
