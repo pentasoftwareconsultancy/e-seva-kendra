@@ -82,7 +82,19 @@ export default function Header() {
       fetchNotifications();
     }, 10000);
 
-    return () => clearInterval(interval);
+    // Close notification dropdown when clicking outside
+    const handleClickOutside = (e) => {
+      if (!e.target.closest('.notification-dropdown')) {
+        setIsNotificationOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('click', handleClickOutside);
+    };
   }, [userId]);
 
   const services = [

@@ -77,6 +77,9 @@ export default function Notifications() {
 
   const markAllAsRead = async () => {
     try {
+      await fetch(`http://localhost:8080/notifications/read-all/${userId}`, {
+        method: "PATCH"
+      });
       // Mark all unread notifications one by one
       const unreadNotifications = notifications.filter(n => !n.read);
       
@@ -89,7 +92,6 @@ export default function Notifications() {
         )
       );
 
-      // Update local state immediately
       setNotifications(prev =>
         prev.map(n => ({ ...n, read: true }))
       );
