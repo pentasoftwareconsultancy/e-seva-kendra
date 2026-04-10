@@ -1,6 +1,6 @@
 import AdminLayout from '../../components/common/AdminLayout';
 import React, { useState, useEffect } from 'react';
-import { User } from 'lucide-react';
+import { User, ShoppingBag } from 'lucide-react';
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('All Orders');
   const [searchQuery, setSearchQuery] = useState('');
@@ -13,21 +13,79 @@ const AdminDashboard = () => {
   });
   const [todayEarnings, setTodayEarnings] = useState(0);
   const [orders, setOrders] = useState([]);
+  const [newStatus, setNewStatus] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [documents, setDocuments] = useState([]);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const itemsPerPage = 7;
+
+  const handleUpdateStatus = async () => {
+    if (!newStatus) {
+      setErrorMessage('Please select a status');
+      setTimeout(() => setErrorMessage(''), 3000);
+      return;
+    }
+
+    try {
+      const response = await fetch(`https://e-seva-kendra-b.onrender.com/api/orders/${selectedOrder.id}/status`, {
+        method: 'PUT',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+
+      if (response.ok) {
+        const result = await response.text();
+        setSuccessMessage(result || 'Status updated successfully');
+        setTimeout(() => setSuccessMessage(''), 3000);
+        setSelectedOrder(null);
+        setNewStatus('');
+        
+        // Refresh orders and stats
+        const ordersResponse = await fetch("https://e-seva-kendra-b.onrender.com/api/orders");
+        const data = await ordersResponse.json();
+        const formatted = data.map(order => ({
+          id: order.id,
+          name: order.name,
+          service: order.serviceName,
+          status: order.status,
+          date: new Date(order.createdAt).toLocaleDateString()
+        }));
+        setOrders(formatted.reverse());
+
+        // Refresh stats
+        const statsResponse = await fetch("https://e-seva-kendra-b.onrender.com/dashboard/stats");
+        const statsData = await statsResponse.json();
+        setStats(statsData);
+      } else {
+        const errorText = await response.text();
+        setErrorMessage(`Failed to update status: ${errorText}`);
+        setTimeout(() => setErrorMessage(''), 3000);
+      }
+    } catch (err) {
+      console.error('Error updating status:', err);
+      setErrorMessage('Failed to update status. Please check if the server is running.');
+      setTimeout(() => setErrorMessage(''), 3000);
+    }
+  };
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/dashboard/stats")
+    fetch("https://e-seva-kendra-b.onrender.com/api/dashboard/stats")
       .then(res => res.json())
       .then(data => setStats(data));
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/payment/today-earnings")
+    fetch("https://e-seva-kendra-b.onrender.com/api/payment/today-earnings")
       .then(res => res.json())
       .then(data => setTodayEarnings(data));
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/orders")
+    fetch("https://e-seva-kendra-b.onrender.com/api/orders")
       .then(res => res.json())
       .then(data => {
         const formatted = data.map(order => ({
@@ -50,6 +108,11 @@ const AdminDashboard = () => {
       order.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentOrders = filteredOrders.slice(startIndex, endIndex);
+
   const getStatusColor = (status) => {
     switch(status) {
       case 'Pending': return 'bg-yellow-100 text-yellow-700';
@@ -66,6 +129,18 @@ const AdminDashboard = () => {
         <i className="fas fa-chart-line text-2xl md:text-3xl text-blue-600"></i>
         <h2 className="text-xl md:text-3xl font-bold"><span className="text-green-600">Welcome to the</span> <span className="text-gray-800">Admin Dashboard!</span></h2>
       </div>
+
+      {successMessage && (
+        <div className="mb-4 p-3 bg-green-50 border border-green-300 rounded-lg text-green-700 text-sm">
+          {successMessage}
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-300 rounded-lg text-red-700 text-sm">
+          {errorMessage}
+        </div>
+      )}
           
           {/* Stats Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4 md:mb-6">
@@ -192,7 +267,7 @@ const AdminDashboard = () => {
               <table className="w-full">
                 <thead>
                   <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Order ID</th>
+                    <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Order ID</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Customer Name</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Service Type</th>
                     <th className="px-4 md:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden md:table-cell">Status</th>
@@ -201,9 +276,9 @@ const AdminDashboard = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {filteredOrders.map((order) => (
+                  {currentOrders.map((order) => (
                     <tr key={order.id} className="hover:bg-blue-50/50 transition-colors duration-150">
-                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600">{order.id}</td>
+                      <td className="px-4 md:px-6 py-4 text-sm font-semibold text-blue-600 hidden sm:table-cell">ORD#{order.id}</td>
                       <td className="px-4 md:px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
@@ -221,7 +296,13 @@ const AdminDashboard = () => {
                       <td className="px-4 md:px-6 py-4 text-sm text-gray-500 hidden md:table-cell">{order.date}</td>
                       <td className="px-4 md:px-6 py-4 text-center">
                         <button 
-                          onClick={() => setSelectedOrder(order)}
+                          onClick={() => {
+                            setSelectedOrder(order);
+                            fetch(`https://e-seva-kendra-b.onrender.com/api/orders/${order.id}/documents`)
+                              .then(res => res.ok ? res.json() : [])
+                              .then(data => setDocuments(Array.isArray(data) ? data : []))
+                              .catch(() => setDocuments([]));
+                          }}
                           className="inline-flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
                         >
                           <i className="fas fa-eye text-xs"></i>
@@ -233,13 +314,24 @@ const AdminDashboard = () => {
                 </tbody>
               </table>
             </div>
-            <div className="px-4 md:px-6 py-4 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <p className="text-sm text-gray-600 font-medium">Showing 1 to 7 of 152 entries</p>
-              <div className="flex gap-2">
-                <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">1</button>
-                <button className="px-4 py-2 border border-blue-600 rounded-lg bg-blue-600 text-white text-sm font-medium shadow-sm">2</button>
-                <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">→</button>
-              </div>
+            <div className="px-4 md:px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-center gap-3">
+              <button 
+                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                ←
+              </button>
+              <span className="px-4 py-2 border border-blue-600 bg-blue-600 text-white rounded-lg text-sm font-medium">
+                {currentPage}
+              </span>
+              <button 
+                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                →
+              </button>
             </div>
           </div>
 
@@ -267,7 +359,7 @@ const AdminDashboard = () => {
                   <div className="bg-gray-50 rounded-lg p-3 md:p-4 space-y-2 md:space-y-3">
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Order ID</span>
-                      <span className="text-xs md:text-sm font-semibold text-gray-900">#{selectedOrder.id}</span>
+                      <span className="text-xs md:text-sm font-semibold text-gray-900">ORD#{selectedOrder.id}</span>
                     </div>
                     <div className="flex justify-between items-center pb-2 md:pb-3 border-b">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Customer Name</span>
@@ -287,6 +379,45 @@ const AdminDashboard = () => {
                         {selectedOrder.status}
                       </span>
                     </div>
+                    {documents.length > 0 && (
+                      <div className="pt-3 border-t">
+                        <p className="text-xs md:text-sm text-gray-600 font-semibold mb-3">Uploaded Documents</p>
+                        <div className="grid grid-cols-2 gap-2">
+                          {documents.map(doc => {
+                            const fileUrl = doc.fileUrl || `https://e-seva-kendra-b.onrender.com/uploads/${doc.fileName}`;
+                            const isPDF = doc.fileName && doc.fileName.toLowerCase().endsWith('.pdf');
+                            const label = doc.documentType ? doc.documentType.replace(/_[0-9]+$/, '').replace(/([A-Z])/g, ' $1').trim() : doc.fileName;
+                            return (
+                              <div key={doc.id} className="border rounded-lg p-2 bg-white shadow">
+                                {isPDF ? (
+                                  <div className="w-full h-20 bg-red-50 rounded flex items-center justify-center cursor-pointer hover:bg-red-100" onClick={() => window.open(fileUrl)}>
+                                    <svg className="w-10 h-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12V6h-4V2H4v16zm-2 1V0h12l4 4v16H2v-1z"/></svg>
+                                  </div>
+                                ) : (
+                                  <img src={fileUrl} alt={doc.fileName} className="w-full h-20 object-cover rounded cursor-pointer" onClick={() => window.open(fileUrl)} />
+                                )}
+                                <p className="text-xs mt-1 text-gray-500 capitalize truncate">{label}</p>
+                                <button onClick={() => { fetch(fileUrl).then(r => r.blob()).then(blob => { const url = window.URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = doc.fileName; document.body.appendChild(a); a.click(); window.URL.revokeObjectURL(url); document.body.removeChild(a); }); }} className="block mt-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 rounded w-full">Download</button>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                    <div className="pt-3 border-t">
+                      <label className="text-xs md:text-sm text-gray-600 font-medium mb-2 block">Update Status</label>
+                      <select
+                        value={newStatus}
+                        onChange={(e) => setNewStatus(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg text-xs md:text-sm"
+                      >
+                        <option value="">Select Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -298,7 +429,10 @@ const AdminDashboard = () => {
                   >
                     Close
                   </button>
-                  <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition">
+                  <button 
+                    onClick={handleUpdateStatus}
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition"
+                  >
                     Update Status
                   </button>
                 </div>

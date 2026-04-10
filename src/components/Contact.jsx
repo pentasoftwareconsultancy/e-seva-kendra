@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import top from "../assets/Contact/top-img.png";
+import { useNavigate } from "react-router-dom";
+import top from "../assets/Contact/top-img.webp";
 import bg from "../assets/Contact/body-bg.avif";
 
 export default function Contact() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -15,32 +19,28 @@ export default function Contact() {
   });
 
   const services = [
-    "Income Tax Return (आयकर रिटर्न)",
-    "Import Export Code (आयात निर्यात कोड)",
-    "Goods and Services Tax (वस्तू आणि सेवा कर)",
-    "Trademark (ट्रेडमार्क)",
-    "Health Insurance (आरोग्य विमा)",
-    "Life Insurance (जीवन विमा)",
-    "Systematic Investment Plan (सिस्टेमॅटिक इन्व्हेस्टमेंट प्लॅन)",
-    "Mutual Fund (म्युच्युअल फंड)",
-    "Rent Agreement (भाडे करार)",
-    "E-Shram Card (ई-श्रम कार्ड)",
-    "Ayushman Card (आयुष्मान कार्ड)",
-    "2-4 Wheeler Insurance (वाहन विमा)",
-    "Demat Account (डीमॅट खाते)",
-    "Personal Loan (वैयक्तिक कर्ज)",
-    "Business Loan (व्यवसाय कर्ज)",
-    "Home Loan (गृह कर्ज)",
-    "Personal Financial Services (वैयक्तिक आर्थिक सेवा)",
     "PAN Card (पॅन कार्ड)",
+    "Systematic Investment Plan (SIP) (सिस्टेमॅटिक इन्व्हेस्टमेंट प्लान)",
+    "Voter ID (मतदार ओळखपत्र)",
     "Passport (पासपोर्ट)",
     "Ration Card (रेशन कार्ड)",
     "Gazette Certificate (गॅझेट प्रमाणपत्र)",
-    "Shop Act (दुकान अधिनियम)",
-    "Udyog Aadhar (उद्योग आधार)",
-    "Food License (अन्न परवाना)",
-    "Senior Citizen Certificate (ज्येष्ठ नागरिक प्रमाणपत्र)",
-    "Voter ID (मतदार ओळखपत्र)",
+    "Shop Act (दुकान नोंदणी)",
+    "Udyam Aadhaar (उद्यम आधार)",
+    "FSSAI Food License (फूड लायसन्स)",
+    "Income Tax Return (ITR) (उत्पन्न कर विवरण)",
+    "Import Export Code (IEC) (आयात निर्यात कोड)",
+    "Goods and Services Tax (GST) (वस्तू व सेवा कर)",
+    "Insurance (विमा)",
+    "Mutual Fund (म्युच्युअल फंड)",
+    "Rent Agreement (भाडे करार)",
+    "Vehicle Insurance (वाहन विमा)",
+    "Demat Account (डीमॅट खाते)",
+    "Loan Services (कर्ज सेवा)",
+    "Company Registration (कंपनी नोंदणी)",
+    "Government Bonds (सरकारी रोखे)",
+    "Driving License (वाहन चालक परवाना)",
+    "Aadhaar Card (आधार कार्ड)",
   ];
 
   const filteredServices = services.filter((service) =>
@@ -48,35 +48,51 @@ export default function Contact() {
   );
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const response = await fetch("http://localhost:8080/api/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
-    });
-
-    if (response.ok) {
-      alert("Message sent successfully!");
-
-      setFormData({
-        name:"",
-        email:"",
-        service:"",
-        mobile:"",
-        message:""
-      });
-
-      setSearchTerm("");
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+    
+    if (!isLoggedIn) {
+      setErrorMessage("Please login first to send a message");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+      return;
     }
 
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
+    try {
+      const response = await fetch("https://e-seva-kendra-b.onrender.com/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        setSuccessMessage("Message sent successfully!");
+        setTimeout(() => setSuccessMessage(""), 3000);
+
+        setFormData({
+          name:"",
+          email:"",
+          service:"",
+          mobile:"",
+          message:""
+        });
+
+        setSearchTerm("");
+      } else {
+        setErrorMessage("Failed to send message. Please try again.");
+        setTimeout(() => setErrorMessage(""), 3000);
+      }
+
+    } catch (error) {
+      console.error("Error:", error);
+      setErrorMessage("Failed to send message. Please try again.");
+      setTimeout(() => setErrorMessage(""), 3000);
+    }
+  };
 
   return (
     <div
@@ -119,36 +135,40 @@ export default function Contact() {
           <div className="space-y-3 sm:space-y-4">
             <a
               href="tel:+918668266879"
-              className="flex items-center gap-2 sm:gap-3 bg-white p-3 sm:p-4 rounded-lg shadow-sm hover:shadow-md transition cursor-pointer"
+              className="flex items-center gap-2 sm:gap-3 bg-white p-3 sm:p-4 rounded-lg shadow-sm hover:shadow-md hover:bg-blue-50 transition cursor-pointer group"
             >
-              <svg
-                className="w-4 h-4 sm:w-5 sm:h-5 text-blue-700 flex-shrink-0"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path d="M22 16.92V21a2 2 0 01-2.18 2A19.7 19.7 0 013 4.18 2 2 0 015 2h4.09a2 2 0 012 1.72l.7 4.09a2 2 0 01-.54 1.73L9.9 10.9a16 16 0 006.2 6.2l1.36-1.37a2 2 0 011.74-.54l4.09.7A2 2 0 0122 16.92z" />
-              </svg>
-              <p className="text-gray-700 text-xs sm:text-sm md:text-base">
+              <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center group-hover:bg-blue-600 transition">
+                <svg
+                  className="w-5 h-5 text-blue-700 group-hover:text-white transition"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M22 16.92V21a2 2 0 01-2.18 2A19.7 19.7 0 013 4.18 2 2 0 015 2h4.09a2 2 0 012 1.72l.7 4.09a2 2 0 01-.54 1.73L9.9 10.9a16 16 0 006.2 6.2l1.36-1.37a2 2 0 011.74-.54l4.09.7A2 2 0 0122 16.92z" />
+                </svg>
+              </div>
+              <p className="text-gray-700 text-xs sm:text-sm md:text-base font-medium">
                 +91 8668266879
               </p>
             </a>
 
             <a
               href="mailto:omsaimultiservices411041@gmail.com"
-              className="flex items-center gap-2 sm:gap-3 bg-white p-3 sm:p-4 rounded-lg shadow-sm hover:shadow-md transition cursor-pointer"
+              className="flex items-center gap-2 sm:gap-3 bg-white p-3 sm:p-4 rounded-lg shadow-sm hover:shadow-md hover:bg-blue-50 transition cursor-pointer group"
             >
-              <svg
-                className="w-4 h-4 sm:w-5 sm:h-5 text-blue-700 flex-shrink-0"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path d="M4 4h16v16H4zM22 6l-10 7L2 6" />
-              </svg>
-              <p className="text-gray-700 text-xs sm:text-sm md:text-base">
+              <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center group-hover:bg-blue-600 transition">
+                <svg
+                  className="w-5 h-5 text-blue-700 group-hover:text-white transition"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M4 4h16v16H4zM22 6l-10 7L2 6" />
+                </svg>
+              </div>
+              <p className="text-gray-700 text-xs sm:text-sm md:text-base font-medium">
                 omsaimultiservices411041@gmail.com
               </p>
             </a>
@@ -157,18 +177,20 @@ export default function Contact() {
               href="https://maps.google.com/?q=Shop+No+6+Dagade+Patil+Complex+Karle+Chowk+Nanded+City+Pune"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 sm:gap-3 bg-white p-3 sm:p-4 rounded-lg shadow-sm hover:shadow-md transition cursor-pointer"
+              className="flex items-center gap-2 sm:gap-3 bg-white p-3 sm:p-4 rounded-lg shadow-sm hover:shadow-md hover:bg-blue-50 transition cursor-pointer group"
             >
-              <svg
-                className="w-4 h-4 sm:w-5 sm:h-5 text-blue-700 flex-shrink-0"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 21s-6-4.35-6-10a6 6 0 1112 0c0 5.65-6 10-6 10z" />
-              </svg>
-              <p className="text-gray-700 text-xs sm:text-sm md:text-base">
+              <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center group-hover:bg-blue-600 transition">
+                <svg
+                  className="w-5 h-5 text-blue-700 group-hover:text-white transition"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 21s-6-4.35-6-10a6 6 0 1112 0c0 5.65-6 10-6 10z" />
+                </svg>
+              </div>
+              <p className="text-gray-700 text-xs sm:text-sm md:text-base font-medium">
                 Shop No 6, Dagade Patil Complex, Karle Chowk, Nanded City, Pune
               </p>
             </a>
@@ -295,6 +317,18 @@ export default function Contact() {
               }
               className="w-full p-2.5 sm:p-3 border rounded-md"
             />
+
+            {successMessage && (
+              <div className="p-3 bg-green-50 border border-green-300 rounded-lg text-green-700 text-sm">
+                {successMessage}
+              </div>
+            )}
+
+            {errorMessage && (
+              <div className="p-3 bg-red-50 border border-red-300 rounded-lg text-red-700 text-sm">
+                {errorMessage}
+              </div>
+            )}
 
             <button
               type="submit"

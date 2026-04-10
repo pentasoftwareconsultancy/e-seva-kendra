@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Bell, Mail, Menu, Moon, Sun, LogOut, User } from "lucide-react";
 
 const AdminNavbar = ({ onMenuClick, isDark, setIsDark }) => {
+  const [newOrdersCount, setNewOrdersCount] = useState(0);
+
+  const fetchNewOrdersCount = () => {
+    fetch("https://e-seva-kendra-b.onrender.com/api/orders")
+      .then(res => res.json())
+      .then(data => {
+        const pendingOrders = data.filter(order => order.status === "Pending");
+        setNewOrdersCount(pendingOrders.length);
+      })
+      .catch(err => console.error(err));
+  };
+
+  useEffect(() => {
+    fetchNewOrdersCount();
+    
+    // Auto-refresh every 1 second
+    const interval = setInterval(fetchNewOrdersCount, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <header className={`h-14 md:h-16 px-2 md:px-4 m-2 md:m-4 rounded-3xl flex items-center justify-between shadow-sm ${isDark ? 'bg-gradient-to-b from-gray-800 to-gray-900' : 'bg-gradient-to-b from-[#2D3A5F] to-[#223054]'}`}>
       {/* Left */}
@@ -23,9 +44,11 @@ const AdminNavbar = ({ onMenuClick, isDark, setIsDark }) => {
           className="relative p-1.5 md:p-2 hover:bg-white/10 rounded-lg transition-colors"
         >
           <Bell className="w-4 h-4 md:w-5 md:h-5 text-white" />
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
-            3
-          </span>
+          {newOrdersCount > 0 && (
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+              {newOrdersCount}
+            </span>
+          )}
         </button>
 
         <button
@@ -41,7 +64,7 @@ const AdminNavbar = ({ onMenuClick, isDark, setIsDark }) => {
         <div className="flex items-center space-x-2 md:space-x-3">
           <button 
             onClick={() => window.location.href = '/admin/settings'}
-            className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-green-600 hover:bg-green-700 flex items-center justify-center transition-colors cursor-pointer"
+            className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-green-600 hover:bg-blue-600 flex items-center justify-center transition-colors cursor-pointer "
           >
             <User className="w-4 h-4 md:w-6 md:h-6 text-white" />
           </button>

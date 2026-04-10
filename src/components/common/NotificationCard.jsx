@@ -34,9 +34,11 @@ export default function NotificationCard({ notification, onMarkRead }) {
       return "bg-blue-50 border-blue-300 border-l-4 border-l-blue-600";
     }
 
+    // Read notifications with type-based colors
     switch (notification.type) {
 
       case "PAYMENT_SUCCESS":
+      case "payment":
         return "bg-green-50 border-green-300 border-l-4 border-l-green-600";
 
       case "ORDER_CREATED":
@@ -46,34 +48,37 @@ export default function NotificationCard({ notification, onMarkRead }) {
         return "bg-purple-50 border-purple-300 border-l-4 border-l-purple-600";
 
       default:
-        return "bg-white border-gray-200";
+        return "bg-gray-50 border-gray-200";
     }
   };
 
   return (
-    <div className={`p-4 rounded-xl border transition ${getColorStyle()}`}>
-      <div className="flex justify-between items-start">
+    <div className={`p-2.5 sm:p-4 rounded-lg sm:rounded-xl border transition ${getColorStyle()}`}>
+      <div className="flex justify-between items-start gap-1.5 sm:gap-2">
 
-        <div>
-          <h3 className="font-semibold text-slate-800">
+        <div className="flex-1 min-w-0">
+          <h3 className="font-semibold text-xs sm:text-base text-slate-800 break-words">
             {notification.title}
           </h3>
 
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-[11px] sm:text-sm text-gray-600 mt-1 break-words">
             {notification.message}
           </p>
 
-          <span className="text-xs text-gray-400 block mt-2">
+          <span className="text-[10px] sm:text-xs text-gray-400 block mt-1 sm:mt-2">
             {notification.createdAt && formatTimeAgo(notification.createdAt)}
           </span>
         </div>
 
         {!notification.read && (
           <button
-            onClick={() => onMarkRead(notification.id)}
-            className="text-xs text-blue-600 hover:underline"
+            onClick={(e) => {
+              e.stopPropagation();
+              onMarkRead(notification.id);
+            }}
+            className="text-[9px] sm:text-xs text-blue-600 hover:underline whitespace-nowrap shrink-0 mt-0.5"
           >
-            Mark as read
+            Mark read
           </button>
         )}
 

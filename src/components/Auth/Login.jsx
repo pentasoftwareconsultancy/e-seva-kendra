@@ -1,85 +1,114 @@
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import illustrationImg from "../../assets/Auth/register-illustration.png";
-import avtarImg from "../../assets/Auth/register-avtar.png";
-
+import { useState, useEffect } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import avtarImg from "../../assets/Auth/register-avtar.webp";
+ 
 export default function Login() {
   const navigate = useNavigate();
-
+ 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("rememberedEmail");
+    const savedPassword = localStorage.getItem("rememberedPassword");
+    
+    if (savedEmail && savedPassword) {
+      setEmail(savedEmail);
+      setPassword(savedPassword);
+      setRememberMe(true);
+    }
+  }, []);
+ 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+ 
     try {
-
+ 
       const response = await axios.post(
-        "http://localhost:8080/api/users/login",
+        "https://e-seva-kendra-b.onrender.com/api/users/login",
         {
           email: email,
           password: password
         }
       );
-
+ 
       const data = response.data;
-
+ 
       if (data.message === "Login Successful") {
-
-        // Store login info
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userEmail", data.email);
+ 
+        // Store login info in both sessionStorage and localStorage
+        sessionStorage.setItem("isLoggedIn", "true");
+        sessionStorage.setItem("userEmail", data.email);
+        sessionStorage.setItem("userId", data.id);
+        sessionStorage.setItem("userName", data.name);
+        
         localStorage.setItem("userId", data.id);
+        localStorage.setItem("userEmail", data.email);
+        localStorage.setItem("userName", data.name);
 
-        alert("Login Successful");
-
-        navigate("/");
-
+        if (rememberMe) {
+          localStorage.setItem("rememberedEmail", email);
+          localStorage.setItem("rememberedPassword", password);
+        } else {
+          localStorage.removeItem("rememberedEmail");
+          localStorage.removeItem("rememberedPassword");
+        }
+ 
+        setSuccessMessage("Login successful! Redirecting...");
+ 
+        // Redirect based on email domain
+        setTimeout(() => {
+          if(data.email.endsWith("@eseva.com")){
+            sessionStorage.setItem("adminAuth", "true");
+            sessionStorage.setItem("adminEmail", data.email);
+            navigate("/admin/dashboard");
+          } else {
+            // check if user clicked service before login
+            const redirectService = sessionStorage.getItem("redirectService");
+            
+            if (redirectService) {
+              sessionStorage.removeItem("redirectService");
+              navigate(`/apply/${redirectService}`);
+            } else {
+              navigate("/");
+            }
+          }
+        }, 1500);
+ 
       } else {
-
-        alert(data.message || "Invalid credentials");
-
+ 
+        setErrorMessage(data.message || "Invalid credentials");
+        setTimeout(() => setErrorMessage(""), 3000);
+ 
       }
-
-    alert(response.data);
-if (response.data === "Login Successful") {
-
-  localStorage.setItem("isLoggedIn", "true");
-  localStorage.setItem("userEmail", email);
-
-  // check if user clicked service before login
-  const redirectService = localStorage.getItem("redirectService");
-
-  if (redirectService) {
-    localStorage.removeItem("redirectService");
-    navigate(`/apply/${redirectService}`);
-  } else {
-    navigate("/service");
-  }
-
-}
-
+ 
     } catch (error) {
-
+ 
       console.error(error);
-      alert("Login failed");
-
+      setErrorMessage("Login failed. Please check your credentials.");
+      setTimeout(() => setErrorMessage(""), 3000);
+ 
     }
   };
-
+ 
   return (
     <>
       {/* ================= HERO SECTION ================= */}
-      <section className="relative h-[400px] sm:h-[450px] md:h-[500px] overflow-hidden">
+      {/* <section className="relative h-[400px] sm:h-[450px] md:h-[500px] overflow-hidden">
         <img
           src={illustrationImg}
           alt="Login illustration"
           className="absolute inset-0 w-full h-full object-cover object-[45%_40%]"
         />
-
+ 
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-900/60 to-transparent"></div>
-
+ 
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 flex items-center">
           <div className="text-white max-w-xl">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
@@ -89,7 +118,7 @@ if (response.data === "Login Successful") {
               Login to access your account and continue with your services for
               PAN Card, Aadhaar, GST Registration and more.
             </p>
-
+ 
             <div className="mt-4 md:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button
                 type="button"
@@ -102,7 +131,7 @@ if (response.data === "Login Successful") {
               >
                 Login Now
               </button>
-
+ 
               <a
                 href="https://wa.me/919876543310"
                 className="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg font-semibold text-white text-center"
@@ -112,44 +141,56 @@ if (response.data === "Login Successful") {
             </div>
           </div>
         </div>
-      </section>
-
+      </section> */}
+ 
       {/* ================= LOGIN SECTION ================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-0 pt-12 sm:pt-16 md:pt-24 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-end">
-
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-0 pt-15 sm:pt-30 md:pt-3 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-end">
+ 
         {/* LEFT CONTENT */}
         <div className="flex flex-col justify-between pb-0 order-2 md:order-1">
-          <div>
+          {/* <div>
             <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900">
               Login to Your Account
             </h2>
-
+ 
             <p className="mt-3 md:mt-4 text-gray-600 max-w-md leading-relaxed text-sm sm:text-base">
               Access your account to manage and track your government and legal
               service applications.
             </p>
-          </div>
-
+          </div> */}
+ 
           <img
             src={avtarImg}
             alt="Login illustration"
             className="hidden md:block w-full max-w-6xl mt-10"
           />
         </div>
-
+ 
         {/* RIGHT FORM */}
         <div
           id="login-form"
           className="flex items-center md:-ml-10 mb-6 md:mb-10 order-1 md:order-2"
         >
           <div className="w-full bg-white rounded-2xl p-6 sm:p-8 md:p-10 shadow-[0_30px_70px_rgba(0,0,0,0.15)]">
-
+ 
             <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-slate-900">
               Login to Continue
             </h3>
 
-            <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5">
+            {successMessage && (
+              <div className="mb-4 p-3 bg-green-50 border border-green-300 rounded-lg text-green-700 text-sm">
+                {successMessage}
+              </div>
+            )}
 
+            {errorMessage && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-300 rounded-lg text-red-700 text-sm">
+                {errorMessage}
+              </div>
+            )}
+ 
+            <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5">
+ 
               <input
                 type="email"
                 placeholder="Email Address"
@@ -157,31 +198,35 @@ if (response.data === "Login Successful") {
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
               />
-
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-              />
-
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-sm">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" className="w-4 h-4" />
-                  <span className="text-gray-600">Remember me</span>
-                </label>
+ 
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full border rounded-lg px-4 py-2.5 sm:py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
-
+ 
+              
+ 
               <button
                 type="submit"
-                className="w-full bg-green-600 hover:bg-green-700 text-white py-2.5 sm:py-3 rounded-lg font-semibold transition"
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-2.5 sm:py-3 rounded-lg font-semibold transition cursor-pointer"
               >
                 Login
               </button>
-
+ 
             </form>
-
+ 
             <p className="text-sm text-center mt-4 sm:mt-5 text-gray-600">
               Don't have an account?{" "}
               <Link
@@ -191,11 +236,10 @@ if (response.data === "Login Successful") {
                 Register here
               </Link>
             </p>
-
+ 
           </div>
         </div>
       </section>
     </>
   );
 }
-

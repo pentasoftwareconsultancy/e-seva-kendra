@@ -1,20 +1,32 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import heroImg from "../../assets/Home/hero.png";
-import panImg from "../../assets/services/pan-img.jpg";
-import gazetteImg from "../../assets/services/gazette.png";
-import passImg from "../../assets/services/pass.png";
-import rationImg from "../../assets/services/ration.png";
-import serviceImg from "../../assets/Home/service.png";
-import uploadImg from "../../assets/Home/upload.png";
+import heroImg from "../../assets/Home/hero.webp";
+import panImg from "../../assets/services/pan-img.webp";
+import gazetteImg from "../../assets/services/gazette.webp";
+import passImg from "../../assets/services/pass.webp";
+import rationImg from "../../assets/services/ration.webp";
+import serviceImg from "../../assets/Home/service.webp";
+import uploadImg from "../../assets/Home/upload.webp";
 import regimage from "../../assets/Home/reg.avif";
-import logImg from "../../assets/Home/login.jpg";
-import deliveryImg from "../../assets/Home/delivery.png";
-import Front from "../../assets/Home/visiting-card-front.jpeg";
-import Back from "../../assets/Home/visiting-card-back.jpeg";
+import logImg from "../../assets/Home/login.webp";
+import deliveryImg from "../../assets/Home/delivery.webp";
+import Front from "../../assets/Home/visiting-card-front.webp";
+import Back from "../../assets/Home/visiting-card-back.webp";
 
 export default function Home() {
   const [isFlipped, setIsFlipped] = useState(false);
+  const navigate = useNavigate();
+
+  const handleServiceClick = (slug) => {
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+    
+    if (isLoggedIn) {
+      navigate(`/apply/${slug}`);
+    } else {
+      sessionStorage.setItem("redirectService", slug);
+      navigate("/login");
+    }
+  };
 
   return (
     <>
@@ -129,14 +141,14 @@ export default function Home() {
                 <div className="p-4 sm:p-5 flex flex-col">
                   {/* TITLE */}
                   <h3 className="font-bold text-base sm:text-lg text-slate-800 mb-2">
-                    {service.title.split("(").map((part, i) =>
+                    {service.title.split("()").map((part, i) =>
                       i === 0 ? (
-                        part
+                        <span key={i}>{part}</span>
                       ) : (
-                        <>
+                        <span key={i}>
                           <br />
                           {part}
-                        </>
+                        </span>
                       ),
                     )}
                   </h3>
@@ -147,12 +159,12 @@ export default function Home() {
                   </p>
 
                   {/* APPLY NOW BUTTON */}
-                  <Link
-                    to={`/apply/${service.slug}`}
+                  <button
+                    onClick={() => handleServiceClick(service.slug)}
                     className={`w-full ${service.btnColor} text-white text-xs sm:text-sm font-semibold py-2 sm:py-2.5 rounded-lg transition-all block text-center hover:scale-105 active:scale-95 shadow-md hover:shadow-lg`}
                   >
                     Apply Now →
-                  </Link>
+                  </button>
                 </div>
               </div>
             ))}
@@ -523,7 +535,7 @@ export default function Home() {
       {/* ================= FLOATING WHATSAPP ================= */}
       <a
         href="https://wa.me/918668266879"
-        className="fixed bottom-6 right-6 h-16 w-16 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-2xl hover:shadow-green-500/40 transition-all duration-300 hover:scale-110 animate-bounce"
+        className="z-index z-50 fixed bottom-6 right-6 h-16 w-16 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-2xl hover:shadow-green-500/40 transition-all duration-300 hover:scale-110 animate-bounce"
         title="Chat on WhatsApp"
       >
         <i className="fa-brands fa-whatsapp text-3xl group-hover:scale-110 transition-transform"></i>

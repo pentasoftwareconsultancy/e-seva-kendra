@@ -11,22 +11,42 @@ const AdminPayments = () => {
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [viewScreenshot, setViewScreenshot] = useState(null);
   const [payments, setPayments] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const PAGE_SIZE = 6;
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/payment")
+    fetch("https://e-seva-kendra-b.onrender.com/api/payment")
       .then(res => res.json())
       .then(data => {
         const formatted = data.map(pay => ({
           id: pay.id,
+          userId: pay.userId,
           user: pay.name,
+          mobile: null,
           service: pay.serviceName,
           amount: "₹" + pay.amount,
           method: "UPI",
           date: new Date(pay.createdAt).toLocaleDateString(),
           status: pay.paymentStatus,
-          screenshot: "http://localhost:8080/uploads/" + pay.screenshot
+          screenshot: pay.screenshot
+            ? (pay.screenshot.startsWith('http') ? pay.screenshot : "https://e-seva-kendra-b.onrender.com/uploads/" + pay.screenshot)
+            : null
         }));
-        setPayments(formatted.reverse());
+        const reversed = formatted.reverse();
+        setPayments(reversed);
+
+        reversed.forEach(pay => {
+          if (pay.userId) {
+            fetch(`https://e-seva-kendra-b.onrender.com/api/users/${pay.userId}`)
+              .then(res => res.json())
+              .then(user => {
+                setPayments(prev => prev.map(p =>
+                  p.id === pay.id ? { ...p, user: user.name || p.user, mobile: user.phone || null } : p
+                ));
+              })
+              .catch(() => {});
+          }
+        });
       })
       .catch(err => console.error(err));
   }, []);
@@ -37,71 +57,81 @@ const AdminPayments = () => {
     pay.user.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const totalPages = Math.ceil(filteredPayments.length / PAGE_SIZE);
+  const paginatedPayments = filteredPayments.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
   return (
     <AdminLayout>
-      <div className="flex items-center gap-2 mb-4 md:mb-6">
-        <CreditCard className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
-        <h1 className="text-xl md:text-3xl font-bold text-[#1f2a44]">Payments</h1>
+      <div className="flex items-center gap-2 mb-3 sm:mb-4 md:mb-6">
+        <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-blue-600" />
+        <h1 className="text-lg sm:text-xl md:text-3xl font-bold text-[#1f2a44]">Payments</h1>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6">
+      <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4 md:p-6">
         {/* Search Bar */}
-        <div className="mb-4">
+        <div className="mb-3 sm:mb-4">
           <input
             type="text"
             placeholder="Search by payment ID or user name..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-3 md:px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
+            onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+            className="w-full px-3 sm:px-3 md:px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-indigo-400 text-xs sm:text-sm"
           />
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-xs md:text-sm">
+            <table className="w-full text-[10px] sm:text-xs md:text-sm">
               <thead>
                 <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 text-left">
-                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs hidden md:table-cell">Payment ID</th>
-                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs">User</th>
-                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs hidden sm:table-cell">Service</th>
-                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs hidden sm:table-cell">Amount</th>
-                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs hidden md:table-cell">PAYMENT PROOF</th>
-                  <th className="px-4 md:px-6 py-4 font-semibold text-gray-700 uppercase tracking-wider text-xs hidden lg:table-cell">Date</th>
-                  <th className="px-4 md:px-6 py-4 text-center font-semibold text-gray-700 uppercase tracking-wider text-xs">Actions</th>
+                  <th className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 font-semibold text-gray-700 uppercase tracking-wider text-[10px] sm:text-xs hidden md:table-cell">Payment ID</th>
+                  <th className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 font-semibold text-gray-700 uppercase tracking-wider text-[10px] sm:text-xs">User</th>
+                  <th className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 font-semibold text-gray-700 uppercase tracking-wider text-[10px] sm:text-xs hidden sm:table-cell">Service</th>
+                  <th className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 font-semibold text-gray-700 uppercase tracking-wider text-[10px] sm:text-xs hidden sm:table-cell">Amount</th>
+                  <th className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 font-semibold text-gray-700 uppercase tracking-wider text-[10px] sm:text-xs hidden md:table-cell">PAYMENT PROOF</th>
+                  <th className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 font-semibold text-gray-700 uppercase tracking-wider text-[10px] sm:text-xs hidden lg:table-cell">Date</th>
+                  <th className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-center font-semibold text-gray-700 uppercase tracking-wider text-[10px] sm:text-xs">Actions</th>
                 </tr>
               </thead>
 
               <tbody className="divide-y divide-gray-100">
-                {filteredPayments.map((pay) => (
+                {paginatedPayments.map((pay) => (
                   <tr key={pay.id} className="hover:bg-blue-50/50 transition-colors duration-150">
-                    <td className="px-4 md:px-6 py-4 font-semibold text-blue-600 hidden md:table-cell">{pay.id}</td>
-                    <td className="px-4 md:px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
-                          <User size={16} />
+                    <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 font-semibold text-blue-600 hidden md:table-cell text-[10px] sm:text-xs md:text-sm">PAY#{pay.id}</td>
+                    <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4">
+                      <div className="flex items-center gap-2 sm:gap-3">
+                        <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-green-500 flex items-center justify-center text-white">
+                          <User size={14} className="sm:w-4 sm:h-4" />
                         </div>
-                        <span className="font-medium text-gray-900">{pay.user}</span>
+                        <span className="font-medium text-gray-900 text-[10px] sm:text-xs md:text-sm truncate max-w-[80px] sm:max-w-[120px]">{pay.user}</span>
                       </div>
                     </td>
-                    <td className="px-4 md:px-6 py-4 text-gray-600 hidden sm:table-cell">{pay.service}</td>
-                    <td className="px-4 md:px-6 py-4 font-semibold text-gray-900 hidden sm:table-cell">{pay.amount}</td>
-                    <td className="px-4 md:px-6 py-4 hidden md:table-cell">
-                      {pay.screenshot && (
-                        <img
-                          src={pay.screenshot}
-                          alt="Screenshot"
-                          className="w-12 h-12 object-cover rounded border cursor-pointer"
-                          onClick={() => setSelectedPayment(pay)}
-                        />
-                      )}
+                    <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-gray-600 hidden sm:table-cell text-[10px] sm:text-xs md:text-sm max-w-[160px] truncate">{pay.service}</td>
+                    <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 font-semibold text-gray-900 hidden sm:table-cell text-[10px] sm:text-xs md:text-sm">{pay.amount}</td>
+                    <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 hidden md:table-cell">
+                      <div
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded border overflow-hidden cursor-pointer bg-gray-100 flex items-center justify-center"
+                        onClick={() => setSelectedPayment(pay)}
+                      >
+                        {pay.screenshot ? (
+                          <img
+                            src={pay.screenshot}
+                            alt=""
+                            className="w-full h-full object-cover"
+                            onError={(e) => { e.target.style.display = 'none'; }}
+                          />
+                        ) : (
+                          <span className="text-[8px] text-gray-400">N/A</span>
+                        )}
+                      </div>
                     </td>
-                    <td className="px-4 md:px-6 py-4 text-gray-500 hidden lg:table-cell">{pay.date}</td>
-                    <td className="px-4 md:px-6 py-4 text-center">
+                    <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-gray-500 hidden lg:table-cell text-[10px] sm:text-xs md:text-sm">{pay.date}</td>
+                    <td className="px-2 sm:px-4 md:px-6 py-3 sm:py-4 text-center">
                       <button 
                         onClick={() => setSelectedPayment(pay)}
-                        className="inline-flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
+                        className="inline-flex items-center gap-1 px-2 sm:px-2 md:px-4 py-1.5 sm:py-1.5 md:py-2 bg-blue-600 hover:bg-blue-700 text-white text-[10px] sm:text-xs font-medium rounded-md sm:rounded-lg transition-colors duration-150 shadow-sm hover:shadow"
                       >
-                        <Eye size={12} className="md:w-3.5 md:h-3.5" />
+                        <Eye size={12} className="sm:w-3.5 sm:h-3.5" />
                         <span className="hidden md:inline">View</span>
                       </button>
                     </td>
@@ -111,15 +141,34 @@ const AdminPayments = () => {
             </table>
           </div>
         </div>
+
+        {/* Pagination */}
+        {totalPages >= 1 && (
+          <div className="flex items-center justify-center gap-2 mt-4">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="w-10 h-10 rounded-xl border border-gray-200 bg-white text-gray-600 text-sm font-semibold hover:bg-gray-50 disabled:opacity-40 transition shadow-sm"
+            >&#8592;</button>
+            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white text-sm font-bold flex items-center justify-center shadow-sm">
+              {currentPage}
+            </div>
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="w-10 h-10 rounded-xl border border-gray-200 bg-white text-gray-600 text-sm font-semibold hover:bg-gray-50 disabled:opacity-40 transition shadow-sm"
+            >&#8594;</button>
+          </div>
+        )}
       </div>
 
       {/* Screenshot Full View Modal */}
       {viewScreenshot && (
-        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[60] p-4" onClick={() => setViewScreenshot(null)}>
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[60] p-3 sm:p-4" onClick={() => setViewScreenshot(null)}>
           <div className="relative max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
             <button 
               onClick={() => setViewScreenshot(null)}
-              className="absolute -top-10 right-0 text-white text-2xl hover:text-gray-300"
+              className="absolute -top-8 sm:-top-10 right-0 text-white text-xl sm:text-2xl hover:text-gray-300"
             >
               ✕
             </button>
@@ -133,19 +182,21 @@ const AdminPayments = () => {
       )}
 
       {/* Payment Details Modal */}
-      {selectedPayment && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-2 md:p-4" onClick={() => setSelectedPayment(null)}>
+      {selectedPayment && (() => {
+        const displayPayment = payments.find(p => p.id === selectedPayment.id) || selectedPayment;
+        return (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-3 sm:p-4" onClick={() => setSelectedPayment(null)}>
           <div className="bg-white rounded-lg shadow-2xl w-full max-w-[98vw] md:max-w-4xl h-[95vh] md:h-[85vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
             
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-3 md:px-6 py-2 md:py-3 flex items-center justify-between rounded-t-lg">
-              <h3 className="text-sm md:text-lg font-semibold text-white flex items-center gap-2">
-                <CreditCard className="w-4 h-4 md:w-5 md:h-5" />
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 flex items-center justify-between rounded-t-lg">
+              <h3 className="text-xs sm:text-sm md:text-lg font-semibold text-white flex items-center gap-1.5 sm:gap-2">
+                <CreditCard className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
                 Payment Details
               </h3>
               <button 
                 onClick={() => setSelectedPayment(null)}
-                className="text-white/80 hover:text-white text-2xl leading-none"
+                className="text-white/80 hover:text-white text-xl sm:text-2xl leading-none"
               >
                 ×
               </button>
@@ -155,73 +206,75 @@ const AdminPayments = () => {
             <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
               
               {/* Left: Payment Info */}
-              <div className="w-full md:w-2/5 p-3 md:p-6 md:border-r bg-gray-50 overflow-y-auto">
-                <div className="space-y-2 md:space-y-4">
+              <div className="w-full md:w-2/5 p-3 sm:p-4 md:p-6 md:border-r bg-gray-50 overflow-y-auto">
+                <div className="space-y-2 sm:space-y-3 md:space-y-4">
                   <div>
-                    <p className="text-xs text-gray-500 mb-1">Payment ID</p>
-                    <p className="text-xs md:text-sm font-bold text-gray-900">#{selectedPayment.id}</p>
+                    <p className="text-[10px] sm:text-xs text-gray-500 mb-1">Payment ID</p>
+                    <p className="text-xs sm:text-sm md:text-sm font-bold text-gray-900">PAY#{displayPayment.id}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 mb-1">Customer Name</p>
-                    <p className="text-xs md:text-sm font-semibold text-gray-900">{selectedPayment.user}</p>
+                    <p className="text-[10px] sm:text-xs text-gray-500 mb-1">Customer Name</p>
+                    <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-900 break-all">{displayPayment.user}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 mb-1">Service</p>
-                    <p className="text-xs md:text-sm font-semibold text-gray-900">{selectedPayment.service}</p>
+                    <p className="text-[10px] sm:text-xs text-gray-500 mb-1">Mobile</p>
+                    <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-900">{displayPayment.mobile || '-'}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 mb-1">Payment Method</p>
-                    <p className="text-xs md:text-sm font-semibold text-gray-900">{selectedPayment.method}</p>
+                    <p className="text-[10px] sm:text-xs text-gray-500 mb-1">Service</p>
+                    <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-900 break-all">{displayPayment.service}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 mb-1">Date</p>
-                    <p className="text-xs md:text-sm font-semibold text-gray-900">{selectedPayment.date}</p>
+                    <p className="text-[10px] sm:text-xs text-gray-500 mb-1">Payment Method</p>
+                    <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-900">{displayPayment.method}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] sm:text-xs text-gray-500 mb-1">Date</p>
+                    <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-900">{displayPayment.date}</p>
                   </div>
                   <div className="pt-2 border-t">
-                    <p className="text-xs text-gray-500 mb-1">Amount</p>
-                    <p className="text-xl md:text-2xl font-bold text-green-600">{selectedPayment.amount}</p>
+                    <p className="text-[10px] sm:text-xs text-gray-500 mb-1">Amount</p>
+                    <p className="text-lg sm:text-xl md:text-2xl font-bold text-green-600">{displayPayment.amount}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 mb-2">Status</p>
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${statusStyle[selectedPayment.status]}`}>
-                      {selectedPayment.status}
+                    <p className="text-[10px] sm:text-xs text-gray-500 mb-2">Status</p>
+                    <span className={`inline-block px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold ${statusStyle[displayPayment.status]}`}>
+                      {displayPayment.status}
                     </span>
                   </div>
                 </div>
               </div>
 
               {/* Right: Screenshot */}
-              <div className="w-full md:w-3/5 p-3 md:p-6 flex flex-col items-center overflow-y-auto">
-                <p className="text-xs md:text-sm font-semibold text-gray-700 mb-2 md:mb-3 self-start">Payment Screenshot</p>
-                <div className="w-full max-w-[280px] md:w-80 flex-1 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden">
-                  {selectedPayment.screenshot ? (
+              <div className="w-full md:w-3/5 p-3 sm:p-4 md:p-6 flex flex-col items-center overflow-y-auto">
+                <p className="text-xs sm:text-sm md:text-sm font-semibold text-gray-700 mb-2 md:mb-3 self-start">Payment Screenshot</p>
+                <div className="w-full max-w-[280px] sm:max-w-xs md:w-80 flex-1 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden">
+                  {displayPayment.screenshot ? (
                     <img
-                      src={selectedPayment.screenshot}
+                      src={displayPayment.screenshot}
                       alt="Payment Screenshot"
                       className="max-w-full max-h-full object-contain"
                     />
                   ) : (
-                    <p className="text-gray-400 text-xs md:text-sm">No screenshot available</p>
+                    <p className="text-gray-400 text-[10px] sm:text-xs md:text-sm">No screenshot available</p>
                   )}
                 </div>
               </div>
             </div>
 
             {/* Footer */}
-            <div className="px-3 md:px-6 py-2 md:py-3 bg-gray-50 border-t flex gap-2 md:gap-3 rounded-b-lg">
+            <div className="px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 bg-gray-50 border-t flex gap-2 md:gap-3 rounded-b-lg">
               <button 
                 onClick={() => setSelectedPayment(null)}
-                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 rounded-lg font-medium text-xs md:text-sm transition"
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 rounded-lg font-medium text-[10px] sm:text-xs md:text-sm transition"
               >
                 Close
               </button>
-              <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs md:text-sm transition">
-                Mark as Verified
-              </button>
+              
             </div>
           </div>
         </div>
-      )}
+        ); })()}
     </AdminLayout>
   );
 };

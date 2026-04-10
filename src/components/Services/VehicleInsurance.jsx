@@ -1,254 +1,145 @@
 import React, { useState } from "react";
-import PanHero from "../../assets/Servicesimg/Panhero.png";
 import { useNavigate } from "react-router-dom";
+import PanHero from "../../assets/Servicesimg/Panhero.webp";
 
 function VehicleInsurance() {
+  const navigate = useNavigate();
+  const [vehicleType, setVehicleType] = useState("two");
+  const [formData, setFormData] = useState({ fullName: "", mobile: "", vehicleNumber: "", vehicleModel: "" });
+  const [errors, setErrors] = useState({ fullName: "", mobile: "" });
+  const [files, setFiles] = useState({ rc: null, license: null, aadhaar: null, photo: null, previousPolicy: null });
+  const [fileErrors, setFileErrors] = useState({ rc: false, license: false, aadhaar: false, photo: false });
 
-    const navigate = useNavigate();
+  const handleFileChange = (e, field) => {
+    const file = e.target.files[0];
+    if (file) setFiles((prev) => ({ ...prev, [field]: { file, url: URL.createObjectURL(file) } }));
+  };
 
-    const [vehicleType, setVehicleType] = useState("two");
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.fullName.trim() || formData.fullName.trim().length < 3) newErrors.fullName = "Name must be at least 3 characters";
+    if (!/^[0-9]{10}$/.test(formData.mobile)) newErrors.mobile = "Mobile number must be exactly 10 digits";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
-    const [formData, setFormData] = useState({
-        fullName: "",
-        mobile: "",
-        vehicleNumber: "",
-        vehicleModel: "",
-    });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+    const missingFiles = { rc: !files.rc, license: !files.license, aadhaar: !files.aadhaar, photo: !files.photo };
+    setFileErrors(missingFiles);
+    if (Object.values(missingFiles).some(Boolean)) return;
+    navigate("/payment", { state: { serviceName: "Vehicle Insurance", applicantName: formData.fullName, mobile: formData.mobile, Amount: vehicleType === "two" ? "5000" : "5000", type: vehicleType, formData, documents: { rc: files.rc?.file, license: files.license?.file, aadhaar: files.aadhaar?.file, photo: files.photo?.file, previousPolicy: files.previousPolicy?.file } } });
+  };
 
-    const [files, setFiles] = useState({
-        rc: null,
-        license: null,
-        aadhaar: null,
-        photo: null,
-        previousPolicy: null,
-    });
-
-    const handleFileChange = (e, field) => {
-        const file = e.target.files[0];
-
-        if (file) {
-            const fileURL = URL.createObjectURL(file);
-            setFiles((prev) => ({
-                ...prev,
-                [field]: { file: file, url: fileURL },
-            }));
-        }
-    };
-
-    /* PAYMENT FLOW SUBMIT */
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (!formData.fullName || !formData.mobile) {
-            alert("Please fill all required fields");
-            return;
-        }
-
-        if (!files.rc || !files.license || !files.aadhaar || !files.photo) {
-            alert("Please upload all required documents");
-            return;
-        }
-
-        const amount = vehicleType === "two" ? 800 : 1200;
-
-        navigate("/payment", {
-            state: {
-                serviceName: "Vehicle Insurance",
-                applicantName: formData.fullName,
-                mobile: formData.mobile,
-                Amount: amount,
-                type: vehicleType,
-            },
-        });
-    };
-
-    const documents = [
-        ["वाहन नोंदणी प्रमाणपत्र (RC बुक)", "Vehicle Registration Certificate (RC Book)"],
-        ["ड्रायव्हिंग लायसन्स", "Driving License"],
-        ["आधार कार्ड", "Aadhaar Card"],
-        ["पासपोर्ट साइज फोटो", "Passport Size Photo"],
-        ["जुनी विमा पॉलिसी (असल्यास)", "Previous Insurance Policy (If Available)"],
-    ];
-
-    return (
-        <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
-
-            {/* Hero Section */}
-            <section className="relative w-full h-[550px] flex items-center">
-                <div className="absolute inset-0">
-                    <img
-                        src={PanHero}
-                        alt="Vehicle Insurance"
-                        className="w-full h-full object-cover object-[20%_center]"
-                    />
-                </div>
-
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/85 to-transparent"></div>
-
-                <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-                    <div className="w-full md:w-1/2 space-y-6 text-white">
-                        <h1 className="text-5xl font-bold">
-                            2-Wheeler & 4-Wheeler Insurance
-                        </h1>
-
-                        <p className="text-xl text-gray-200">
-                            Motor Insurance Service
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Main Card */}
-            <section className="py-12 px-4 md:px-8">
-                <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl p-8 md:p-12">
-
-                    {/* Toggle */}
-                    <div className="flex justify-center mb-8">
-                        <div className="bg-gray-200 rounded-full p-1 flex">
-                            <button
-                                onClick={() => setVehicleType("two")}
-                                className={`px-6 py-2 rounded-full font-semibold transition ${
-                                    vehicleType === "two"
-                                        ? "bg-[#f07e1b] text-white"
-                                        : "text-gray-700"
-                                }`}
-                            >
-                                2-Wheeler
-                            </button>
-
-                            <button
-                                onClick={() => setVehicleType("four")}
-                                className={`px-6 py-2 rounded-full font-semibold transition ${
-                                    vehicleType === "four"
-                                        ? "bg-[#f07e1b] text-white"
-                                        : "text-gray-700"
-                                }`}
-                            >
-                                4-Wheeler
-                            </button>
-                        </div>
-                    </div>
-
-                    <h2 className="text-3xl font-bold text-center mb-6">
-                        {vehicleType === "two"
-                            ? "2-Wheeler Insurance Form"
-                            : "4-Wheeler Insurance Form"}
-                    </h2>
-
-                    {/* Documents */}
-                    <div className="border-4 border-green-600 rounded-2xl p-6 mb-8">
-                        <h3 className="text-2xl font-bold text-green-600 text-center mb-6">
-                            आवश्यक कागदपत्रे / Required Documents
-                        </h3>
-
-                        <div className="space-y-3">
-                            {documents.map((doc, index) => (
-                                <div key={index} className="flex gap-3">
-                                    <span className="text-green-600 font-bold">✱</span>
-                                    <div>
-                                        <p className="font-semibold">{doc[0]}</p>
-                                        <p className="text-gray-600 text-sm">{doc[1]}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* FORM */}
-                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                        <InputField
-                            label="Full Name (पूर्ण नाव)"
-                            value={formData.fullName}
-                            onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                        />
-
-                        <InputField
-                            label="Mobile Number (मोबाईल नंबर)"
-                            value={formData.mobile}
-                            onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-                        />
-
-                        <InputField
-                            label="Vehicle Number (वाहन क्रमांक)"
-                            value={formData.vehicleNumber}
-                            onChange={(e) => setFormData({ ...formData, vehicleNumber: e.target.value })}
-                        />
-
-                        <InputField
-                            label="Vehicle Model (वाहन मॉडेल)"
-                            value={formData.vehicleModel}
-                            onChange={(e) => setFormData({ ...formData, vehicleModel: e.target.value })}
-                        />
-
-                        <UploadBox label="RC Book" fileData={files.rc} onChange={(e)=>handleFileChange(e,"rc")}/>
-                        <UploadBox label="Driving License" fileData={files.license} onChange={(e)=>handleFileChange(e,"license")}/>
-                        <UploadBox label="Aadhaar Card" fileData={files.aadhaar} onChange={(e)=>handleFileChange(e,"aadhaar")}/>
-                        <UploadBox label="Passport Photo" fileData={files.photo} onChange={(e)=>handleFileChange(e,"photo")}/>
-                        <UploadBox label="Previous Policy" fileData={files.previousPolicy} onChange={(e)=>handleFileChange(e,"previousPolicy")}/>
-
-                        <div className="md:col-span-2 flex justify-end pt-6">
-                            <button
-                                type="submit"
-                                className="bg-[#f07e1b] text-white px-12 py-4 rounded-xl font-bold text-lg hover:bg-[#d4ac5b] transition-all"
-                            >
-                                Submit Application
-                            </button>
-                        </div>
-
-                    </form>
-
-                </div>
-            </section>
-
+  return (
+    <div className="min-h-screen bg-[#f8faff] font-sans text-[#1e293b]">
+      <section className="relative w-full h-[250px] sm:h-[350px] md:h-[500px] flex items-center">
+        <div className="absolute inset-0"><img src={PanHero} alt="Vehicle Insurance" className="w-full h-full object-cover object-[20%_center]" /></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0b2c6d]/95 via-[#143f8f]/85 to-transparent"></div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full">
+          <div className="w-full md:w-1/2 space-y-3 sm:space-y-6 text-white">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold">2-Wheeler & 4-Wheeler Insurance</h1>
+            <p className="text-sm sm:text-lg md:text-xl text-gray-200">Motor Insurance Service — fast and reliable vehicle insurance assistance.</p>
+            <a href="#vehicle-form"><button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black px-5 sm:px-8 py-2 sm:py-3 rounded-xl font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">Apply Now</button></a>
+          </div>
         </div>
-    );
-}
+      </section>
 
-/* INPUT */
-function InputField({ label, value, onChange }) {
-    return (
-        <div>
-            <label className="block font-bold mb-2">{label}</label>
-            <input
-                type="text"
-                value={value}
-                onChange={onChange}
-                placeholder={`Enter ${label}`}
-                className="w-full bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1e40af]/20"
-            />
-        </div>
-    );
-}
-
-/* UPLOAD */
-function UploadBox({ label, fileData, onChange }) {
-    return (
-        <div className="bg-[#f8faff] p-4 rounded-xl ring-1 ring-gray-200">
-            <div className="flex justify-between items-center">
-                <span className="font-semibold text-sm">{label}</span>
-
-                <label className="bg-[#f07e1b] text-white px-5 py-2 rounded-lg cursor-pointer hover:bg-[#d4ac5b] transition-all">
-                    Upload
-                    <input
-                        type="file"
-                        accept="image/*,.pdf"
-                        className="hidden"
-                        onChange={onChange}
-                    />
-                </label>
+      <section className="bg-white py-8 sm:py-12 px-3 sm:px-6 md:px-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white border-4 border-green-700 rounded-3xl p-4 sm:p-8 md:p-12 shadow-xl">
+            <h2 className="text-xl sm:text-3xl font-bold text-green-600 text-center mb-2">आवश्यक कागदपत्रे</h2>
+            <h3 className="text-base sm:text-2xl font-bold text-green-600 text-center mb-4 sm:mb-8 border-b-4 border-green-700 pb-3">Documents Required for Vehicle Insurance</h3>
+            <div className="space-y-3 text-sm sm:text-lg">
+              {[["वाहन नोंदणी प्रमाणपत्र (RC बुक)", "Vehicle Registration Certificate (RC Book)"], ["ड्रायव्हिंग लायसन्स", "Driving License"], ["आधार कार्ड", "Aadhaar Card"], ["पासपोर्ट साइज फोटो", "Passport Size Photo"], ["जुनी विमा पॉलिसी (असल्यास)", "Previous Insurance Policy (If Available)"]].map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <span className="text-green-600 font-bold text-lg sm:text-xl flex-shrink-0">✱</span>
+                  <div><p className="text-gray-800 font-semibold text-xs sm:text-base">{item[0]}</p><p className="text-gray-600 text-xs sm:text-base">{item[1]}</p></div>
+                </div>
+              ))}
             </div>
-
-            {fileData && (
-                <p
-                    className="text-blue-600 text-sm mt-2 cursor-pointer hover:text-blue-800"
-                    onClick={() => window.open(fileData.url, "_blank")}
-                >
-                    {fileData.file.name}
-                </p>
-            )}
+          </div>
         </div>
-    );
+      </section>
+
+      <section id="vehicle-form" className="py-8 sm:py-12 px-3 sm:px-6 md:px-8 bg-[#f8faff]">
+        <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden mb-10 sm:mb-20">
+          <div className="bg-gradient-to-r from-blue-900 to-blue-700 px-4 sm:px-10 py-5 sm:py-8">
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-white text-center">Vehicle Insurance Application Form</h2>
+            <p className="text-blue-200 text-center text-xs sm:text-sm mt-1">Fill in your details to get started</p>
+          </div>
+          <form onSubmit={handleSubmit} className="p-4 sm:p-6 md:p-10 space-y-6 sm:space-y-8">
+            <div className="flex gap-2 sm:gap-4">
+              <button type="button" onClick={() => setVehicleType("two")} className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 text-xs sm:text-sm ${vehicleType === "two" ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>2-Wheeler</button>
+              <button type="button" onClick={() => setVehicleType("four")} className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 text-xs sm:text-sm ${vehicleType === "four" ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>4-Wheeler</button>
+            </div>
+            <div>
+              <h3 className="text-sm sm:text-lg font-bold text-gray-700 mb-3 sm:mb-4 pb-2 border-b-2 border-blue-100 flex items-center gap-2">
+                <span className="w-6 h-6 sm:w-7 sm:h-7 bg-blue-900 text-white rounded-full flex items-center justify-center text-xs sm:text-sm flex-shrink-0">1</span>
+                Personal Details
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
+                <div>
+                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Full Name (पूर्ण नाव) <span className="text-red-500">*</span></label>
+                  <input type="text" required minLength={3} value={formData.fullName} onChange={(e) => { const value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); setFormData({ ...formData, fullName: value }); setErrors({ ...errors, fullName: "" }); }} placeholder="Enter Full Name" className={`w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border text-xs sm:text-sm ${errors.fullName ? "border-red-500" : "border-gray-200"} focus:outline-none focus:ring-2 focus:ring-blue-500`} />
+                  {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Mobile Number (मोबाईल नंबर) <span className="text-red-500">*</span></label>
+                  <input type="tel" required pattern="[0-9]{10}" maxLength={10} value={formData.mobile} onChange={(e) => { const value = e.target.value.replace(/[^0-9]/g, ""); setFormData({ ...formData, mobile: value }); setErrors({ ...errors, mobile: "" }); }} placeholder="Enter 10-digit Mobile Number" className={`w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border text-xs sm:text-sm ${errors.mobile ? "border-red-500" : "border-gray-200"} focus:outline-none focus:ring-2 focus:ring-blue-500`} />
+                  {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Vehicle Number (वाहन क्रमांक) <span className="text-red-500">*</span></label>
+                  <input type="text" value={formData.vehicleNumber} onChange={(e) => setFormData({ ...formData, vehicleNumber: e.target.value.toUpperCase().replace(/[^A-Z0-9\s]/g, "") })} placeholder="e.g. MH12AB1234" className="w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1.5 text-xs sm:text-sm text-gray-600">Vehicle Model (वाहन मॉडेल) <span className="text-red-500">*</span></label>
+                  <input type="text" value={formData.vehicleModel} onChange={(e) => setFormData({ ...formData, vehicleModel: e.target.value.replace(/[^a-zA-Z0-9\s]/g, "") })} placeholder="e.g. Honda Activa" className="w-full bg-gray-50 p-2.5 sm:p-3 rounded-xl border border-gray-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-sm sm:text-lg font-bold text-gray-700 mb-3 sm:mb-4 pb-2 border-b-2 border-blue-100 flex items-center gap-2">
+                <span className="w-6 h-6 sm:w-7 sm:h-7 bg-blue-900 text-white rounded-full flex items-center justify-center text-xs sm:text-sm flex-shrink-0">2</span>
+                Upload Documents
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                <UploadBox label="RC Book (RC बुक)" required fileData={files.rc} hasError={fileErrors.rc} onChange={(e) => { handleFileChange(e, "rc"); setFileErrors((p) => ({ ...p, rc: false })); }} />
+                <UploadBox label="Driving License (ड्रायव्हिंग लायसन्स)" required fileData={files.license} hasError={fileErrors.license} onChange={(e) => { handleFileChange(e, "license"); setFileErrors((p) => ({ ...p, license: false })); }} />
+                <UploadBox label="Aadhaar Card (आधार कार्ड)" required fileData={files.aadhaar} hasError={fileErrors.aadhaar} onChange={(e) => { handleFileChange(e, "aadhaar"); setFileErrors((p) => ({ ...p, aadhaar: false })); }} />
+                <UploadBox label="Passport Photo (पासपोर्ट फोटो)" required fileData={files.photo} hasError={fileErrors.photo} onChange={(e) => { handleFileChange(e, "photo"); setFileErrors((p) => ({ ...p, photo: false })); }} />
+                <UploadBox label="Previous Policy (जुनी पॉलिसी) (Optional)" fileData={files.previousPolicy} onChange={(e) => handleFileChange(e, "previousPolicy")} />
+              </div>
+            </div>
+            <div className="flex justify-end pt-2">
+              <button type="submit" className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white px-6 sm:px-10 py-2.5 sm:py-3 rounded-xl font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5">Submit Application →</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function UploadBox({ label, fileData, onChange, hasError, required }) {
+  return (
+    <div>
+      <label className="block font-bold mb-1.5 text-xs sm:text-sm">{label} {required && <span className="text-red-500">*</span>}</label>
+      <div className={`bg-gray-50 p-2.5 sm:p-3 rounded-xl border ${hasError ? "border-red-500" : "border-gray-200"}`}>
+        <div className="flex justify-between items-center gap-2">
+          <span className="font-semibold text-xs text-gray-600">Upload Document</span>
+          <label className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-1.5 rounded-lg cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-sm transition-all text-xs">
+            Upload
+            <input type="file" accept="image/*,.pdf" className="hidden" onChange={onChange} />
+          </label>
+        </div>
+        {fileData && <p className="text-blue-600 text-xs mt-1.5 cursor-pointer hover:text-blue-800 break-all" onClick={() => window.open(fileData.url, "_blank")}>{fileData.file.name}</p>}
+        {hasError && <p className="text-red-500 text-xs mt-1">This field is required</p>}
+      </div>
+    </div>
+  );
 }
 
 export default VehicleInsurance;
